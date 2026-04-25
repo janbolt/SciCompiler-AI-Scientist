@@ -1,0 +1,6 @@
+[
+  {"id": "crp", "question": "A paper-based electrochemical biosensor functionalized with anti-CRP antibodies will detect C-reactive protein in whole blood at concentrations below 0.5 mg/L within 10 minutes, matching laboratory ELISA sensitivity without requiring sample preprocessing."},
+  {"id": "lgg", "question": "Supplementing C57BL/6 mice with Lactobacillus rhamnosus GG for 4 weeks will reduce intestinal permeability by at least 30% compared to controls, measured by FITC-dextran assay."},
+  {"id": "trehalose", "question": "Replacing sucrose with trehalose as a cryoprotectant will increase post-thaw viability of HeLa cells by at least 15 percentage points compared to standard DMSO protocol."},
+  {"id": "sporomusa", "question": "Sporomusa ovata in a bioelectrochemical system at -400mV vs SHE will fix CO2 into acetate at >=150 mmol/L/day."}
+]

@@ -1,0 +1,7 @@
+services:
+  db:
+    image: pgvector/pgvector:pg16
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: predictivebio
+    ports: ["5432:5432"]

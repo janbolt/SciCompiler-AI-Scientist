@@ -1,0 +1,5 @@
+{
+  "name": "predictivebio",
+  "private": true,
+  "workspaces": ["apps/*"]
+}
