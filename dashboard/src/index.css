@@ -1,0 +1,54 @@
+@import "tailwindcss";
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: #0D0D0D;
+  color: #f0f0f0;
+  font-family: system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+#root {
+  width: 100%;
+  max-width: 100%;
+  min-height: 100vh;
+  text-align: left;
+  border: none;
+}
+
+h1, h2, h3, p { margin: 0; }
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+}
+
+.glow-cyan {
+  box-shadow: 0 0 40px rgba(34, 211, 238, 0.08);
+}
+
+.mask-log {
+  mask-image: linear-gradient(to bottom, transparent 0%, black 10%, black 88%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 10%, black 88%, transparent 100%);
+}
+
+@keyframes scroll-up {
+  0%   { transform: translateY(0); }
+  100% { transform: translateY(-50%); }
+}
+
+.scroll-log {
+  animation: scroll-up 28s linear infinite;
+}
+
+@keyframes ping-slow {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.4; }
+}
+
+.ping-slow { animation: ping-slow 2s ease-in-out infinite; }
