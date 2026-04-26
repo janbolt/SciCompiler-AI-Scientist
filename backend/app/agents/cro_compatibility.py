@@ -27,7 +27,7 @@ HistoWiz, …). Stripping the catalogue:
   • shortens the prompt for cheaper / faster / more reproducible calls.
 
 Reproducibility tactics:
-  • temperature = 0
+  • temperature = 1 (gpt-5.5 reasoning model rejects other values)
   • structured outputs via instructor (schema-enforced)
   • deterministic input ordering (cards iterated in plan order)
   • bundles must cite ≥1 real CRO (server-side guard) — anything the LLM
@@ -227,7 +227,7 @@ def evaluate_batch(
             model=LLM_MODEL,
             response_model=_BatchEvaluation,
             max_retries=LLM_MAX_RETRIES,
-            temperature=0,
+            temperature=1,
             messages=[
                 {"role": "system", "content": SYSTEM_PROMPT},
                 {
