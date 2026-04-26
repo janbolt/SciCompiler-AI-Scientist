@@ -1,4 +1,4 @@
-# PredictiveBio Vertical Demo
+# SciCompiler Vertical Demo
 
 Runnable vertical demo for AI-assisted experiment planning.
 
