@@ -1,10 +1,10 @@
 """Agent 2 of 11 — Literature QC Agent.
 
-Determines whether the same or a similar experiment already exists in the
-protocols.io public protocol database. Three queries are issued sequentially
-(full_scope / intervention_only / system_method), the union is deduplicated
-by protocol id, and an LLM classifies the novelty signal across three
-similarity dimensions (intervention, biological system, experiment type).
+Searches Semantic Scholar (free public API, no key required) for papers
+related to the hypothesis. Three queries are issued sequentially
+(full_scope / intervention_only / system_method), results are deduplicated
+by paperId, and an LLM classifies the novelty signal across three similarity
+dimensions (intervention, biological system, experiment type).
 
 Python — not the LLM — owns:
     * confidence_score  (deterministic scoring matrix)
@@ -15,13 +15,13 @@ The LLM owns:
     * novelty_signal     (not_found | similar_work_exists | exact_match_found)
     * explanation        (2–3 sentences, dimension-by-dimension)
     * confidence_reasoning (used as a soft input into the score)
-    * top_reference_indices + relevance_notes (which protocols to surface)
+    * top_reference_indices + relevance_notes (which papers to surface)
 
 Two execution modes:
 
 - ``USE_STUB_AGENTS=true``  → ``_stub_literature_qc`` returns deterministic
   output without contacting any external API.
-- Otherwise                 → live mode: protocols.io REST + OpenAI via the
+- Otherwise                 → live mode: Semantic Scholar REST + OpenAI via the
   shared instructor client (``Mode.TOOLS``).
 """
 
@@ -30,7 +30,6 @@ from __future__ import annotations
 import json
 import logging
 import os
-from datetime import datetime, timezone
 from typing import Any, Literal
 
 import requests
@@ -47,11 +46,13 @@ from app.services.llm import LLM_MAX_RETRIES, LLM_MODEL, USE_STUB_AGENTS, get_cl
 logger = logging.getLogger(__name__)
 
 
-PROTOCOLS_IO_BASE_URL = "https://www.protocols.io/api/v3"
-PROTOCOLS_IO_TIMEOUT_SECONDS = 10
-MAX_UNIQUE_PROTOCOLS = 8
-MAX_PROTOCOLS_FOR_LLM = 5
+SEMANTIC_SCHOLAR_BASE_URL = "https://api.semanticscholar.org/graph/v1"
+SEMANTIC_SCHOLAR_TIMEOUT_SECONDS = 15
+MAX_UNIQUE_PAPERS = 8
+MAX_PAPERS_FOR_LLM = 5
 MAX_REFERENCES_RETURNED = 3
+
+S2_FIELDS = "title,abstract,year,authors,externalIds,citationCount"
 
 
 # ---------------------------------------------------------------------------
@@ -63,14 +64,14 @@ class _LiteratureQCLLMOutput(BaseModel):
     novelty_signal: Literal["not_found", "similar_work_exists", "exact_match_found"] = Field(
         ...,
         description=(
-            "Classify the novelty of the hypothesis against the retrieved protocols. "
-            "Use 'exact_match_found' only when at least one protocol covers BOTH the "
+            "Classify the novelty of the hypothesis against the retrieved papers. "
+            "Use 'exact_match_found' only when at least one paper covers BOTH the "
             "same/equivalent intervention AND the same/similar biological system. "
             "Use 'similar_work_exists' when there is meaningful prior art (same "
             "intervention on a related system, same compound class on the same "
             "system, or same experiment type with different intervention purpose). "
-            "Use 'not_found' when retrieved protocols are only peripherally related, "
-            "or when no protocols were retrieved."
+            "Use 'not_found' when retrieved papers are only peripherally related, "
+            "or when no papers were retrieved."
         ),
     )
     explanation: str = Field(
@@ -78,7 +79,7 @@ class _LiteratureQCLLMOutput(BaseModel):
         description=(
             "2–3 sentences justifying the novelty_signal. Reason explicitly across "
             "three dimensions: (1) intervention, (2) biological system, (3) "
-            "experiment type / assay. Reference protocols by their bracketed index "
+            "experiment type / assay. Reference papers by their bracketed index "
             "when relevant."
         ),
     )
@@ -93,16 +94,16 @@ class _LiteratureQCLLMOutput(BaseModel):
     top_reference_indices: list[int] = Field(
         default_factory=list,
         description=(
-            "0-based indices into the protocol list provided in the user message, "
-            "for the most relevant protocols. Maximum 3 indices. Empty list if no "
-            "protocol is relevant."
+            "0-based indices into the paper list provided in the user message, "
+            "for the most relevant papers. Maximum 3 indices. Empty list if no "
+            "paper is relevant."
         ),
     )
     relevance_notes: list[str] = Field(
         default_factory=list,
         description=(
             "One short relevance note per index in top_reference_indices, in the "
-            "same order. Each note must explain why that specific protocol is "
+            "same order. Each note must explain why that specific paper is "
             "relevant to THIS hypothesis (not a generic description)."
         ),
     )
@@ -115,203 +116,113 @@ class _LiteratureQCLLMOutput(BaseModel):
 
 SYSTEM_PROMPT = """\
 You are a senior wet-lab scientist evaluating whether a planned experiment
-already exists in published protocol databases.
+already exists in the scientific literature.
 
 You will receive:
 1. A structured hypothesis with these fields: intervention, biological_system,
    comparator_or_control, measurable_outcome, experiment_type.
-2. A list of protocols retrieved from protocols.io, each with title, abstract,
-   authors, year, and which search query found it.
+2. A list of papers retrieved from Semantic Scholar, each with title, abstract,
+   year, authors, and which search query found it.
 
 Your job is to classify the novelty of the hypothesis using exactly one of:
 
 CLASSIFICATION RULES (read carefully — these are intentionally realistic):
 
 exact_match_found:
-  Use this when at least one retrieved protocol covers BOTH:
+  Use this when at least one retrieved paper covers BOTH:
     (a) the same or functionally equivalent intervention, AND
     (b) the same or very similar biological system or experimental context.
-  The threshold and exact outcome do NOT need to match — protocols rarely
+  The threshold and exact outcome do NOT need to match — papers rarely
   report exact success thresholds. Focus on whether the core experiment
   (what is being tested, on what system) is already described.
-  Example: a protocol for "trehalose as cryoprotectant in mammalian cell lines"
-  is an exact match for a hypothesis about trehalose in HeLa cells.
 
 similar_work_exists:
-  Use this when retrieved protocols cover ONE of the following:
+  Use this when retrieved papers cover ONE of the following:
     (a) The same intervention applied to a different but related biological system, OR
     (b) A closely related intervention (same compound class, same technique family)
         applied to the same or similar biological system, OR
     (c) The same experimental type and assay in the same system, but for a
         different intervention purpose.
-  This means: there is prior art the scientist must engage with, but the
-  specific combination being proposed may not have been directly tested.
 
 not_found:
-  Use this when retrieved protocols are only peripherally related —
+  Use this when retrieved papers are only peripherally related —
   same general field but different technique, different compound class,
   different organism kingdom, or the results are clearly unrelated to
   the hypothesis dimensions.
-  Also use this when NO protocols were retrieved at all.
+  Also use this when NO papers were retrieved at all.
 
 DIMENSION REASONING:
 When classifying, explicitly reason across these three dimensions in your
 explanation — this makes your decision auditable:
-  1. Intervention dimension: is the same compound/method present in any protocol?
+  1. Intervention dimension: is the same compound/method present in any paper?
   2. Biological system dimension: is the same or similar system present?
   3. Experiment type dimension: is the same assay or methodology described?
 
 RULES:
-- Never claim certainty you do not have. If protocols are tangential, say so.
-- Never invent protocol details not in the provided list.
-- If no protocols were provided, classify as not_found and say so clearly.
-- relevance_notes must explain specifically why that protocol is relevant to
-  THIS hypothesis — not a generic description of the protocol.
+- Never claim certainty you do not have. If papers are tangential, say so.
+- Never invent paper details not in the provided list.
+- If no papers were provided, classify as not_found and say so clearly.
+- relevance_notes must explain specifically why that paper is relevant to
+  THIS hypothesis — not a generic description of the paper.
 - confidence_reasoning must reflect your genuine uncertainty, not just echo
-  the novelty_signal. "Two protocols matched the intervention but neither
-  used HeLa cells specifically" is good reasoning.
+  the novelty_signal.
 """
 
 
 # ---------------------------------------------------------------------------
-# Token / env helpers
+# Semantic Scholar client
 # ---------------------------------------------------------------------------
 
 
-def _get_protocols_io_token() -> str:
-    token = os.getenv("PROTOCOLS_IO_TOKEN", "").strip()
-    if not token or token == "your_token_here":
-        raise EnvironmentError(
-            "PROTOCOLS_IO_TOKEN is not set. Add it to backend/.env."
-        )
-    return token
+def _search_semantic_scholar(query: str, match_type: str) -> list[dict[str, Any]]:
+    """Call the Semantic Scholar paper search endpoint for one query.
 
-
-# ---------------------------------------------------------------------------
-# protocols.io client
-# ---------------------------------------------------------------------------
-
-
-def _search_protocols(query: str, match_type: str, token: str | None = None) -> list[dict[str, Any]]:
-    """Call ``GET /protocols`` on protocols.io for one query.
-
-    Returns a list of raw protocol dicts (with ``match_type`` injected) or an
-    empty list on any error. Never raises — degrades gracefully so the agent
-    can still classify based on the queries that did succeed.
+    Returns a list of raw paper dicts (with ``match_type`` and ``paperId``
+    injected) or an empty list on any error. Never raises — degrades
+    gracefully so the agent can still classify based on queries that succeed.
     """
     query = (query or "").strip()
     if not query:
         return []
 
-    if token is None:
-        try:
-            token = _get_protocols_io_token()
-        except EnvironmentError as exc:
-            logger.warning("protocols.io token unavailable for query %r (%s): %s", query, match_type, exc)
-            return []
-
-    headers = {
-        "Authorization": f"Bearer {token}",
-        "Content-Type": "application/json",
+    url = f"{SEMANTIC_SCHOLAR_BASE_URL}/paper/search"
+    params: dict[str, Any] = {
+        "query": query,
+        "fields": S2_FIELDS,
+        "limit": 10,
     }
-    base_url = f"{PROTOCOLS_IO_BASE_URL}/protocols"
-    # APIs in the wild sometimes accept different search parameter names.
-    # Try the required documented shape first, then compatibility fallbacks.
-    param_candidates: list[dict[str, Any]] = [
-        {
-            "key": query,
-            "filter": "public",
-            "order_field": "relevance",
-            "order_dir": "desc",
-            "page_size": 10,
-        },
-        {
-            "key": query,
-            "filter": "public",
-            "order_field": "published_on",
-            "order_dir": "desc",
-            "page_size": 10,
-        },
-        {
-            "key": query,
-            "filter": "public",
-            "order_dir": "desc",
-            "page_size": 10,
-        },
-        {
-            "key": query,
-            "filter": "public",
-            "page_size": 10,
-        },
-        {
-            "q": query,
-            "filter": "public",
-            "order_field": "published_on",
-            "order_dir": "desc",
-            "page_size": 10,
-        },
-        {
-            "query": query,
-            "filter": "public",
-            "order_field": "published_on",
-            "order_dir": "desc",
-            "page_size": 10,
-        },
-    ]
 
-    items: list[dict[str, Any]] = []
-    got_successful_response = False
-    last_status: int | None = None
-    for params in param_candidates:
-        try:
-            response = requests.get(
-                base_url,
-                headers=headers,
-                params=params,
-                timeout=PROTOCOLS_IO_TIMEOUT_SECONDS,
-            )
-        except requests.RequestException as exc:
-            logger.warning("protocols.io request failed for query %r (%s): %s", query, match_type, exc)
-            return []
+    try:
+        response = requests.get(url, params=params, timeout=SEMANTIC_SCHOLAR_TIMEOUT_SECONDS)
+    except requests.RequestException as exc:
+        logger.warning("Semantic Scholar request failed for query %r (%s): %s", query, match_type, exc)
+        return []
 
-        if response.status_code >= 400:
-            last_status = response.status_code
-            continue
+    if response.status_code >= 400:
+        logger.warning(
+            "Semantic Scholar returned HTTP %s for query %r (%s)",
+            response.status_code, query, match_type,
+        )
+        return []
 
-        try:
-            payload = response.json()
-        except ValueError:
-            last_status = response.status_code
-            continue
+    try:
+        payload = response.json()
+    except ValueError:
+        logger.warning("Semantic Scholar returned non-JSON for query %r (%s)", query, match_type)
+        return []
 
-        maybe_items = payload.get("items") if isinstance(payload, dict) else None
-        if isinstance(maybe_items, list):
-            got_successful_response = True
-            items = maybe_items
-            break
-
-    if not items:
-        if got_successful_response:
-            logger.info(
-                "protocols.io returned no items for query %r (%s)",
-                query,
-                match_type,
-            )
-        else:
-            logger.warning(
-                "protocols.io returned HTTP %s or malformed payload for query %r (%s)",
-                last_status if last_status is not None else "unknown",
-                query,
-                match_type,
-            )
+    papers = payload.get("data") if isinstance(payload, dict) else None
+    if not isinstance(papers, list):
+        logger.info("Semantic Scholar returned no data for query %r (%s)", query, match_type)
         return []
 
     results: list[dict[str, Any]] = []
-    for item in items:
-        if not isinstance(item, dict) or item.get("id") is None:
+    for paper in papers:
+        if not isinstance(paper, dict) or not paper.get("paperId"):
             continue
-        item["match_type"] = match_type
-        results.append(item)
+        paper["match_type"] = match_type
+        results.append(paper)
+
     return results
 
 
@@ -365,25 +276,25 @@ def _compute_confidence_score(
 def _recommended_action(novelty_signal: str, confidence_score: float) -> str:
     if novelty_signal == "exact_match_found":
         return (
-            "A protocol matching this experiment was found on protocols.io. "
+            "A paper matching this experiment was found in the scientific literature. "
             "Review it before proceeding. If this is intentional replication, "
             "state that explicitly. If not, differentiate your approach."
         )
     if novelty_signal == "similar_work_exists" and confidence_score >= 0.60:
         return (
-            "Related protocols exist. Review the references, cite relevant prior "
+            "Related publications exist. Review the references, cite relevant prior "
             "work in your plan, and explicitly state how your experiment differs "
             "or extends the existing approach."
         )
     if novelty_signal == "similar_work_exists" and confidence_score < 0.60:
         return (
-            "Potentially related protocols found but match confidence is low. "
-            "Manual literature review on protocols.io and PubMed recommended "
+            "Potentially related papers found but match confidence is low. "
+            "Manual literature review on PubMed and bioRxiv recommended "
             "before committing to this experimental design."
         )
     if novelty_signal == "not_found" and confidence_score >= 0.55:
         return (
-            "No directly matching protocol found. This combination appears novel. "
+            "No directly matching publication found. This combination appears novel. "
             "Proceed with experiment planning."
         )
     return (
@@ -393,34 +304,27 @@ def _recommended_action(novelty_signal: str, confidence_score: float) -> str:
 
 
 # ---------------------------------------------------------------------------
-# Protocol-dict helpers
+# Paper-dict helpers
 # ---------------------------------------------------------------------------
 
 
-def _published_year(protocol: dict[str, Any]) -> int | None:
-    ts = protocol.get("published_on")
-    if not isinstance(ts, (int, float)) or ts <= 0:
-        return None
-    try:
-        return datetime.fromtimestamp(float(ts), tz=timezone.utc).year
-    except (OSError, OverflowError, ValueError):
-        return None
+def _paper_year(paper: dict[str, Any]) -> int | None:
+    year = paper.get("year")
+    if isinstance(year, int) and year > 0:
+        return year
+    return None
 
 
-def _author_names(protocol: dict[str, Any]) -> list[str]:
-    raw = protocol.get("authors") or []
+def _paper_authors(paper: dict[str, Any]) -> list[str]:
+    raw = paper.get("authors") or []
     if not isinstance(raw, list):
         return []
     names: list[str] = []
     for entry in raw:
         if isinstance(entry, dict):
-            name = entry.get("name")
-            if not name:
-                first = (entry.get("first_name") or "").strip()
-                last = (entry.get("last_name") or "").strip()
-                name = (first + " " + last).strip()
+            name = (entry.get("name") or "").strip()
             if name:
-                names.append(str(name))
+                names.append(name)
         elif isinstance(entry, str) and entry.strip():
             names.append(entry.strip())
     if len(names) > 3:
@@ -428,29 +332,34 @@ def _author_names(protocol: dict[str, Any]) -> list[str]:
     return names
 
 
-def _abstract_text(protocol: dict[str, Any]) -> str:
-    text = protocol.get("description") or protocol.get("abstract")
+def _paper_url(paper: dict[str, Any]) -> str:
+    ext_ids = paper.get("externalIds") or {}
+    if isinstance(ext_ids, dict):
+        doi = ext_ids.get("DOI")
+        if doi:
+            return f"https://doi.org/{doi}"
+    paper_id = paper.get("paperId", "")
+    if paper_id:
+        return f"https://www.semanticscholar.org/paper/{paper_id}"
+    return "https://www.semanticscholar.org/"
+
+
+def _paper_abstract(paper: dict[str, Any]) -> str:
+    text = paper.get("abstract")
     if not isinstance(text, str) or not text.strip():
         return "No abstract available"
     return text.strip()
 
 
-def _protocol_url(protocol: dict[str, Any]) -> str:
-    uri = (protocol.get("uri") or "").strip().lstrip("/")
-    if not uri:
-        return "https://www.protocols.io/"
-    return f"https://www.protocols.io/{uri}"
-
-
-def _to_reference(protocol: dict[str, Any], relevance_note: str) -> ProtocolReference:
-    raw_match = protocol.get("match_type", "full_scope")
+def _s2_to_reference(paper: dict[str, Any], relevance_note: str) -> ProtocolReference:
+    raw_match = paper.get("match_type", "full_scope")
     if raw_match not in {"full_scope", "intervention_only", "system_method", "stub"}:
         raw_match = "full_scope"
     return ProtocolReference(
-        title=str(protocol.get("title") or "Untitled protocol"),
-        protocol_url=_protocol_url(protocol),
-        authors=_author_names(protocol),
-        published_year=_published_year(protocol),
+        title=str(paper.get("title") or "Untitled paper"),
+        protocol_url=_paper_url(paper),
+        authors=_paper_authors(paper),
+        published_year=_paper_year(paper),
         match_type=raw_match,
         relevance_note=relevance_note,
         is_stub=False,
@@ -462,25 +371,27 @@ def _to_reference(protocol: dict[str, Any], relevance_note: str) -> ProtocolRefe
 # ---------------------------------------------------------------------------
 
 
-def _format_protocols_for_llm(protocols: list[dict[str, Any]]) -> str:
+def _format_papers_for_llm(papers: list[dict[str, Any]]) -> str:
     lines: list[str] = []
-    for idx, p in enumerate(protocols):
-        abstract = _abstract_text(p)
+    for idx, p in enumerate(papers):
+        abstract = _paper_abstract(p)
         if len(abstract) > 300:
             abstract = abstract[:300]
-        year = _published_year(p)
+        year = _paper_year(p)
         year_text = str(year) if year is not None else "unknown"
-        title = str(p.get("title") or "Untitled protocol")
+        title = str(p.get("title") or "Untitled paper")
         match_type = p.get("match_type", "full_scope")
+        citations = p.get("citationCount")
+        citation_text = f", citations={citations}" if isinstance(citations, int) else ""
         lines.append(
-            f"[{idx}] (match_type={match_type}, year={year_text}) {title}\n"
+            f"[{idx}] (match_type={match_type}, year={year_text}{citation_text}) {title}\n"
             f"     abstract: {abstract}"
         )
-    return "\n".join(lines) if lines else "(no protocols retrieved)"
+    return "\n".join(lines) if lines else "(no papers retrieved)"
 
 
 def _classify_with_llm(
-    hypothesis: StructuredHypothesis, protocols: list[dict[str, Any]]
+    hypothesis: StructuredHypothesis, papers: list[dict[str, Any]]
 ) -> _LiteratureQCLLMOutput:
     client = get_client()
 
@@ -491,11 +402,11 @@ def _classify_with_llm(
         f"- comparator_or_control: {hypothesis.comparator_or_control}\n"
         f"- measurable_outcome: {hypothesis.measurable_outcome}\n"
         f"- experiment_type: {hypothesis.experiment_type}\n\n"
-        "RETRIEVED PROTOCOLS (numbered list, 0-based indices):\n"
-        f"{_format_protocols_for_llm(protocols)}\n\n"
-        "Classify the novelty and select the most relevant protocols. "
+        "RETRIEVED PAPERS (numbered list, 0-based indices):\n"
+        f"{_format_papers_for_llm(papers)}\n\n"
+        "Classify the novelty and select the most relevant papers. "
         "Return top_reference_indices as a list of 0-based indices into the "
-        "protocol list above, with relevance_notes in the same order."
+        "paper list above, with relevance_notes in the same order."
     )
 
     return client.chat.completions.create(
@@ -525,7 +436,7 @@ def _stub_literature_qc(hypothesis: StructuredHypothesis) -> LiteratureQCResult:
             references=[
                 ProtocolReference(
                     title="Trehalose-based cryopreservation of mammalian cells",
-                    protocol_url="https://www.protocols.io/stub-reference-1",
+                    protocol_url="https://www.semanticscholar.org/paper/stub-reference-1",
                     authors=["Stub Author"],
                     published_year=2021,
                     match_type="stub",
@@ -535,9 +446,9 @@ def _stub_literature_qc(hypothesis: StructuredHypothesis) -> LiteratureQCResult:
             ],
             confidence_score=confidence_score,
             explanation=(
-                "Protocols using trehalose as a cryoprotectant exist on protocols.io, "
+                "Papers using trehalose as a cryoprotectant exist in the literature, "
                 "primarily in the context of cell preservation and lyophilization. "
-                "No protocol was found combining trehalose with HeLa cells specifically "
+                "No paper was found combining trehalose with HeLa cells specifically "
                 "using trypan blue viability as the primary endpoint."
             ),
             recommended_action=_recommended_action(signal, confidence_score),
@@ -569,8 +480,8 @@ def _build_queries(hypothesis: StructuredHypothesis) -> tuple[str, str, str]:
 
     intervention = hypothesis.intervention or ""
     query_b = "" if intervention == MISSING else intervention.strip()
-    if len(query_b) > 60:
-        query_b = query_b[:60]
+    if len(query_b) > 80:
+        query_b = query_b[:80]
 
     bio = "" if hypothesis.biological_system in (MISSING, "") else hypothesis.biological_system
     exp = "" if hypothesis.experiment_type in (MISSING, "") else hypothesis.experiment_type
@@ -579,15 +490,15 @@ def _build_queries(hypothesis: StructuredHypothesis) -> tuple[str, str, str]:
     return query_a, query_b, query_c
 
 
-def _dedupe_protocols(*groups: list[dict[str, Any]]) -> list[dict[str, Any]]:
+def _dedupe_papers(*groups: list[dict[str, Any]]) -> list[dict[str, Any]]:
     seen: dict[Any, dict[str, Any]] = {}
     for group in groups:
         for item in group:
-            pid = item.get("id")
+            pid = item.get("paperId")
             if pid is None or pid in seen:
                 continue
             seen[pid] = item
-            if len(seen) >= MAX_UNIQUE_PROTOCOLS:
+            if len(seen) >= MAX_UNIQUE_PAPERS:
                 return list(seen.values())
     return list(seen.values())
 
@@ -608,19 +519,17 @@ def run_literature_qc_agent(hypothesis: StructuredHypothesis) -> LiteratureQCRes
 
     Two execution modes:
       * stub mode (USE_STUB_AGENTS=true): deterministic, no network.
-      * live mode: protocols.io search + OpenAI classification.
+      * live mode: Semantic Scholar search + OpenAI classification.
     """
     if USE_STUB_AGENTS:
         return _stub_literature_qc(hypothesis)
 
-    token = _get_protocols_io_token()  # raises EnvironmentError if missing
-
     try:
         query_a, query_b, query_c = _build_queries(hypothesis)
 
-        results_a = _search_protocols(query_a, "full_scope", token=token) if query_a else []
-        results_b = _search_protocols(query_b, "intervention_only", token=token) if query_b else []
-        results_c = _search_protocols(query_c, "system_method", token=token) if query_c else []
+        results_a = _search_semantic_scholar(query_a, "full_scope") if query_a else []
+        results_b = _search_semantic_scholar(query_b, "intervention_only") if query_b else []
+        results_c = _search_semantic_scholar(query_c, "system_method") if query_c else []
 
         ran_query_results: list[list[dict[str, Any]]] = []
         if query_a:
@@ -630,7 +539,7 @@ def run_literature_qc_agent(hypothesis: StructuredHypothesis) -> LiteratureQCRes
         if query_c:
             ran_query_results.append(results_c)
 
-        unique = _dedupe_protocols(results_a, results_b, results_c)
+        unique = _dedupe_papers(results_a, results_b, results_c)
         total_unique = len(unique)
 
         if not ran_query_results or all(len(r) == 0 for r in ran_query_results):
@@ -640,11 +549,13 @@ def run_literature_qc_agent(hypothesis: StructuredHypothesis) -> LiteratureQCRes
         else:
             search_coverage = "partial"
 
+        confidence_reasoning = ""
+
         if total_unique == 0:
             novelty_signal: Literal[
                 "not_found", "similar_work_exists", "exact_match_found"
             ] = "not_found"
-            explanation = "No protocols found on protocols.io for this hypothesis."
+            explanation = "No papers found on Semantic Scholar for this hypothesis."
             confidence_reasoning = "Search returned no results — cannot confirm novelty."
             top_indices: list[int] = []
             relevance_notes: list[str] = []
@@ -652,12 +563,9 @@ def run_literature_qc_agent(hypothesis: StructuredHypothesis) -> LiteratureQCRes
         else:
             sorted_top = sorted(
                 unique,
-                key=lambda p: (
-                    p.get("published_on") if isinstance(p.get("published_on"), (int, float)) else 0,
-                    p.get("created_on") if isinstance(p.get("created_on"), (int, float)) else 0,
-                ),
+                key=lambda p: (p.get("citationCount") or 0, p.get("year") or 0),
                 reverse=True,
-            )[:MAX_PROTOCOLS_FOR_LLM]
+            )[:MAX_PAPERS_FOR_LLM]
 
             llm_output = _classify_with_llm(hypothesis, sorted_top)
             novelty_signal = llm_output.novelty_signal
@@ -681,7 +589,7 @@ def run_literature_qc_agent(hypothesis: StructuredHypothesis) -> LiteratureQCRes
                 if slot < len(relevance_notes) and relevance_notes[slot]
                 else "Selected by classifier as relevant prior work."
             )
-            references.append(_to_reference(sorted_top[idx], note))
+            references.append(_s2_to_reference(sorted_top[idx], note))
 
         recommended_action = _recommended_action(novelty_signal, confidence_score)
 
@@ -699,7 +607,7 @@ def run_literature_qc_agent(hypothesis: StructuredHypothesis) -> LiteratureQCRes
 
 
 # ---------------------------------------------------------------------------
-# Adapter for the orchestrator (which still passes the StructuredHypothesis).
+# Adapter for the orchestrator.
 # ---------------------------------------------------------------------------
 
 

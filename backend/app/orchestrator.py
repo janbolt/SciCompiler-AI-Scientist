@@ -29,7 +29,7 @@ def run_demo_pipeline(request: DemoRunRequest, plan_id: str | None = None) -> De
     literature_qc = run_literature_qc(hypothesis)
     protocol_candidates = run_protocol_retrieval(hypothesis)
     evidence_claims = run_evidence(hypothesis, literature_qc)
-    risks = run_risk()
+    risks = run_risk(hypothesis, literature_qc)
 
     resolved_plan_id = plan_id or str(uuid.uuid4())
     prior_feedback = feedback_for_plan(resolved_plan_id)
@@ -38,9 +38,15 @@ def run_demo_pipeline(request: DemoRunRequest, plan_id: str | None = None) -> De
         for item in prior_feedback
     ]
 
-    plan = run_plan(hypothesis=hypothesis, risks=risks, feedback_incorporated=feedback_notes)
-    materials, budget = run_budget()
-    timeline = run_timeline()
+    plan = run_plan(
+        hypothesis=hypothesis,
+        risks=risks,
+        feedback_incorporated=feedback_notes,
+        protocol_candidates=protocol_candidates,
+        literature_qc=literature_qc,
+    )
+    materials, budget = run_budget(hypothesis, plan)
+    timeline = run_timeline(hypothesis, plan)
     validation = run_validation(hypothesis)
     cro_ready_brief = run_cro(plan, timeline)
 
