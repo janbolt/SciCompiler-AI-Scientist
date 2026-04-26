@@ -38,32 +38,49 @@ export function Modal({
           exit={{ opacity: 0 }}
           transition={{ duration: 0.15 }}
           className="fixed inset-0 z-50 flex items-end sm:items-center justify-center px-4 py-6"
-          style={{ background: "rgba(10,10,10,0.45)" }}
+          style={{ background: "rgba(26,26,26,0.5)" }}
           onClick={onCancel}
         >
           <motion.div
-            initial={{ y: 12, opacity: 0 }}
+            initial={{ y: 14, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
-            exit={{ y: 12, opacity: 0 }}
+            exit={{ y: 14, opacity: 0 }}
             transition={{ duration: 0.2 }}
             onClick={(e) => e.stopPropagation()}
-            className="w-full max-w-[480px] bg-white"
-            style={{ border: "1px solid var(--color-border)", borderRadius: 0 }}
+            className="w-full max-w-[480px]"
+            style={{
+              background: "var(--color-card)",
+              border: "1px solid var(--color-border)",
+              borderRadius: 16,
+              boxShadow: "0 8px 40px rgba(0,0,0,0.12)",
+            }}
           >
             <div className="px-5 py-4" style={{ borderBottom: "1px solid var(--color-border)" }}>
-              <h3 className="text-base font-semibold leading-snug">{title}</h3>
+              <h3
+                className="text-lg font-bold leading-snug"
+                style={{ fontFamily: "var(--font-serif)", color: "var(--color-text)" }}
+              >
+                {title}
+              </h3>
             </div>
-            {children && <div className="px-5 py-4 text-sm">{children}</div>}
-            <div className="flex items-center justify-end gap-2 px-5 py-4" style={{ borderTop: "1px solid var(--color-border)" }}>
+            {children && (
+              <div className="px-5 py-4 text-sm" style={{ color: "var(--color-text)" }}>
+                {children}
+              </div>
+            )}
+            <div
+              className="flex items-center justify-end gap-2 px-5 py-4"
+              style={{ borderTop: "1px solid var(--color-border)" }}
+            >
               <button
                 type="button"
                 onClick={onCancel}
-                className="px-4 py-2 text-sm transition hover:opacity-80"
+                className="px-4 py-2 text-sm font-medium transition hover:opacity-80"
                 style={{
-                  background: "white",
-                  color: "var(--color-text)",
+                  background: "transparent",
+                  color: "var(--color-text-muted)",
                   border: "1px solid var(--color-border)",
-                  borderRadius: 4,
+                  borderRadius: 999,
                 }}
               >
                 {cancelLabel}
@@ -72,12 +89,11 @@ export function Modal({
                 <button
                   type="button"
                   onClick={onConfirm}
-                  className="px-4 py-2 text-sm font-semibold transition hover:opacity-90"
+                  className="px-5 py-2 text-sm font-semibold text-white transition hover:opacity-90"
                   style={{
                     background: "var(--color-accent)",
-                    color: "white",
-                    border: "1px solid var(--color-accent)",
-                    borderRadius: 4,
+                    border: "none",
+                    borderRadius: 999,
                   }}
                 >
                   {confirmLabel}

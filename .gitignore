@@ -2,6 +2,21 @@
 __pycache__/
 .pytest_cache/
 *.pyc
+
+# Python virtualenvs (any location)
+.venv/
 backend/.venv/
+
+# Python build/dist artifacts
+*.egg-info/
+build/
+dist/
+
+# Frontend deps and build output
 frontend/node_modules/
 frontend/.next/
+frontend/dist/
+frontend/.vite/
+
+# TypeScript incremental build info
+*.tsbuildinfo

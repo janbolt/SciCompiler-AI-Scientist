@@ -15,9 +15,10 @@ type Props = {
 export function TabBar({ active, onChange }: Props) {
   return (
     <nav
-      className="sticky z-10 bg-[var(--color-bg)]"
+      className="sticky z-10"
       style={{
         top: 48,
+        background: "var(--color-bg)",
         borderBottom: "1px solid var(--color-border)",
       }}
     >
@@ -29,12 +30,16 @@ export function TabBar({ active, onChange }: Props) {
               key={tab.id}
               type="button"
               onClick={() => onChange(tab.id)}
-              className="whitespace-nowrap py-3 px-3 sm:px-4 text-sm transition"
+              className="whitespace-nowrap py-3 px-3 sm:px-4 text-sm transition-all"
               style={{
-                color: isActive ? "var(--color-accent)" : "var(--color-muted)",
+                color: isActive ? "var(--color-accent-deep)" : "var(--color-text-muted)",
                 fontWeight: isActive ? 700 : 500,
-                borderBottom: isActive ? "2px solid var(--color-accent)" : "2px solid transparent",
+                borderBottom: isActive
+                  ? "2px solid var(--color-accent)"
+                  : "2px solid transparent",
+                background: "transparent",
                 borderRadius: 0,
+                letterSpacing: isActive ? undefined : undefined,
               }}
             >
               {tab.label}
