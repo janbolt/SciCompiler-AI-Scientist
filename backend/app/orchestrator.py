@@ -1,6 +1,9 @@
 from __future__ import annotations
 
+import json
+import time
 import uuid
+from pathlib import Path
 
 from app.agents import (
     create_feedback_record,
@@ -18,6 +21,24 @@ from app.agents import (
 )
 from app.schemas import DemoRunRequest, DemoRunResponse, FeedbackRequest, FeedbackResponse
 from app.services.memory import feedback_for_plan, load_plan, save_plan, store_feedback
+
+_DEBUG_LOG_PATH = Path("/Users/janikludwig/Developer/PredictiveBio/.cursor/debug-323526.log")
+
+
+def _debug_log(run_id: str, hypothesis_id: str, location: str, message: str, data: dict[str, object]) -> None:
+    # region agent log
+    payload = {
+        "sessionId": "323526",
+        "runId": run_id,
+        "hypothesisId": hypothesis_id,
+        "location": location,
+        "message": message,
+        "data": data,
+        "timestamp": int(time.time() * 1000),
+    }
+    with _DEBUG_LOG_PATH.open("a", encoding="utf-8") as fp:
+        fp.write(json.dumps(payload) + "\n")
+    # endregion
 
 
 def _confidence_score(protocol_conf: float, readiness_score: float) -> float:
@@ -58,11 +79,34 @@ def run_demo_pipeline(request: DemoRunRequest, plan_id: str | None = None) -> De
     validation = run_validation(hypothesis)
     cro_ready_brief = run_cro(plan, timeline)
 
+    real_protocol_candidates = [c for c in protocol_candidates if c.source_type != "stub"]
     avg_protocol_conf = (
-        sum(item.confidence for item in protocol_candidates) / len(protocol_candidates)
-        if protocol_candidates
-        else 0.0
+        sum(item.confidence for item in real_protocol_candidates) / len(real_protocol_candidates)
+        if real_protocol_candidates
+        else literature_qc.confidence_score
     )
+    final_conf = _confidence_score(
+        protocol_conf=avg_protocol_conf,
+        readiness_score=plan.execution_readiness_score,
+    )
+    # region agent log
+    _debug_log(
+        "run1",
+        "H7",
+        "orchestrator.py:run_demo_pipeline",
+        "confidence_inputs_outputs",
+        {
+            "candidate_count": len(protocol_candidates),
+            "real_candidate_count": len(real_protocol_candidates),
+            "candidate_source_types": [c.source_type for c in protocol_candidates[:5]],
+            "candidate_confidences": [round(c.confidence, 3) for c in protocol_candidates[:5]],
+            "avg_protocol_conf": round(avg_protocol_conf, 3),
+            "protocol_conf_source": "real_candidates" if real_protocol_candidates else "literature_qc_fallback",
+            "execution_readiness_score": round(plan.execution_readiness_score, 3),
+            "final_confidence_score": final_conf,
+        },
+    )
+    # endregion
     response = DemoRunResponse(
         plan_id=resolved_plan_id,
         hypothesis=hypothesis,
@@ -76,10 +120,7 @@ def run_demo_pipeline(request: DemoRunRequest, plan_id: str | None = None) -> De
         timeline=timeline,
         validation=validation,
         cro_ready_brief=cro_ready_brief,
-        confidence_score=_confidence_score(
-            protocol_conf=avg_protocol_conf,
-            readiness_score=plan.execution_readiness_score,
-        ),
+        confidence_score=final_conf,
     )
     save_plan(resolved_plan_id, {"request": request.model_dump(mode="json"), "response": response.model_dump(mode="json")})
     return response

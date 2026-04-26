@@ -48,14 +48,24 @@ export default function App() {
     // Falls back to MOCK_PLAN (already in context) if backend is unreachable.
     fetch(endpoint, init)
       .then((res) => {
+        // #region agent log
+        fetch('http://127.0.0.1:7293/ingest/3a3fd8fd-a1e7-459c-8132-bb16645c37e2',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'323526'},body:JSON.stringify({sessionId:'323526',runId:'run1',hypothesisId:'H8',location:'App.tsx:50',message:'fetch_response',data:{endpoint,status:res.status,ok:res.ok},timestamp:Date.now()})}).catch(()=>{});
+        // #endregion
         if (!res.ok) throw new Error(res.statusText);
         return res.json() as Promise<PlanData>;
       })
       .then((data) => {
+        // #region agent log
+        fetch('http://127.0.0.1:7293/ingest/3a3fd8fd-a1e7-459c-8132-bb16645c37e2',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'323526'},body:JSON.stringify({sessionId:'323526',runId:'run1',hypothesisId:'H9',location:'App.tsx:55',message:'set_plan_from_api',data:{confidence_score:data?.confidence_score,experiments_count:Array.isArray(data?.experiments)?data.experiments.length:-1},timestamp:Date.now()})}).catch(()=>{});
+        // #endregion
         setPlan(data);
         setFetchReady(true);
       })
-      .catch(() => {
+      .catch((err: unknown) => {
+        const errorMessage = err instanceof Error ? err.message : String(err);
+        // #region agent log
+        fetch('http://127.0.0.1:7293/ingest/3a3fd8fd-a1e7-459c-8132-bb16645c37e2',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'323526'},body:JSON.stringify({sessionId:'323526',runId:'run1',hypothesisId:'H10',location:'App.tsx:59',message:'fetch_fallback_to_mock',data:{endpoint,errorMessage},timestamp:Date.now()})}).catch(()=>{});
+        // #endregion
         // Backend not reachable — MOCK_PLAN remains in context; still unblock loading
         setFetchReady(true);
       });

@@ -208,6 +208,78 @@ def _compute_cro_compatible(demo: DemoRunResponse) -> bool:
     return score >= 4
 
 
+def _group_level_cro_adjustment(group_name: str, steps: list[ProtocolStep]) -> int:
+    """
+    Per-protocol adjustment on top of the global CRO-readiness score.
+
+    This keeps global context (novelty, references, candidate protocols) while
+    letting each protocol card diverge based on its own procedural complexity.
+    """
+    text = f"{group_name} " + " ".join(step.description for step in steps)
+    lower = text.lower()
+
+    # Patterns typically harder to outsource as a routine CRO package.
+    high_customization = (
+        "optimiz",
+        "de novo",
+        "novel assay",
+        "custom",
+        "troubleshoot",
+        "explor",
+        "pilot",
+        "iterat",
+        "calibration curve design",
+        "algorithm",
+    )
+    # Patterns usually associated with standard CRO workflows.
+    standardizable = (
+        "elisa",
+        "qpcr",
+        "western blot",
+        "flow cytometry",
+        "histology",
+        "immunostaining",
+        "lc-ms",
+        "rna-seq",
+        "plate reader",
+    )
+
+    adjustment = 0
+    if any(token in lower for token in high_customization):
+        adjustment -= 2
+    if any(token in lower for token in standardizable):
+        adjustment += 1
+
+    # Very short groups are often underspecified, very long groups often custom.
+    step_count = len(steps)
+    if step_count <= 2:
+        adjustment -= 1
+    elif step_count >= 12:
+        adjustment -= 1
+
+    return adjustment
+
+
+def _compute_group_cro_compatible(demo: DemoRunResponse, group_name: str, steps: list[ProtocolStep]) -> bool:
+    """
+    Evaluate CRO compatibility for one protocol group.
+    """
+    plan = demo.plan
+    if plan.execution_readiness_label == "blocked_pending_expert_review":
+        return False
+
+    base_global_score = 0
+    if _compute_cro_compatible(demo):
+        # Keep previous global threshold behavior as the baseline.
+        base_global_score = 4
+    else:
+        # Borderline non-CRO plans can still have one standardizable protocol.
+        base_global_score = 3
+
+    score = base_global_score + _group_level_cro_adjustment(group_name, steps)
+    return score >= 4
+
+
 def _map_experiments(demo: DemoRunResponse) -> list[FrontendExperiment]:
     """
     Build one FrontendExperiment per distinct sub-protocol (grouped by
@@ -255,8 +327,6 @@ def _map_experiments(demo: DemoRunResponse) -> list[FrontendExperiment]:
     for tag, fm in frontend_materials_tagged:
         materials_by_group.setdefault(tag, []).append(fm)
 
-    cro_compatible = _compute_cro_compatible(demo)
-
     # Group steps by linked_to, preserving agent-defined order
     groups: dict[str, list[ProtocolStep]] = {}
     for step in plan.step_by_step_protocol:
@@ -269,7 +339,11 @@ def _map_experiments(demo: DemoRunResponse) -> list[FrontendExperiment]:
                 id=demo.plan_id,
                 name=hypothesis.experiment_type.replace("_", " ").title(),
                 duration=timeline.total_duration_estimate,
-                cro_compatible=cro_compatible,
+                cro_compatible=_compute_group_cro_compatible(
+                    demo=demo,
+                    group_name=hypothesis.experiment_type.replace("_", " ").title(),
+                    steps=[],
+                ),
                 goal=plan.objective,
                 success_criteria=validation.success_threshold,
                 steps=[],
@@ -282,7 +356,7 @@ def _map_experiments(demo: DemoRunResponse) -> list[FrontendExperiment]:
             id=f"{demo.plan_id}-{i}",
             name=group_name,
             duration=_estimate_duration_from_steps(steps),
-            cro_compatible=cro_compatible,
+            cro_compatible=_compute_group_cro_compatible(demo=demo, group_name=group_name, steps=steps),
             goal=plan.objective,
             success_criteria=validation.success_threshold,
             steps=[s.description for s in steps],

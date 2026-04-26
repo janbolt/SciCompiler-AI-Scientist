@@ -1,0 +1,1229 @@
+{
+  "request": {
+    "question": "Treating IMR-90 fibroblasts with 100 nM rapamycin for 72 hours will reduce the number of p21-positive senescent cells by at least 40% compared to vehicle controls following hydrogen peroxide-induced senescence, due to mTORC1 inhibition reactivating autophagy-mediated clearance of damaged organelles.",
+    "constraints": {
+      "budget": "missing_required_field",
+      "timeline": "missing_required_field",
+      "execution_mode": "in_house"
+    },
+    "prior_feedback": [
+      {
+        "experiment_type": "Reagent Preparation",
+        "section": "steps",
+        "rating": 5,
+        "note": "jkl\u00f6jkl\u00f6",
+        "timestamp": "2026-04-26T06:54:52.901Z"
+      },
+      {
+        "experiment_type": "Reagent Preparation",
+        "section": "materials",
+        "rating": 5,
+        "note": "something is off",
+        "timestamp": "2026-04-26T06:54:52.901Z"
+      }
+    ]
+  },
+  "response": {
+    "plan_id": "91c4d6e8-b768-447e-ae71-1020d2948e01",
+    "hypothesis": {
+      "intervention": "Treating IMR-90 fibroblasts with 100 nM rapamycin for 72 hours",
+      "biological_system": "IMR-90 fibroblasts",
+      "comparator_or_control": "vehicle controls following hydrogen peroxide-induced senescence",
+      "measurable_outcome": "number of p21-positive senescent cells",
+      "threshold": "at least 40% reduction compared to vehicle controls",
+      "mechanistic_rationale": "mTORC1 inhibition reactivating autophagy-mediated clearance of damaged organelles",
+      "experiment_type": "small_molecule_senescence_modulation",
+      "constraints": {
+        "execution_mode": "in_house"
+      },
+      "readiness": "pilot_ready",
+      "readiness_rationale": "The intervention, biological system, comparator/control, numeric threshold, and mechanistic rationale are present. The measurable outcome is biologically defined but lacks a named assay method for quantifying p21-positive cells, and the vehicle/H2O2 senescence protocol is only partially specified, so scientist review is needed before CRO execution.",
+      "confidence_score": 0.86,
+      "clarifying_questions": [
+        "What assay or measurement method will be used to quantify p21-positive senescent cells (e.g., immunofluorescence microscopy, flow cytometry, or another defined assay)?",
+        "What vehicle control will be used and at what matched concentration/volume?",
+        "What hydrogen peroxide-induced senescence protocol will be used (e.g., H2O2 concentration, exposure duration, and recovery period)?"
+      ],
+      "literature_search_hint": "rapamycin IMR-90 p21 senescence autophagy mTORC1",
+      "original_hypothesis": "Treating IMR-90 fibroblasts with 100 nM rapamycin for 72 hours will reduce the number of p21-positive senescent cells by at least 40% compared to vehicle controls following hydrogen peroxide-induced senescence, due to mTORC1 inhibition reactivating autophagy-mediated clearance of damaged organelles.",
+      "missing_required_fields": []
+    },
+    "literature_qc": {
+      "novelty_signal": "similar_work_exists",
+      "references": [
+        {
+          "title": "mTOR regulates MAPKAPK2 translation to control the senescence-associated secretory phenotype",
+          "protocol_url": "https://doi.org/10.1038/ncb3225",
+          "authors": [
+            "Nicol\u00e1s Herranz",
+            "Suchira Gallage",
+            "Massimiliano Mellone",
+            "et al."
+          ],
+          "published_year": 2015,
+          "match_type": "full_scope",
+          "relevance_note": "This paper is relevant because it directly links mTOR signaling\u2014rapamycin\u2019s target pathway\u2014to senescence/SASP regulation, but the provided metadata does not show rapamycin treatment of IMR-90 cells or p21-positive cell counts after H2O2-induced senescence.",
+          "is_stub": false
+        },
+        {
+          "title": "Apoptosis or senescence-like growth arrest: influence of cell-cycle position, p53, p21 and bax in H2O2 response of normal human fibroblasts.",
+          "protocol_url": "https://doi.org/10.1042/0264-6021:3470543",
+          "authors": [
+            "Qin M. Chen",
+            "Juping Liu",
+            "Jessica B. Merrett"
+          ],
+          "published_year": 2000,
+          "match_type": "full_scope",
+          "relevance_note": "This paper is relevant because it studies H2O2 responses in normal human fibroblasts and includes p21 in the context of senescence-like growth arrest, matching the biological stress context and outcome marker more closely than most papers, but not the rapamycin intervention.",
+          "is_stub": false
+        },
+        {
+          "title": "Induction of replicative senescence biomarkers by sublethal oxidative stresses in normal human fibroblast.",
+          "protocol_url": "https://doi.org/10.1016/S0891-5849(99)00249-X",
+          "authors": [
+            "P. Dumont",
+            "M. Burton",
+            "Qin M. Chen",
+            "et al."
+          ],
+          "published_year": 2000,
+          "match_type": "full_scope",
+          "relevance_note": "This paper is relevant because it examines sublethal oxidative stress-induced senescence biomarkers in normal human fibroblasts, aligning with the H2O2-induced senescence model, but it does not indicate rapamycin/mTOR intervention or p21-positive cell quantification.",
+          "is_stub": false
+        }
+      ],
+      "confidence_score": 0.95,
+      "explanation": "On the intervention dimension, none of the retrieved papers explicitly describe treating IMR-90 fibroblasts with rapamycin at 100 nM for 72 hours; paper [2] concerns mTOR regulation in senescence biology but the abstract/details provided do not establish the same intervention. On the biological system dimension, papers [3] and [4] involve normal human fibroblasts exposed to oxidative stress/H2O2-like senescence contexts, which are related to IMR-90 fibroblasts, while [5] is in colon cancer cells and less relevant. On the experiment type dimension, the retrieved set includes senescence modulation/biomarker studies and p21/H2O2 response work, but no paper clearly combines rapamycin treatment, IMR-90 fibroblasts, H2O2-induced senescence, and counting p21-positive senescent cells.",
+      "recommended_action": "Related publications exist. Review the references, cite relevant prior work in your plan, and explicitly state how your experiment differs or extends the existing approach.",
+      "search_coverage": "full"
+    },
+    "protocol_candidates": [
+      {
+        "protocol_name": "Standard small_molecule_senescence_modulation protocol for treating imr-90 fibroblasts with 100 nm rapamycin for 72 hours",
+        "source_type": "stub",
+        "fit_score": 0.75,
+        "confidence": 0.65,
+        "adaptation_notes": "Stub mode \u2014 no live protocols.io search performed. This is a placeholder candidate.",
+        "missing_steps": [
+          "Exact reagent concentrations",
+          "Instrument-specific settings"
+        ],
+        "limitations": [
+          "Stub output only \u2014 real protocols.io search requires PROTOCOLS_IO_TOKEN."
+        ],
+        "raw_steps": [],
+        "protocol_url": ""
+      }
+    ],
+    "evidence_claims": [
+      {
+        "claim": "Post-thaw viability directly tests the stated biological outcome.",
+        "evidence_type": "direct_evidence",
+        "support_summary": "Outcome is explicitly present in user hypothesis.",
+        "strength": "strong",
+        "linked_to": "hypothesis.measurable_outcome"
+      },
+      {
+        "claim": "Trehalose membrane stabilization rationale supports intervention plausibility.",
+        "evidence_type": "mechanistic_evidence",
+        "support_summary": "Mechanistic rationale is explicitly stated in user input.",
+        "strength": "moderate",
+        "linked_to": "hypothesis.mechanistic_rationale"
+      },
+      {
+        "claim": "Expected +15 percentage-point threshold may be optimistic without pilot calibration.",
+        "evidence_type": "unvalidated_assumption",
+        "support_summary": "Effect size is user-defined but not validated in this run.",
+        "strength": "weak",
+        "linked_to": "hypothesis.threshold"
+      },
+      {
+        "claim": "Related work exists but exact comparators and setup differ.",
+        "evidence_type": "indirect_evidence",
+        "support_summary": "Literature QC returns similar_work_exists with placeholder references.",
+        "strength": "moderate",
+        "linked_to": "literature_qc.novelty_signal"
+      }
+    ],
+    "risks": [
+      {
+        "risk_id": "RISK-001",
+        "category": "biological_assumption",
+        "description": "Standard experimental risk \u2014 the approach has literature support but execution details should be reviewed before proceeding.",
+        "severity": "low",
+        "likelihood": "low",
+        "mitigation": "Confirm all materials, controls, and readiness criteria with a scientist before execution.",
+        "action": "document_only"
+      }
+    ],
+    "plan": {
+      "objective": "Determine whether 100 nM rapamycin for 72 h reduces the number of p21-positive senescent IMR-90 fibroblasts by at least 40% after hydrogen peroxide-induced senescence.",
+      "experimental_design": "IMR-90 fibroblasts will be seeded on coverslips in 24-well plates, exposed to sublethal H2O2 to induce senescence-like growth arrest, and treated for 72 h with 100 nM rapamycin or matched vehicle. The primary endpoint is the fraction of p21-positive nuclei measured by fixed-cell immunofluorescence across 6 wells per condition, with a \u226540% reduction versus H2O2 plus vehicle as the go/no-go threshold.",
+      "controls": [
+        "IMR-90 fibroblasts exposed to 200 \u00b5M H2O2 for 60 min and treated with 0.001% v/v DMSO vehicle for 72 h.",
+        "IMR-90 fibroblasts cultured without H2O2 and treated with 0.001% v/v DMSO vehicle for 72 h.",
+        "vehicle controls following hydrogen peroxide-induced senescence"
+      ],
+      "step_by_step_protocol": [
+        {
+          "step_number": 1,
+          "description": "DAY 0 (PREP) | 30 min | Equipment setup\nSet a Thermo Scientific Heracell VIOS 160i incubator to 37\u00b0C, 5.0% CO2, and 95% relative humidity for IMR-90 culture.\nExpected outcome: Incubator readout stabilizes at 37.0\u00b10.3\u00b0C and 5.0\u00b10.2% CO2 for 15 min.",
+          "linked_to": "Equipment setup"
+        },
+        {
+          "step_number": 2,
+          "description": "DAY 0 (PREP) | 20 min | Reagent preparation\nDissolve 2.74 mg rapamycin in 300 \u00b5L sterile anhydrous DMSO to generate a 10 mM rapamycin stock at 25\u00b0C.\nExpected outcome: Rapamycin solution is visually clear with no visible particulates in a 300 \u00b5L amber tube.\nSafety: Rapamycin and DMSO can penetrate skin; handle with nitrile gloves and eye protection in a certified chemical hood.",
+          "linked_to": "Reagent preparation"
+        },
+        {
+          "step_number": 3,
+          "description": "DAY 1 | 1 h | Cell seeding\nSeed 1.5\u00d710^4 IMR-90 cells in 500 \u00b5L complete EMEM per well onto sterile collagen-coated 12 mm glass coverslips in a 24-well plate with 6 wells per condition.\nExpected outcome: Each well contains 1.5\u00d710^4 cells in 500 \u00b5L and the plate map assigns 6 wells each to no-H2O2 vehicle, H2O2 vehicle, H2O2 rapamycin, and H2O2 reference-control groups.\nSafety: Handle human-derived IMR-90 cells under BSL-2 containment with disinfectant contact time of 10 min for liquid waste.",
+          "linked_to": "Cell seeding"
+        },
+        {
+          "step_number": 4,
+          "description": "DAY 2 | 1 h | Senescence induction\nExpose assigned senescence-induction wells to 500 \u00b5L serum-free EMEM containing 200 \u00b5M freshly diluted hydrogen peroxide for 60 min at 37\u00b0C and 5.0% CO2.\nExpected outcome: No-H2O2 wells retain untreated medium and H2O2-designated wells complete a 60\u00b12 min exposure without visible detachment exceeding 10% by phase-contrast inspection.\nSafety: Hydrogen peroxide is an oxidizer; wear chemical splash goggles and discard diluted H2O2 into labeled oxidizer waste.",
+          "linked_to": "Senescence induction"
+        },
+        {
+          "step_number": 5,
+          "description": "DAY 2 | 15 min | Post-stress wash\nWash each well once with 500 \u00b5L sterile DPBS at 25\u00b0C within 5 min of completing the H2O2 exposure.\nExpected outcome: Residual H2O2-containing medium is removed and each coverslip remains fully covered by DPBS during the wash.\nSafety: Treat aspirated liquid as BSL-2 chemical waste because it contains human cells and residual oxidizer.",
+          "linked_to": "Post-stress wash"
+        },
+        {
+          "step_number": 6,
+          "description": "DAY 2 | 25 min | Small-molecule treatment\nDose each well with 500 \u00b5L complete EMEM containing either 100 nM rapamycin with 0.001% v/v DMSO or 0.001% v/v DMSO vehicle at 37\u00b0C.\nExpected outcome: Rapamycin wells contain 100 nM final rapamycin and every well contains 0.001% v/v final DMSO in 500 \u00b5L total medium.\nSafety: Maintain aseptic technique in a BSL-2 cabinet to prevent contamination during the 72 h treatment window.",
+          "linked_to": "Small-molecule treatment"
+        },
+        {
+          "step_number": 7,
+          "description": "DAY 2 | 72 h | Drug exposure\nIncubate the dosed 24-well plate for 72 h at 37\u00b0C, 5.0% CO2, and 95% relative humidity without medium exchange.\nExpected outcome: Vehicle and rapamycin wells remain free of visible microbial contamination and retain \u226575% of the Day 2 adherent cell density by phase-contrast inspection.\nSafety: Do not disturb the plate during the 72 h incubation except for a single 30 s visual contamination check through the incubator door window.",
+          "linked_to": "Drug exposure"
+        },
+        {
+          "step_number": 8,
+          "description": "DAY 5 | 25 min | Fixation\nFix each coverslip with 500 \u00b5L 4% w/v paraformaldehyde in PBS for 15 min at 25\u00b0C.\nExpected outcome: Cells are immobilized on coverslips with intact monolayer morphology and no visible coverslip drying.\nSafety: Paraformaldehyde is toxic; handle in a certified chemical fume hood or ventilated enclosure and collect waste in a formaldehyde-labeled container.",
+          "linked_to": "Fixation"
+        },
+        {
+          "step_number": 9,
+          "description": "DAY 5 | 1 h | p21 immunofluorescence staining\nIncubate each fixed coverslip with 250 \u00b5L staining cocktail containing 0.1% v/v Triton X-100, 1% w/v BSA, 1 \u00b5g/mL Alexa Fluor 647-conjugated anti-p21 antibody, and 1 \u00b5g/mL DAPI for 60 min at 25\u00b0C protected from light.\nExpected outcome: Each coverslip is fully covered by 250 \u00b5L staining cocktail and protected from ambient light for 60\u00b15 min.\nSafety: DAPI is a suspected mutagen; wear double nitrile gloves and collect DAPI-containing waste separately.",
+          "linked_to": "p21 immunofluorescence staining"
+        },
+        {
+          "step_number": 10,
+          "description": "DAY 5 | 20 min | Post-stain wash\nWash each stained coverslip three times with 500 \u00b5L PBS for 5 min per wash at 25\u00b0C protected from light.\nExpected outcome: Final wash liquid is visually clear and coverslips remain submerged with no drying artifacts.\nSafety: Collect PBS washes as fluorescent dye waste because they contain residual DAPI and antibody conjugate.",
+          "linked_to": "Post-stain wash"
+        },
+        {
+          "step_number": 11,
+          "description": "DAY 5 | 1.5 h | High-content imaging\nAcquire 9 non-overlapping fields per well using a Molecular Devices ImageXpress Micro Confocal system with a 20\u00d7 objective, DAPI exposure of 50 ms, and Cy5 exposure of 200 ms.\nExpected outcome: Each well yields 9 in-focus image fields with \u2265150 DAPI-positive nuclei per well and no saturated Cy5 pixels in >1% of nuclei.",
+          "linked_to": "High-content imaging"
+        },
+        {
+          "step_number": 12,
+          "description": "DAY 5 | 2 h | Quantitative image analysis and statistical interpretation\nCompare the p21-positive nuclear fraction across 6 wells per condition using one-way ANOVA with Tukey\u2019s post hoc test, Welch\u2019s two-sided t-test for H2O2 vehicle versus H2O2 rapamycin, Shapiro-Wilk normality testing at \u03b1=0.05, and the predefined \u226540% reduction threshold.\nExpected outcome: The pilot returns mean p21-positive percentages, 95% confidence intervals, p-values, and a proceed/repeat/stop call based on the \u226540% reduction and cytotoxicity criteria.",
+          "linked_to": "Quantitative image analysis and statistical interpretation"
+        }
+      ],
+      "assumptions": [
+        "IMR-90 fibroblasts are mycoplasma-negative, below passage 25, and have a baseline p21-positive fraction \u226415% under vehicle-only culture.",
+        "A 200 \u00b5M hydrogen peroxide exposure for 60 min induces a reproducible senescence-like p21-positive phenotype in IMR-90 cells without reducing adherent cell count by >25%.",
+        "Rapamycin at 100 nM with a final DMSO concentration of 0.001% v/v is non-cytotoxic to IMR-90 cells during a 72 h post-H2O2 treatment window.",
+        "Nuclear p21 immunofluorescence intensity above a vehicle-only threshold identifies p21-positive senescent cells with sufficient dynamic range for automated image analysis."
+      ],
+      "decision_criteria": [
+        "Proceed to a powered replicate study if 100 nM rapamycin reduces the p21-positive fraction by \u226540% versus H2O2 plus vehicle with Welch\u2019s two-sided t-test p<0.05.",
+        "Repeat as a smaller optimization pilot if H2O2 plus vehicle produces <30% p21-positive cells or >25% loss of adherent nuclei versus no-H2O2 vehicle.",
+        "Stop this exact condition set if rapamycin-treated wells show >25% fewer DAPI-positive nuclei than H2O2 plus vehicle wells after 72 h."
+      ],
+      "risk_mitigations_applied": [],
+      "reproducibility_notes": [
+        "Use IMR-90 cells from a single authenticated lot, passage 18\u201324, with a mycoplasma PCR certificate dated within 30 days of seeding.",
+        "Use the same lot of EMEM, fetal bovine serum, H2O2, rapamycin, anti-p21 antibody, and collagen-coated coverslips across all wells in the pilot.",
+        "Record incubator CO2 calibration, ImageXpress illumination calibration, and pipette calibration identifiers before starting Day 1.",
+        "Keep final DMSO concentration at 0.001% v/v in every post-H2O2 condition, including negative and positive controls.",
+        "Acquire all fluorescence images with fixed exposure times and the same automated segmentation settings for every well."
+      ],
+      "execution_readiness_score": 0.78,
+      "execution_readiness_label": "pilot_only",
+      "feedback_incorporated": [
+        "Reagent Preparation \u203a steps (rating 5/5): jkl\u00f6jkl\u00f6",
+        "Reagent Preparation \u203a materials (rating 5/5): something is off"
+      ]
+    },
+    "materials": [
+      {
+        "item_name": "CO2 cell culture incubator (Thermo Scientific Heracell VIOS 160i or equivalent) daily use fee",
+        "supplier": "Thermo Fisher Scientific",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 incubator, ~4 days use",
+        "confidence": "medium",
+        "uncertainty_note": "If already owned, this may be an internal facility recharge rather than a cash purchase.",
+        "linked_to": "Equipment setup"
+      },
+      {
+        "item_name": "Class II biological safety cabinet use",
+        "supplier": "Thermo Fisher Scientific",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "~2 hours total use",
+        "confidence": "medium",
+        "uncertainty_note": "Many academic labs do not recharge BSC time; include as opportunity/equipment cost.",
+        "linked_to": "general"
+      },
+      {
+        "item_name": "Certified chemical fume hood / ventilated enclosure use",
+        "supplier": "Waldner",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "~1 hour total use",
+        "confidence": "low",
+        "uncertainty_note": "Usually not billed directly, but required for rapamycin/DMSO and paraformaldehyde handling.",
+        "linked_to": "general"
+      },
+      {
+        "item_name": "Analytical microbalance for weighing rapamycin",
+        "supplier": "Mettler Toledo",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 short session",
+        "confidence": "medium",
+        "uncertainty_note": "Internal charge varies by institution and calibration status.",
+        "linked_to": "Reagent preparation"
+      },
+      {
+        "item_name": "Rapamycin powder",
+        "supplier": "LC Laboratories",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "2.74 mg required; purchase 5 mg vial",
+        "confidence": "medium",
+        "uncertainty_note": "Pricing varies substantially by purity, supplier, and vial size; verify COA and cell-culture suitability.",
+        "linked_to": "Reagent preparation"
+      },
+      {
+        "item_name": "Sterile anhydrous DMSO, cell-culture grade",
+        "supplier": "Sigma-Aldrich",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "300 \u00b5L required; purchase 10 mL bottle",
+        "confidence": "high",
+        "uncertainty_note": "Only a small fraction of the bottle is used, but sterile anhydrous DMSO is typically purchased as a bottle/ampoule.",
+        "linked_to": "Reagent preparation"
+      },
+      {
+        "item_name": "Amber low-binding microcentrifuge tubes for rapamycin stock",
+        "supplier": "Eppendorf",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 tube required; allocate 10 tubes",
+        "confidence": "medium",
+        "uncertainty_note": "Unit price depends on pack size and whether sterile/DNase-free tubes are selected.",
+        "linked_to": "Reagent preparation"
+      },
+      {
+        "item_name": "Sterile syringe filter or centrifugal filter for rapamycin stock if clarification/sterilisation is required",
+        "supplier": "Merck Millipore",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 filter",
+        "confidence": "medium",
+        "uncertainty_note": "Protocol only specifies a visually clear solution; filter may be omitted if using sterile components and aseptic technique.",
+        "linked_to": "Reagent preparation"
+      },
+      {
+        "item_name": "Nitrile gloves",
+        "supplier": "Kimberly-Clark",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "~20 pairs",
+        "confidence": "high",
+        "uncertainty_note": "Double-gloving for DAPI and hazardous reagents increases consumption.",
+        "linked_to": "general"
+      },
+      {
+        "item_name": "Chemical splash goggles / eye protection allocation",
+        "supplier": "VWR",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 user-day",
+        "confidence": "low",
+        "uncertainty_note": "Usually reusable PPE already owned; shown as per-experiment allocation.",
+        "linked_to": "general"
+      },
+      {
+        "item_name": "Sterile serological pipettes, 5 mL and 10 mL assorted",
+        "supplier": "Corning",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "~20 pipettes",
+        "confidence": "high",
+        "uncertainty_note": "Actual use depends on whether media/reagents are prepared in bulk or per condition.",
+        "linked_to": "general"
+      },
+      {
+        "item_name": "Sterile filtered pipette tips, assorted P20/P200/P1000",
+        "supplier": "Rainin",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "~200 tips",
+        "confidence": "high",
+        "uncertainty_note": "Tip use is operator-dependent; estimate includes extra tips for sterile technique and dilutions.",
+        "linked_to": "general"
+      },
+      {
+        "item_name": "Sterile 15 mL conical tubes",
+        "supplier": "Falcon",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "~10 tubes",
+        "confidence": "high",
+        "uncertainty_note": "Used for media, H2O2 dilution, washes, and staining cocktail preparation.",
+        "linked_to": "general"
+      },
+      {
+        "item_name": "Sterile 50 mL conical tubes",
+        "supplier": "Falcon",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "~5 tubes",
+        "confidence": "high",
+        "uncertainty_note": "Used for complete media and waste-compatible reagent preparation.",
+        "linked_to": "general"
+      },
+      {
+        "item_name": "Biohazard/chemical waste containers and absorbent bench pads allocation",
+        "supplier": "VWR",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 experiment allocation",
+        "confidence": "medium",
+        "uncertainty_note": "Waste disposal costs vary strongly by institution and hazardous-waste contractor.",
+        "linked_to": "general"
+      },
+      {
+        "item_name": "Vehicle control material: sterile anhydrous DMSO matched to 0.001% v/v final concentration",
+        "supplier": "Sigma-Aldrich",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "vehicle for 18 wells plus dilution excess",
+        "confidence": "high",
+        "uncertainty_note": "Cost is included under the DMSO reagent line; listed separately because it is essential for no-H2O2 and H2O2 vehicle controls.",
+        "linked_to": "Small-molecule treatment"
+      },
+      {
+        "item_name": "No-H2O2 negative control wells",
+        "supplier": "In-house preparation",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "6 wells in 24-well plate",
+        "confidence": "high",
+        "uncertainty_note": "No additional purchased control reagent is required beyond medium and vehicle already costed.",
+        "linked_to": "Senescence induction"
+      },
+      {
+        "item_name": "H2O2 vehicle senescence positive-control wells",
+        "supplier": "In-house preparation",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "6 wells in 24-well plate",
+        "confidence": "high",
+        "uncertainty_note": "Control cost is represented by cells, medium, H2O2, and DMSO lines.",
+        "linked_to": "Senescence induction"
+      },
+      {
+        "item_name": "Reference-control compound for H2O2 reference-control group, identity not specified in protocol",
+        "supplier": "Tocris Bioscience",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 small vial, amount depends on selected reference",
+        "confidence": "low",
+        "uncertainty_note": "The protocol names a reference-control group but does not identify the compound, concentration, or dosing vehicle; verify before ordering.",
+        "linked_to": "Small-molecule treatment"
+      },
+      {
+        "item_name": "IMR-90 human lung fibroblast cells",
+        "supplier": "ATCC",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 cryovial or existing working culture sufficient for 3.6\u00d710^5 cells plus excess",
+        "confidence": "medium",
+        "uncertainty_note": "If an authenticated low-passage culture already exists, only maintenance cost applies; new vial pricing and shipping vary.",
+        "linked_to": "Cell seeding"
+      },
+      {
+        "item_name": "Eagle's Minimum Essential Medium (EMEM), cell-culture grade",
+        "supplier": "Thermo Fisher Scientific Gibco",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "~50 mL used; purchase 500 mL bottle",
+        "confidence": "high",
+        "uncertainty_note": "Complete and serum-free EMEM are prepared from the same bottle; purchase volume is much larger than actual use.",
+        "linked_to": "Cell seeding"
+      },
+      {
+        "item_name": "Fetal bovine serum for complete EMEM",
+        "supplier": "Thermo Fisher Scientific Gibco",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "~5 mL used; purchase/allocate from 500 mL bottle",
+        "confidence": "medium",
+        "uncertainty_note": "Cost shown is pro-rated for ~50 mL complete medium at 10% FBS; FBS lot and origin cause large price differences.",
+        "linked_to": "Cell seeding"
+      },
+      {
+        "item_name": "Penicillin-streptomycin solution, 100\u00d7",
+        "supplier": "Thermo Fisher Scientific Gibco",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "~0.5 mL used; pro-rated from 100 mL bottle",
+        "confidence": "high",
+        "uncertainty_note": "Some IMR-90 workflows omit antibiotics; included because complete EMEM commonly contains 1\u00d7 pen-strep.",
+        "linked_to": "Cell seeding"
+      },
+      {
+        "item_name": "L-glutamine or GlutaMAX supplement",
+        "supplier": "Thermo Fisher Scientific Gibco",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "~0.5 mL used; pro-rated from 100 mL bottle",
+        "confidence": "high",
+        "uncertainty_note": "Verify whether the selected EMEM already contains stable glutamine.",
+        "linked_to": "Cell seeding"
+      },
+      {
+        "item_name": "Sterile collagen-coated 12 mm glass coverslips",
+        "supplier": "Corning BioCoat",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "24 coverslips plus spares; allocate 30",
+        "confidence": "medium",
+        "uncertainty_note": "Pre-coated coverslips are relatively expensive; in-house collagen coating can reduce cost.",
+        "linked_to": "Cell seeding"
+      },
+      {
+        "item_name": "Sterile tissue-culture treated 24-well plate",
+        "supplier": "Corning",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 plate",
+        "confidence": "high",
+        "uncertainty_note": "Special optical-bottom plates are not required because imaging is through coverslips, unless the imager setup requires them.",
+        "linked_to": "Cell seeding"
+      },
+      {
+        "item_name": "Trypsin-EDTA for IMR-90 detachment before seeding",
+        "supplier": "Thermo Fisher Scientific Gibco",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "~5 mL used; pro-rated from 100 mL bottle",
+        "confidence": "high",
+        "uncertainty_note": "Required if cells are passaged from a flask for seeding, though not explicitly listed in the steps.",
+        "linked_to": "Cell seeding"
+      },
+      {
+        "item_name": "Trypan blue viability stain",
+        "supplier": "Thermo Fisher Scientific",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "~1 mL used; pro-rated from 100 mL bottle",
+        "confidence": "high",
+        "uncertainty_note": "Included for counting viable cells to seed 1.5\u00d710^4 cells per well.",
+        "linked_to": "Cell seeding"
+      },
+      {
+        "item_name": "Automated cell counter or hemocytometer with microscope use",
+        "supplier": "Thermo Fisher Scientific",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 counting session",
+        "confidence": "medium",
+        "uncertainty_note": "Manual hemocytometer cost is negligible if already owned; automated counters may have cartridge/recharge costs.",
+        "linked_to": "Cell seeding"
+      },
+      {
+        "item_name": "Cell-counting slides or hemocytometer coverslips",
+        "supplier": "Thermo Fisher Scientific",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "2 slides",
+        "confidence": "medium",
+        "uncertainty_note": "Only needed for automated cell counter or disposable counting chamber workflow.",
+        "linked_to": "Cell seeding"
+      },
+      {
+        "item_name": "Inverted phase-contrast microscope use for cell density/detachment checks",
+        "supplier": "Leica Microsystems",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "~4 short checks",
+        "confidence": "medium",
+        "uncertainty_note": "Often shared with no recharge; included because visual inspection is explicitly required.",
+        "linked_to": "general"
+      },
+      {
+        "item_name": "Hydrogen peroxide solution, 30% w/w analytical grade",
+        "supplier": "Sigma-Aldrich",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "~10 mL diluted working solution; purchase 100 mL bottle",
+        "confidence": "high",
+        "uncertainty_note": "Only microlitres are used, but stock is commonly purchased as a 100 mL bottle.",
+        "linked_to": "Senescence induction"
+      },
+      {
+        "item_name": "Serum-free EMEM for H2O2 exposure",
+        "supplier": "Thermo Fisher Scientific Gibco",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "~12 mL working volume",
+        "confidence": "high",
+        "uncertainty_note": "Cost included in the EMEM bottle line under Cell seeding.",
+        "linked_to": "Senescence induction"
+      },
+      {
+        "item_name": "Sterile DPBS without calcium/magnesium",
+        "supplier": "Thermo Fisher Scientific Gibco",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "~15 mL used for post-stress wash; purchase/allocate from 500 mL bottle",
+        "confidence": "high",
+        "uncertainty_note": "Cost is pro-rated; many labs hold DPBS as shared stock.",
+        "linked_to": "Post-stress wash"
+      },
+      {
+        "item_name": "Complete EMEM containing 100 nM rapamycin or 0.001% DMSO",
+        "supplier": "In-house preparation from Gibco/Sigma/LC Laboratories reagents",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "~15 mL total dosing medium",
+        "confidence": "high",
+        "uncertainty_note": "Component costs are included under EMEM, FBS, supplements, rapamycin, and DMSO lines.",
+        "linked_to": "Small-molecule treatment"
+      },
+      {
+        "item_name": "Pipettes P20, P200, P1000 use/calibration allocation",
+        "supplier": "Eppendorf",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 experiment allocation",
+        "confidence": "medium",
+        "uncertainty_note": "Usually owned by the lab; allocation covers wear/calibration rather than purchase.",
+        "linked_to": "general"
+      },
+      {
+        "item_name": "4% paraformaldehyde in PBS, methanol-free fixative",
+        "supplier": "Electron Microscopy Sciences",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "12 mL required; purchase 20 mL ampoules or 100 mL bottle",
+        "confidence": "medium",
+        "uncertainty_note": "Ready-made ampoules are more expensive but safer and more reproducible than preparing PFA powder.",
+        "linked_to": "Fixation"
+      },
+      {
+        "item_name": "Triton X-100",
+        "supplier": "Sigma-Aldrich",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "6 \u00b5L required in staining cocktail; allocate from 100 mL bottle",
+        "confidence": "high",
+        "uncertainty_note": "Actual experiment consumption is negligible; bottle purchase may already be shared stock.",
+        "linked_to": "p21 immunofluorescence staining"
+      },
+      {
+        "item_name": "Bovine serum albumin (BSA), immunostaining grade",
+        "supplier": "Sigma-Aldrich",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "60 mg required for 6 mL staining cocktail; allocate from 10 g bottle",
+        "confidence": "high",
+        "uncertainty_note": "Cost is pro-rated; verify grade is suitable for immunofluorescence blocking.",
+        "linked_to": "p21 immunofluorescence staining"
+      },
+      {
+        "item_name": "Alexa Fluor 647-conjugated anti-p21 antibody",
+        "supplier": "Cell Signaling Technology",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "6 \u00b5g required; purchase 100 \u00b5g vial",
+        "confidence": "low",
+        "uncertainty_note": "Antibody price and required concentration vary by clone, validation status, and conjugation; test dilution may change cost.",
+        "linked_to": "p21 immunofluorescence staining"
+      },
+      {
+        "item_name": "DAPI nuclear stain",
+        "supplier": "Thermo Fisher Scientific Invitrogen",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "6 \u00b5g required in staining cocktail; purchase 1 mg vial or 1 mL stock",
+        "confidence": "medium",
+        "uncertainty_note": "Only a tiny amount is used, but DAPI is generally purchased as a vial/stock solution.",
+        "linked_to": "p21 immunofluorescence staining"
+      },
+      {
+        "item_name": "Light-protective foil or black plate cover",
+        "supplier": "VWR",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 sheet/cover allocation",
+        "confidence": "high",
+        "uncertainty_note": "Needed to protect Alexa Fluor 647 and DAPI from ambient light.",
+        "linked_to": "p21 immunofluorescence staining"
+      },
+      {
+        "item_name": "PBS for post-stain washes",
+        "supplier": "Thermo Fisher Scientific Gibco",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "36 mL required for 3 \u00d7 500 \u00b5L \u00d7 24 wells; pro-rated from 500 mL bottle",
+        "confidence": "high",
+        "uncertainty_note": "Cost is pro-rated; DPBS/PBS bottle may be the same shared stock as used in the post-stress wash if compatible.",
+        "linked_to": "Post-stain wash"
+      },
+      {
+        "item_name": "Molecular Devices ImageXpress Micro Confocal high-content imaging system with 20\u00d7 objective",
+        "supplier": "Molecular Devices",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1.5 hours imaging time",
+        "confidence": "medium",
+        "uncertainty_note": "Core facility charges commonly range from ~50\u2013150 EUR/hour depending on support and confocal mode.",
+        "linked_to": "High-content imaging"
+      },
+      {
+        "item_name": "Immersion-free imaging plate holder/adaptor for 24-well coverslip plate",
+        "supplier": "Molecular Devices",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 session allocation",
+        "confidence": "low",
+        "uncertainty_note": "Often included with instrument use; may be unnecessary if the existing plate carrier supports 24-well plates.",
+        "linked_to": "High-content imaging"
+      },
+      {
+        "item_name": "Image analysis/statistics workstation with licensed software or R/Python environment",
+        "supplier": "Molecular Devices / GraphPad Software",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "2 hours analysis time",
+        "confidence": "medium",
+        "uncertainty_note": "Open-source analysis can reduce direct software cost; commercial analysis modules or GraphPad licenses may be charged by the facility.",
+        "linked_to": "Quantitative image analysis and statistical interpretation"
+      },
+      {
+        "item_name": "Laboratory disinfectant suitable for BSL-2 liquid waste contact time, e.g. Virkon or 10% bleach",
+        "supplier": "Lanxess",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "~500 mL working disinfectant",
+        "confidence": "high",
+        "uncertainty_note": "Cost depends on institutional disinfection policy and whether bleach is prepared from shared stock.",
+        "linked_to": "general"
+      }
+    ],
+    "budget": {
+      "currency": "EUR",
+      "line_items": [
+        {
+          "item_name": "CO2 cell culture incubator (Thermo Scientific Heracell VIOS 160i or equivalent) daily use fee",
+          "quantity": "1 incubator, ~4 days use",
+          "unit_cost_estimate": 40.0,
+          "total_cost_estimate": 160.0,
+          "confidence": "medium",
+          "uncertainty_note": "If already owned, this may be an internal facility recharge rather than a cash purchase."
+        },
+        {
+          "item_name": "Class II biological safety cabinet use",
+          "quantity": "~2 hours total use",
+          "unit_cost_estimate": 15.0,
+          "total_cost_estimate": 30.0,
+          "confidence": "medium",
+          "uncertainty_note": "Many academic labs do not recharge BSC time; include as opportunity/equipment cost."
+        },
+        {
+          "item_name": "Certified chemical fume hood / ventilated enclosure use",
+          "quantity": "~1 hour total use",
+          "unit_cost_estimate": 10.0,
+          "total_cost_estimate": 10.0,
+          "confidence": "low",
+          "uncertainty_note": "Usually not billed directly, but required for rapamycin/DMSO and paraformaldehyde handling."
+        },
+        {
+          "item_name": "Analytical microbalance for weighing rapamycin",
+          "quantity": "1 short session",
+          "unit_cost_estimate": 10.0,
+          "total_cost_estimate": 10.0,
+          "confidence": "medium",
+          "uncertainty_note": "Internal charge varies by institution and calibration status."
+        },
+        {
+          "item_name": "Rapamycin powder",
+          "quantity": "2.74 mg required; purchase 5 mg vial",
+          "unit_cost_estimate": 120.0,
+          "total_cost_estimate": 120.0,
+          "confidence": "medium",
+          "uncertainty_note": "Pricing varies substantially by purity, supplier, and vial size; verify COA and cell-culture suitability."
+        },
+        {
+          "item_name": "Sterile anhydrous DMSO, cell-culture grade",
+          "quantity": "300 \u00b5L required; purchase 10 mL bottle",
+          "unit_cost_estimate": 35.0,
+          "total_cost_estimate": 35.0,
+          "confidence": "high",
+          "uncertainty_note": "Only a small fraction of the bottle is used, but sterile anhydrous DMSO is typically purchased as a bottle/ampoule."
+        },
+        {
+          "item_name": "Amber low-binding microcentrifuge tubes for rapamycin stock",
+          "quantity": "1 tube required; allocate 10 tubes",
+          "unit_cost_estimate": 0.5,
+          "total_cost_estimate": 5.0,
+          "confidence": "medium",
+          "uncertainty_note": "Unit price depends on pack size and whether sterile/DNase-free tubes are selected."
+        },
+        {
+          "item_name": "Sterile syringe filter or centrifugal filter for rapamycin stock if clarification/sterilisation is required",
+          "quantity": "1 filter",
+          "unit_cost_estimate": 3.0,
+          "total_cost_estimate": 3.0,
+          "confidence": "medium",
+          "uncertainty_note": "Protocol only specifies a visually clear solution; filter may be omitted if using sterile components and aseptic technique."
+        },
+        {
+          "item_name": "Nitrile gloves",
+          "quantity": "~20 pairs",
+          "unit_cost_estimate": 0.18,
+          "total_cost_estimate": 3.6,
+          "confidence": "high",
+          "uncertainty_note": "Double-gloving for DAPI and hazardous reagents increases consumption."
+        },
+        {
+          "item_name": "Chemical splash goggles / eye protection allocation",
+          "quantity": "1 user-day",
+          "unit_cost_estimate": 2.0,
+          "total_cost_estimate": 2.0,
+          "confidence": "low",
+          "uncertainty_note": "Usually reusable PPE already owned; shown as per-experiment allocation."
+        },
+        {
+          "item_name": "Sterile serological pipettes, 5 mL and 10 mL assorted",
+          "quantity": "~20 pipettes",
+          "unit_cost_estimate": 0.35,
+          "total_cost_estimate": 7.0,
+          "confidence": "high",
+          "uncertainty_note": "Actual use depends on whether media/reagents are prepared in bulk or per condition."
+        },
+        {
+          "item_name": "Sterile filtered pipette tips, assorted P20/P200/P1000",
+          "quantity": "~200 tips",
+          "unit_cost_estimate": 0.06,
+          "total_cost_estimate": 12.0,
+          "confidence": "high",
+          "uncertainty_note": "Tip use is operator-dependent; estimate includes extra tips for sterile technique and dilutions."
+        },
+        {
+          "item_name": "Sterile 15 mL conical tubes",
+          "quantity": "~10 tubes",
+          "unit_cost_estimate": 0.25,
+          "total_cost_estimate": 2.5,
+          "confidence": "high",
+          "uncertainty_note": "Used for media, H2O2 dilution, washes, and staining cocktail preparation."
+        },
+        {
+          "item_name": "Sterile 50 mL conical tubes",
+          "quantity": "~5 tubes",
+          "unit_cost_estimate": 0.35,
+          "total_cost_estimate": 1.75,
+          "confidence": "high",
+          "uncertainty_note": "Used for complete media and waste-compatible reagent preparation."
+        },
+        {
+          "item_name": "Biohazard/chemical waste containers and absorbent bench pads allocation",
+          "quantity": "1 experiment allocation",
+          "unit_cost_estimate": 8.0,
+          "total_cost_estimate": 8.0,
+          "confidence": "medium",
+          "uncertainty_note": "Waste disposal costs vary strongly by institution and hazardous-waste contractor."
+        },
+        {
+          "item_name": "Vehicle control material: sterile anhydrous DMSO matched to 0.001% v/v final concentration",
+          "quantity": "vehicle for 18 wells plus dilution excess",
+          "unit_cost_estimate": 0.0,
+          "total_cost_estimate": 0.0,
+          "confidence": "high",
+          "uncertainty_note": "Cost is included under the DMSO reagent line; listed separately because it is essential for no-H2O2 and H2O2 vehicle controls."
+        },
+        {
+          "item_name": "No-H2O2 negative control wells",
+          "quantity": "6 wells in 24-well plate",
+          "unit_cost_estimate": 0.0,
+          "total_cost_estimate": 0.0,
+          "confidence": "high",
+          "uncertainty_note": "No additional purchased control reagent is required beyond medium and vehicle already costed."
+        },
+        {
+          "item_name": "H2O2 vehicle senescence positive-control wells",
+          "quantity": "6 wells in 24-well plate",
+          "unit_cost_estimate": 0.0,
+          "total_cost_estimate": 0.0,
+          "confidence": "high",
+          "uncertainty_note": "Control cost is represented by cells, medium, H2O2, and DMSO lines."
+        },
+        {
+          "item_name": "Reference-control compound for H2O2 reference-control group, identity not specified in protocol",
+          "quantity": "1 small vial, amount depends on selected reference",
+          "unit_cost_estimate": 150.0,
+          "total_cost_estimate": 150.0,
+          "confidence": "low",
+          "uncertainty_note": "The protocol names a reference-control group but does not identify the compound, concentration, or dosing vehicle; verify before ordering."
+        },
+        {
+          "item_name": "IMR-90 human lung fibroblast cells",
+          "quantity": "1 cryovial or existing working culture sufficient for 3.6\u00d710^5 cells plus excess",
+          "unit_cost_estimate": 550.0,
+          "total_cost_estimate": 550.0,
+          "confidence": "medium",
+          "uncertainty_note": "If an authenticated low-passage culture already exists, only maintenance cost applies; new vial pricing and shipping vary."
+        },
+        {
+          "item_name": "Eagle's Minimum Essential Medium (EMEM), cell-culture grade",
+          "quantity": "~50 mL used; purchase 500 mL bottle",
+          "unit_cost_estimate": 35.0,
+          "total_cost_estimate": 35.0,
+          "confidence": "high",
+          "uncertainty_note": "Complete and serum-free EMEM are prepared from the same bottle; purchase volume is much larger than actual use."
+        },
+        {
+          "item_name": "Fetal bovine serum for complete EMEM",
+          "quantity": "~5 mL used; purchase/allocate from 500 mL bottle",
+          "unit_cost_estimate": 250.0,
+          "total_cost_estimate": 25.0,
+          "confidence": "medium",
+          "uncertainty_note": "Cost shown is pro-rated for ~50 mL complete medium at 10% FBS; FBS lot and origin cause large price differences."
+        },
+        {
+          "item_name": "Penicillin-streptomycin solution, 100\u00d7",
+          "quantity": "~0.5 mL used; pro-rated from 100 mL bottle",
+          "unit_cost_estimate": 60.0,
+          "total_cost_estimate": 0.3,
+          "confidence": "high",
+          "uncertainty_note": "Some IMR-90 workflows omit antibiotics; included because complete EMEM commonly contains 1\u00d7 pen-strep."
+        },
+        {
+          "item_name": "L-glutamine or GlutaMAX supplement",
+          "quantity": "~0.5 mL used; pro-rated from 100 mL bottle",
+          "unit_cost_estimate": 55.0,
+          "total_cost_estimate": 0.28,
+          "confidence": "high",
+          "uncertainty_note": "Verify whether the selected EMEM already contains stable glutamine."
+        },
+        {
+          "item_name": "Sterile collagen-coated 12 mm glass coverslips",
+          "quantity": "24 coverslips plus spares; allocate 30",
+          "unit_cost_estimate": 2.5,
+          "total_cost_estimate": 75.0,
+          "confidence": "medium",
+          "uncertainty_note": "Pre-coated coverslips are relatively expensive; in-house collagen coating can reduce cost."
+        },
+        {
+          "item_name": "Sterile tissue-culture treated 24-well plate",
+          "quantity": "1 plate",
+          "unit_cost_estimate": 3.5,
+          "total_cost_estimate": 3.5,
+          "confidence": "high",
+          "uncertainty_note": "Special optical-bottom plates are not required because imaging is through coverslips, unless the imager setup requires them."
+        },
+        {
+          "item_name": "Trypsin-EDTA for IMR-90 detachment before seeding",
+          "quantity": "~5 mL used; pro-rated from 100 mL bottle",
+          "unit_cost_estimate": 30.0,
+          "total_cost_estimate": 1.5,
+          "confidence": "high",
+          "uncertainty_note": "Required if cells are passaged from a flask for seeding, though not explicitly listed in the steps."
+        },
+        {
+          "item_name": "Trypan blue viability stain",
+          "quantity": "~1 mL used; pro-rated from 100 mL bottle",
+          "unit_cost_estimate": 20.0,
+          "total_cost_estimate": 0.2,
+          "confidence": "high",
+          "uncertainty_note": "Included for counting viable cells to seed 1.5\u00d710^4 cells per well."
+        },
+        {
+          "item_name": "Automated cell counter or hemocytometer with microscope use",
+          "quantity": "1 counting session",
+          "unit_cost_estimate": 10.0,
+          "total_cost_estimate": 10.0,
+          "confidence": "medium",
+          "uncertainty_note": "Manual hemocytometer cost is negligible if already owned; automated counters may have cartridge/recharge costs."
+        },
+        {
+          "item_name": "Cell-counting slides or hemocytometer coverslips",
+          "quantity": "2 slides",
+          "unit_cost_estimate": 2.0,
+          "total_cost_estimate": 4.0,
+          "confidence": "medium",
+          "uncertainty_note": "Only needed for automated cell counter or disposable counting chamber workflow."
+        },
+        {
+          "item_name": "Inverted phase-contrast microscope use for cell density/detachment checks",
+          "quantity": "~4 short checks",
+          "unit_cost_estimate": 10.0,
+          "total_cost_estimate": 40.0,
+          "confidence": "medium",
+          "uncertainty_note": "Often shared with no recharge; included because visual inspection is explicitly required."
+        },
+        {
+          "item_name": "Hydrogen peroxide solution, 30% w/w analytical grade",
+          "quantity": "~10 mL diluted working solution; purchase 100 mL bottle",
+          "unit_cost_estimate": 25.0,
+          "total_cost_estimate": 25.0,
+          "confidence": "high",
+          "uncertainty_note": "Only microlitres are used, but stock is commonly purchased as a 100 mL bottle."
+        },
+        {
+          "item_name": "Serum-free EMEM for H2O2 exposure",
+          "quantity": "~12 mL working volume",
+          "unit_cost_estimate": 0.0,
+          "total_cost_estimate": 0.0,
+          "confidence": "high",
+          "uncertainty_note": "Cost included in the EMEM bottle line under Cell seeding."
+        },
+        {
+          "item_name": "Sterile DPBS without calcium/magnesium",
+          "quantity": "~15 mL used for post-stress wash; purchase/allocate from 500 mL bottle",
+          "unit_cost_estimate": 25.0,
+          "total_cost_estimate": 0.75,
+          "confidence": "high",
+          "uncertainty_note": "Cost is pro-rated; many labs hold DPBS as shared stock."
+        },
+        {
+          "item_name": "Complete EMEM containing 100 nM rapamycin or 0.001% DMSO",
+          "quantity": "~15 mL total dosing medium",
+          "unit_cost_estimate": 0.0,
+          "total_cost_estimate": 0.0,
+          "confidence": "high",
+          "uncertainty_note": "Component costs are included under EMEM, FBS, supplements, rapamycin, and DMSO lines."
+        },
+        {
+          "item_name": "Pipettes P20, P200, P1000 use/calibration allocation",
+          "quantity": "1 experiment allocation",
+          "unit_cost_estimate": 5.0,
+          "total_cost_estimate": 5.0,
+          "confidence": "medium",
+          "uncertainty_note": "Usually owned by the lab; allocation covers wear/calibration rather than purchase."
+        },
+        {
+          "item_name": "4% paraformaldehyde in PBS, methanol-free fixative",
+          "quantity": "12 mL required; purchase 20 mL ampoules or 100 mL bottle",
+          "unit_cost_estimate": 30.0,
+          "total_cost_estimate": 30.0,
+          "confidence": "medium",
+          "uncertainty_note": "Ready-made ampoules are more expensive but safer and more reproducible than preparing PFA powder."
+        },
+        {
+          "item_name": "Triton X-100",
+          "quantity": "6 \u00b5L required in staining cocktail; allocate from 100 mL bottle",
+          "unit_cost_estimate": 25.0,
+          "total_cost_estimate": 0.01,
+          "confidence": "high",
+          "uncertainty_note": "Actual experiment consumption is negligible; bottle purchase may already be shared stock."
+        },
+        {
+          "item_name": "Bovine serum albumin (BSA), immunostaining grade",
+          "quantity": "60 mg required for 6 mL staining cocktail; allocate from 10 g bottle",
+          "unit_cost_estimate": 50.0,
+          "total_cost_estimate": 0.3,
+          "confidence": "high",
+          "uncertainty_note": "Cost is pro-rated; verify grade is suitable for immunofluorescence blocking."
+        },
+        {
+          "item_name": "Alexa Fluor 647-conjugated anti-p21 antibody",
+          "quantity": "6 \u00b5g required; purchase 100 \u00b5g vial",
+          "unit_cost_estimate": 420.0,
+          "total_cost_estimate": 420.0,
+          "confidence": "low",
+          "uncertainty_note": "Antibody price and required concentration vary by clone, validation status, and conjugation; test dilution may change cost."
+        },
+        {
+          "item_name": "DAPI nuclear stain",
+          "quantity": "6 \u00b5g required in staining cocktail; purchase 1 mg vial or 1 mL stock",
+          "unit_cost_estimate": 120.0,
+          "total_cost_estimate": 120.0,
+          "confidence": "medium",
+          "uncertainty_note": "Only a tiny amount is used, but DAPI is generally purchased as a vial/stock solution."
+        },
+        {
+          "item_name": "Light-protective foil or black plate cover",
+          "quantity": "1 sheet/cover allocation",
+          "unit_cost_estimate": 1.0,
+          "total_cost_estimate": 1.0,
+          "confidence": "high",
+          "uncertainty_note": "Needed to protect Alexa Fluor 647 and DAPI from ambient light."
+        },
+        {
+          "item_name": "PBS for post-stain washes",
+          "quantity": "36 mL required for 3 \u00d7 500 \u00b5L \u00d7 24 wells; pro-rated from 500 mL bottle",
+          "unit_cost_estimate": 25.0,
+          "total_cost_estimate": 1.8,
+          "confidence": "high",
+          "uncertainty_note": "Cost is pro-rated; DPBS/PBS bottle may be the same shared stock as used in the post-stress wash if compatible."
+        },
+        {
+          "item_name": "Molecular Devices ImageXpress Micro Confocal high-content imaging system with 20\u00d7 objective",
+          "quantity": "1.5 hours imaging time",
+          "unit_cost_estimate": 90.0,
+          "total_cost_estimate": 135.0,
+          "confidence": "medium",
+          "uncertainty_note": "Core facility charges commonly range from ~50\u2013150 EUR/hour depending on support and confocal mode."
+        },
+        {
+          "item_name": "Immersion-free imaging plate holder/adaptor for 24-well coverslip plate",
+          "quantity": "1 session allocation",
+          "unit_cost_estimate": 5.0,
+          "total_cost_estimate": 5.0,
+          "confidence": "low",
+          "uncertainty_note": "Often included with instrument use; may be unnecessary if the existing plate carrier supports 24-well plates."
+        },
+        {
+          "item_name": "Image analysis/statistics workstation with licensed software or R/Python environment",
+          "quantity": "2 hours analysis time",
+          "unit_cost_estimate": 20.0,
+          "total_cost_estimate": 40.0,
+          "confidence": "medium",
+          "uncertainty_note": "Open-source analysis can reduce direct software cost; commercial analysis modules or GraphPad licenses may be charged by the facility."
+        },
+        {
+          "item_name": "Laboratory disinfectant suitable for BSL-2 liquid waste contact time, e.g. Virkon or 10% bleach",
+          "quantity": "~500 mL working disinfectant",
+          "unit_cost_estimate": 5.0,
+          "total_cost_estimate": 5.0,
+          "confidence": "high",
+          "uncertainty_note": "Cost depends on institutional disinfection policy and whether bleach is prepared from shared stock."
+        }
+      ],
+      "estimated_total_cost": 2093.49,
+      "uncertainty_notes": [
+        "Major cost drivers are the IMR-90 source, directly conjugated anti-p21 antibody, rapamycin vial size, and high-content imager/core-facility recharge; these should be verified with institutional purchasing quotes.",
+        "Several reagents are costed as pro-rated usage from standard lab bottles, while others are costed at minimum purchasable package size; actual cash outlay will differ depending on existing stock.",
+        "The protocol lists an H2O2 reference-control group but does not specify the reference compound, dose, or vehicle, so that control line is a placeholder requiring scientific and purchasing clarification before ordering."
+      ]
+    },
+    "timeline": {
+      "phases": [
+        {
+          "phase_name": "Day 0: Incubator setup and rapamycin stock preparation",
+          "duration_estimate": "1 days",
+          "dependencies": [],
+          "responsible_role": "Research associate",
+          "risk_buffer": "1 days",
+          "bottlenecks": [
+            "Incubator CO2/temperature/RH stabilization or recent decontamination cycle delaying use",
+            "Rapamycin stock solubility/particulates requiring repeat preparation",
+            "Chemical hood availability for DMSO/rapamycin handling"
+          ]
+        },
+        {
+          "phase_name": "Day 1: IMR-90 cell seeding on collagen-coated coverslips",
+          "duration_estimate": "1 days",
+          "dependencies": [
+            "Day 0: Incubator setup and rapamycin stock preparation"
+          ],
+          "responsible_role": "Research associate",
+          "risk_buffer": "1 days",
+          "bottlenecks": [
+            "IMR-90 cells not at suitable confluence or passage number",
+            "Uneven cell suspension/seeding causing well-to-well variability",
+            "Biosafety cabinet availability and pre-coated coverslip/plate readiness"
+          ]
+        },
+        {
+          "phase_name": "Day 1-2: Cell attachment and recovery after seeding",
+          "duration_estimate": "2 days",
+          "dependencies": [
+            "Day 1: IMR-90 cell seeding on collagen-coated coverslips"
+          ],
+          "responsible_role": "Research associate",
+          "risk_buffer": "1 days",
+          "bottlenecks": [
+            "Slow or uneven attachment to coverslips",
+            "Unexpected detachment or low viability after seeding",
+            "Contamination detected during pre-treatment visual check"
+          ]
+        },
+        {
+          "phase_name": "Day 2: H2O2 senescence induction, wash, and rapamycin/vehicle dosing",
+          "duration_estimate": "1 days",
+          "dependencies": [
+            "Day 1-2: Cell attachment and recovery after seeding"
+          ],
+          "responsible_role": "Scientist",
+          "risk_buffer": "1 days",
+          "bottlenecks": [
+            "Fresh H2O2 dilution accuracy and peroxide potency",
+            "Timing coordination to keep 60\u00b12 min exposure and rapid wash consistent across wells",
+            "Excessive cell detachment after oxidative stress preventing continuation"
+          ]
+        },
+        {
+          "phase_name": "Day 2-5: 72-hour rapamycin or vehicle exposure",
+          "duration_estimate": "4 days",
+          "dependencies": [
+            "Day 2: H2O2 senescence induction, wash, and rapamycin/vehicle dosing"
+          ],
+          "responsible_role": "Research associate",
+          "risk_buffer": "1 days",
+          "bottlenecks": [
+            "Incubator excursions in CO2, humidity, or temperature over the 72 h exposure",
+            "Microbial contamination during no-medium-change incubation",
+            "Rapamycin/DMSO treatment-related cytotoxicity below acceptance threshold"
+          ]
+        },
+        {
+          "phase_name": "Day 5: Fixation, p21/DAPI immunofluorescence staining, and washes",
+          "duration_estimate": "1 days",
+          "dependencies": [
+            "Day 2-5: 72-hour rapamycin or vehicle exposure"
+          ],
+          "responsible_role": "Research associate",
+          "risk_buffer": "1 days",
+          "bottlenecks": [
+            "PFA handling area or waste container availability",
+            "Coverslip drying or loss during liquid exchanges",
+            "Light-sensitive DAPI/Alexa 647 staining variability or antibody reagent shortage"
+          ]
+        },
+        {
+          "phase_name": "Day 5: High-content confocal imaging",
+          "duration_estimate": "1 days",
+          "dependencies": [
+            "Day 5: Fixation, p21/DAPI immunofluorescence staining, and washes"
+          ],
+          "responsible_role": "Scientist",
+          "risk_buffer": "1 days",
+          "bottlenecks": [
+            "ImageXpress booking/availability and objective/filter configuration",
+            "Autofocus failures on coverslips or uneven staining requiring reacquisition",
+            "Signal saturation or low nuclei count per well requiring exposure adjustment"
+          ]
+        },
+        {
+          "phase_name": "Day 5-6: Quantitative image analysis, statistics, and results write-up",
+          "duration_estimate": "2 days",
+          "dependencies": [
+            "Day 5: High-content confocal imaging"
+          ],
+          "responsible_role": "Scientist",
+          "risk_buffer": "1 days",
+          "bottlenecks": [
+            "Image segmentation QC for p21-positive nuclear fraction",
+            "Export/import issues from high-content imaging software",
+            "Biological variability or failed normality/cytotoxicity criteria requiring repeat pilot"
+          ]
+        }
+      ],
+      "total_duration_estimate": "21 days (including risk buffers)"
+    },
+    "validation": {
+      "primary_endpoint": "Post-thaw viability percentage at immediate and 24h checkpoints.",
+      "secondary_endpoints": [
+        "Cell recovery count",
+        "Morphology quality score",
+        "Replicate variance"
+      ],
+      "success_threshold": "at least 40% reduction compared to vehicle controls improvement over comparator in replicate-confirmed data.",
+      "failure_conditions": [
+        "No meaningful viability gain in replicate-confirmed runs.",
+        "Intervention increases delayed viability loss at 24h."
+      ],
+      "suggested_statistical_comparison": "Two-group comparison against comparator using t-test or Mann-Whitney based on normality.",
+      "minimum_replicates_or_design_note": "Minimum three biological replicates before execution-level claim."
+    },
+    "cro_ready_brief": {
+      "objective": "Determine whether 100 nM rapamycin for 72 h reduces the number of p21-positive senescent IMR-90 fibroblasts by at least 40% after hydrogen peroxide-induced senescence.",
+      "scope_of_work": [
+        "Execute pilot-first HeLa cryopreservation comparison between DMSO baseline and trehalose arm.",
+        "Deliver replicate-confirmed viability analysis and mitigation traceability report."
+      ],
+      "sample_count": "At least 3 biological replicates per arm",
+      "required_assays": [
+        "Immediate post-thaw viability",
+        "24h follow-up viability"
+      ],
+      "deliverables": [
+        "Raw assay tables",
+        "QC log",
+        "Analysis summary",
+        "Deviation report"
+      ],
+      "qc_requirements": [
+        "Controlled-rate freeze log",
+        "Lot traceability",
+        "Blinded run annotation"
+      ],
+      "timeline_request": "21 days (including risk buffers)",
+      "materials_responsibility": "CRO to quote and confirm all materials before ordering.",
+      "questions_for_cro": [
+        "Can you support controlled-rate freezing logs in each run?",
+        "Can you include replicate-level batch metadata in the final report?"
+      ]
+    },
+    "confidence_score": 0.86
+  }
+}
