@@ -408,7 +408,7 @@ def _generate_plan_with_llm(
         model=LLM_MODEL,
         response_model=_PlanLLMOutput,
         max_retries=LLM_MAX_RETRIES,
-        temperature=0.2,
+        temperature=1,
         messages=[
             {"role": "system", "content": SYSTEM_PROMPT},
             {"role": "user", "content": user_message},

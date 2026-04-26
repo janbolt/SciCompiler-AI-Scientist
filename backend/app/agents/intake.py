@@ -404,7 +404,7 @@ def run_intake_agent(
             model=LLM_MODEL,
             response_model=_IntakeLLMOutput,
             max_retries=LLM_MAX_RETRIES,
-            temperature=0,
+            temperature=1,
             messages=[
                 {"role": "system", "content": SYSTEM_PROMPT},
                 {

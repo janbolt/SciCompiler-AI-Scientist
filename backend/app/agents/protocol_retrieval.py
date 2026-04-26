@@ -277,7 +277,7 @@ def _assess_fit(
         model=LLM_MODEL,
         response_model=_ProtocolFitLLMOutput,
         max_retries=LLM_MAX_RETRIES,
-        temperature=0,
+        temperature=1,
         messages=[
             {"role": "system", "content": FIT_SYSTEM_PROMPT},
             {"role": "user", "content": user_message},

@@ -113,7 +113,7 @@ def _generate_search_queries(hypothesis: StructuredHypothesis) -> _SearchQueries
         model=LLM_MODEL,
         response_model=_SearchQueriesLLM,
         max_retries=LLM_MAX_RETRIES,
-        temperature=0,
+        temperature=1,
         messages=[
             {"role": "system", "content": _QUERY_GEN_SYSTEM},
             {"role": "user", "content": user_message},
@@ -591,7 +591,7 @@ def _classify_with_llm(
         model=LLM_MODEL,
         response_model=_LiteratureQCLLMOutput,
         max_retries=LLM_MAX_RETRIES,
-        temperature=0,
+        temperature=1,
         messages=[
             {"role": "system", "content": system_prompt},
             {"role": "user", "content": user_message},
