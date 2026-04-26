@@ -20,3 +20,15 @@ frontend/.vite/
 
 # TypeScript incremental build info
 *.tsbuildinfo
+
+# IDE debug logs
+.cursor/
+
+# Environment files (real credentials)
+.env
+backend/.env
+
+# Stored plan data (runtime state, not source)
+backend/data/plans/
+backend/data/feedback.json
+backend/data/feedback_memory.json
