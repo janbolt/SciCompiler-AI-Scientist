@@ -2,10 +2,12 @@ from __future__ import annotations
 
 import uuid
 
+from .adapters import to_frontend_plan
 from .agents import (
     budget_agent,
     cro_brief_agent,
     evidence_agent,
+    experiments_agent,
     intake_agent,
     literature_qc_agent,
     materials_agent,
@@ -15,7 +17,7 @@ from .agents import (
     timeline_agent,
     validation_agent,
 )
-from .schemas import DemoRunRequest, DemoRunResponse
+from .schemas import DemoRunRequest, DemoRunResponse, FrontendPlanData
 from .store import add_feedback, get_feedback_for_plan, load_plan_run, save_plan_run
 
 
@@ -31,9 +33,20 @@ def run_demo_pipeline(request: DemoRunRequest, existing_plan_id: str | None = No
     risks = risk_agent(hypothesis, evidence_claims)
 
     plan_id = existing_plan_id or str(uuid.uuid4())
-    feedback = get_feedback_for_plan(plan_id) if existing_plan_id else []
-    feedback_notes = [f"{f.section}: {f.correction}" for f in sorted(feedback, key=lambda x: (x.section, x.correction))]
-    plan = plan_agent(plan_id=plan_id, hypothesis=hypothesis, risks=risks, feedback_notes=feedback_notes)
+
+    # Merge stored plan-level feedback with incoming prior_feedback from the UI
+    plan_feedback = get_feedback_for_plan(plan_id) if existing_plan_id else []
+    plan_feedback_notes = [f"{f.section}: {f.correction}" for f in sorted(plan_feedback, key=lambda x: (x.section, x.correction))]
+
+    # Prior feedback from the review panel: only carry corrections (rating ≤ 3)
+    prior_notes = [
+        f"[Prior review — {fb.experiment_type}, {fb.section}, rating {fb.rating}/5] {fb.note}"
+        for fb in request.prior_feedback
+        if fb.rating <= 3 and fb.note.strip()
+    ]
+
+    all_feedback_notes = plan_feedback_notes + prior_notes
+    plan = plan_agent(plan_id=plan_id, hypothesis=hypothesis, risks=risks, feedback_notes=all_feedback_notes)
 
     materials = materials_agent()
     budget = budget_agent(materials)
@@ -76,6 +89,29 @@ def store_feedback(plan_id: str, section: str, original_text: str, correction: s
             severity=severity,
         )
     )
+
+
+def run_frontend_pipeline(request: DemoRunRequest) -> FrontendPlanData:
+    """
+    Lightweight pipeline that returns the frontend-shaped PlanData JSON directly.
+    Used by POST /demo/plan so the React app can replace MOCK_PLAN with live data.
+    """
+    hypothesis = intake_agent(request)
+    literature_qc = literature_qc_agent(hypothesis)
+    evidence_claims = evidence_agent(hypothesis, literature_qc)
+    risks = risk_agent(hypothesis, evidence_claims)
+    timeline = timeline_agent()
+
+    # Prior feedback: only low-rated corrections become generation context
+    prior_notes = [
+        f"[Prior review — {fb.experiment_type}, {fb.section}, rating {fb.rating}/5] {fb.note}"
+        for fb in request.prior_feedback
+        if fb.rating <= 3 and fb.note.strip()
+    ]
+
+    experiments = experiments_agent(hypothesis, risks, feedback_notes=prior_notes)
+
+    return to_frontend_plan(hypothesis, literature_qc, timeline, experiments)
 
 
 def regenerate_plan(plan_id: str) -> DemoRunResponse | None:
