@@ -5,6 +5,7 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 
 from . import litmus_client
+from .adapters import demo_response_to_frontend
 from .litmus_client import classify_experiment_type
 from .orchestrator import (
     get_saved_plan,
@@ -17,6 +18,7 @@ from .schemas import (
     DemoRunResponse,
     FeedbackRequest,
     FeedbackResponse,
+    FrontendPlanData,
     LitmusSubmitRequest,
     LitmusSubmitResponse,
     LitmusSubmitResult,
@@ -41,6 +43,12 @@ def health() -> dict[str, str]:
 @app.post("/demo/run", response_model=DemoRunResponse)
 def demo_run(request: DemoRunRequest) -> DemoRunResponse:
     return run_demo_pipeline(request)
+
+
+@app.post("/demo/plan", response_model=FrontendPlanData)
+def demo_plan(request: DemoRunRequest) -> FrontendPlanData:
+    result = run_demo_pipeline(request)
+    return demo_response_to_frontend(result)
 
 
 @app.get("/plans/{plan_id}", response_model=DemoRunResponse)

@@ -1,24 +1,22 @@
 """Agent 3 of 11 — Protocol Retrieval Agent.
 
 Searches protocols.io for existing lab procedures relevant to the hypothesis,
-then uses an LLM (via instructor) to score each candidate's fitness. This
-agent focuses on *lab procedures* (how to do the experiment), while Literature
-QC focuses on *scientific publications* (whether it has been published).
+then uses an LLM to score each candidate's fitness. For the top-scoring
+candidates, fetches the full protocol detail (GET /protocols/{id}) to extract
+the actual step-by-step text, which is passed to the plan agent as a concrete
+procedural skeleton.
 
 Two execution modes:
-
-- ``USE_STUB_AGENTS=true``  → returns deterministic stub output without any
-  external API call.
-- ``PROTOCOLS_IO_TOKEN`` set → live mode: protocols.io REST search + OpenAI
-  fit assessment per candidate.
-- ``PROTOCOLS_IO_TOKEN`` missing → degrades gracefully to stub output and logs
-  a warning. No exception is raised.
+- USE_STUB_AGENTS=true  → deterministic stub output, no network.
+- PROTOCOLS_IO_TOKEN set → live: search → score → fetch full steps.
+- PROTOCOLS_IO_TOKEN missing → degrades to stub, logs warning.
 """
 
 from __future__ import annotations
 
 import logging
 import os
+import re
 from datetime import datetime, timezone
 from typing import Any, Literal
 
@@ -34,6 +32,8 @@ logger = logging.getLogger(__name__)
 PROTOCOLS_IO_BASE_URL = "https://www.protocols.io/api/v3"
 PROTOCOLS_IO_TIMEOUT_SECONDS = 10
 MAX_CANDIDATES = 5
+MAX_DETAIL_FETCH = 2      # how many candidates get full step detail fetched
+MAX_STEPS_PER_PROTOCOL = 20   # cap steps sent to the plan LLM
 
 
 # ---------------------------------------------------------------------------
@@ -153,6 +153,80 @@ def _search_protocols(query: str, token: str) -> list[dict[str, Any]]:
     return []
 
 
+def _strip_html(text: str) -> str:
+    """Remove HTML tags and normalise whitespace."""
+    if not text:
+        return ""
+    text = re.sub(r"<[^>]+>", " ", text)
+    text = re.sub(r"&nbsp;", " ", text)
+    text = re.sub(r"&amp;", "&", text)
+    text = re.sub(r"&lt;", "<", text)
+    text = re.sub(r"&gt;", ">", text)
+    text = re.sub(r"\s+", " ", text)
+    return text.strip()
+
+
+def _fetch_protocol_steps(protocol_id: Any, token: str) -> tuple[list[str], str]:
+    """Fetch full protocol detail from protocols.io and extract step texts.
+
+    Returns (steps, protocol_url) where steps is a list of clean text strings
+    and protocol_url is the public URI (empty string on failure).
+    """
+    try:
+        url = f"{PROTOCOLS_IO_BASE_URL}/protocols/{protocol_id}"
+        response = requests.get(
+            url,
+            headers={"Authorization": f"Bearer {token}"},
+            timeout=PROTOCOLS_IO_TIMEOUT_SECONDS,
+        )
+        if response.status_code >= 400:
+            logger.warning("protocols.io detail fetch HTTP %s for id=%s", response.status_code, protocol_id)
+            return [], ""
+
+        payload = response.json()
+        protocol = payload.get("protocol") or payload  # v3 wraps in {"protocol": {...}}
+
+        # Extract public URL
+        protocol_url = str(protocol.get("uri") or protocol.get("url") or "")
+
+        # Extract steps — v3 API returns steps as a list of step objects
+        steps_raw = protocol.get("steps") or []
+        result: list[str] = []
+
+        for step in steps_raw:
+            if not isinstance(step, dict):
+                continue
+
+            # Step description may live in several fields depending on step type
+            desc = (
+                step.get("description")
+                or step.get("title")
+                or ""
+            )
+
+            # Some step types nest content in 'components'
+            if not desc:
+                for comp in (step.get("components") or []):
+                    if isinstance(comp, dict):
+                        comp_text = comp.get("source", {})
+                        if isinstance(comp_text, dict):
+                            desc = comp_text.get("title") or comp_text.get("body") or ""
+                        elif isinstance(comp_text, str):
+                            desc = comp_text
+                        if desc:
+                            break
+
+            desc = _strip_html(str(desc))
+            if desc:
+                result.append(desc[:400])
+
+        return result[:MAX_STEPS_PER_PROTOCOL], protocol_url
+
+    except Exception as exc:  # noqa: BLE001
+        logger.warning("Protocol detail fetch failed for id=%s: %s", protocol_id, exc)
+        return [], ""
+
+
 def _published_year(protocol: dict[str, Any]) -> int | None:
     ts = protocol.get("published_on")
     if not isinstance(ts, (int, float)) or ts <= 0:
@@ -167,7 +241,7 @@ def _protocol_abstract(protocol: dict[str, Any]) -> str:
     text = protocol.get("description") or protocol.get("abstract") or ""
     if not isinstance(text, str):
         return "No description available."
-    text = text.strip()
+    text = _strip_html(text)
     if len(text) > 500:
         text = text[:500] + "..."
     return text or "No description available."
@@ -245,6 +319,8 @@ def _stub_protocol_retrieval(hypothesis: StructuredHypothesis) -> list[ProtocolC
             adaptation_notes="Stub mode — no live protocols.io search performed. This is a placeholder candidate.",
             missing_steps=["Exact reagent concentrations", "Instrument-specific settings"],
             limitations=["Stub output only — real protocols.io search requires PROTOCOLS_IO_TOKEN."],
+            raw_steps=[],
+            protocol_url="",
         ),
     ]
 
@@ -257,8 +333,16 @@ def _stub_protocol_retrieval(hypothesis: StructuredHypothesis) -> list[ProtocolC
 def run(hypothesis: StructuredHypothesis) -> list[ProtocolCandidate]:
     """Retrieve and assess protocol candidates for the given hypothesis.
 
-    Returns up to MAX_CANDIDATES ProtocolCandidate objects, ordered by fit_score
-    descending. Degrades gracefully to stub output if token is missing or API fails.
+    Runs three search queries:
+      - literature_search_hint (full scope)
+      - experiment_type (technique-level procedure)
+      - intervention (organism/compound-level procedure — NEW)
+
+    Top-scoring candidates have their full step text fetched from the
+    protocols.io detail endpoint and stored in ProtocolCandidate.raw_steps.
+
+    Returns up to MAX_CANDIDATES ProtocolCandidate objects ordered by fit_score.
+    Degrades gracefully to stub if token is missing or API fails.
     """
     if USE_STUB_AGENTS:
         return _stub_protocol_retrieval(hypothesis)
@@ -270,21 +354,25 @@ def run(hypothesis: StructuredHypothesis) -> list[ProtocolCandidate]:
         return _stub_protocol_retrieval(hypothesis)
 
     try:
-        # Two searches: literature_search_hint captures the full scope,
-        # experiment_type captures technique-level procedures.
+        # Three searches: full scope, technique class, and intervention/organism
         query_a = (hypothesis.literature_search_hint or "").strip()
-        query_b = (hypothesis.experiment_type or "").strip()
+        query_b = (hypothesis.experiment_type or "").strip().replace("_", " ")
+        query_c = (hypothesis.intervention or "").strip()
+        if len(query_c) > 80:
+            # Trim to first 80 chars at a word boundary for cleaner search
+            query_c = query_c[:80].rsplit(" ", 1)[0]
 
         raw_a = _search_protocols(query_a, token) if query_a else []
         raw_b = _search_protocols(query_b, token) if query_b else []
+        raw_c = _search_protocols(query_c, token) if query_c else []
 
-        all_raw = _dedupe_protocols(raw_a + raw_b)
+        all_raw = _dedupe_protocols(raw_a + raw_b + raw_c)
 
         if not all_raw:
             logger.info("protocols.io returned no results — falling back to stub.")
             return _stub_protocol_retrieval(hypothesis)
 
-        # Score top candidates with LLM (cap to avoid token overuse)
+        # Score top candidates with LLM
         candidates: list[ProtocolCandidate] = []
         for protocol in all_raw[:MAX_CANDIDATES]:
             try:
@@ -298,11 +386,12 @@ def run(hypothesis: StructuredHypothesis) -> list[ProtocolCandidate]:
                         adaptation_notes=fit.adaptation_notes,
                         missing_steps=fit.missing_steps,
                         limitations=fit.limitations,
+                        raw_steps=[],
+                        protocol_url="",
                     )
                 )
             except Exception as exc:  # noqa: BLE001
                 logger.warning("LLM fit assessment failed for protocol %r: %s", protocol.get("id"), exc)
-                # Include the protocol with default scores rather than dropping it
                 candidates.append(
                     ProtocolCandidate(
                         protocol_name=str(protocol.get("title") or "Untitled protocol"),
@@ -312,10 +401,36 @@ def run(hypothesis: StructuredHypothesis) -> list[ProtocolCandidate]:
                         adaptation_notes="LLM fit assessment failed — manual review required.",
                         missing_steps=[],
                         limitations=["Automated fit assessment unavailable."],
+                        raw_steps=[],
+                        protocol_url="",
                     )
                 )
 
         candidates.sort(key=lambda c: c.fit_score, reverse=True)
+
+        # Fetch full step content for the top-scoring candidates
+        # We zip with the original raw dicts to get the protocol ID
+        id_map: dict[str, Any] = {
+            str(p.get("title") or ""): p.get("id")
+            for p in all_raw
+        }
+
+        enriched = 0
+        for candidate in candidates:
+            if enriched >= MAX_DETAIL_FETCH:
+                break
+            pid = id_map.get(candidate.protocol_name)
+            if not pid:
+                continue
+            steps, url = _fetch_protocol_steps(pid, token)
+            if steps:
+                candidate.raw_steps = steps
+                candidate.protocol_url = url
+                logger.info(
+                    "Fetched %d steps for candidate %r", len(steps), candidate.protocol_name
+                )
+            enriched += 1
+
         return candidates or _stub_protocol_retrieval(hypothesis)
 
     except Exception as exc:  # noqa: BLE001

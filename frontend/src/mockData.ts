@@ -33,6 +33,8 @@ export type PlanData = {
   /** @deprecated derive from budget.total_eur instead */
   total_budget_eur?: number;
   novelty_signal: "not found" | "similar work exists" | "exact match found";
+  /** 0.0–1.0 AI confidence in the generated plan (literature × protocol × readiness) */
+  confidence_score: number;
   references: Reference[];
   experiments: Experiment[];
   budget: {
@@ -55,6 +57,7 @@ export const MOCK_PLAN: PlanData = {
   total_duration_days: 35,
   total_budget_eur: 8240,
   novelty_signal: "similar work exists",
+  confidence_score: 0.72,
   references: [
     {
       citation:

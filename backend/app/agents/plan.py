@@ -1,18 +1,28 @@
 """Agent 6 of 11 — Plan Agent.
 
 Generates a concrete, hypothesis-specific experiment plan using an LLM
-(instructor + OpenAI). The plan follows Benchling-style protocol structure:
-steps organised by day, each step including expected duration and safety notes,
-and explicitly named positive/negative controls.
+(instructor + OpenAI).
+
+Key improvements over the original:
+  * Complexity classification (simple/moderate/complex) scales the step count
+    to 8-12 / 12-18 / 18-25 steps respectively.
+  * Richer _StepLLM schema: equipment, reagents, expected_outcome, safety_note
+    are extracted and embedded into the stored ProtocolStep.description so the
+    frontend can render full expert-level steps without schema changes.
+  * Actual protocols.io step text (raw_steps) is injected into the LLM prompt,
+    giving it a real procedural skeleton to adapt — not just a 500-char abstract.
+  * System prompt prohibits vague language and mandates numeric parameters.
 
 The LLM owns:
     * objective, experimental_design, controls (pos + neg)
-    * step_by_step_protocol (6-10 steps, grouped by day)
+    * step_by_step_protocol (count scaled to complexity)
     * assumptions, decision_criteria, reproducibility_notes
     * execution_readiness_score + execution_readiness_label
 
 Python owns:
-    * risk mitigation steps (appended deterministically from risk items)
+    * complexity classification
+    * step description formatting (embeds day/duration/equipment/outcome)
+    * risk mitigation steps
     * step numbering
     * feedback_incorporated pass-through
 
@@ -24,7 +34,7 @@ Two execution modes:
 from __future__ import annotations
 
 import logging
-from typing import Any, Literal
+from typing import Literal
 
 from pydantic import BaseModel, Field
 
@@ -43,33 +53,107 @@ logger = logging.getLogger(__name__)
 
 
 # ---------------------------------------------------------------------------
+# Complexity classification
+# ---------------------------------------------------------------------------
+
+_COMPLEX_KEYWORDS = {
+    "bioelectrochemical", "electrosynthesis", "microbial electro",
+    "multi", "omics", "sequencing", "genomic", "transcriptomic", "proteomic",
+    "in_vivo", "in vivo", "clinical", "longitudinal", "chassis",
+    "crispr", "gene editing", "directed evolution", "fermentation",
+    "bioreactor", "chemostat", "anaerobic", "syntrophic",
+}
+
+_MODERATE_KEYWORDS = {
+    "elisa", "western", "pcr", "qpcr", "culture", "flow cytometry",
+    "immunofluorescence", "confocal", "cryopreservation", "dose response",
+    "mass spectrometry", "hplc", "gc-ms", "rnaseq", "chip",
+}
+
+
+def _classify_complexity(hypothesis: StructuredHypothesis) -> Literal["simple", "moderate", "complex"]:
+    """Classify hypothesis complexity to drive step count scaling."""
+    text = " ".join([
+        hypothesis.experiment_type or "",
+        hypothesis.intervention or "",
+        hypothesis.biological_system or "",
+        hypothesis.mechanistic_rationale or "",
+    ]).lower()
+
+    if any(k in text for k in _COMPLEX_KEYWORDS):
+        return "complex"
+    if any(k in text for k in _MODERATE_KEYWORDS):
+        return "moderate"
+    return "simple"
+
+
+_STEP_COUNT_MAP: dict[str, tuple[int, int]] = {
+    "simple": (8, 12),
+    "moderate": (12, 18),
+    "complex": (18, 25),
+}
+
+
+# ---------------------------------------------------------------------------
 # LLM intermediate schemas
 # ---------------------------------------------------------------------------
 
 
 class _StepLLM(BaseModel):
-    day: int = Field(..., description="Experimental day this step occurs on (1, 2, 3 ...).")
-    description: str = Field(
-        ...,
-        description=(
-            "Full step description including technique, key parameters (volumes, "
-            "temperatures, durations), safety/handling notes, and expected outcome. "
-            "Be concrete — avoid vague language like 'perform assay'."
-        ),
-    )
+    day: int = Field(..., ge=0, description="Experimental day this step occurs on (0 = prep day before Day 1).")
     sub_protocol: str = Field(
         ...,
         description=(
             "Name of the sub-protocol or technique this step belongs to "
-            "(e.g. 'Cell culture', 'PCR', 'Gel electrophoresis', 'Data analysis'). "
-            "Used for linking in the plan record."
+            "(e.g. 'Reactor assembly', 'Inoculation', 'Chronoamperometry', 'HPLC analysis')."
+        ),
+    )
+    description: str = Field(
+        ...,
+        description=(
+            "Complete procedural action for this step. Must include: "
+            "what is being done, numeric parameters (exact volumes in µL/mL, "
+            "temperatures in °C, centrifuge speeds in ×g, incubation times in min/h), "
+            "and any critical handling notes. "
+            "PROHIBITED: vague language like 'perform assay', 'analyse results', "
+            "'prepare samples', 'add appropriate amount'."
         ),
     )
     expected_duration: str = Field(
         ...,
+        description="Realistic time estimate, e.g. '45 min', '2 h', 'overnight (16 h)'.",
+    )
+    equipment: list[str] = Field(
+        ...,
         description=(
-            "Realistic time estimate for this step based on your knowledge of the "
-            "technique (e.g. '2h', '45min', 'overnight', '30min setup + 12h incubation')."
+            "Specific instruments and consumables needed for this step. "
+            "Name the instrument model where known (e.g. 'Bio-Logic SP-150 potentiostat', "
+            "'Eppendorf 5424 centrifuge', 'Shimadzu HPLC-LC-20A'). "
+            "Include consumables: electrode type, filter pore size, plate format, etc."
+        ),
+    )
+    reagents: list[str] = Field(
+        default_factory=list,
+        description=(
+            "Specific reagents with concentrations, e.g. "
+            "'50 mM NaHCO3 in ultrapure water', 'Sporomusa ovata ATCC 49399 stock culture'. "
+            "Empty list if step is purely instrumental with no reagents."
+        ),
+    )
+    expected_outcome: str = Field(
+        ...,
+        description=(
+            "What a successful outcome looks like — a measurable, observable result "
+            "(e.g. 'OCP stabilises within ±5 mV over 10 min', "
+            "'OD600 reaches 0.4-0.6 within 48 h', 'acetate peak area >1000 mAU·s')."
+        ),
+    )
+    safety_note: str = Field(
+        default="",
+        description=(
+            "Specific safety or containment requirement for this step, or empty string "
+            "if none. E.g. 'CO2 asphyxiation risk — operate in ventilated fume hood', "
+            "'Anaerobic conditions — use Schlenk line or glove box'."
         ),
     )
 
@@ -89,42 +173,46 @@ class _PlanLLMOutput(BaseModel):
     positive_control: str = Field(
         ...,
         description=(
-            "Concrete positive control for this experiment — name the specific "
-            "reagent, sample, or condition (not 'appropriate control')."
+            "Concrete positive control — name the specific reagent, strain, or condition "
+            "(e.g. 'known acetate-producing Sporomusa ovata culture at −400 mV vs SHE', "
+            "'validated cryoprotectant: 10% DMSO standard protocol'). "
+            "Not 'appropriate positive control'."
         ),
     )
     negative_control: str = Field(
         ...,
         description=(
-            "Concrete negative control — name the specific blank, buffer-only, "
-            "or reaction-minus-key-component condition."
+            "Concrete negative control — e.g. "
+            "'abiotic cathode at −400 mV vs SHE with sterile medium', "
+            "'uninoculated medium blank', 'buffer-only reaction'. "
+            "Not 'appropriate negative control'."
         ),
     )
     steps: list[_StepLLM] = Field(
         ...,
-        min_length=4,
+        min_length=6,
         description=(
-            "6–10 concrete protocol steps. Organise by day — any step with "
-            "overnight incubation starts a new day. Include preparation steps "
-            "and a final data analysis / results interpretation step."
+            "Expert-level protocol steps. Count is specified in the user message "
+            "based on experiment complexity. Steps must be ordered by day, cover "
+            "the full arc from setup/prep to data collection and analysis."
         ),
     )
     assumptions: list[str] = Field(
         ...,
-        description="2–4 explicit assumptions the plan rests on.",
+        description="2–4 explicit scientific assumptions the plan rests on.",
     )
     decision_criteria: list[str] = Field(
         ...,
         description=(
-            "2–3 criteria for deciding whether to proceed, pilot, or stop "
-            "after seeing results."
+            "2–3 concrete, numeric criteria for deciding whether to proceed, "
+            "run a pilot, or stop (e.g. 'Proceed if acetate rate ≥ 150 mmol/L/day')."
         ),
     )
     reproducibility_notes: list[str] = Field(
         ...,
         description=(
-            "2–3 notes on what must be recorded/standardised to ensure "
-            "reproducibility (e.g. lot numbers, passage counts, timestamps)."
+            "3–5 notes specifying what must be standardised: electrode lot numbers, "
+            "strain passage count, medium batch, instrument calibration records, etc."
         ),
     )
     execution_readiness_score: float = Field(
@@ -132,8 +220,8 @@ class _PlanLLMOutput(BaseModel):
         ge=0.0,
         le=1.0,
         description=(
-            "Score from 0.0 to 1.0 reflecting how ready this experiment is to "
-            "execute as described. 1.0 = run today, 0.0 = major gaps remain."
+            "Score from 0.0 to 1.0 reflecting how ready this experiment is to execute. "
+            "1.0 = run today, 0.0 = major gaps remain."
         ),
     )
     execution_readiness_label: Literal[
@@ -142,7 +230,7 @@ class _PlanLLMOutput(BaseModel):
         ...,
         description=(
             "execution_ready_after_review: plan is sound, proceed after scientist sign-off. "
-            "pilot_only: run a small pilot first to validate assumptions. "
+            "pilot_only: run a small pilot first to validate key assumptions. "
             "blocked_pending_expert_review: critical gaps or risks prevent execution."
         ),
     )
@@ -153,34 +241,55 @@ class _PlanLLMOutput(BaseModel):
 # ---------------------------------------------------------------------------
 
 SYSTEM_PROMPT = """\
-You are a senior experimental scientist generating a detailed, actionable
-experiment plan from a structured hypothesis.
+You are a senior experimental scientist generating a CRO-ready, expert-level
+protocol for a planned experiment. A real lab will execute this plan.
 
-Your plan must follow these structural conventions (derived from real lab
-protocol standards):
+=====================================================================
+STRUCTURE RULES
+=====================================================================
+1. Steps are ordered chronologically by day (day=0 for prep before Day 1).
+   Any step with overnight incubation, long culture, or multi-hour passive
+   waiting starts a new day.
+2. Every step must cover exactly ONE logical operation at the bench —
+   do not bundle unrelated actions into a single step.
+3. The first 1–2 steps are always setup / reagent prep / equipment booking.
+4. The final step is always data analysis and results interpretation with
+   specific statistical tests named.
 
-STRUCTURE RULES:
-1. Steps are organised by experimental day (DAY 1, DAY 2, ...). Any step
-   involving overnight incubation, long culture periods, or multi-hour waiting
-   starts a new day.
-2. Each step includes: what is being done, key parameters (volumes,
-   temperatures, concentrations), safety/handling notes, and expected duration.
-3. Controls must be named concretely: state the actual reagent, sample, or
-   condition (e.g. "wild-type untreated cells as negative control",
-   "commercially validated positive control reagent X").
-4. The plan ends with a data collection and results interpretation step.
-5. Preparations needed before Day 1 (reagent preparation, overnight cultures,
-   equipment booking) should be listed as a Day 0 or prep note.
+=====================================================================
+CONTENT RULES — MANDATORY
+=====================================================================
+- PROHIBITED PHRASES: "perform assay", "analyse results", "prepare samples",
+  "add appropriate amount", "incubate as needed", "standard conditions",
+  "follow manufacturer instructions". These are not acceptable. Replace
+  with the exact procedure.
+- Every step description must include numeric parameters:
+    * volumes: in µL or mL
+    * temperatures: in °C
+    * centrifuge / rpm / time: e.g. "centrifuge at 6,000 × g, 10 min, 4°C"
+    * incubation times: in minutes or hours, never "overnight" without "~16 h"
+    * electrode potentials: in mV vs SHE or Ag/AgCl
+    * concentrations: in mM, µM, mg/mL, % w/v, OD units
+- Equipment must be named specifically (brand and model where known).
+- Reagents must include concentration and source grade where relevant.
+- expected_outcome must be a numeric/observable criterion, not "step succeeds".
 
-CONTENT RULES:
-- Base every step on the hypothesis fields provided. Do not invent unrelated
-  experiments.
-- If protocol candidates from protocols.io are provided, reference them in the
-  relevant steps — but adapt them to fit the hypothesis, do not copy blindly.
-- Use your knowledge of the scientific domain to generate realistic step
-  descriptions and duration estimates. Do not use generic placeholder text.
-- The execution_readiness_score should reflect genuine gaps or blockers in the
-  hypothesis (e.g. underspecified dosing, missing controls, unvalidated model).
+=====================================================================
+PROTOCOLS.IO SOURCE STEPS — HOW TO USE THEM
+=====================================================================
+If protocol source steps are provided, treat them as expert procedural
+skeletons. Adapt them to the specific hypothesis (organism, conditions,
+readout), expand them with the required numeric parameters, and fill any
+gaps identified by the adaptation_notes. Do not copy blindly — the
+source protocol may be for a different system.
+
+=====================================================================
+COMPLEXITY AND STEP COUNT
+=====================================================================
+The required step count range is stated in the user message. You MUST
+generate at least the minimum number of steps specified. For complex
+multi-phase experiments, each phase (setup, operation, sampling, analysis)
+should be represented by multiple steps.
 """
 
 
@@ -192,13 +301,22 @@ CONTENT RULES:
 def _format_protocol_candidates(candidates: list[ProtocolCandidate]) -> str:
     if not candidates:
         return "(none available)"
-    lines = []
+    lines: list[str] = []
     for i, c in enumerate(candidates[:3]):
-        lines.append(
-            f"[{i}] {c.protocol_name} (fit={c.fit_score:.2f})\n"
-            f"    Adaptation notes: {c.adaptation_notes}\n"
-            f"    Limitations: {'; '.join(c.limitations) if c.limitations else 'none'}"
-        )
+        lines.append(f"\n[{i}] {c.protocol_name} (fit={c.fit_score:.2f}, confidence={c.confidence:.2f})")
+        if c.protocol_url:
+            lines.append(f"    Source: {c.protocol_url}")
+        lines.append(f"    Adaptation needed: {c.adaptation_notes}")
+        if c.missing_steps:
+            lines.append(f"    Missing: {'; '.join(c.missing_steps)}")
+        if c.limitations:
+            lines.append(f"    Limitations: {'; '.join(c.limitations)}")
+        if c.raw_steps:
+            lines.append(f"    SOURCE STEPS ({len(c.raw_steps)} steps fetched from protocols.io):")
+            for j, step_text in enumerate(c.raw_steps[:15]):
+                lines.append(f"      {j + 1}. {step_text}")
+        else:
+            lines.append("    (No raw steps available — infer procedure from hypothesis and training knowledge)")
     return "\n".join(lines)
 
 
@@ -213,6 +331,25 @@ def _format_literature_context(lit_qc: LiteratureQCResult) -> str:
     return "\n".join(lines)
 
 
+def _format_step_description(step: _StepLLM) -> str:
+    """Embed all _StepLLM fields into a rich description string."""
+    day_label = f"DAY {step.day}" if step.day > 0 else "DAY 0 (PREP)"
+    header = f"{day_label} | {step.expected_duration} | {step.sub_protocol}"
+
+    parts = [header, step.description]
+
+    if step.equipment:
+        parts.append("Equipment: " + ", ".join(step.equipment))
+    if step.reagents:
+        parts.append("Reagents: " + ", ".join(step.reagents))
+    if step.expected_outcome:
+        parts.append(f"Expected outcome: {step.expected_outcome}")
+    if step.safety_note:
+        parts.append(f"Safety: {step.safety_note}")
+
+    return "\n".join(parts)
+
+
 # ---------------------------------------------------------------------------
 # LLM call
 # ---------------------------------------------------------------------------
@@ -223,8 +360,11 @@ def _generate_plan_with_llm(
     protocol_candidates: list[ProtocolCandidate],
     literature_qc: LiteratureQCResult,
     feedback_notes: list[str],
+    complexity: Literal["simple", "moderate", "complex"],
 ) -> _PlanLLMOutput:
     client = get_client()
+
+    min_steps, max_steps = _STEP_COUNT_MAP[complexity]
 
     feedback_section = ""
     if feedback_notes:
@@ -242,12 +382,14 @@ def _generate_plan_with_llm(
         f"- mechanistic_rationale: {hypothesis.mechanistic_rationale}\n"
         f"- experiment_type: {hypothesis.experiment_type}\n"
         f"- readiness: {hypothesis.readiness}\n\n"
+        f"COMPLEXITY: {complexity.upper()} — generate {min_steps}–{max_steps} steps minimum.\n\n"
         "LITERATURE CONTEXT\n"
         f"{_format_literature_context(literature_qc)}\n\n"
         "AVAILABLE PROTOCOL CANDIDATES (from protocols.io)\n"
         f"{_format_protocol_candidates(protocol_candidates)}\n"
         f"{feedback_section}\n\n"
-        "Generate a concrete, actionable experiment plan for this hypothesis."
+        "Generate a complete, expert-level experiment plan for this hypothesis. "
+        f"You MUST produce at least {min_steps} steps."
     )
 
     return client.chat.completions.create(
@@ -367,17 +509,17 @@ def run(
     protocol_candidates: list[ProtocolCandidate] | None = None,
     literature_qc: LiteratureQCResult | None = None,
 ) -> ExperimentPlan:
-    """Generate an experiment plan for the given hypothesis.
+    """Generate an expert-level experiment plan for the given hypothesis.
 
     Args:
         hypothesis: Structured hypothesis from the intake agent.
         risks: Risk items from the risk agent (used for mitigation steps).
         feedback_incorporated: Prior feedback notes to incorporate.
-        protocol_candidates: Candidate protocols from protocol retrieval.
+        protocol_candidates: Candidates from protocol retrieval (may include raw_steps).
         literature_qc: Literature QC result for context.
 
     Returns:
-        A fully populated ExperimentPlan.
+        A fully populated ExperimentPlan with rich, hypothesis-scaled steps.
     """
     if USE_STUB_AGENTS:
         return _stub_plan(hypothesis, risks, feedback_incorporated)
@@ -392,8 +534,13 @@ def run(
         search_coverage="none",
     )
 
+    complexity = _classify_complexity(hypothesis)
+    logger.info("Plan agent complexity=%s for experiment_type=%r", complexity, hypothesis.experiment_type)
+
     try:
-        llm_output = _generate_plan_with_llm(hypothesis, candidates, lit_qc, feedback_incorporated)
+        llm_output = _generate_plan_with_llm(
+            hypothesis, candidates, lit_qc, feedback_incorporated, complexity
+        )
 
         controls = [llm_output.positive_control, llm_output.negative_control]
         if hypothesis.comparator_or_control and hypothesis.comparator_or_control not in controls:
@@ -402,7 +549,7 @@ def run(
         protocol_steps = [
             ProtocolStep(
                 step_number=i + 1,
-                description=step.description,
+                description=_format_step_description(step),
                 linked_to=step.sub_protocol or "hypothesis",
             )
             for i, step in enumerate(llm_output.steps)

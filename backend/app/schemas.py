@@ -172,6 +172,8 @@ class ProtocolCandidate(BaseModel):
     adaptation_notes: str
     missing_steps: list[str]
     limitations: list[str]
+    raw_steps: list[str] = Field(default_factory=list)
+    protocol_url: str = ""
 
 
 class EvidenceClaim(BaseModel):
@@ -364,6 +366,7 @@ class FrontendPlanData(BaseModel):
     phases: list[FrontendPhase]
     experiments: list[FrontendExperiment]
     budget: FrontendBudget
+    confidence_score: float = Field(default=0.0, ge=0.0, le=1.0)
 
 
 # ── Litmus submission schemas ──────────────────────────────────────────────────

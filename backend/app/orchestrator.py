@@ -37,6 +37,14 @@ def run_demo_pipeline(request: DemoRunRequest, plan_id: str | None = None) -> De
         f"{item.feedback} | requested: {', '.join(item.requested_changes) if item.requested_changes else 'none'}"
         for item in prior_feedback
     ]
+    # Incorporate structured scientist reviews sent directly in the request body.
+    # These come from the frontend's ReviewPanel (star ratings + notes) and are
+    # stored in localStorage, then sent as prior_feedback on each generation call.
+    for fb in request.prior_feedback:
+        if fb.note.strip():
+            feedback_notes.append(
+                f"{fb.experiment_type} › {fb.section} (rating {fb.rating}/5): {fb.note}"
+            )
 
     plan = run_plan(
         hypothesis=hypothesis,

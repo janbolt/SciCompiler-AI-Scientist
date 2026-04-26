@@ -8,7 +8,8 @@ import { OverviewTab } from "./components/OverviewTab";
 import { ExperimentsTab } from "./components/ExperimentsTab";
 import { BudgetTab } from "./components/BudgetTab";
 import { SubmitTab } from "./components/SubmitTab";
-import { buildPriorFeedback } from "./lib/feedbackStore";
+import { FeedbackAppliedBanner } from "./components/FeedbackAppliedBanner";
+import { buildPriorFeedback, loadAllReviews } from "./lib/feedbackStore";
 import { useSetPlan } from "./context/PlanContext";
 import { PlanData } from "./mockData";
 
@@ -17,6 +18,8 @@ type Stage = "input" | "loading" | "results";
 export default function App() {
   const [stage, setStage] = useState<Stage>("input");
   const [tab, setTab] = useState<TabId>("overview");
+  const [currentHypothesis, setCurrentHypothesis] = useState("");
+  const [fetchReady, setFetchReady] = useState(false);
 
   const setPlan = useSetPlan();
 
@@ -26,7 +29,9 @@ export default function App() {
   }
 
   function handleSubmit(hypothesis: string) {
+    setCurrentHypothesis(hypothesis);
     setStage("loading");
+    setFetchReady(false);
 
     const priorFeedback = buildPriorFeedback();
     const useFixture = new URLSearchParams(window.location.search).get("fixture") === "crp";
@@ -46,11 +51,22 @@ export default function App() {
         if (!res.ok) throw new Error(res.statusText);
         return res.json() as Promise<PlanData>;
       })
-      .then((data) => setPlan(data))
+      .then((data) => {
+        setPlan(data);
+        setFetchReady(true);
+      })
       .catch(() => {
-        // Backend not reachable — MOCK_PLAN remains in context
+        // Backend not reachable — MOCK_PLAN remains in context; still unblock loading
+        setFetchReady(true);
       });
   }
+
+  function handleRegenerate() {
+    if (!currentHypothesis) return;
+    handleSubmit(currentHypothesis);
+  }
+
+  const activeReviews = loadAllReviews();
 
   return (
     <div className="min-h-screen text-[var(--color-text)]">
@@ -71,7 +87,7 @@ export default function App() {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
           >
-            <LoadingState onDone={() => setStage("results")} />
+            <LoadingState onDone={() => setStage("results")} ready={fetchReady} />
           </motion.div>
         )}
 
@@ -82,6 +98,7 @@ export default function App() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
           >
+            <FeedbackAppliedBanner reviews={activeReviews} />
             <TabBar active={tab} onChange={setTab} />
             <main className="mx-auto w-full max-w-[860px] px-4 py-6 sm:px-6 sm:py-8">
               <AnimatePresence mode="wait">
@@ -92,7 +109,7 @@ export default function App() {
                   exit={{ opacity: 0, y: -8 }}
                   transition={{ duration: 0.2 }}
                 >
-                  {tab === "overview" && <OverviewTab />}
+                  {tab === "overview" && <OverviewTab onRegenerate={handleRegenerate} />}
                   {tab === "experiments" && <ExperimentsTab />}
                   {tab === "budget" && <BudgetTab />}
                   {tab === "submit" && <SubmitTab />}
