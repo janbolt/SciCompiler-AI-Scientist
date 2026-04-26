@@ -1,0 +1,107 @@
+import { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { Navbar } from "./components/Navbar";
+import { InputScreen } from "./components/InputScreen";
+import { LoadingState } from "./components/LoadingState";
+import { TabBar, TabId } from "./components/TabBar";
+import { OverviewTab } from "./components/OverviewTab";
+import { ExperimentsTab } from "./components/ExperimentsTab";
+import { BudgetTab } from "./components/BudgetTab";
+import { SubmitTab } from "./components/SubmitTab";
+import { buildPriorFeedback } from "./lib/feedbackStore";
+import { useSetPlan } from "./context/PlanContext";
+import { PlanData } from "./mockData";
+
+type Stage = "input" | "loading" | "results";
+
+export default function App() {
+  const [stage, setStage] = useState<Stage>("input");
+  const [tab, setTab] = useState<TabId>("overview");
+
+  const setPlan = useSetPlan();
+
+  function reset() {
+    setStage("input");
+    setTab("overview");
+  }
+
+  function handleSubmit(hypothesis: string) {
+    setStage("loading");
+
+    const priorFeedback = buildPriorFeedback();
+    const useFixture = new URLSearchParams(window.location.search).get("fixture") === "crp";
+    const endpoint = useFixture ? "/fixtures/crp_biosensor_plan_data.json" : "/api/demo/plan";
+    const init = useFixture
+      ? undefined
+      : {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ question: hypothesis, prior_feedback: priorFeedback }),
+        };
+
+    // Call the frontend-shaped endpoint; update plan context if successful.
+    // Falls back to MOCK_PLAN (already in context) if backend is unreachable.
+    fetch(endpoint, init)
+      .then((res) => {
+        if (!res.ok) throw new Error(res.statusText);
+        return res.json() as Promise<PlanData>;
+      })
+      .then((data) => setPlan(data))
+      .catch(() => {
+        // Backend not reachable — MOCK_PLAN remains in context
+      });
+  }
+
+  return (
+    <div className="min-h-screen text-[var(--color-text)]">
+      <Navbar onReset={stage !== "input" ? reset : undefined} />
+
+      <AnimatePresence mode="wait">
+        {stage === "input" && (
+          <motion.div key="input" exit={{ opacity: 0 }} transition={{ duration: 0.2 }}>
+            <InputScreen onSubmit={handleSubmit} />
+          </motion.div>
+        )}
+
+        {stage === "loading" && (
+          <motion.div
+            key="loading"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+          >
+            <LoadingState onDone={() => setStage("results")} />
+          </motion.div>
+        )}
+
+        {stage === "results" && (
+          <motion.div
+            key="results"
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            <TabBar active={tab} onChange={setTab} />
+            <main className="mx-auto w-full max-w-[860px] px-4 py-6 sm:px-6 sm:py-8">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={tab}
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -8 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  {tab === "overview" && <OverviewTab />}
+                  {tab === "experiments" && <ExperimentsTab />}
+                  {tab === "budget" && <BudgetTab />}
+                  {tab === "submit" && <SubmitTab />}
+                </motion.div>
+              </AnimatePresence>
+            </main>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}

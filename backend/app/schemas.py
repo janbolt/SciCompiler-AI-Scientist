@@ -84,9 +84,20 @@ class RunConstraints(BaseModel):
     execution_mode: ExecutionMode = ExecutionMode.in_house
 
 
+class PriorFeedbackItem(BaseModel):
+    """One scientist correction captured from the review UI and passed back to
+    the generation layer so the backend can incorporate it as a few-shot signal."""
+    experiment_type: str
+    section: str  # "steps" | "materials" | "timeline"
+    rating: int = Field(ge=1, le=5)
+    note: str
+    timestamp: str = ""
+
+
 class DemoRunRequest(BaseModel):
     question: str
     constraints: RunConstraints = Field(default_factory=RunConstraints)
+    prior_feedback: list[PriorFeedbackItem] = Field(default_factory=list)
 
 
 _CORE_HYPOTHESIS_FIELDS: tuple[str, ...] = (
@@ -297,4 +308,87 @@ class FeedbackRecord(BaseModel):
     section: str
     severity: Literal["low", "medium", "high"]
     created_at: datetime
+
+
+# ── Frontend-shaped models ────────────────────────────────────────────────────
+# These mirror the TypeScript PlanData types the frontend consumes directly.
+# The /demo/plan endpoint returns FrontendPlanData so the UI can drop MOCK_PLAN.
+
+class FrontendMaterial(BaseModel):
+    name: str
+    catalog: str
+    supplier: str
+    qty: str
+    unit_cost_eur: float
+    total_eur: float
+
+
+class FrontendExperiment(BaseModel):
+    id: str
+    name: str
+    duration: str
+    cro_compatible: bool
+    goal: str
+    success_criteria: str
+    steps: list[str]
+    materials: list[FrontendMaterial]
+
+
+class FrontendReference(BaseModel):
+    citation: str
+    doi: str
+
+
+class FrontendBudgetLine(BaseModel):
+    item: str
+    cost_eur: float
+
+
+class FrontendBudget(BaseModel):
+    fixed: list[FrontendBudgetLine]
+    staff: list[FrontendBudgetLine]
+    recurring: list[FrontendBudgetLine]
+    total_eur: float
+
+
+class FrontendPhase(BaseModel):
+    name: str
+    days: int
+
+
+class FrontendPlanData(BaseModel):
+    hypothesis: str
+    objective: str
+    novelty_signal: Literal["not found", "similar work exists", "exact match found"]
+    references: list[FrontendReference]
+    phases: list[FrontendPhase]
+    experiments: list[FrontendExperiment]
+    budget: FrontendBudget
+
+
+# ── Litmus submission schemas ──────────────────────────────────────────────────
+
+class LitmusSubmitRequest(BaseModel):
+    """Sent by the React frontend to POST /litmus/submit."""
+    hypothesis: str
+    experiment_ids: list[str]  # which experiments to submit (by id)
+    experiments: list[FrontendExperiment]  # full experiment objects for mapping
+
+
+class LitmusSubmitResult(BaseModel):
+    """Result for a single submitted experiment."""
+    experiment_name: str
+    experiment_type: str
+    litmus_experiment_id: str | None = None
+    status: str
+    estimated_cost_usd: float | None = None
+    estimated_turnaround_days: int | None = None
+    error: str | None = None
+
+
+class LitmusSubmitResponse(BaseModel):
+    """Returned to the React frontend after submission."""
+    results: list[LitmusSubmitResult]
+    total_submitted: int
+    total_errors: int
 
