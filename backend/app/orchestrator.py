@@ -11,6 +11,7 @@ from app.agents.literature_qc import run_literature_qc_agent as _run_literature_
 from app.agents.plan import run as _run_plan
 from app.agents.protocol_retrieval import run as _run_protocol_retrieval
 from app.agents.risk import run as _run_risk
+from app.agents.staffing import run as _run_staffing
 from app.agents.timeline import run as _run_timeline
 from app.agents.validation import run as _run_validation
 from app.schemas import (
@@ -19,6 +20,7 @@ from app.schemas import (
     FeedbackRecord,
     FeedbackRequest,
     FeedbackResponse,
+    StaffingPlan,
     StructuredHypothesis,
 )
 from app.services.memory import (
@@ -39,6 +41,7 @@ AGENT_ORDER = [
     "plan",
     "budget",
     "timeline",
+    "staffing",
     "validation",
     "cro_ready_brief",
 ]
@@ -52,8 +55,9 @@ AGENT_DEPENDENCIES = {
     "plan": ["hypothesis", "literature_qc", "protocol_candidates", "evidence_claims", "risks"],
     "budget": ["hypothesis", "plan"],
     "timeline": ["hypothesis", "plan", "budget"],
+    "staffing": ["hypothesis", "plan", "timeline"],
     "validation": ["hypothesis", "plan"],
-    "cro_ready_brief": ["hypothesis", "plan", "budget", "timeline", "validation"],
+    "cro_ready_brief": ["hypothesis", "plan", "budget", "timeline", "staffing", "validation"],
 }
 
 
@@ -249,6 +253,27 @@ def run_timeline_agent(
     )
 
 
+def run_staffing_agent(
+    hypothesis: StructuredHypothesis,
+    plan,
+    timeline,
+    prior_context: str = "",
+    scientist_feedback: str = "",
+) -> StaffingPlan:
+    combined_feedback_parts: list[str] = []
+    if prior_context:
+        combined_feedback_parts.append(prior_context)
+    if scientist_feedback:
+        combined_feedback_parts.append(scientist_feedback)
+    combined_feedback = "\n\n".join(combined_feedback_parts)
+    return _run_staffing(
+        hypothesis,
+        plan,
+        timeline,
+        scientist_feedback=combined_feedback,
+    )
+
+
 def run_validation_agent(
     hypothesis: StructuredHypothesis,
     plan,
@@ -410,6 +435,13 @@ def run_demo_pipeline(request: DemoRunRequest, plan_id: str | None = None) -> De
         scientist_feedback="\n".join(timeline_feedback_lines),
     )
 
+    staffing = run_staffing_agent(
+        hypothesis,
+        plan,
+        timeline,
+        prior_context=_build_prior_context(hypothesis, section="staffing"),
+    )
+
     validation = run_validation_agent(
         hypothesis,
         plan,
@@ -443,6 +475,7 @@ def run_demo_pipeline(request: DemoRunRequest, plan_id: str | None = None) -> De
         materials=materials,
         budget=budget,
         timeline=timeline,
+        staffing=staffing,
         validation=validation,
         cro_ready_brief=cro_ready_brief,
         confidence_score=_confidence_score(
@@ -516,6 +549,7 @@ def selective_regenerate(
         "plan": existing_plan.plan,
         "budget": existing_plan.budget,
         "timeline": existing_plan.timeline,
+        "staffing": existing_plan.staffing,
         "validation": existing_plan.validation,
         "cro_ready_brief": existing_plan.cro_ready_brief,
     }
@@ -601,6 +635,14 @@ def selective_regenerate(
             current["timeline"] = result
             plan_data["timeline"] = result.model_dump()
             feedback_trace.append(f"Timeline Agent re-ran{trace_suffix}")
+
+        elif section == "staffing":
+            result = run_staffing_agent(
+                current["hypothesis"], current["plan"], current["timeline"], scientist_feedback=fb
+            )
+            current["staffing"] = result
+            plan_data["staffing"] = result.model_dump()
+            feedback_trace.append(f"Staffing Agent re-ran{trace_suffix}")
 
         elif section == "validation":
             result = run_validation_agent(

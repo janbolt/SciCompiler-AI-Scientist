@@ -5,6 +5,17 @@ type Props = {
   onRegenerate?: () => void;
 };
 
+// Locally-typed slice of FrontendStaffingPlan from the backend. We type it
+// here so OverviewTab can render the optional "Team Required" card without
+// modifying the shared mockData.ts (kept untouched to preserve compatibility
+// with MOCK_PLAN and other tabs).
+type StaffingSummary = {
+  recommended_team_size: number;
+  can_single_person_execute: boolean;
+  total_staffing_cost_eur: number;
+  cro_delegation_recommendation: string;
+};
+
 const NOVELTY_STYLES: Record<
   string,
   { label: string; bg: string; bar: string; text: string }
@@ -57,13 +68,25 @@ function getConfidenceLevel(score: number): ConfidenceLevel {
 }
 
 export function OverviewTab({ onRegenerate }: Props) {
-  const { references, novelty_signal, hypothesis, objective, budget, phases, confidence_score } = usePlan();
+  const plan = usePlan();
+  const { references, novelty_signal, hypothesis, objective, budget, phases, confidence_score } = plan;
   const novelty = NOVELTY_STYLES[novelty_signal];
   const totalPhaseDays = phases.reduce((sum, p) => sum + p.days, 0);
   const totalBudgetEur = budget.total_eur;
 
   const pct = Math.round((confidence_score ?? 0) * 100);
   const conf = getConfidenceLevel(confidence_score ?? 0);
+
+  // Read the optional staffing block via a typed cast so we don't have to
+  // touch mockData.ts. When the backend returns a FrontendStaffingPlan the
+  // /demo/plan adapter attaches it under `staffing`; older plans omit it.
+  const staffing = (plan as unknown as { staffing?: StaffingSummary | null }).staffing ?? null;
+  const staffingCostStr = staffing
+    ? `€${Math.round(staffing.total_staffing_cost_eur).toLocaleString("en-US")}`
+    : "";
+  const croRecommendation = staffing?.cro_delegation_recommendation ?? "";
+  const truncatedCroRec =
+    croRecommendation.length > 120 ? `${croRecommendation.slice(0, 120).trimEnd()}…` : croRecommendation;
 
   return (
     <div className="space-y-6">
@@ -279,6 +302,79 @@ export function OverviewTab({ onRegenerate }: Props) {
           );
         })}
       </section>
+
+      {/* Team Required (rendered only when the backend supplies a staffing plan) */}
+      {staffing && (
+        <section className="card px-5 py-4 space-y-3">
+          <div className="flex items-center justify-between gap-3">
+            <span className="eyebrow">Team Required</span>
+            <span
+              className="px-3 py-1 text-[0.65rem] font-bold uppercase tracking-wider"
+              style={
+                staffing.can_single_person_execute
+                  ? {
+                      background: "rgba(22,163,74,0.08)",
+                      color: "#166534",
+                      borderRadius: 999,
+                    }
+                  : {
+                      background: "rgba(217,119,6,0.08)",
+                      color: "#92400e",
+                      borderRadius: 999,
+                    }
+              }
+            >
+              {staffing.can_single_person_execute ? "Solo-executable" : "Team required"}
+            </span>
+          </div>
+          <div className="divider" />
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 pt-1">
+            <div>
+              <div className="eyebrow mb-2">Recommended Team Size</div>
+              <div className="flex items-baseline gap-1.5">
+                <span
+                  className="text-4xl font-bold tracking-tight"
+                  style={{ fontFamily: "var(--font-serif)" }}
+                >
+                  {staffing.recommended_team_size}
+                </span>
+                <span className="text-sm" style={{ color: "var(--color-text-muted)" }}>
+                  {staffing.recommended_team_size === 1 ? "person" : "people"}
+                </span>
+              </div>
+            </div>
+            <div>
+              <div className="eyebrow mb-2">Total Staffing Cost</div>
+              <div className="flex items-baseline gap-1">
+                <span
+                  className="text-4xl font-bold tracking-tight"
+                  style={{ fontFamily: "var(--font-serif)" }}
+                >
+                  {staffingCostStr}
+                </span>
+                <span className="text-sm" style={{ color: "var(--color-text-muted)" }}>
+                  estimated
+                </span>
+              </div>
+            </div>
+          </div>
+          {truncatedCroRec && (
+            <>
+              <div className="divider" />
+              <div>
+                <div className="eyebrow mb-2">CRO Delegation Recommendation</div>
+                <p
+                  className="text-sm leading-relaxed"
+                  style={{ color: "var(--color-text)" }}
+                  title={croRecommendation}
+                >
+                  {truncatedCroRec}
+                </p>
+              </div>
+            </>
+          )}
+        </section>
+      )}
     </div>
   );
 }

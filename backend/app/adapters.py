@@ -25,9 +25,12 @@ from .schemas import (
     FrontendPhase,
     FrontendPlanData,
     FrontendReference,
+    FrontendStaffingPlan,
+    FrontendStaffingRole,
     LiteratureQCResult,
     MaterialItem,
     ProtocolStep,
+    StaffingPlan,
     StructuredHypothesis,
     TimelineEstimate,
     ValidationPlan,
@@ -99,13 +102,18 @@ def _map_phases(timeline: TimelineEstimate) -> list[FrontendPhase]:
 
 # ── Budget ────────────────────────────────────────────────────────────────────
 
-def _build_budget(experiments: list[FrontendExperiment]) -> FrontendBudget:
+def _build_budget(
+    experiments: list[FrontendExperiment],
+    staffing: StaffingPlan | None = None,
+) -> FrontendBudget:
     """
     Derive a structured budget from the experiment materials.
 
-    Split into three categories by heuristic:
-      fixed    — equipment/infrastructure one-off fees
-      staff    — researcher time (8h/experiment-day at 45 EUR/h)
+    Split into three categories:
+      fixed     — equipment/infrastructure one-off fees
+      staff     — one budget line per StaffingRole when a StaffingPlan is
+                  available; otherwise the legacy total_days × 8h × 45 EUR/h
+                  fallback so old saved plans still render.
       recurring — all consumable materials
     """
     recurring: list[FrontendBudgetLine] = []
@@ -123,17 +131,29 @@ def _build_budget(experiments: list[FrontendExperiment]) -> FrontendBudget:
         ),
     ]
 
-    total_days = sum(
-        int(e.duration.split()[0]) if e.duration.split()[0].isdigit() else 3
-        for e in experiments
-    )
-    staff_hours = total_days * 8
-    staff = [
-        FrontendBudgetLine(
-            item=f"Researcher time ({staff_hours}h × 45 EUR/h)",
-            cost_eur=round(staff_hours * 45.0, 2),
+    if staffing is not None and staffing.roles:
+        staff = [
+            FrontendBudgetLine(
+                item=(
+                    f"{role.role_title} "
+                    f"({role.estimated_hours}h × {role.hourly_rate_eur} EUR/h)"
+                ),
+                cost_eur=round(role.total_cost_eur, 2),
+            )
+            for role in staffing.roles
+        ]
+    else:
+        total_days = sum(
+            int(e.duration.split()[0]) if e.duration.split()[0].isdigit() else 3
+            for e in experiments
         )
-    ]
+        staff_hours = total_days * 8
+        staff = [
+            FrontendBudgetLine(
+                item=f"Researcher time ({staff_hours}h × 45 EUR/h)",
+                cost_eur=round(staff_hours * 45.0, 2),
+            )
+        ]
 
     total = (
         sum(b.cost_eur for b in fixed)
@@ -149,6 +169,33 @@ def _build_budget(experiments: list[FrontendExperiment]) -> FrontendBudget:
     )
 
 
+# ── Staffing ──────────────────────────────────────────────────────────────────
+
+def _map_staffing(staffing: StaffingPlan | None) -> FrontendStaffingPlan | None:
+    """Convert the backend StaffingPlan into the frontend-shaped model."""
+    if staffing is None:
+        return None
+    return FrontendStaffingPlan(
+        roles=[
+            FrontendStaffingRole(
+                role_title=r.role_title,
+                required_skills=list(r.required_skills),
+                phases_involved=list(r.phases_involved),
+                estimated_hours=r.estimated_hours,
+                hourly_rate_eur=r.hourly_rate_eur,
+                total_cost_eur=r.total_cost_eur,
+            )
+            for r in staffing.roles
+        ],
+        minimum_team_size=staffing.minimum_team_size,
+        recommended_team_size=staffing.recommended_team_size,
+        can_single_person_execute=staffing.can_single_person_execute,
+        total_staffing_cost_eur=staffing.total_staffing_cost_eur,
+        cro_delegation_recommendation=staffing.cro_delegation_recommendation,
+        staffing_notes=staffing.staffing_notes,
+    )
+
+
 # ── Experiments ───────────────────────────────────────────────────────────────
 
 def _estimate_duration_from_steps(steps: list[ProtocolStep]) -> str:
@@ -161,7 +208,10 @@ def _estimate_duration_from_steps(steps: list[ProtocolStep]) -> str:
     return f"{span} day{'s' if span > 1 else ''}"
 
 
-def _map_experiments(demo: DemoRunResponse) -> list[FrontendExperiment]:
+def _map_experiments(
+    demo: DemoRunResponse,
+    staffing: StaffingPlan | None = None,
+) -> list[FrontendExperiment]:
     """
     Build one FrontendExperiment per distinct sub-protocol (grouped by
     ProtocolStep.linked_to) from the ExperimentPlan produced by the pipeline.
@@ -169,7 +219,12 @@ def _map_experiments(demo: DemoRunResponse) -> list[FrontendExperiment]:
     Materials are distributed to their matching sub-protocol card using
     MaterialItem.linked_to. For old plans without tags, all materials fall
     back to the first card.
+
+    The ``staffing`` argument is plumbed through here so the staffing plan
+    can flow downstream to ``_build_budget`` (via ``to_frontend_plan``)
+    without requiring callers to pass the demo response twice.
     """
+    _ = staffing  # threaded through for _build_budget; consumed by to_frontend_plan
     plan: ExperimentPlan = demo.plan
     materials: list[MaterialItem] = demo.materials
     budget: BudgetEstimate = demo.budget
@@ -374,6 +429,7 @@ def to_frontend_plan(
     lit_qc: LiteratureQCResult,
     timeline: TimelineEstimate,
     experiments: list[FrontendExperiment],
+    staffing: StaffingPlan | None = None,
 ) -> FrontendPlanData:
     """
     Assemble a FrontendPlanData object from individual agent outputs.
@@ -386,18 +442,20 @@ def to_frontend_plan(
         references=_map_references(lit_qc),
         phases=_map_phases(timeline),
         experiments=experiments,
-        budget=_build_budget(experiments),
+        budget=_build_budget(experiments, staffing=staffing),
     )
 
 
 def demo_response_to_frontend(demo: DemoRunResponse) -> FrontendPlanData:
     """Convert a full DemoRunResponse into the FrontendPlanData the UI consumes."""
-    experiments = _map_experiments(demo)
+    experiments = _map_experiments(demo, staffing=demo.staffing)
     fp = to_frontend_plan(
         hypothesis=demo.hypothesis,
         lit_qc=demo.literature_qc,
         timeline=demo.timeline,
         experiments=experiments,
+        staffing=demo.staffing,
     )
     fp.confidence_score = demo.confidence_score
+    fp.staffing = _map_staffing(demo.staffing)
     return fp

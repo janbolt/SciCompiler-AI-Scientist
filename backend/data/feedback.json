@@ -389,5 +389,26 @@
     "severity": "major",
     "global_feedback": "Be more rigorous.",
     "created_at": "2026-04-26T07:11:51.801121Z"
+  },
+  {
+    "plan_id": "9fa6f000-7c74-42d0-8ffe-f6ad6dc57d16",
+    "feedback": "Add explicit viability assay calibration note.",
+    "requested_changes": [
+      "validation calibration details"
+    ],
+    "section": "overall_plan",
+    "severity": "medium",
+    "created_at": "2026-04-26T10:37:14.004581Z"
+  },
+  {
+    "plan_id": "957f6170-eba5-4e0e-b2a8-5c45a1a75fec",
+    "section": "plan",
+    "feedback_text": "Clarify replicate gate for execution readiness.",
+    "requested_changes": [
+      "replicate gate in plan text"
+    ],
+    "severity": "major",
+    "global_feedback": "",
+    "created_at": "2026-04-26T08:37:29.626746Z"
   }
 ]

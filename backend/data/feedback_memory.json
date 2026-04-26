@@ -42,7 +42,7 @@
       ],
       "experiment_type": "comparative_cryopreservation",
       "created_at": "2026-04-26T04:55:58.166723Z",
-      "applied_count": 445
+      "applied_count": 505
     },
     {
       "fingerprint": "comparative_cryopreservation__replace_sucrose",
@@ -62,7 +62,7 @@
       ],
       "experiment_type": "comparative_cryopreservation",
       "created_at": "2026-04-26T04:55:58.182824Z",
-      "applied_count": 389
+      "applied_count": 449
     },
     {
       "fingerprint": "comparative_cryopreservation__replace_sucrose",
@@ -128,7 +128,18 @@
       ],
       "experiment_type": "comparative_cryopreservation",
       "created_at": "2026-04-26T06:11:31.088400Z",
-      "applied_count": 74
+      "applied_count": 134
+    },
+    {
+      "fingerprint": "comparative_cryopreservation__replace_sucrose",
+      "section": "plan",
+      "feedback_text": "Clarify replicate gate for execution readiness.",
+      "requested_changes": [
+        "replicate gate in plan text"
+      ],
+      "experiment_type": "comparative_cryopreservation",
+      "created_at": "2026-04-26T08:37:29.626746Z",
+      "applied_count": 0
     }
   ],
   "comparative_cryopreservation__250_mm": [

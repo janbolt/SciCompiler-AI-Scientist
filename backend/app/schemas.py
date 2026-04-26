@@ -288,6 +288,111 @@ class CROReadyBrief(BaseModel):
     questions_for_cro: list[str]
 
 
+class StaffingRole(BaseModel):
+    role_title: str = Field(
+        ...,
+        description=(
+            "Exact lab role title (e.g. 'Research Associate', 'Scientist', "
+            "'Senior Scientist', 'PI', 'Bioinformatician', 'Lab Manager')."
+        ),
+    )
+    required_skills: list[str] = Field(
+        ...,
+        description=(
+            "Specific technical skills the role must have for this experiment "
+            "(e.g. 'cell culture', 'qPCR', 'FACS', 'statistical analysis')."
+        ),
+    )
+    phases_involved: list[str] = Field(
+        ...,
+        description="Phase names from the timeline that this role is responsible for.",
+    )
+    estimated_hours: float = Field(
+        ...,
+        ge=0.0,
+        description="Total active working hours across the entire experiment for this role.",
+    )
+    hourly_rate_eur: float = Field(
+        ...,
+        ge=0.0,
+        description=(
+            "Typical all-in hourly rate in EUR for this role at an academic or "
+            "biotech lab (loaded cost — salary + overhead). PI: 90–120; "
+            "Senior Scientist: 70–90; Scientist: 50–70; "
+            "Research Associate: 35–50; Bioinformatician: 55–75; "
+            "Lab Manager: 40–55."
+        ),
+    )
+    total_cost_eur: float = Field(
+        ...,
+        ge=0.0,
+        description=(
+            "Computed as estimated_hours × hourly_rate_eur. "
+            "Python MUST recompute this after construction to avoid LLM arithmetic errors."
+        ),
+    )
+
+
+class StaffingPlan(BaseModel):
+    roles: list[StaffingRole] = Field(
+        ...,
+        min_length=1,
+        description="One entry per distinct role required across the full experiment.",
+    )
+    minimum_team_size: int = Field(
+        ...,
+        ge=1,
+        description=(
+            "Fewest people who could run this experiment (bare minimum, "
+            "e.g. one person covering multiple roles)."
+        ),
+    )
+    recommended_team_size: int = Field(
+        ...,
+        ge=1,
+        description="Optimal team size for quality and timeline adherence.",
+    )
+    can_single_person_execute: bool = Field(
+        ...,
+        description=(
+            "True only if a single scientist with the right skills could "
+            "realistically run every phase without help."
+        ),
+    )
+    total_staffing_cost_eur: float = Field(
+        ...,
+        ge=0.0,
+        description=(
+            "Sum of total_cost_eur across all roles. "
+            "Python MUST recompute from roles after construction."
+        ),
+    )
+    cro_delegation_recommendation: str = Field(
+        ...,
+        description=(
+            "Which specific phases or tasks would most benefit from CRO "
+            "delegation, and why (cost, complexity, equipment)."
+        ),
+    )
+    staffing_notes: str = Field(
+        ...,
+        description=(
+            "Any important caveats: parallel vs sequential role requirements, "
+            "biosafety training needs, equipment-operator certifications, "
+            "or bottlenecks caused by single points of expertise."
+        ),
+    )
+
+    @model_validator(mode="after")
+    def _recompute_costs(self) -> "StaffingPlan":
+        for role in self.roles:
+            role.total_cost_eur = round(role.estimated_hours * role.hourly_rate_eur, 2)
+        self.total_staffing_cost_eur = round(
+            sum(r.total_cost_eur for r in self.roles), 2
+        )
+        return self
+
+
 class DemoRunResponse(BaseModel):
     plan_id: str
     hypothesis: StructuredHypothesis
@@ -299,6 +404,9 @@ class DemoRunResponse(BaseModel):
     materials: list[MaterialItem]
     budget: BudgetEstimate
     timeline: TimelineEstimate
+    # Optional so the 109 existing saved plan JSONs (which predate the
+    # staffing agent) still validate via DemoRunResponse.model_validate.
+    staffing: StaffingPlan | None = None
     validation: ValidationPlan
     cro_ready_brief: CROReadyBrief
     confidence_score: float = Field(ge=0.0, le=1.0)
@@ -409,6 +517,25 @@ class FrontendPhase(BaseModel):
     days: int
 
 
+class FrontendStaffingRole(BaseModel):
+    role_title: str
+    required_skills: list[str]
+    phases_involved: list[str]
+    estimated_hours: float
+    hourly_rate_eur: float
+    total_cost_eur: float
+
+
+class FrontendStaffingPlan(BaseModel):
+    roles: list[FrontendStaffingRole]
+    minimum_team_size: int
+    recommended_team_size: int
+    can_single_person_execute: bool
+    total_staffing_cost_eur: float
+    cro_delegation_recommendation: str
+    staffing_notes: str
+
+
 class FrontendPlanData(BaseModel):
     hypothesis: str
     objective: str
@@ -418,6 +545,7 @@ class FrontendPlanData(BaseModel):
     experiments: list[FrontendExperiment]
     budget: FrontendBudget
     confidence_score: float = Field(default=0.0, ge=0.0, le=1.0)
+    staffing: FrontendStaffingPlan | None = None
 
 
 # ── Litmus submission schemas ──────────────────────────────────────────────────
