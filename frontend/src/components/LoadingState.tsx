@@ -32,13 +32,13 @@ export function LoadingState({ onDone }: Props) {
   const progress = ((idx + 1) / STATUSES.length) * 100;
 
   return (
-    <div className="mx-auto flex min-h-[calc(100vh-3rem)] w-full max-w-[860px] flex-col justify-center px-4 sm:px-6">
+    <div className="mx-auto flex min-h-[calc(100vh-3rem)] w-full max-w-[720px] flex-col justify-center px-5 sm:px-6">
       <div className="space-y-8">
         <div
           style={{
-            height: 2,
+            height: 3,
             background: "var(--color-border)",
-            position: "relative",
+            borderRadius: 999,
             overflow: "hidden",
           }}
         >
@@ -49,6 +49,7 @@ export function LoadingState({ onDone }: Props) {
             style={{
               height: "100%",
               background: "var(--color-accent)",
+              borderRadius: 999,
             }}
           />
         </div>
@@ -61,7 +62,8 @@ export function LoadingState({ onDone }: Props) {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -6 }}
               transition={{ duration: 0.3 }}
-              className="text-[var(--color-muted)] font-mono text-sm"
+              className="text-sm"
+              style={{ fontFamily: "var(--font-mono)", color: "var(--color-accent-label)" }}
             >
               {STATUSES[idx]}
             </motion.div>

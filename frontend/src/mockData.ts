@@ -28,8 +28,10 @@ export type BudgetLine = { item: string; cost_eur: number };
 export type PlanData = {
   hypothesis: string;
   objective: string;
-  total_duration_days: number;
-  total_budget_eur: number;
+  /** @deprecated derive from phases[].days sum instead */
+  total_duration_days?: number;
+  /** @deprecated derive from budget.total_eur instead */
+  total_budget_eur?: number;
   novelty_signal: "not found" | "similar work exists" | "exact match found";
   references: Reference[];
   experiments: Experiment[];

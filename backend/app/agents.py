@@ -273,16 +273,19 @@ def plan_agent(
         )
         next_step += 1
 
+    # Silently incorporate prior scientist corrections.
+    # These are used as generation context — not surfaced as labelled steps.
+    incorporated: list[str] = []
+    for note in (feedback_notes or []):
+        clean = note.split("] ", 1)[-1] if "] " in note else note
+        incorporated.append(clean)
+
     assumptions = [
         "Trehalose concentration range is compatible with HeLa osmolality tolerance.",
         "Operator handling and thaw timing are standardized across arms.",
     ]
     if hypothesis.missing_fields:
         assumptions.append(f"Unspecified fields remain unresolved: {', '.join(hypothesis.missing_fields)}.")
-
-    incorporated = feedback_notes or []
-    if incorporated:
-        assumptions.append("Plan updated with stored scientist feedback notes.")
 
     return ExperimentPlan(
         id=plan_id,
@@ -413,6 +416,99 @@ def validation_agent() -> ValidationPlan:
         ],
         suggested_statistical_comparison="Two-sided t-test or Mann-Whitney U (depending on normality) with replicate-level analysis.",
     )
+
+
+def experiments_agent(
+    hypothesis: StructuredHypothesis,
+    risks: list[RiskItem],
+    feedback_notes: list[str] | None = None,
+) -> "list":
+    """
+    Produces a list of FrontendExperiment objects — steps and materials grouped
+    per experiment.  This is the primary output consumed by the frontend's
+    Experiments tab.  The stub implementation is tailored to the cryopreservation
+    demo hypothesis; an LLM-backed version would derive experiments dynamically.
+    """
+    from .schemas import FrontendExperiment, FrontendMaterial
+
+    # Incorporate any scientist feedback notes as additional step text
+    correction_steps: list[str] = []
+    for note in (feedback_notes or []):
+        clean = note.split("] ", 1)[-1] if "] " in note else note
+        correction_steps.append(f"[Scientist correction incorporated] {clean}")
+
+    exp1 = FrontendExperiment(
+        id="exp-01",
+        name="Cell Culture & Cryomedia Preparation",
+        duration="3 days",
+        cro_compatible=False,
+        goal="Culture HeLa cells to consistent confluency and prepare both cryoprotectant arms before freezing.",
+        success_criteria="Cells at 80–90% confluency; cryomedia prepared fresh and osmolality confirmed within ±10 mOsm/kg of target.",
+        steps=[
+            "Culture HeLa cells in DMEM + 10% FBS + 1% Pen/Strep at 37°C, 5% CO₂. Passage to T-75 flasks 72h before freezing.",
+            "Confirm confluency at 80–90% by brightfield microscopy on day of harvest.",
+            "Prepare Control cryomedia: DMEM + 10% FBS + 10% DMSO (standard arm).",
+            "Prepare Trehalose cryomedia: DMEM + 10% FBS + 100 mM trehalose (test arm). Verify osmolality with osmometer.",
+            "Trypsinize cells, count with hemocytometer (target 2×10⁶ cells/ml), resuspend in respective cryomedia.",
+            "Aliquot 1 ml per cryovial. Label blinded (operator unaware of arm assignment).",
+            *correction_steps,
+        ],
+        materials=[
+            FrontendMaterial(name="HeLa cell line (ATCC CCL-2)", catalog="CCL-2", supplier="ATCC", qty="1 vial", unit_cost_eur=450.0, total_eur=450.0),
+            FrontendMaterial(name="DMEM, high glucose", catalog="11965092", supplier="Thermo Fisher", qty="500 ml", unit_cost_eur=14.0, total_eur=14.0),
+            FrontendMaterial(name="Fetal Bovine Serum", catalog="10270106", supplier="Thermo Fisher", qty="100 ml", unit_cost_eur=65.0, total_eur=65.0),
+            FrontendMaterial(name="DMSO, cell culture grade", catalog="D2650", supplier="Sigma-Aldrich", qty="50 ml", unit_cost_eur=42.0, total_eur=42.0),
+            FrontendMaterial(name="Trehalose dihydrate", catalog="T9531", supplier="Sigma-Aldrich", qty="5 g", unit_cost_eur=28.0, total_eur=28.0),
+            FrontendMaterial(name="Cryogenic vials (2 ml)", catalog="5000-0012", supplier="Nunc", qty="50 vials", unit_cost_eur=0.6, total_eur=30.0),
+        ],
+    )
+
+    exp2 = FrontendExperiment(
+        id="exp-02",
+        name="Controlled-Rate Freeze & Storage",
+        duration="2 days",
+        cro_compatible=True,
+        goal="Freeze cell suspensions under controlled rate (−1°C/min) to minimize ice crystal formation, then store in LN₂.",
+        success_criteria="Cooling log confirms −1°C/min rate through −80°C; all vials transferred to LN₂ within 15 min of reaching −80°C.",
+        steps=[
+            "Pre-chill isopropanol-filled controlled-rate freezing container (Mr. Frosty) to 4°C for 30 min.",
+            "Place labelled cryovials into container; transfer to −80°C freezer immediately.",
+            "Freeze overnight at −1°C/min rate. Verify log from thermal logger attached to representative vial.",
+            "Next day: transfer vials to liquid nitrogen dewar. Record vial positions in cryogenic inventory.",
+            "Store at −196°C for minimum 7 days before thaw to simulate realistic biobanking conditions.",
+        ],
+        materials=[
+            FrontendMaterial(name="Mr. Frosty controlled-rate freezing container", catalog="5100-0001", supplier="Nunc", qty="1 unit", unit_cost_eur=85.0, total_eur=85.0),
+            FrontendMaterial(name="Thermal data logger (mini)", catalog="EL-USB-1", supplier="EasyLog", qty="1 unit", unit_cost_eur=38.0, total_eur=38.0),
+            FrontendMaterial(name="Liquid nitrogen dewar (bench-top)", catalog="lab_equipment", supplier="Core Facility", qty="1 use", unit_cost_eur=50.0, total_eur=50.0),
+        ],
+    )
+
+    exp3 = FrontendExperiment(
+        id="exp-03",
+        name="Post-Thaw Viability Assessment",
+        duration="2 days",
+        cro_compatible=True,
+        goal="Quantify immediate (0h) and delayed (24h) post-thaw viability to capture both acute and apoptotic cell death.",
+        success_criteria="Trehalose arm shows ≥15 percentage-point improvement in 24h viability over DMSO control (p<0.05, unpaired t-test, n=3 biological replicates).",
+        steps=[
+            "Remove vials from LN₂; thaw rapidly in 37°C water bath for 60–90 s with gentle agitation. Do not exceed 2 min.",
+            "Transfer contents dropwise to 10 ml warm DMEM. Centrifuge 300×g, 5 min. Aspirate supernatant.",
+            "Resuspend pellet in 1 ml DMEM. Count viable cells by trypan blue exclusion (hemocytometer). Record 0h viability.",
+            "Plate cells in 6-well plates at 5×10⁴/well. Culture 24h at 37°C, 5% CO₂.",
+            "At 24h: harvest cells by trypsinization. Stain with propidium iodide (1 μg/ml) and Annexin V-FITC. Analyze by flow cytometry.",
+            "Calculate % live (PI⁻/Annexin V⁻) per well. Average across duplicate wells per animal replicate.",
+            "Perform unpaired two-tailed t-test between DMSO and trehalose arms. α=0.05.",
+        ],
+        materials=[
+            FrontendMaterial(name="Trypan Blue Solution 0.4%", catalog="15250061", supplier="Thermo Fisher", qty="100 ml", unit_cost_eur=18.0, total_eur=18.0),
+            FrontendMaterial(name="Annexin V-FITC / PI Apoptosis Kit", catalog="V13242", supplier="Thermo Fisher", qty="1 kit", unit_cost_eur=240.0, total_eur=240.0),
+            FrontendMaterial(name="6-well cell culture plates", catalog="140675", supplier="Thermo Fisher", qty="4 plates", unit_cost_eur=8.0, total_eur=32.0),
+            FrontendMaterial(name="Flow cytometer access (core)", catalog="core_service", supplier="Core Facility", qty="4 hours", unit_cost_eur=45.0, total_eur=180.0),
+        ],
+    )
+
+    return [exp1, exp2, exp3]
 
 
 def cro_brief_agent(plan: ExperimentPlan, timeline: TimelineEstimate) -> CROReadyBrief:
