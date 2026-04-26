@@ -18,23 +18,6 @@ from app.agents import (
 )
 from app.schemas import DemoRunRequest, DemoRunResponse, FeedbackRequest, FeedbackResponse
 from app.services.memory import feedback_for_plan, load_plan, save_plan, store_feedback
-from .adapters import to_frontend_plan
-from .agents import (
-    budget_agent,
-    cro_brief_agent,
-    evidence_agent,
-    experiments_agent,
-    intake_agent,
-    literature_qc_agent,
-    materials_agent,
-    plan_agent,
-    protocol_retrieval_agent,
-    risk_agent,
-    timeline_agent,
-    validation_agent,
-)
-from .schemas import DemoRunRequest, DemoRunResponse, FrontendPlanData
-from .store import add_feedback, get_feedback_for_plan, load_plan_run, save_plan_run
 
 
 def _confidence_score(literature_conf: float, protocol_conf: float, readiness_score: float) -> float:
@@ -54,21 +37,6 @@ def run_demo_pipeline(request: DemoRunRequest, plan_id: str | None = None) -> De
         f"{item.feedback} | requested: {', '.join(item.requested_changes) if item.requested_changes else 'none'}"
         for item in prior_feedback
     ]
-    plan_id = existing_plan_id or str(uuid.uuid4())
-
-    # Merge stored plan-level feedback with incoming prior_feedback from the UI
-    plan_feedback = get_feedback_for_plan(plan_id) if existing_plan_id else []
-    plan_feedback_notes = [f"{f.section}: {f.correction}" for f in sorted(plan_feedback, key=lambda x: (x.section, x.correction))]
-
-    # Prior feedback from the review panel: only carry corrections (rating ≤ 3)
-    prior_notes = [
-        f"[Prior review — {fb.experiment_type}, {fb.section}, rating {fb.rating}/5] {fb.note}"
-        for fb in request.prior_feedback
-        if fb.rating <= 3 and fb.note.strip()
-    ]
-
-    all_feedback_notes = plan_feedback_notes + prior_notes
-    plan = plan_agent(plan_id=plan_id, hypothesis=hypothesis, risks=risks, feedback_notes=all_feedback_notes)
 
     plan = run_plan(hypothesis=hypothesis, risks=risks, feedback_incorporated=feedback_notes)
     materials, budget = run_budget()
@@ -76,7 +44,11 @@ def run_demo_pipeline(request: DemoRunRequest, plan_id: str | None = None) -> De
     validation = run_validation(hypothesis)
     cro_ready_brief = run_cro(plan, timeline)
 
-    avg_protocol_conf = sum(item.confidence for item in protocol_candidates) / len(protocol_candidates)
+    avg_protocol_conf = (
+        sum(item.confidence for item in protocol_candidates) / len(protocol_candidates)
+        if protocol_candidates
+        else 0.0
+    )
     response = DemoRunResponse(
         plan_id=resolved_plan_id,
         hypothesis=hypothesis,
@@ -116,35 +88,8 @@ def get_saved_plan(plan_id: str) -> DemoRunResponse | None:
 def regenerate_plan(plan_id: str, payload: FeedbackRequest | None = None) -> DemoRunResponse | None:
     stored_plan = load_plan(plan_id)
     if stored_plan is None:
-def run_frontend_pipeline(request: DemoRunRequest) -> FrontendPlanData:
-    """
-    Lightweight pipeline that returns the frontend-shaped PlanData JSON directly.
-    Used by POST /demo/plan so the React app can replace MOCK_PLAN with live data.
-    """
-    hypothesis = intake_agent(request)
-    literature_qc = literature_qc_agent(hypothesis)
-    evidence_claims = evidence_agent(hypothesis, literature_qc)
-    risks = risk_agent(hypothesis, evidence_claims)
-    timeline = timeline_agent()
-
-    # Prior feedback: only low-rated corrections become generation context
-    prior_notes = [
-        f"[Prior review — {fb.experiment_type}, {fb.section}, rating {fb.rating}/5] {fb.note}"
-        for fb in request.prior_feedback
-        if fb.rating <= 3 and fb.note.strip()
-    ]
-
-    experiments = experiments_agent(hypothesis, risks, feedback_notes=prior_notes)
-
-    return to_frontend_plan(hypothesis, literature_qc, timeline, experiments)
-
-
-def regenerate_plan(plan_id: str) -> DemoRunResponse | None:
-    previous = load_plan_run(plan_id)
-    if previous is None:
         return None
     if payload is not None:
         store_feedback(create_feedback_record(plan_id, payload))
     request = DemoRunRequest.model_validate(stored_plan["request"])
     return run_demo_pipeline(request=request, plan_id=plan_id)
-

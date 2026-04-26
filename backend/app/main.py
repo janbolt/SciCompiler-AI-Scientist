@@ -4,19 +4,22 @@ import httpx
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 
-from .orchestrator import get_saved_plan, regenerate_plan, run_demo_pipeline, store_scientist_feedback
-from .schemas import DemoRunRequest, DemoRunResponse, FeedbackRequest, FeedbackResponse
 from . import litmus_client
 from .litmus_client import classify_experiment_type
-from .orchestrator import regenerate_plan, run_demo_pipeline, run_frontend_pipeline, store_feedback
+from .orchestrator import (
+    get_saved_plan,
+    regenerate_plan,
+    run_demo_pipeline,
+    store_scientist_feedback,
+)
 from .schemas import (
     DemoRunRequest,
     DemoRunResponse,
-    FrontendPlanData,
+    FeedbackRequest,
+    FeedbackResponse,
     LitmusSubmitRequest,
     LitmusSubmitResponse,
     LitmusSubmitResult,
-    ScientistFeedbackInput,
 )
 
 
@@ -51,26 +54,6 @@ def get_plan(plan_id: str) -> DemoRunResponse:
 @app.post("/plans/{plan_id}/feedback", response_model=FeedbackResponse)
 def save_feedback(plan_id: str, payload: FeedbackRequest) -> FeedbackResponse:
     return store_scientist_feedback(plan_id=plan_id, payload=payload)
-@app.post("/demo/plan", response_model=FrontendPlanData)
-def demo_plan(request: DemoRunRequest) -> FrontendPlanData:
-    """
-    Returns a FrontendPlanData JSON that the React app can consume directly —
-    same shape as the TypeScript PlanData type, no adapter needed on the client.
-    """
-    return run_frontend_pipeline(request)
-
-
-@app.post("/plans/{plan_id}/feedback")
-def save_feedback(plan_id: str, feedback: ScientistFeedbackInput) -> dict[str, str]:
-    store_feedback(
-        plan_id=plan_id,
-        section=feedback.section,
-        original_text=feedback.original_text,
-        correction=feedback.correction,
-        reason=feedback.reason,
-        severity=feedback.severity,
-    )
-    return {"status": "stored", "plan_id": plan_id}
 
 
 @app.post("/plans/{plan_id}/regenerate", response_model=DemoRunResponse)
@@ -93,7 +76,6 @@ def litmus_submit(request: LitmusSubmitRequest) -> LitmusSubmitResponse:
     except RuntimeError as exc:
         raise HTTPException(status_code=503, detail=str(exc)) from exc
 
-    # Filter to only the requested experiments
     selected = [e for e in request.experiments if e.id in request.experiment_ids]
     if not selected:
         raise HTTPException(status_code=400, detail="No matching experiments found for given experiment_ids.")
@@ -136,4 +118,3 @@ def litmus_submit(request: LitmusSubmitRequest) -> LitmusSubmitResponse:
         total_submitted=len(results) - errors,
         total_errors=errors,
     )
-
