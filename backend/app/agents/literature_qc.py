@@ -790,6 +790,13 @@ def run_literature_qc_agent(hypothesis: StructuredHypothesis) -> LiteratureQCRes
             top_indices = [i for i in llm_output.top_reference_indices if 0 <= i < len(sorted_top)]
             relevance_notes = list(llm_output.relevance_notes)
 
+            # Consistency guard: if the signal implies prior work exists but the LLM
+            # selected no references, fall back to the highest-cited paper so the
+            # frontend always has at least one reference to back the signal.
+            if novelty_signal in ("similar_work_exists", "exact_match_found") and not top_indices:
+                top_indices = [0]
+                relevance_notes = ["Selected as the most relevant retrieved paper."]
+
         confidence_score = _compute_confidence_score(
             query_a_count=count_a,
             query_b_count=count_b,

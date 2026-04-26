@@ -111,7 +111,7 @@ export function OverviewTab({ onRegenerate }: Props) {
                 />
               </div>
               <p className="text-[0.75rem]" style={{ color: "var(--color-text-muted)" }}>
-                Based on literature coverage, protocol match, and hypothesis specificity
+                Based on protocol fit and execution readiness
               </p>
             </div>
           </div>

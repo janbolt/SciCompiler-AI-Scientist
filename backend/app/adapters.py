@@ -22,6 +22,7 @@ from .schemas import (
     FrontendReference,
     LiteratureQCResult,
     MaterialItem,
+    ProtocolStep,
     StructuredHypothesis,
     TimelineEstimate,
     ValidationPlan,
@@ -143,10 +144,23 @@ def _build_budget(experiments: list[FrontendExperiment]) -> FrontendBudget:
 
 # ── Experiments ───────────────────────────────────────────────────────────────
 
+def _estimate_duration_from_steps(steps: list[ProtocolStep]) -> str:
+    """Parse DAY N markers from step descriptions to estimate duration for a group."""
+    day_pattern = re.compile(r"\bDAY\s+(\d+)", re.IGNORECASE)
+    days = {int(m.group(1)) for s in steps for m in day_pattern.finditer(s.description)}
+    if not days:
+        return "< 1 day"
+    span = max(days) - min(days) + 1
+    return f"{span} day{'s' if span > 1 else ''}"
+
+
 def _map_experiments(demo: DemoRunResponse) -> list[FrontendExperiment]:
     """
-    Build one FrontendExperiment from the single ExperimentPlan produced by
-    the pipeline, joined with materials, budget, validation, and timeline.
+    Build one FrontendExperiment per distinct sub-protocol (grouped by
+    ProtocolStep.linked_to) from the ExperimentPlan produced by the pipeline.
+
+    Materials are assigned to the first experiment only, since they are not
+    tagged per step; this keeps _build_budget aggregation correct.
     """
     plan: ExperimentPlan = demo.plan
     materials: list[MaterialItem] = demo.materials
@@ -177,17 +191,38 @@ def _map_experiments(demo: DemoRunResponse) -> list[FrontendExperiment]:
 
     cro_compatible = plan.execution_readiness_label != "blocked_pending_expert_review"
 
+    # Group steps by linked_to, preserving agent-defined order
+    groups: dict[str, list[ProtocolStep]] = {}
+    for step in plan.step_by_step_protocol:
+        groups.setdefault(step.linked_to or "Protocol", []).append(step)
+
+    if not groups:
+        # Fallback: single card with all steps when the agent emits no steps
+        return [
+            FrontendExperiment(
+                id=demo.plan_id,
+                name=hypothesis.experiment_type.replace("_", " ").title(),
+                duration=timeline.total_duration_estimate,
+                cro_compatible=cro_compatible,
+                goal=plan.objective,
+                success_criteria=validation.success_threshold,
+                steps=[],
+                materials=frontend_materials,
+            )
+        ]
+
     return [
         FrontendExperiment(
-            id=demo.plan_id,
-            name=hypothesis.experiment_type.replace("_", " ").title(),
-            duration=timeline.total_duration_estimate,
+            id=f"{demo.plan_id}-{i}",
+            name=group_name,
+            duration=_estimate_duration_from_steps(steps),
             cro_compatible=cro_compatible,
             goal=plan.objective,
             success_criteria=validation.success_threshold,
-            steps=[s.description for s in plan.step_by_step_protocol],
-            materials=frontend_materials,
+            steps=[s.description for s in steps],
+            materials=frontend_materials if i == 0 else [],
         )
+        for i, (group_name, steps) in enumerate(groups.items())
     ]
 
 

@@ -20,8 +20,8 @@ from app.schemas import DemoRunRequest, DemoRunResponse, FeedbackRequest, Feedba
 from app.services.memory import feedback_for_plan, load_plan, save_plan, store_feedback
 
 
-def _confidence_score(literature_conf: float, protocol_conf: float, readiness_score: float) -> float:
-    return round((literature_conf + protocol_conf + readiness_score) / 3.0, 2)
+def _confidence_score(protocol_conf: float, readiness_score: float) -> float:
+    return round((protocol_conf + readiness_score) / 2.0, 2)
 
 
 def run_demo_pipeline(request: DemoRunRequest, plan_id: str | None = None) -> DemoRunResponse:
@@ -77,7 +77,6 @@ def run_demo_pipeline(request: DemoRunRequest, plan_id: str | None = None) -> De
         validation=validation,
         cro_ready_brief=cro_ready_brief,
         confidence_score=_confidence_score(
-            literature_conf=literature_qc.confidence_score,
             protocol_conf=avg_protocol_conf,
             readiness_score=plan.execution_readiness_score,
         ),

@@ -33,7 +33,7 @@ export type PlanData = {
   /** @deprecated derive from budget.total_eur instead */
   total_budget_eur?: number;
   novelty_signal: "not found" | "similar work exists" | "exact match found";
-  /** 0.0–1.0 AI confidence in the generated plan (literature × protocol × readiness) */
+  /** 0.0–1.0 AI confidence in the generated plan (protocol fit × execution readiness) */
   confidence_score: number;
   references: Reference[];
   experiments: Experiment[];
