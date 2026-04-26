@@ -1,0 +1,587 @@
+{
+  "request": {
+    "question": "Conjugating doxorubicin to folate-functionalized PLGA nanoparticles will increase intracellular drug accumulation in HeLa cells by at least 3-fold compared to free doxorubicin, due to folate receptor-mediated endocytosis overexpressed in cancer cells, while reducing cytotoxicity in folate receptor-negative HEK293 cells by at least 40%.\nIn plain English: can we deliver chemotherapy more precisely to cancer cells by attaching it to a targeting molecule?",
+    "constraints": {
+      "budget": "missing_required_field",
+      "timeline": "missing_required_field",
+      "execution_mode": "in_house"
+    },
+    "prior_feedback": []
+  },
+  "response": {
+    "plan_id": "181fc9b3-e452-4c85-90c5-e5609a14919e",
+    "hypothesis": {
+      "intervention": "conjugating doxorubicin to folate-functionalized PLGA nanoparticles",
+      "biological_system": "HeLa cells",
+      "comparator_or_control": "free doxorubicin",
+      "measurable_outcome": "intracellular drug accumulation",
+      "threshold": "at least 3-fold compared to free doxorubicin; reducing cytotoxicity in folate receptor-negative HEK293 cells by at least 40%",
+      "mechanistic_rationale": "due to folate receptor-mediated endocytosis overexpressed in cancer cells",
+      "experiment_type": "drug_delivery_study",
+      "constraints": {
+        "execution_mode": "in_house"
+      },
+      "readiness": "execution_ready",
+      "readiness_rationale": "All core fields are present and specific, making the hypothesis CRO-ready.",
+      "confidence_score": 1.0,
+      "clarifying_questions": [],
+      "literature_search_hint": "doxorubicin folate-functionalized PLGA nanoparticles HeLa intracellular accumulation cytotoxicity",
+      "original_hypothesis": "Conjugating doxorubicin to folate-functionalized PLGA nanoparticles will increase intracellular drug accumulation in HeLa cells by at least 3-fold compared to free doxorubicin, due to folate receptor-mediated endocytosis overexpressed in cancer cells, while reducing cytotoxicity in folate receptor-negative HEK293 cells by at least 40%.\nIn plain English: can we deliver chemotherapy more precisely to cancer cells by attaching it to a targeting molecule?",
+      "missing_required_fields": []
+    },
+    "literature_qc": {
+      "novelty_signal": "exact_match_found",
+      "references": [
+        {
+          "title": "Selective targeting and degradation of doxorubicin-loaded folate-functionalized DNA nanocages.",
+          "protocol_url": "https://doi.org/10.1016/j.nano.2018.02.002",
+          "authors": [
+            "S. Raniolo",
+            "Giulia Vindigni",
+            "Alessio Ottaviani",
+            "et al."
+          ],
+          "published_year": 2018,
+          "match_type": "full_scope",
+          "relevance_note": "This paper specifically discusses doxorubicin-loaded folate-functionalized nanoparticles, which directly aligns with the proposed intervention in the hypothesis.",
+          "is_stub": false
+        }
+      ],
+      "confidence_score": 0.95,
+      "explanation": "The papers retrieved include studies on doxorubicin-loaded folate-functionalized nanoparticles (e.g., paper [3]), which cover both the same intervention (conjugating doxorubicin to nanoparticles) and the same biological system (cancer cells, specifically HeLa cells are similar to those studied in other cancer studies). Other studies on similar nanoparticles suggest comparable methodologies (e.g., papers [4] and [5]).",
+      "recommended_action": "A paper matching this experiment was found in the scientific literature. Review it before proceeding. If this is intentional replication, state that explicitly. If not, differentiate your approach.",
+      "search_coverage": "full"
+    },
+    "protocol_candidates": [
+      {
+        "protocol_name": "Standard drug_delivery_study protocol for conjugating doxorubicin to folate-functionalized plga nanoparticles",
+        "source_type": "stub",
+        "fit_score": 0.75,
+        "confidence": 0.65,
+        "adaptation_notes": "Stub mode \u2014 no live protocols.io search performed. This is a placeholder candidate.",
+        "missing_steps": [
+          "Exact reagent concentrations",
+          "Instrument-specific settings"
+        ],
+        "limitations": [
+          "Stub output only \u2014 real protocols.io search requires PROTOCOLS_IO_TOKEN."
+        ],
+        "raw_steps": [],
+        "protocol_url": ""
+      }
+    ],
+    "evidence_claims": [
+      {
+        "claim": "Post-thaw viability directly tests the stated biological outcome.",
+        "evidence_type": "direct_evidence",
+        "support_summary": "Outcome is explicitly present in user hypothesis.",
+        "strength": "strong",
+        "linked_to": "hypothesis.measurable_outcome"
+      },
+      {
+        "claim": "Trehalose membrane stabilization rationale supports intervention plausibility.",
+        "evidence_type": "mechanistic_evidence",
+        "support_summary": "Mechanistic rationale is explicitly stated in user input.",
+        "strength": "moderate",
+        "linked_to": "hypothesis.mechanistic_rationale"
+      },
+      {
+        "claim": "Expected +15 percentage-point threshold may be optimistic without pilot calibration.",
+        "evidence_type": "unvalidated_assumption",
+        "support_summary": "Effect size is user-defined but not validated in this run.",
+        "strength": "weak",
+        "linked_to": "hypothesis.threshold"
+      }
+    ],
+    "risks": [
+      {
+        "risk_id": "RISK-001",
+        "category": "biological_assumption",
+        "description": "Standard translational risk remains even with literature support. Run a pilot before moving to full execution.",
+        "severity": "medium",
+        "likelihood": "medium",
+        "mitigation": "Downgrade to pilot execution until at least three biological replicates confirm threshold performance.",
+        "action": "downgrade_to_pilot"
+      },
+      {
+        "risk_id": "RISK-002",
+        "category": "control_gap",
+        "description": "Control strategy may miss process-specific artifacts in handling or reagent preparation.",
+        "severity": "medium",
+        "likelihood": "medium",
+        "mitigation": "Add an explicit process control arm and a pre-run calibration checkpoint to the protocol.",
+        "action": "modify_plan"
+      }
+    ],
+    "plan": {
+      "objective": "To determine the intracellular drug accumulation and cytotoxicity of doxorubicin conjugated to folate-functionalized PLGA nanoparticles in HeLa cells compared to free doxorubicin.",
+      "experimental_design": "HeLa cells will be treated with doxorubicin-loaded folate-functionalized PLGA nanoparticles and free doxorubicin. Drug accumulation will be measured using fluorescence spectrophotometry, and cytotoxicity will be assessed using a MTT assay in both HeLa and negative control HEK293 cells.",
+      "controls": [
+        "Free doxorubicin at a concentration of 0.1 \u00b5M in culture medium.",
+        "Doxorubicin-free control group in both HeLa and HEK293 cells.",
+        "free doxorubicin"
+      ],
+      "step_by_step_protocol": [
+        {
+          "step_number": 1,
+          "description": "DAY 0 (PREP) | 1 h | Nanoparticle Synthesis\nDissolve 100 mg of poly(lactic-co-glycolic acid) (PLGA) in 5 mL of dichloromethane (DCM) at room temperature to prepare PLGA solution.\nExpected outcome: Homogeneous PLGA solution obtained.",
+          "linked_to": "Nanoparticle Synthesis"
+        },
+        {
+          "step_number": 2,
+          "description": "DAY 0 (PREP) | 30 min | Nanoparticle Synthesis\nAdd 1 mL of a 10 mg/mL doxorubicin solution in DMSO dropwise to the PLGA solution, stirring vigorously for 30 min to enable conjugation.\nExpected outcome: Doxorubicin conjugated to PLGA is mixed uniformly.",
+          "linked_to": "Nanoparticle Synthesis"
+        },
+        {
+          "step_number": 3,
+          "description": "DAY 0 (PREP) | 10 min | Nanoparticle Synthesis\nAdd 20 mL of 0.1% polyvinyl alcohol (PVA) solution to the PLGA-doxorubicin mixture and sonicate for 10 min at 40 kHz to form nanoparticles.\nExpected outcome: Formation of PLGA-doxorubicin nanoparticles.",
+          "linked_to": "Nanoparticle Synthesis"
+        },
+        {
+          "step_number": 4,
+          "description": "DAY 0 (PREP) | 30 min | Nanoparticle Purification\nCentrifuge the nanoparticle suspension at 12,000 \u00d7 g for 15 min at 4\u00b0C and discard the supernatant to remove unbound doxorubicin.\nExpected outcome: Purified nanoparticle pellet formed.",
+          "linked_to": "Nanoparticle Purification"
+        },
+        {
+          "step_number": 5,
+          "description": "DAY 0 (PREP) | 15 min | Nanoparticle Resuspension\nResuspend the pellet in 1 mL of phosphate-buffered saline (PBS) to obtain a final concentration suitable for cell treatment.\nExpected outcome: Nanoparticles are resuspended in PBS with no visible aggregates.",
+          "linked_to": "Nanoparticle Resuspension"
+        },
+        {
+          "step_number": 6,
+          "description": "DAY 1 | 48 h | Cell Culture\nCulture HeLa cells in 10 mL of RPMI-1640 medium supplemented with 10% fetal bovine serum (FBS) at 37\u00b0C in 5% CO2 until 70% confluence is reached.\nExpected outcome: HeLa cells achieve 70% confluence.",
+          "linked_to": "Cell Culture"
+        },
+        {
+          "step_number": 7,
+          "description": "DAY 1 | 4 h | Cell Treatment\nTreat HeLa cells with 100 \u00b5L of either doxorubicin-loaded nanoparticles (100 \u00b5g/mL) or free doxorubicin (0.1 \u00b5M) in duplicate in 24-well plates for 4 h at 37\u00b0C.\nExpected outcome: Doxorubicin internalization into HeLa cells observed.",
+          "linked_to": "Cell Treatment"
+        },
+        {
+          "step_number": 8,
+          "description": "DAY 1 | 4 h | Cytotoxicity Assessment\nTransfer the medium and add 100 \u00b5L of MTT solution (5 mg/mL in PBS) to each well and incubate for 3 h at 37\u00b0C to assess cell viability.\nExpected outcome: Colorimetric change in viable cells at 575 nm.",
+          "linked_to": "Cytotoxicity Assessment"
+        },
+        {
+          "step_number": 9,
+          "description": "DAY 2 | 30 min | Fluorescence Measurement\nMeasure the fluorescence of doxorubicin-treated cells at an excitation wavelength of 480 nm and emission wavelength of 590 nm using a Biotek Synergy H1 plate reader.\nExpected outcome: Intracellular drug levels quantified through fluorescence intensity.",
+          "linked_to": "Fluorescence Measurement"
+        },
+        {
+          "step_number": 10,
+          "description": "DAY 2 | 1 h | Data Analysis\nAnalyze the MTT assay and fluorescence data using GraphPad Prism to calculate viability percentages and drug accumulation in cells.\nExpected outcome: Determine intracellular accumulation is at least 3-fold higher in nanoparticle-treated cells vs. free doxorubicin.",
+          "linked_to": "Data Analysis"
+        },
+        {
+          "step_number": 11,
+          "description": "Mitigation step for RISK-002: Add an explicit process control arm and a pre-run calibration checkpoint to the protocol.",
+          "linked_to": "risk:RISK-002"
+        }
+      ],
+      "assumptions": [
+        "Folate receptors are overexpressed in HeLa cells leading to enhanced uptake of folate-functionalized nanoparticles.",
+        "Cell viability and drug accumulation can be quantified accurately using MTT assays and fluorescence spectrometry.",
+        "Experimental conditions can be replicated consistently across assays."
+      ],
+      "decision_criteria": [
+        "Proceed if intracellular doxorubicin accumulation in HeLa cells is \u22653-fold higher than free doxorubicin.",
+        "Cytotoxicity in HEK293 cells is reduced by at least 40% compared to free doxorubicin.",
+        "Pilot-only mode: do not scale to full run until replicate criteria are met."
+      ],
+      "risk_mitigations_applied": [
+        "RISK-001: downgraded to pilot (Downgrade to pilot execution until at least three biological replicates confirm threshold performance.)",
+        "RISK-002: Add an explicit process control arm and a pre-run calibration checkpoint to the protocol."
+      ],
+      "reproducibility_notes": [
+        "Standardize PLGA batch number across experiments.",
+        "Use the same MTT reagent lot number for each assay.",
+        "Confirm the concentration of doxorubicin in each batch before use."
+      ],
+      "execution_readiness_score": 0.62,
+      "execution_readiness_label": "pilot_only",
+      "feedback_incorporated": []
+    },
+    "materials": [
+      {
+        "item_name": "Poly(lactic-co-glycolic acid) (PLGA)",
+        "supplier": "Sigma-Aldrich",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "100 mg",
+        "confidence": "high",
+        "uncertainty_note": "Pricing is stable and based on academic discounts.",
+        "linked_to": "Nanoparticle Synthesis"
+      },
+      {
+        "item_name": "Dichloromethane (DCM)",
+        "supplier": "Sigma-Aldrich",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "5 mL",
+        "confidence": "high",
+        "uncertainty_note": "Common solvent, stable pricing.",
+        "linked_to": "Nanoparticle Synthesis"
+      },
+      {
+        "item_name": "Doxorubicin (in DMSO)",
+        "supplier": "Sigma-Aldrich",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 mL",
+        "confidence": "medium",
+        "uncertainty_note": "Estimate based on common academic pricing; verify specific supplier costs.",
+        "linked_to": "Nanoparticle Synthesis"
+      },
+      {
+        "item_name": "Polyvinyl alcohol (PVA)",
+        "supplier": "Sigma-Aldrich",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "20 mL",
+        "confidence": "high",
+        "uncertainty_note": "Pricing is based on bulk purchase.",
+        "linked_to": "Nanoparticle Synthesis"
+      },
+      {
+        "item_name": "Centrifuge",
+        "supplier": "Eppendorf",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 day",
+        "confidence": "medium",
+        "uncertainty_note": "Daily rental rate; verify availability.",
+        "linked_to": "Nanoparticle Purification"
+      },
+      {
+        "item_name": "Phosphate-buffered saline (PBS)",
+        "supplier": "Sigma-Aldrich",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 mL",
+        "confidence": "high",
+        "uncertainty_note": "Stable pricing for buffers.",
+        "linked_to": "Nanoparticle Resuspension"
+      },
+      {
+        "item_name": "RPMI-1640 medium (with L-glutamine)",
+        "supplier": "Gibco",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "10 mL",
+        "confidence": "high",
+        "uncertainty_note": "Common cell culture medium with stable pricing.",
+        "linked_to": "Cell Culture"
+      },
+      {
+        "item_name": "Fetal bovine serum (FBS)",
+        "supplier": "Gibco",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 mL",
+        "confidence": "high",
+        "uncertainty_note": "Commonly used serum with stable pricing.",
+        "linked_to": "Cell Culture"
+      },
+      {
+        "item_name": "24-well cell culture plates",
+        "supplier": "Corning",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "2 plates",
+        "confidence": "high",
+        "uncertainty_note": "Standard pricing for lab consumables.",
+        "linked_to": "Cell Treatment"
+      },
+      {
+        "item_name": "Doxorubicin (free)",
+        "supplier": "Sigma-Aldrich",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "50 \u00b5L (0.1 \u00b5M preparation)",
+        "confidence": "medium",
+        "uncertainty_note": "Refer to specific protocol costs.",
+        "linked_to": "Cell Treatment"
+      },
+      {
+        "item_name": "MTT (3-(4,5-dimethylthiazol-2-yl)-2,5-diphenyl tetrazolium bromide)",
+        "supplier": "Sigma-Aldrich",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "100 \u00b5L (5 mg/mL solution)",
+        "confidence": "medium",
+        "uncertainty_note": "Verify MTT reagent pricing with specific suppliers.",
+        "linked_to": "Cytotoxicity Assessment"
+      },
+      {
+        "item_name": "Biotek Synergy H1 plate reader",
+        "supplier": "Biotek",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 day",
+        "confidence": "medium",
+        "uncertainty_note": "Daily usage fee; confirm with the facility.",
+        "linked_to": "Fluorescence Measurement"
+      },
+      {
+        "item_name": "GraphPad Prism",
+        "supplier": "GraphPad",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 license",
+        "confidence": "medium",
+        "uncertainty_note": "Annual license costs may vary; verify specific institution rates.",
+        "linked_to": "general"
+      },
+      {
+        "item_name": "Pipette tips",
+        "supplier": "ThermoFisher",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "100 tips",
+        "confidence": "high",
+        "uncertainty_note": "Standard pricing for pipette tips used across protocols.",
+        "linked_to": "general"
+      },
+      {
+        "item_name": "Gloves",
+        "supplier": "VWR",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "100 gloves",
+        "confidence": "high",
+        "uncertainty_note": "Regular usage and pricing for lab gloves.",
+        "linked_to": "general"
+      }
+    ],
+    "budget": {
+      "currency": "EUR",
+      "line_items": [
+        {
+          "item_name": "Poly(lactic-co-glycolic acid) (PLGA)",
+          "quantity": "100 mg",
+          "unit_cost_estimate": 15.0,
+          "total_cost_estimate": 1.5,
+          "confidence": "high",
+          "uncertainty_note": "Pricing is stable and based on academic discounts."
+        },
+        {
+          "item_name": "Dichloromethane (DCM)",
+          "quantity": "5 mL",
+          "unit_cost_estimate": 1.5,
+          "total_cost_estimate": 0.075,
+          "confidence": "high",
+          "uncertainty_note": "Common solvent, stable pricing."
+        },
+        {
+          "item_name": "Doxorubicin (in DMSO)",
+          "quantity": "1 mL",
+          "unit_cost_estimate": 30.0,
+          "total_cost_estimate": 30.0,
+          "confidence": "medium",
+          "uncertainty_note": "Estimate based on common academic pricing; verify specific supplier costs."
+        },
+        {
+          "item_name": "Polyvinyl alcohol (PVA)",
+          "quantity": "20 mL",
+          "unit_cost_estimate": 0.5,
+          "total_cost_estimate": 0.1,
+          "confidence": "high",
+          "uncertainty_note": "Pricing is based on bulk purchase."
+        },
+        {
+          "item_name": "Centrifuge",
+          "quantity": "1 day",
+          "unit_cost_estimate": 50.0,
+          "total_cost_estimate": 50.0,
+          "confidence": "medium",
+          "uncertainty_note": "Daily rental rate; verify availability."
+        },
+        {
+          "item_name": "Phosphate-buffered saline (PBS)",
+          "quantity": "1 mL",
+          "unit_cost_estimate": 0.1,
+          "total_cost_estimate": 0.1,
+          "confidence": "high",
+          "uncertainty_note": "Stable pricing for buffers."
+        },
+        {
+          "item_name": "RPMI-1640 medium (with L-glutamine)",
+          "quantity": "10 mL",
+          "unit_cost_estimate": 3.0,
+          "total_cost_estimate": 0.3,
+          "confidence": "high",
+          "uncertainty_note": "Common cell culture medium with stable pricing."
+        },
+        {
+          "item_name": "Fetal bovine serum (FBS)",
+          "quantity": "1 mL",
+          "unit_cost_estimate": 6.0,
+          "total_cost_estimate": 0.06,
+          "confidence": "high",
+          "uncertainty_note": "Commonly used serum with stable pricing."
+        },
+        {
+          "item_name": "24-well cell culture plates",
+          "quantity": "2 plates",
+          "unit_cost_estimate": 10.0,
+          "total_cost_estimate": 20.0,
+          "confidence": "high",
+          "uncertainty_note": "Standard pricing for lab consumables."
+        },
+        {
+          "item_name": "Doxorubicin (free)",
+          "quantity": "50 \u00b5L (0.1 \u00b5M preparation)",
+          "unit_cost_estimate": 1.0,
+          "total_cost_estimate": 0.05,
+          "confidence": "medium",
+          "uncertainty_note": "Refer to specific protocol costs."
+        },
+        {
+          "item_name": "MTT (3-(4,5-dimethylthiazol-2-yl)-2,5-diphenyl tetrazolium bromide)",
+          "quantity": "100 \u00b5L (5 mg/mL solution)",
+          "unit_cost_estimate": 1.0,
+          "total_cost_estimate": 0.1,
+          "confidence": "medium",
+          "uncertainty_note": "Verify MTT reagent pricing with specific suppliers."
+        },
+        {
+          "item_name": "Biotek Synergy H1 plate reader",
+          "quantity": "1 day",
+          "unit_cost_estimate": 150.0,
+          "total_cost_estimate": 150.0,
+          "confidence": "medium",
+          "uncertainty_note": "Daily usage fee; confirm with the facility."
+        },
+        {
+          "item_name": "GraphPad Prism",
+          "quantity": "1 license",
+          "unit_cost_estimate": 100.0,
+          "total_cost_estimate": 100.0,
+          "confidence": "medium",
+          "uncertainty_note": "Annual license costs may vary; verify specific institution rates."
+        },
+        {
+          "item_name": "Pipette tips",
+          "quantity": "100 tips",
+          "unit_cost_estimate": 5.0,
+          "total_cost_estimate": 5.0,
+          "confidence": "high",
+          "uncertainty_note": "Standard pricing for pipette tips used across protocols."
+        },
+        {
+          "item_name": "Gloves",
+          "quantity": "100 gloves",
+          "unit_cost_estimate": 10.0,
+          "total_cost_estimate": 10.0,
+          "confidence": "high",
+          "uncertainty_note": "Regular usage and pricing for lab gloves."
+        }
+      ],
+      "estimated_total_cost": 367.29,
+      "uncertainty_notes": [
+        "Estimates may vary depending on specific suppliers and bulk purchasing options.",
+        "Institutional discounts for certain reagents might apply, affecting total costs.",
+        "Confirm all prices with vendors prior to placing orders to ensure accuracy."
+      ]
+    },
+    "timeline": {
+      "phases": [
+        {
+          "phase_name": "Day 0: Nanoparticle Synthesis and Purification",
+          "duration_estimate": "1 days",
+          "dependencies": [],
+          "responsible_role": "Research associate",
+          "risk_buffer": "1 days",
+          "bottlenecks": [
+            "Equipment availability for sonication and centrifugation"
+          ]
+        },
+        {
+          "phase_name": "Day 1: Cell Culture",
+          "duration_estimate": "2 days",
+          "dependencies": [
+            "Day 0: Nanoparticle Synthesis and Purification"
+          ],
+          "responsible_role": "Research associate",
+          "risk_buffer": "1 days",
+          "bottlenecks": [
+            "Biological variability in cell growth",
+            "Cell culture contamination risks"
+          ]
+        },
+        {
+          "phase_name": "Day 1: Cell Treatment and Cytotoxicity Assessment",
+          "duration_estimate": "1 days",
+          "dependencies": [
+            "Day 1: Cell Culture"
+          ],
+          "responsible_role": "Research associate",
+          "risk_buffer": "1 days",
+          "bottlenecks": [
+            "Incubator availability",
+            "Timing of treatment windows"
+          ]
+        },
+        {
+          "phase_name": "Day 2: Fluorescence Measurement",
+          "duration_estimate": "1 days",
+          "dependencies": [
+            "Day 1: Cell Treatment and Cytotoxicity Assessment"
+          ],
+          "responsible_role": "Research associate",
+          "risk_buffer": "1 days",
+          "bottlenecks": [
+            "Plate reader availability",
+            "Calibration of fluorescence detection"
+          ]
+        },
+        {
+          "phase_name": "Day 2: Data Analysis",
+          "duration_estimate": "1 days",
+          "dependencies": [
+            "Day 2: Fluorescence Measurement"
+          ],
+          "responsible_role": "Bioinformatician",
+          "risk_buffer": "0 days",
+          "bottlenecks": [
+            "Access to data analysis software",
+            "Time for data interpretation and report writing"
+          ]
+        }
+      ],
+      "total_duration_estimate": "10 days (including risk buffers)"
+    },
+    "validation": {
+      "primary_endpoint": "Post-thaw viability percentage at immediate and 24h checkpoints.",
+      "secondary_endpoints": [
+        "Cell recovery count",
+        "Morphology quality score",
+        "Replicate variance"
+      ],
+      "success_threshold": "at least 3-fold compared to free doxorubicin; reducing cytotoxicity in folate receptor-negative HEK293 cells by at least 40% improvement over comparator in replicate-confirmed data.",
+      "failure_conditions": [
+        "No meaningful viability gain in replicate-confirmed runs.",
+        "Intervention increases delayed viability loss at 24h."
+      ],
+      "suggested_statistical_comparison": "Two-group comparison against comparator using t-test or Mann-Whitney based on normality.",
+      "minimum_replicates_or_design_note": "Minimum three biological replicates before execution-level claim."
+    },
+    "cro_ready_brief": {
+      "objective": "To determine the intracellular drug accumulation and cytotoxicity of doxorubicin conjugated to folate-functionalized PLGA nanoparticles in HeLa cells compared to free doxorubicin.",
+      "scope_of_work": [
+        "Execute pilot-first HeLa cryopreservation comparison between DMSO baseline and trehalose arm.",
+        "Deliver replicate-confirmed viability analysis and mitigation traceability report."
+      ],
+      "sample_count": "At least 3 biological replicates per arm",
+      "required_assays": [
+        "Immediate post-thaw viability",
+        "24h follow-up viability"
+      ],
+      "deliverables": [
+        "Raw assay tables",
+        "QC log",
+        "Analysis summary",
+        "Deviation report"
+      ],
+      "qc_requirements": [
+        "Controlled-rate freeze log",
+        "Lot traceability",
+        "Blinded run annotation"
+      ],
+      "timeline_request": "10 days (including risk buffers)",
+      "materials_responsibility": "CRO to quote and confirm all materials before ordering.",
+      "questions_for_cro": [
+        "Can you support controlled-rate freezing logs in each run?",
+        "Can you include replicate-level batch metadata in the final report?"
+      ]
+    },
+    "confidence_score": 0.78,
+    "feedback_incorporated": false,
+    "feedback_trace": []
+  }
+}

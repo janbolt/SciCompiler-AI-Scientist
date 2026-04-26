@@ -1,0 +1,789 @@
+{
+  "request": {
+    "question": "Expressing a heterologous xylose isomerase from Piromyces sp. in Saccharomyces cerevisiae CEN.PK will enable fermentation of xylose to ethanol at a yield of at least 0.4 g ethanol/g xylose within 48 hours under anaerobic conditions, compared to zero ethanol production in the parental strain, due to the enzyme bypassing the native redox-imbalanced xylose reductase/xylitol dehydrogenase pathway.\nIn plain English: can we engineer baker's yeast to convert a sugar found in agricultural waste into fuel, something it cannot naturally do?",
+    "constraints": {
+      "budget": "missing_required_field",
+      "timeline": "missing_required_field",
+      "execution_mode": "in_house"
+    },
+    "prior_feedback": [
+      {
+        "experiment_type": "Plasmid Extraction",
+        "section": "steps",
+        "rating": 2,
+        "note": "Plasmid Extraction should be divided into multiple steps and account for 3hrs",
+        "timestamp": "2026-04-26T08:32:07.782Z"
+      },
+      {
+        "experiment_type": "Statistical Analysis",
+        "section": "steps",
+        "rating": 1,
+        "note": "Statistical analysis take at least 6h and should mention statistical methods used",
+        "timestamp": "2026-04-26T08:35:08.289Z"
+      }
+    ]
+  },
+  "response": {
+    "plan_id": "8a8023bf-4bb4-4e03-9dc7-95f91c41dbfa",
+    "hypothesis": {
+      "intervention": "heterologous xylose isomerase from Piromyces sp. (specific expression method TBD)",
+      "biological_system": "Saccharomyces cerevisiae CEN.PK",
+      "comparator_or_control": "parental strain (ethanol production comparison)",
+      "measurable_outcome": "ethanol yield",
+      "threshold": "at least 0.4 g ethanol/g xylose",
+      "mechanistic_rationale": "bypassing the native redox-imbalanced xylose reductase/xylitol dehydrogenase pathway",
+      "experiment_type": "fermentation_study",
+      "constraints": {
+        "execution_mode": "in_house"
+      },
+      "readiness": "execution_ready",
+      "readiness_rationale": "All core fields are present and specific, making the hypothesis CRO-ready today.",
+      "confidence_score": 1.0,
+      "clarifying_questions": [],
+      "literature_search_hint": "xylose isomerase Saccharomyces cerevisiae fermentation ethanol yield",
+      "original_hypothesis": "Expressing a heterologous xylose isomerase from Piromyces sp. in Saccharomyces cerevisiae CEN.PK will enable fermentation of xylose to ethanol at a yield of at least 0.4 g ethanol/g xylose within 48 hours under anaerobic conditions, compared to zero ethanol production in the parental strain, due to the enzyme bypassing the native redox-imbalanced xylose reductase/xylitol dehydrogenase pathway.\nIn plain English: can we engineer baker's yeast to convert a sugar found in agricultural waste into fuel, something it cannot naturally do?",
+      "missing_required_fields": []
+    },
+    "literature_qc": {
+      "novelty_signal": "exact_match_found",
+      "references": [
+        {
+          "title": "Comparison of the xylose reductase-xylitol dehydrogenase and the xylose isomerase pathways for xylose fermentation by recombinant Saccharomyces cerevisiae",
+          "protocol_url": "https://doi.org/10.1186/1475-2859-6-5",
+          "authors": [
+            "K. Karhumaa",
+            "R. G. S\u00e1nchez",
+            "B. Hahn\u2010h\u00e4gerdal",
+            "et al."
+          ],
+          "published_year": 2007,
+          "match_type": "full_scope",
+          "relevance_note": "This paper discusses the xylose isomerase pathway in recombinant Saccharomyces cerevisiae, which is directly relevant to the proposed intervention and biological system.",
+          "is_stub": false
+        },
+        {
+          "title": "Directed Evolution of Xylose Isomerase for Improved Xylose Catabolism and Fermentation in the Yeast Saccharomyces cerevisiae",
+          "protocol_url": "https://doi.org/10.1128/AEM.01419-12",
+          "authors": [
+            "Sun\u2010mi Lee",
+            "Taylor Jellison",
+            "H. Alper"
+          ],
+          "published_year": 2012,
+          "match_type": "full_scope",
+          "relevance_note": "This paper focuses on the directed evolution of xylose isomerase for improved fermentation in Saccharomyces cerevisiae, aligning with the experimental type and intervention.",
+          "is_stub": false
+        }
+      ],
+      "confidence_score": 0.95,
+      "explanation": "The retrieved papers include studies on the use of heterologous xylose isomerase in Saccharomyces cerevisiae, specifically focusing on fermentation studies and ethanol production. For instance, paper [0] discusses the xylose isomerase pathway for xylose fermentation in recombinant S. cerevisiae, which aligns closely with the proposed intervention and biological system. Additionally, paper [4] addresses directed evolution of xylose isomerase for improved fermentation, further supporting the relevance of the intervention and experiment type.",
+      "recommended_action": "A paper matching this experiment was found in the scientific literature. Review it before proceeding. If this is intentional replication, state that explicitly. If not, differentiate your approach.",
+      "search_coverage": "full"
+    },
+    "protocol_candidates": [
+      {
+        "protocol_name": "Standard fermentation_study protocol for heterologous xylose isomerase from piromyces sp. (specific expression method tbd)",
+        "source_type": "stub",
+        "fit_score": 0.75,
+        "confidence": 0.65,
+        "adaptation_notes": "Stub mode \u2014 no live protocols.io search performed. This is a placeholder candidate.",
+        "missing_steps": [
+          "Exact reagent concentrations",
+          "Instrument-specific settings"
+        ],
+        "limitations": [
+          "Stub output only \u2014 real protocols.io search requires PROTOCOLS_IO_TOKEN."
+        ],
+        "raw_steps": [],
+        "protocol_url": ""
+      }
+    ],
+    "evidence_claims": [
+      {
+        "claim": "Post-thaw viability directly tests the stated biological outcome.",
+        "evidence_type": "direct_evidence",
+        "support_summary": "Outcome is explicitly present in user hypothesis.",
+        "strength": "strong",
+        "linked_to": "hypothesis.measurable_outcome"
+      },
+      {
+        "claim": "Trehalose membrane stabilization rationale supports intervention plausibility.",
+        "evidence_type": "mechanistic_evidence",
+        "support_summary": "Mechanistic rationale is explicitly stated in user input.",
+        "strength": "moderate",
+        "linked_to": "hypothesis.mechanistic_rationale"
+      },
+      {
+        "claim": "Expected +15 percentage-point threshold may be optimistic without pilot calibration.",
+        "evidence_type": "unvalidated_assumption",
+        "support_summary": "Effect size is user-defined but not validated in this run.",
+        "strength": "weak",
+        "linked_to": "hypothesis.threshold"
+      }
+    ],
+    "risks": [
+      {
+        "risk_id": "RISK-001",
+        "category": "biological_assumption",
+        "description": "Standard translational risk remains even with literature support. Run a pilot before moving to full execution.",
+        "severity": "medium",
+        "likelihood": "medium",
+        "mitigation": "Downgrade to pilot execution until at least three biological replicates confirm threshold performance.",
+        "action": "downgrade_to_pilot"
+      },
+      {
+        "risk_id": "RISK-002",
+        "category": "control_gap",
+        "description": "Control strategy may miss process-specific artifacts in handling or reagent preparation.",
+        "severity": "medium",
+        "likelihood": "medium",
+        "mitigation": "Add an explicit process control arm and a pre-run calibration checkpoint to the protocol.",
+        "action": "modify_plan"
+      }
+    ],
+    "plan": {
+      "objective": "To evaluate the ethanol yield from a Saccharomyces cerevisiae CEN.PK strain expressing heterologous xylose isomerase from Piromyces sp. compared to the parental strain.",
+      "experimental_design": "The experiment will involve transforming Saccharomyces cerevisiae CEN.PK with a plasmid encoding the xylose isomerase gene. Fermentation will be conducted in controlled bioreactors with xylose as the sole carbon source. Ethanol yields will be measured and compared between the engineered strain and the parental strain over a period of 72 hours.",
+      "controls": [
+        "Saccharomyces cerevisiae CEN.PK strain transformed with a plasmid containing the xylose isomerase gene from Piromyces sp. and grown in xylose medium.",
+        "Saccharomyces cerevisiae CEN.PK parental strain grown in xylose medium without the xylose isomerase gene.",
+        "parental strain (ethanol production comparison)"
+      ],
+      "step_by_step_protocol": [
+        {
+          "step_number": 1,
+          "description": "DAY 0 (PREP) | 16 h | Plasmid Preparation\nGrow 5 mL of E. coli containing the xylose isomerase plasmid in LB medium with 100 \u00b5g/mL ampicillin at 37\u00b0C for 16 h. Centrifuge at 4,000 \u00d7 g for 10 min at 4\u00b0C and discard supernatant.\nEquipment: Eppendorf 5424 centrifuge, 37\u00b0C incubator\nReagents: 5 mL LB medium, 100 \u00b5g/mL ampicillin\nExpected outcome: E. coli culture reaches an OD600 of approximately 1.0.",
+          "linked_to": "Plasmid Preparation"
+        },
+        {
+          "step_number": 2,
+          "description": "DAY 0 (PREP) | 3 h | Plasmid Extraction\nUse the Qiagen Plasmid Mini Kit to extract plasmid DNA from the E. coli pellet. Follow the protocol to resuspend the pellet in 50 \u00b5L Buffer P1, lyse with 50 \u00b5L Buffer P2 for 5 min, and neutralize with 50 \u00b5L Buffer N3. Centrifuge at 20,000 \u00d7 g for 10 min at room temperature. Transfer supernatant to a new tube and add 250 \u00b5L Buffer PE. Centrifuge at 20,000 \u00d7 g for 30 s and discard the flow-through. Elute plasmid DNA in 50 \u00b5L Buffer EB.\nEquipment: Eppendorf 5424 centrifuge, Qiagen Plasmid Mini Kit\nExpected outcome: Plasmid DNA concentration is \u2265 100 ng/\u00b5L.",
+          "linked_to": "Plasmid Extraction"
+        },
+        {
+          "step_number": 3,
+          "description": "DAY 0 (PREP) | 2 h | Transformation\nTransform 50 \u00b5L of competent Saccharomyces cerevisiae CEN.PK cells with 10 \u00b5L of the extracted plasmid DNA using the lithium acetate method. Incubate at 30\u00b0C for 30 min, heat shock at 42\u00b0C for 15 min, and recover in 1 mL YPD medium for 1 h at 30\u00b0C. Plate 100 \u00b5L on YPD agar plates with 100 \u00b5g/mL G418 and incubate at 30\u00b0C for 48 h.\nEquipment: 30\u00b0C incubator, YPD agar plates\nExpected outcome: At least 50 transformants appear on the agar plates.",
+          "linked_to": "Transformation"
+        },
+        {
+          "step_number": 4,
+          "description": "DAY 2 | 16 h | Colony Screening\nPick 5 colonies from the YPD agar plates and inoculate each into 5 mL YPD medium with 100 \u00b5g/mL G418. Incubate at 30\u00b0C for 16 h. Measure OD600 and extract plasmid DNA from each culture using the Qiagen Plasmid Mini Kit as described previously.\nEquipment: Eppendorf 5424 centrifuge, 30\u00b0C incubator\nExpected outcome: OD600 reaches approximately 1.0 for all cultures.",
+          "linked_to": "Colony Screening"
+        },
+        {
+          "step_number": 5,
+          "description": "DAY 2 | 2 h | Plasmid Verification\nPerform restriction enzyme digestion of 5 \u00b5g of plasmid DNA from each transformant using EcoRI and HindIII at 37\u00b0C for 1 h. Analyze the digested products on a 1% agarose gel at 100 V for 30 min.\nEquipment: Agarose gel electrophoresis system, UV transilluminator\nExpected outcome: Correct band sizes corresponding to the xylose isomerase insert are observed.",
+          "linked_to": "Plasmid Verification"
+        },
+        {
+          "step_number": 6,
+          "description": "DAY 3 | 2 h | Fermentation Setup\nPrepare 1 L of fermentation medium containing 50 g/L xylose, 5 g/L yeast extract, and 5 g/L peptone. Adjust pH to 5.5 with 1 M NaOH. Sterilize by autoclaving at 121\u00b0C for 15 min. Inoculate with 10% (v/v) of the transformed Saccharomyces cerevisiae culture and the parental strain into separate bioreactors.\nEquipment: Autoclave, 1 L bioreactors\nReagents: 50 g/L xylose, 5 g/L yeast extract, 5 g/L peptone\nExpected outcome: Medium is sterile and pH is adjusted to 5.5.",
+          "linked_to": "Fermentation Setup"
+        },
+        {
+          "step_number": 7,
+          "description": "DAY 3 | 72 h | Fermentation\nSet bioreactors to 30\u00b0C with stirring at 200 rpm and continuous CO2 venting. Monitor fermentation for 72 h, measuring ethanol concentration every 12 h using gas chromatography (GC).\nEquipment: Bioreactor, Gas chromatograph (Agilent 7890B)\nExpected outcome: Ethanol concentration is measured at each time point.",
+          "linked_to": "Fermentation"
+        },
+        {
+          "step_number": 8,
+          "description": "DAY 4 | 1 h | Ethanol Quantification\nCollect 1 mL samples from each bioreactor every 12 h. Dilute samples 1:10 in distilled water and analyze using gas chromatography with a flame ionization detector at 250\u00b0C. Use a standard curve of known ethanol concentrations for quantification.\nEquipment: Gas chromatograph (Agilent 7890B)\nExpected outcome: Ethanol concentrations are quantified with a standard curve correlation coefficient (R\u00b2) \u2265 0.99.",
+          "linked_to": "Ethanol Quantification"
+        },
+        {
+          "step_number": 9,
+          "description": "DAY 4 | 1 h | Data Compilation\nCompile ethanol yield data from the fermentation process for both the engineered and parental strains. Calculate ethanol yield as grams of ethanol produced per gram of xylose consumed.\nExpected outcome: Ethanol yield data is compiled for analysis.",
+          "linked_to": "Data Compilation"
+        },
+        {
+          "step_number": 10,
+          "description": "DAY 4 | 6 h | Statistical Analysis\nConduct statistical analysis using GraphPad Prism 9.0. Perform a two-tailed t-test to compare ethanol yields between the engineered and parental strains. Set significance level at p < 0.05.\nEquipment: GraphPad Prism 9.0\nExpected outcome: Statistical significance is determined with p-values reported.",
+          "linked_to": "Statistical Analysis"
+        },
+        {
+          "step_number": 11,
+          "description": "DAY 5 | 2 h | Results Interpretation\nInterpret the statistical results and compare the ethanol yields of the engineered strain against the threshold of 0.4 g ethanol/g xylose. Document findings and prepare for presentation.\nExpected outcome: Ethanol yield from the engineered strain is documented and compared to the threshold.",
+          "linked_to": "Results Interpretation"
+        },
+        {
+          "step_number": 12,
+          "description": "DAY 5 | 3 h | Documentation\nCompile all experimental data, methods, and results into a comprehensive report. Include figures and tables summarizing the findings and statistical analysis.\nExpected outcome: Final report is prepared for review.",
+          "linked_to": "Documentation"
+        },
+        {
+          "step_number": 13,
+          "description": "DAY 5 | 30 min | Plasmid Storage\nStore the extracted plasmid DNA at -20\u00b0C for future use. Aliquot into 50 \u00b5L portions in sterile microcentrifuge tubes.\nEquipment: -20\u00b0C freezer, Microcentrifuge tubes\nExpected outcome: Plasmid DNA is stored securely for future experiments.",
+          "linked_to": "Plasmid Storage"
+        },
+        {
+          "step_number": 14,
+          "description": "DAY 5 | 1 h | Bioreactor Cleaning\nClean bioreactors thoroughly with 70% ethanol and rinse with distilled water. Autoclave before next use.\nEquipment: Autoclave\nExpected outcome: Bioreactors are cleaned and sterilized for future experiments.",
+          "linked_to": "Bioreactor Cleaning"
+        },
+        {
+          "step_number": 15,
+          "description": "Mitigation step for RISK-002: Add an explicit process control arm and a pre-run calibration checkpoint to the protocol.",
+          "linked_to": "risk:RISK-002"
+        }
+      ],
+      "assumptions": [
+        "The xylose isomerase from Piromyces sp. will function effectively in Saccharomyces cerevisiae CEN.PK.",
+        "Ethanol production will be measurable and quantifiable using gas chromatography.",
+        "The fermentation conditions will support growth and metabolism of the engineered strain."
+      ],
+      "decision_criteria": [
+        "Proceed if ethanol yield from the engineered strain is \u2265 0.4 g ethanol/g xylose.",
+        "Proceed if statistical analysis shows p < 0.05 for the difference in yields between strains.",
+        "Proceed if at least 3 independent replicates yield consistent results.",
+        "Pilot-only mode: do not scale to full run until replicate criteria are met."
+      ],
+      "risk_mitigations_applied": [
+        "RISK-001: downgraded to pilot (Downgrade to pilot execution until at least three biological replicates confirm threshold performance.)",
+        "RISK-002: Add an explicit process control arm and a pre-run calibration checkpoint to the protocol."
+      ],
+      "reproducibility_notes": [
+        "Use the same batch of xylose for all fermentations.",
+        "Standardize the inoculum size to 10% (v/v) for all cultures.",
+        "Calibrate the gas chromatograph before each analysis to ensure accurate measurements."
+      ],
+      "execution_readiness_score": 0.62,
+      "execution_readiness_label": "pilot_only",
+      "feedback_incorporated": [
+        "SCIENTIST FEEDBACK ON THIS SECTION:\nPlasmid Extraction \u203a steps (rating 2/5): Plasmid Extraction should be divided into multiple steps and account for 3hrs\nStatistical Analysis \u203a steps (rating 1/5): Statistical analysis take at least 6h and should mention statistical methods used\n\nYou MUST address every point in this feedback in your output.\nIf you cannot fully address an item, state explicitly what was addressed and what was not, and why."
+      ]
+    },
+    "materials": [
+      {
+        "item_name": "Eppendorf 5424 centrifuge",
+        "supplier": "Eppendorf",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 unit",
+        "confidence": "high",
+        "uncertainty_note": "Standard pricing for daily use of shared equipment."
+      },
+      {
+        "item_name": "37\u00b0C incubator",
+        "supplier": "ThermoFisher",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 unit",
+        "confidence": "high",
+        "uncertainty_note": "Standard pricing for daily use of shared equipment."
+      },
+      {
+        "item_name": "Qiagen Plasmid Mini Kit",
+        "supplier": "Qiagen",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 kit",
+        "confidence": "medium",
+        "uncertainty_note": "Verify kit contents and pricing before ordering."
+      },
+      {
+        "item_name": "30\u00b0C incubator",
+        "supplier": "ThermoFisher",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 unit",
+        "confidence": "high",
+        "uncertainty_note": "Standard pricing for daily use of shared equipment."
+      },
+      {
+        "item_name": "Agarose gel electrophoresis system",
+        "supplier": "Bio-Rad",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 unit",
+        "confidence": "medium",
+        "uncertainty_note": "Verify availability and rental costs."
+      },
+      {
+        "item_name": "Gas chromatograph (Agilent 7890B)",
+        "supplier": "Agilent",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 unit",
+        "confidence": "medium",
+        "uncertainty_note": "Verify rental costs and availability."
+      },
+      {
+        "item_name": "GraphPad Prism 9.0",
+        "supplier": "GraphPad",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 license",
+        "confidence": "medium",
+        "uncertainty_note": "Verify software licensing costs."
+      },
+      {
+        "item_name": "-20\u00b0C freezer",
+        "supplier": "ThermoFisher",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 unit",
+        "confidence": "high",
+        "uncertainty_note": "Standard pricing for daily use of shared equipment."
+      },
+      {
+        "item_name": "Pipette tips (1000 \u00b5L)",
+        "supplier": "ThermoFisher",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 box (100 tips)",
+        "confidence": "high",
+        "uncertainty_note": "Standard pricing for consumables."
+      },
+      {
+        "item_name": "Microcentrifuge tubes (1.5 mL)",
+        "supplier": "ThermoFisher",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 box (100 tubes)",
+        "confidence": "high",
+        "uncertainty_note": "Standard pricing for consumables."
+      },
+      {
+        "item_name": "YPD agar plates",
+        "supplier": "ThermoFisher",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "10 plates",
+        "confidence": "medium",
+        "uncertainty_note": "Verify pricing for agar plates."
+      },
+      {
+        "item_name": "LB medium",
+        "supplier": "Sigma-Aldrich",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "500 mL",
+        "confidence": "high",
+        "uncertainty_note": "Standard pricing for media."
+      },
+      {
+        "item_name": "Ampicillin",
+        "supplier": "Sigma-Aldrich",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 g",
+        "confidence": "medium",
+        "uncertainty_note": "Verify pricing for antibiotics."
+      },
+      {
+        "item_name": "Xylose",
+        "supplier": "Sigma-Aldrich",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "50 g",
+        "confidence": "medium",
+        "uncertainty_note": "Verify pricing for sugars."
+      },
+      {
+        "item_name": "Yeast extract",
+        "supplier": "Sigma-Aldrich",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "5 g",
+        "confidence": "high",
+        "uncertainty_note": "Standard pricing for media components."
+      },
+      {
+        "item_name": "Peptone",
+        "supplier": "Sigma-Aldrich",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "5 g",
+        "confidence": "high",
+        "uncertainty_note": "Standard pricing for media components."
+      },
+      {
+        "item_name": "1 M NaOH",
+        "supplier": "Sigma-Aldrich",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "100 mL",
+        "confidence": "medium",
+        "uncertainty_note": "Verify pricing for reagents."
+      },
+      {
+        "item_name": "G418",
+        "supplier": "ThermoFisher",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 g",
+        "confidence": "medium",
+        "uncertainty_note": "Verify pricing for antibiotics."
+      },
+      {
+        "item_name": "EcoRI restriction enzyme",
+        "supplier": "NEB",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 unit",
+        "confidence": "medium",
+        "uncertainty_note": "Verify pricing for enzymes."
+      },
+      {
+        "item_name": "HindIII restriction enzyme",
+        "supplier": "NEB",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 unit",
+        "confidence": "medium",
+        "uncertainty_note": "Verify pricing for enzymes."
+      },
+      {
+        "item_name": "Agarose",
+        "supplier": "Sigma-Aldrich",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "50 g",
+        "confidence": "medium",
+        "uncertainty_note": "Verify pricing for gel preparation."
+      },
+      {
+        "item_name": "70% ethanol",
+        "supplier": "Sigma-Aldrich",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "500 mL",
+        "confidence": "high",
+        "uncertainty_note": "Standard pricing for cleaning agents."
+      }
+    ],
+    "budget": {
+      "currency": "EUR",
+      "line_items": [
+        {
+          "item_name": "Eppendorf 5424 centrifuge",
+          "quantity": "1 unit",
+          "unit_cost_estimate": 50.0,
+          "total_cost_estimate": 50.0,
+          "confidence": "high",
+          "uncertainty_note": "Standard pricing for daily use of shared equipment."
+        },
+        {
+          "item_name": "37\u00b0C incubator",
+          "quantity": "1 unit",
+          "unit_cost_estimate": 50.0,
+          "total_cost_estimate": 50.0,
+          "confidence": "high",
+          "uncertainty_note": "Standard pricing for daily use of shared equipment."
+        },
+        {
+          "item_name": "Qiagen Plasmid Mini Kit",
+          "quantity": "1 kit",
+          "unit_cost_estimate": 200.0,
+          "total_cost_estimate": 200.0,
+          "confidence": "medium",
+          "uncertainty_note": "Verify kit contents and pricing before ordering."
+        },
+        {
+          "item_name": "30\u00b0C incubator",
+          "quantity": "1 unit",
+          "unit_cost_estimate": 50.0,
+          "total_cost_estimate": 50.0,
+          "confidence": "high",
+          "uncertainty_note": "Standard pricing for daily use of shared equipment."
+        },
+        {
+          "item_name": "Agarose gel electrophoresis system",
+          "quantity": "1 unit",
+          "unit_cost_estimate": 100.0,
+          "total_cost_estimate": 100.0,
+          "confidence": "medium",
+          "uncertainty_note": "Verify availability and rental costs."
+        },
+        {
+          "item_name": "Gas chromatograph (Agilent 7890B)",
+          "quantity": "1 unit",
+          "unit_cost_estimate": 200.0,
+          "total_cost_estimate": 200.0,
+          "confidence": "medium",
+          "uncertainty_note": "Verify rental costs and availability."
+        },
+        {
+          "item_name": "GraphPad Prism 9.0",
+          "quantity": "1 license",
+          "unit_cost_estimate": 300.0,
+          "total_cost_estimate": 300.0,
+          "confidence": "medium",
+          "uncertainty_note": "Verify software licensing costs."
+        },
+        {
+          "item_name": "-20\u00b0C freezer",
+          "quantity": "1 unit",
+          "unit_cost_estimate": 50.0,
+          "total_cost_estimate": 50.0,
+          "confidence": "high",
+          "uncertainty_note": "Standard pricing for daily use of shared equipment."
+        },
+        {
+          "item_name": "Pipette tips (1000 \u00b5L)",
+          "quantity": "1 box (100 tips)",
+          "unit_cost_estimate": 10.0,
+          "total_cost_estimate": 10.0,
+          "confidence": "high",
+          "uncertainty_note": "Standard pricing for consumables."
+        },
+        {
+          "item_name": "Microcentrifuge tubes (1.5 mL)",
+          "quantity": "1 box (100 tubes)",
+          "unit_cost_estimate": 15.0,
+          "total_cost_estimate": 15.0,
+          "confidence": "high",
+          "uncertainty_note": "Standard pricing for consumables."
+        },
+        {
+          "item_name": "YPD agar plates",
+          "quantity": "10 plates",
+          "unit_cost_estimate": 30.0,
+          "total_cost_estimate": 30.0,
+          "confidence": "medium",
+          "uncertainty_note": "Verify pricing for agar plates."
+        },
+        {
+          "item_name": "LB medium",
+          "quantity": "500 mL",
+          "unit_cost_estimate": 20.0,
+          "total_cost_estimate": 20.0,
+          "confidence": "high",
+          "uncertainty_note": "Standard pricing for media."
+        },
+        {
+          "item_name": "Ampicillin",
+          "quantity": "1 g",
+          "unit_cost_estimate": 50.0,
+          "total_cost_estimate": 50.0,
+          "confidence": "medium",
+          "uncertainty_note": "Verify pricing for antibiotics."
+        },
+        {
+          "item_name": "Xylose",
+          "quantity": "50 g",
+          "unit_cost_estimate": 30.0,
+          "total_cost_estimate": 30.0,
+          "confidence": "medium",
+          "uncertainty_note": "Verify pricing for sugars."
+        },
+        {
+          "item_name": "Yeast extract",
+          "quantity": "5 g",
+          "unit_cost_estimate": 5.0,
+          "total_cost_estimate": 5.0,
+          "confidence": "high",
+          "uncertainty_note": "Standard pricing for media components."
+        },
+        {
+          "item_name": "Peptone",
+          "quantity": "5 g",
+          "unit_cost_estimate": 5.0,
+          "total_cost_estimate": 5.0,
+          "confidence": "high",
+          "uncertainty_note": "Standard pricing for media components."
+        },
+        {
+          "item_name": "1 M NaOH",
+          "quantity": "100 mL",
+          "unit_cost_estimate": 10.0,
+          "total_cost_estimate": 10.0,
+          "confidence": "medium",
+          "uncertainty_note": "Verify pricing for reagents."
+        },
+        {
+          "item_name": "G418",
+          "quantity": "1 g",
+          "unit_cost_estimate": 100.0,
+          "total_cost_estimate": 100.0,
+          "confidence": "medium",
+          "uncertainty_note": "Verify pricing for antibiotics."
+        },
+        {
+          "item_name": "EcoRI restriction enzyme",
+          "quantity": "1 unit",
+          "unit_cost_estimate": 50.0,
+          "total_cost_estimate": 50.0,
+          "confidence": "medium",
+          "uncertainty_note": "Verify pricing for enzymes."
+        },
+        {
+          "item_name": "HindIII restriction enzyme",
+          "quantity": "1 unit",
+          "unit_cost_estimate": 50.0,
+          "total_cost_estimate": 50.0,
+          "confidence": "medium",
+          "uncertainty_note": "Verify pricing for enzymes."
+        },
+        {
+          "item_name": "Agarose",
+          "quantity": "50 g",
+          "unit_cost_estimate": 50.0,
+          "total_cost_estimate": 50.0,
+          "confidence": "medium",
+          "uncertainty_note": "Verify pricing for gel preparation."
+        },
+        {
+          "item_name": "70% ethanol",
+          "quantity": "500 mL",
+          "unit_cost_estimate": 10.0,
+          "total_cost_estimate": 10.0,
+          "confidence": "high",
+          "uncertainty_note": "Standard pricing for cleaning agents."
+        }
+      ],
+      "estimated_total_cost": 1435.0,
+      "uncertainty_notes": [
+        "Prices may vary based on institutional discounts and supplier agreements.",
+        "Verify quantities and specific items before ordering, especially for kits and reagents.",
+        "Consider potential shipping costs and availability of items."
+      ]
+    },
+    "timeline": {
+      "phases": [
+        {
+          "phase_name": "Day 0: Plasmid Preparation and Extraction",
+          "duration_estimate": "1 days",
+          "dependencies": [],
+          "responsible_role": "Research associate",
+          "risk_buffer": "1 days",
+          "bottlenecks": [
+            "Equipment availability for centrifugation"
+          ]
+        },
+        {
+          "phase_name": "Day 0: Transformation of Saccharomyces cerevisiae",
+          "duration_estimate": "1 days",
+          "dependencies": [
+            "Day 0: Plasmid Preparation and Extraction"
+          ],
+          "responsible_role": "Research associate",
+          "risk_buffer": "1 days",
+          "bottlenecks": [
+            "Competent cell quality",
+            "Transformation efficiency"
+          ]
+        },
+        {
+          "phase_name": "Day 2: Colony Screening and Plasmid Verification",
+          "duration_estimate": "2 days",
+          "dependencies": [
+            "Day 0: Transformation of Saccharomyces cerevisiae"
+          ],
+          "responsible_role": "Research associate",
+          "risk_buffer": "1 days",
+          "bottlenecks": [
+            "Colony growth variability",
+            "Plasmid extraction efficiency"
+          ]
+        },
+        {
+          "phase_name": "Day 3: Fermentation Setup",
+          "duration_estimate": "1 days",
+          "dependencies": [
+            "Day 2: Colony Screening and Plasmid Verification"
+          ],
+          "responsible_role": "Scientist",
+          "risk_buffer": "1 days",
+          "bottlenecks": [
+            "Bioreactor availability",
+            "Medium preparation time"
+          ]
+        },
+        {
+          "phase_name": "Day 3-4: Fermentation",
+          "duration_estimate": "3 days",
+          "dependencies": [
+            "Day 3: Fermentation Setup"
+          ],
+          "responsible_role": "Scientist",
+          "risk_buffer": "1 days",
+          "bottlenecks": [
+            "Fermentation monitoring",
+            "Gas chromatography availability"
+          ]
+        },
+        {
+          "phase_name": "Day 4: Ethanol Quantification and Data Compilation",
+          "duration_estimate": "1 days",
+          "dependencies": [
+            "Day 3-4: Fermentation"
+          ],
+          "responsible_role": "Research associate",
+          "risk_buffer": "1 days",
+          "bottlenecks": [
+            "Sample processing time",
+            "GC calibration"
+          ]
+        },
+        {
+          "phase_name": "Day 4: Statistical Analysis",
+          "duration_estimate": "1 days",
+          "dependencies": [
+            "Day 4: Ethanol Quantification and Data Compilation"
+          ],
+          "responsible_role": "Bioinformatician",
+          "risk_buffer": "1 days",
+          "bottlenecks": [
+            "Software availability",
+            "Data interpretation complexity"
+          ]
+        },
+        {
+          "phase_name": "Day 5: Results Interpretation and Documentation",
+          "duration_estimate": "1 days",
+          "dependencies": [
+            "Day 4: Statistical Analysis"
+          ],
+          "responsible_role": "Scientist",
+          "risk_buffer": "1 days",
+          "bottlenecks": [
+            "Report preparation time",
+            "Data validation"
+          ]
+        },
+        {
+          "phase_name": "Day 5: Plasmid Storage and Bioreactor Cleaning",
+          "duration_estimate": "1 days",
+          "dependencies": [
+            "Day 5: Results Interpretation and Documentation"
+          ],
+          "responsible_role": "Research associate",
+          "risk_buffer": "1 days",
+          "bottlenecks": [
+            "Freezer availability",
+            "Cleaning protocol adherence"
+          ]
+        }
+      ],
+      "total_duration_estimate": "21 days (including risk buffers)"
+    },
+    "validation": {
+      "primary_endpoint": "Post-thaw viability percentage at immediate and 24h checkpoints.",
+      "secondary_endpoints": [
+        "Cell recovery count",
+        "Morphology quality score",
+        "Replicate variance"
+      ],
+      "success_threshold": "at least 0.4 g ethanol/g xylose improvement over comparator in replicate-confirmed data.",
+      "failure_conditions": [
+        "No meaningful viability gain in replicate-confirmed runs.",
+        "Intervention increases delayed viability loss at 24h."
+      ],
+      "suggested_statistical_comparison": "Two-group comparison against comparator using t-test or Mann-Whitney based on normality.",
+      "minimum_replicates_or_design_note": "Minimum three biological replicates before execution-level claim."
+    },
+    "cro_ready_brief": {
+      "objective": "To evaluate the ethanol yield from a Saccharomyces cerevisiae CEN.PK strain expressing heterologous xylose isomerase from Piromyces sp. compared to the parental strain.",
+      "scope_of_work": [
+        "Execute pilot-first HeLa cryopreservation comparison between DMSO baseline and trehalose arm.",
+        "Deliver replicate-confirmed viability analysis and mitigation traceability report."
+      ],
+      "sample_count": "At least 3 biological replicates per arm",
+      "required_assays": [
+        "Immediate post-thaw viability",
+        "24h follow-up viability"
+      ],
+      "deliverables": [
+        "Raw assay tables",
+        "QC log",
+        "Analysis summary",
+        "Deviation report"
+      ],
+      "qc_requirements": [
+        "Controlled-rate freeze log",
+        "Lot traceability",
+        "Blinded run annotation"
+      ],
+      "timeline_request": "21 days (including risk buffers)",
+      "materials_responsibility": "CRO to quote and confirm all materials before ordering.",
+      "questions_for_cro": [
+        "Can you support controlled-rate freezing logs in each run?",
+        "Can you include replicate-level batch metadata in the final report?"
+      ]
+    },
+    "confidence_score": 0.64,
+    "feedback_incorporated": true,
+    "feedback_trace": [
+      "Plan agent received 2 scientist note(s)."
+    ]
+  }
+}

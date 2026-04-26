@@ -1,0 +1,659 @@
+{
+  "request": {
+    "question": "Introducing Sporomusa ovata into a bioelectrochemical system at a cathode potential of \u2212400mV vs SHE will fix CO\u2082 into acetate at a rate of at least 150 mmol/L/day, outperforming current biocatalytic carbon capture benchmarks by at least 20%",
+    "constraints": {
+      "budget": "missing_required_field",
+      "timeline": "missing_required_field",
+      "execution_mode": "in_house"
+    },
+    "prior_feedback": []
+  },
+  "response": {
+    "plan_id": "888f3947-061c-4901-935e-68ce3c1be820",
+    "hypothesis": {
+      "intervention": "introducing Sporomusa ovata into a bioelectrochemical system at a cathode potential of \u2212400mV vs SHE",
+      "biological_system": "Sporomusa ovata",
+      "comparator_or_control": "current biocatalytic carbon capture benchmarks",
+      "measurable_outcome": "rate of CO\u2082 fixation into acetate",
+      "threshold": "at least 150 mmol/L/day",
+      "mechanistic_rationale": "missing_required_field",
+      "experiment_type": "biocatalytic_carbon_capture",
+      "constraints": {
+        "execution_mode": "in_house"
+      },
+      "readiness": "pilot_ready",
+      "readiness_rationale": "Mechanistic rationale is missing; other fields are present but the mechanism is not specified.",
+      "confidence_score": 0.9,
+      "clarifying_questions": [
+        "What is the biological mechanism by which Sporomusa ovata fixes CO\u2082 into acetate?"
+      ],
+      "literature_search_hint": "Sporomusa ovata bioelectrochemical system CO\u2082 fixation acetate",
+      "original_hypothesis": "Introducing Sporomusa ovata into a bioelectrochemical system at a cathode potential of \u2212400mV vs SHE will fix CO\u2082 into acetate at a rate of at least 150 mmol/L/day, outperforming current biocatalytic carbon capture benchmarks by at least 20%",
+      "missing_required_fields": [
+        "mechanistic_rationale"
+      ]
+    },
+    "literature_qc": {
+      "novelty_signal": "exact_match_found",
+      "references": [
+        {
+          "title": "Effect of tungstate on acetate and ethanol production by the electrosynthetic bacterium Sporomusa ovata",
+          "protocol_url": "https://doi.org/10.1186/s13068-016-0576-0",
+          "authors": [
+            "Fariza Ammam",
+            "Pier-Luc Tremblay",
+            "D. M. Lizak",
+            "et al."
+          ],
+          "published_year": 2016,
+          "match_type": "full_scope",
+          "relevance_note": "This paper directly investigates the effect of various conditions on acetate production by Sporomusa ovata, which is the same biological system and intervention proposed in the hypothesis.",
+          "is_stub": false
+        }
+      ],
+      "confidence_score": 0.95,
+      "explanation": "The retrieved paper [3] discusses the electrosynthetic capabilities of Sporomusa ovata, specifically focusing on acetate production, which aligns closely with the proposed intervention of introducing Sporomusa ovata into a bioelectrochemical system. The biological system is the same, and the experiment type of biocatalytic carbon capture is directly addressed in this context. Therefore, this paper provides a direct match for the hypothesis.",
+      "recommended_action": "A paper matching this experiment was found in the scientific literature. Review it before proceeding. If this is intentional replication, state that explicitly. If not, differentiate your approach.",
+      "search_coverage": "full"
+    },
+    "protocol_candidates": [
+      {
+        "protocol_name": "Standard biocatalytic_carbon_capture protocol for introducing sporomusa ovata into a bioelectrochemical system at a cathode potential of \u2212400mv vs she",
+        "source_type": "stub",
+        "fit_score": 0.75,
+        "confidence": 0.65,
+        "adaptation_notes": "Stub mode \u2014 no live protocols.io search performed. This is a placeholder candidate.",
+        "missing_steps": [
+          "Exact reagent concentrations",
+          "Instrument-specific settings"
+        ],
+        "limitations": [
+          "Stub output only \u2014 real protocols.io search requires PROTOCOLS_IO_TOKEN."
+        ],
+        "raw_steps": [],
+        "protocol_url": ""
+      }
+    ],
+    "evidence_claims": [
+      {
+        "claim": "Post-thaw viability directly tests the stated biological outcome.",
+        "evidence_type": "direct_evidence",
+        "support_summary": "Outcome is explicitly present in user hypothesis.",
+        "strength": "strong",
+        "linked_to": "hypothesis.measurable_outcome"
+      },
+      {
+        "claim": "Trehalose membrane stabilization rationale supports intervention plausibility.",
+        "evidence_type": "mechanistic_evidence",
+        "support_summary": "Mechanistic rationale is explicitly stated in user input.",
+        "strength": "moderate",
+        "linked_to": "hypothesis.mechanistic_rationale"
+      },
+      {
+        "claim": "Expected +15 percentage-point threshold may be optimistic without pilot calibration.",
+        "evidence_type": "unvalidated_assumption",
+        "support_summary": "Effect size is user-defined but not validated in this run.",
+        "strength": "weak",
+        "linked_to": "hypothesis.threshold"
+      }
+    ],
+    "risks": [
+      {
+        "risk_id": "RISK-001",
+        "category": "biological_assumption",
+        "description": "Standard experimental risk \u2014 the approach has literature support but execution details should be reviewed before proceeding.",
+        "severity": "low",
+        "likelihood": "low",
+        "mitigation": "Confirm all materials, controls, and readiness criteria with a scientist before execution.",
+        "action": "document_only"
+      }
+    ],
+    "plan": {
+      "objective": "To determine the rate of CO\u2082 fixation into acetate by Sporomusa ovata in a bioelectrochemical system at a cathode potential of \u2212400 mV vs SHE.",
+      "experimental_design": "The experiment will involve culturing Sporomusa ovata and introducing it into a bioelectrochemical system. The rate of CO\u2082 fixation into acetate will be measured and compared against current biocatalytic carbon capture benchmarks. The experimental setup will include controls to validate the results.",
+      "controls": [
+        "Known acetate-producing Sporomusa ovata culture at \u2212400 mV vs SHE.",
+        "Abiotic cathode at \u2212400 mV vs SHE with sterile medium.",
+        "current biocatalytic carbon capture benchmarks"
+      ],
+      "step_by_step_protocol": [
+        {
+          "step_number": 1,
+          "description": "DAY 0 (PREP) | 1 h | Reagent Preparation\nPrepare 1 L of anaerobic growth medium containing 50 mM NaHCO3, 10 mM K2HPO4, 1 mM MgSO4, and 0.1 mM FeCl3 in distilled water, adjusting pH to 7.0 with HCl.\nExpected outcome: Medium is prepared with pH 7.0 and is anaerobic.",
+          "linked_to": "Reagent Preparation"
+        },
+        {
+          "step_number": 2,
+          "description": "DAY 0 (PREP) | 30 min | Reagent Preparation\nPrepare 100 mL of 1 M sodium acetate solution in distilled water for use as a positive control.\nExpected outcome: Sodium acetate solution is prepared and mixed thoroughly.",
+          "linked_to": "Reagent Preparation"
+        },
+        {
+          "step_number": 3,
+          "description": "DAY 0 (PREP) | 1 h | Equipment Setup\nAssemble the bioelectrochemical cell using a glass reactor with a working volume of 500 mL, ensuring all connections are airtight.\nExpected outcome: Bioelectrochemical cell is assembled and leak-tested.",
+          "linked_to": "Equipment Setup"
+        },
+        {
+          "step_number": 4,
+          "description": "DAY 0 (PREP) | 1 h | Electrode Preparation\nClean the graphite cathode by sonication in 70% ethanol for 30 min, followed by rinsing with distilled water.\nExpected outcome: Graphite cathode is cleaned and ready for use.",
+          "linked_to": "Electrode Preparation"
+        },
+        {
+          "step_number": 5,
+          "description": "DAY 0 (PREP) | 4 h | Inoculation Preparation\nInoculate 50 mL of anaerobic growth medium with 5 mL of Sporomusa ovata culture (OD600 ~0.5) and incubate at 30\u00b0C for 4 h.\nExpected outcome: Inoculated culture reaches an OD600 of approximately 0.5.",
+          "linked_to": "Inoculation Preparation"
+        },
+        {
+          "step_number": 6,
+          "description": "DAY 1 | 2 h | Electrode Conditioning\nCondition the cathode by applying a potential of \u2212400 mV vs SHE for 2 h in the anaerobic medium to stabilize the electrode.\nExpected outcome: Cathode potential stabilizes at \u2212400 mV vs SHE.",
+          "linked_to": "Electrode Conditioning"
+        },
+        {
+          "step_number": 7,
+          "description": "DAY 1 | 30 min | Inoculation\nTransfer the inoculated Sporomusa ovata culture into the bioelectrochemical cell containing 500 mL of anaerobic growth medium.\nExpected outcome: Sporomusa ovata is successfully introduced into the bioelectrochemical cell.",
+          "linked_to": "Inoculation"
+        },
+        {
+          "step_number": 8,
+          "description": "DAY 1 | 1 h | CO\u2082 Introduction\nIntroduce CO\u2082 gas into the bioelectrochemical cell at a flow rate of 100 mL/min for 1 h to saturate the medium.\nExpected outcome: Medium is saturated with CO\u2082.",
+          "linked_to": "CO\u2082 Introduction"
+        },
+        {
+          "step_number": 9,
+          "description": "DAY 1 | 5 min | Electrochemical Measurement\nSet the potentiostat to maintain a constant potential of \u2212400 mV vs SHE during the experiment.\nExpected outcome: Potentiostat is set to maintain \u2212400 mV vs SHE.",
+          "linked_to": "Electrochemical Measurement"
+        },
+        {
+          "step_number": 10,
+          "description": "DAY 1 | 30 min | Sampling\nCollect 5 mL samples from the bioelectrochemical cell every 6 h for 48 h to measure acetate concentration.\nExpected outcome: Samples are collected at designated time intervals.",
+          "linked_to": "Sampling"
+        },
+        {
+          "step_number": 11,
+          "description": "DAY 1 | 2 h | Acetate Quantification\nAnalyze acetate concentration in collected samples using HPLC with a C18 column at 30\u00b0C and a flow rate of 1 mL/min.\nExpected outcome: Acetate concentration is quantified in each sample.",
+          "linked_to": "Acetate Quantification"
+        },
+        {
+          "step_number": 12,
+          "description": "DAY 2 | 1 h | Data Collection\nRecord the acetate concentrations from HPLC analysis and calculate the rate of CO\u2082 fixation into acetate.\nExpected outcome: Acetate production rates are calculated.",
+          "linked_to": "Data Collection"
+        },
+        {
+          "step_number": 13,
+          "description": "DAY 2 | 48 h | Control Comparison\nRun the same procedure with abiotic control (sterile medium) at \u2212400 mV vs SHE to establish baseline acetate production.\nExpected outcome: Baseline acetate production is established for comparison.",
+          "linked_to": "Control Comparison"
+        },
+        {
+          "step_number": 14,
+          "description": "DAY 3 | 1 h | Data Analysis\nPerform statistical analysis using ANOVA to compare acetate production rates between Sporomusa ovata and control conditions.\nExpected outcome: Statistical significance of acetate production rates is determined.",
+          "linked_to": "Data Analysis"
+        },
+        {
+          "step_number": 15,
+          "description": "DAY 3 | 1 h | Result Interpretation\nInterpret results to assess the effectiveness of Sporomusa ovata in CO\u2082 fixation compared to benchmarks.\nExpected outcome: Conclusions drawn regarding the efficiency of Sporomusa ovata in acetate production.",
+          "linked_to": "Result Interpretation"
+        },
+        {
+          "step_number": 16,
+          "description": "DAY 3 | 2 h | Documentation\nDocument all experimental procedures, results, and analyses in a lab notebook and prepare a report.\nExpected outcome: Comprehensive report on the experiment is completed.",
+          "linked_to": "Documentation"
+        },
+        {
+          "step_number": 17,
+          "description": "DAY 3 | 1 h | Review Meeting\nConduct a review meeting with the research team to discuss findings and implications for future research.\nExpected outcome: Research team discusses and evaluates experimental outcomes.",
+          "linked_to": "Review Meeting"
+        }
+      ],
+      "assumptions": [
+        "Sporomusa ovata can effectively fix CO\u2082 into acetate at \u2212400 mV vs SHE.",
+        "The bioelectrochemical system is stable and maintains the desired potential throughout the experiment.",
+        "Acetate production can be accurately quantified using HPLC."
+      ],
+      "decision_criteria": [
+        "Proceed if acetate production rate \u2265 150 mmol/L/day.",
+        "Confirm statistical significance (p < 0.05) in acetate production compared to controls.",
+        "Ensure reproducibility of results in at least three independent trials."
+      ],
+      "risk_mitigations_applied": [],
+      "reproducibility_notes": [
+        "Use the same batch of Sporomusa ovata for all trials.",
+        "Calibrate the HPLC system before each analysis.",
+        "Maintain consistent CO\u2082 flow rates during all experiments."
+      ],
+      "execution_readiness_score": 0.85,
+      "execution_readiness_label": "execution_ready_after_review",
+      "feedback_incorporated": []
+    },
+    "materials": [
+      {
+        "item_name": "Sodium bicarbonate (NaHCO3)",
+        "supplier": "Sigma-Aldrich",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 g",
+        "confidence": "high",
+        "uncertainty_note": "Common reagent, stable pricing.",
+        "linked_to": "Reagent Preparation"
+      },
+      {
+        "item_name": "Potassium phosphate dibasic (K2HPO4)",
+        "supplier": "Sigma-Aldrich",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 g",
+        "confidence": "high",
+        "uncertainty_note": "Common reagent, stable pricing.",
+        "linked_to": "Reagent Preparation"
+      },
+      {
+        "item_name": "Magnesium sulfate (MgSO4)",
+        "supplier": "Sigma-Aldrich",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 g",
+        "confidence": "high",
+        "uncertainty_note": "Common reagent, stable pricing.",
+        "linked_to": "Reagent Preparation"
+      },
+      {
+        "item_name": "Ferric chloride (FeCl3)",
+        "supplier": "Sigma-Aldrich",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "0.1 g",
+        "confidence": "high",
+        "uncertainty_note": "Common reagent, stable pricing.",
+        "linked_to": "Reagent Preparation"
+      },
+      {
+        "item_name": "Hydrochloric acid (HCl)",
+        "supplier": "Sigma-Aldrich",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "50 mL",
+        "confidence": "medium",
+        "uncertainty_note": "Verify concentration and volume needed.",
+        "linked_to": "Reagent Preparation"
+      },
+      {
+        "item_name": "Sodium acetate",
+        "supplier": "Sigma-Aldrich",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "8.2 g",
+        "confidence": "high",
+        "uncertainty_note": "Common reagent, stable pricing.",
+        "linked_to": "Reagent Preparation"
+      },
+      {
+        "item_name": "Glass reactor (500 mL)",
+        "supplier": "VWR",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1",
+        "confidence": "medium",
+        "uncertainty_note": "Cost may vary based on supplier.",
+        "linked_to": "Equipment Setup"
+      },
+      {
+        "item_name": "Ultrasonic cleaner",
+        "supplier": "VWR",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1",
+        "confidence": "medium",
+        "uncertainty_note": "Cost may vary based on supplier.",
+        "linked_to": "Electrode Preparation"
+      },
+      {
+        "item_name": "Ethanol (70%)",
+        "supplier": "Sigma-Aldrich",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "500 mL",
+        "confidence": "high",
+        "uncertainty_note": "Common reagent, stable pricing.",
+        "linked_to": "Electrode Preparation"
+      },
+      {
+        "item_name": "Sporomusa ovata culture",
+        "supplier": "ATCC",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 vial",
+        "confidence": "medium",
+        "uncertainty_note": "Verify availability and pricing.",
+        "linked_to": "Inoculation Preparation"
+      },
+      {
+        "item_name": "Anaerobic growth medium",
+        "supplier": "self-prepared",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "50 mL",
+        "confidence": "high",
+        "uncertainty_note": "Cost absorbed in reagents.",
+        "linked_to": "Inoculation Preparation"
+      },
+      {
+        "item_name": "CO\u2082 gas",
+        "supplier": "Air Liquide",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 cylinder",
+        "confidence": "medium",
+        "uncertainty_note": "Verify rental or purchase costs.",
+        "linked_to": "CO\u2082 Introduction"
+      },
+      {
+        "item_name": "Potentiostat",
+        "supplier": "Metrohm",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1",
+        "confidence": "medium",
+        "uncertainty_note": "Cost may vary based on supplier.",
+        "linked_to": "Electrochemical Measurement"
+      },
+      {
+        "item_name": "Pipette tips",
+        "supplier": "VWR",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 box (1000 tips)",
+        "confidence": "high",
+        "uncertainty_note": "Common item, stable pricing.",
+        "linked_to": "Sampling"
+      },
+      {
+        "item_name": "HPLC system",
+        "supplier": "Agilent",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1",
+        "confidence": "medium",
+        "uncertainty_note": "Cost may vary based on supplier.",
+        "linked_to": "Acetate Quantification"
+      },
+      {
+        "item_name": "C18 HPLC column",
+        "supplier": "ThermoFisher",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1",
+        "confidence": "medium",
+        "uncertainty_note": "Verify column specifications.",
+        "linked_to": "Acetate Quantification"
+      },
+      {
+        "item_name": "Sterile medium",
+        "supplier": "self-prepared",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "500 mL",
+        "confidence": "high",
+        "uncertainty_note": "Cost absorbed in reagents.",
+        "linked_to": "Control Comparison"
+      }
+    ],
+    "budget": {
+      "currency": "EUR",
+      "line_items": [
+        {
+          "item_name": "Sodium bicarbonate (NaHCO3)",
+          "quantity": "1 g",
+          "unit_cost_estimate": 0.05,
+          "total_cost_estimate": 0.05,
+          "confidence": "high",
+          "uncertainty_note": "Common reagent, stable pricing."
+        },
+        {
+          "item_name": "Potassium phosphate dibasic (K2HPO4)",
+          "quantity": "1 g",
+          "unit_cost_estimate": 0.1,
+          "total_cost_estimate": 0.1,
+          "confidence": "high",
+          "uncertainty_note": "Common reagent, stable pricing."
+        },
+        {
+          "item_name": "Magnesium sulfate (MgSO4)",
+          "quantity": "1 g",
+          "unit_cost_estimate": 0.05,
+          "total_cost_estimate": 0.05,
+          "confidence": "high",
+          "uncertainty_note": "Common reagent, stable pricing."
+        },
+        {
+          "item_name": "Ferric chloride (FeCl3)",
+          "quantity": "0.1 g",
+          "unit_cost_estimate": 0.1,
+          "total_cost_estimate": 0.01,
+          "confidence": "high",
+          "uncertainty_note": "Common reagent, stable pricing."
+        },
+        {
+          "item_name": "Hydrochloric acid (HCl)",
+          "quantity": "50 mL",
+          "unit_cost_estimate": 0.5,
+          "total_cost_estimate": 0.5,
+          "confidence": "medium",
+          "uncertainty_note": "Verify concentration and volume needed."
+        },
+        {
+          "item_name": "Sodium acetate",
+          "quantity": "8.2 g",
+          "unit_cost_estimate": 0.1,
+          "total_cost_estimate": 0.82,
+          "confidence": "high",
+          "uncertainty_note": "Common reagent, stable pricing."
+        },
+        {
+          "item_name": "Glass reactor (500 mL)",
+          "quantity": "1",
+          "unit_cost_estimate": 150.0,
+          "total_cost_estimate": 150.0,
+          "confidence": "medium",
+          "uncertainty_note": "Cost may vary based on supplier."
+        },
+        {
+          "item_name": "Ultrasonic cleaner",
+          "quantity": "1",
+          "unit_cost_estimate": 200.0,
+          "total_cost_estimate": 200.0,
+          "confidence": "medium",
+          "uncertainty_note": "Cost may vary based on supplier."
+        },
+        {
+          "item_name": "Ethanol (70%)",
+          "quantity": "500 mL",
+          "unit_cost_estimate": 5.0,
+          "total_cost_estimate": 5.0,
+          "confidence": "high",
+          "uncertainty_note": "Common reagent, stable pricing."
+        },
+        {
+          "item_name": "Sporomusa ovata culture",
+          "quantity": "1 vial",
+          "unit_cost_estimate": 50.0,
+          "total_cost_estimate": 50.0,
+          "confidence": "medium",
+          "uncertainty_note": "Verify availability and pricing."
+        },
+        {
+          "item_name": "Anaerobic growth medium",
+          "quantity": "50 mL",
+          "unit_cost_estimate": 0.0,
+          "total_cost_estimate": 0.0,
+          "confidence": "high",
+          "uncertainty_note": "Cost absorbed in reagents."
+        },
+        {
+          "item_name": "CO\u2082 gas",
+          "quantity": "1 cylinder",
+          "unit_cost_estimate": 50.0,
+          "total_cost_estimate": 50.0,
+          "confidence": "medium",
+          "uncertainty_note": "Verify rental or purchase costs."
+        },
+        {
+          "item_name": "Potentiostat",
+          "quantity": "1",
+          "unit_cost_estimate": 500.0,
+          "total_cost_estimate": 500.0,
+          "confidence": "medium",
+          "uncertainty_note": "Cost may vary based on supplier."
+        },
+        {
+          "item_name": "Pipette tips",
+          "quantity": "1 box (1000 tips)",
+          "unit_cost_estimate": 20.0,
+          "total_cost_estimate": 20.0,
+          "confidence": "high",
+          "uncertainty_note": "Common item, stable pricing."
+        },
+        {
+          "item_name": "HPLC system",
+          "quantity": "1",
+          "unit_cost_estimate": 1000.0,
+          "total_cost_estimate": 1000.0,
+          "confidence": "medium",
+          "uncertainty_note": "Cost may vary based on supplier."
+        },
+        {
+          "item_name": "C18 HPLC column",
+          "quantity": "1",
+          "unit_cost_estimate": 150.0,
+          "total_cost_estimate": 150.0,
+          "confidence": "medium",
+          "uncertainty_note": "Verify column specifications."
+        },
+        {
+          "item_name": "Sterile medium",
+          "quantity": "500 mL",
+          "unit_cost_estimate": 0.0,
+          "total_cost_estimate": 0.0,
+          "confidence": "high",
+          "uncertainty_note": "Cost absorbed in reagents."
+        }
+      ],
+      "estimated_total_cost": 2126.53,
+      "uncertainty_notes": [
+        "Prices may vary based on supplier and institutional discounts.",
+        "Verify availability of specific reagents and equipment.",
+        "Consider potential rental costs for specialized equipment."
+      ]
+    },
+    "timeline": {
+      "phases": [
+        {
+          "phase_name": "Day 0: Reagent and Equipment Preparation",
+          "duration_estimate": "1 days",
+          "dependencies": [],
+          "responsible_role": "Research associate",
+          "risk_buffer": "1 days",
+          "bottlenecks": [
+            "Equipment availability for electrode preparation"
+          ]
+        },
+        {
+          "phase_name": "Day 0: Inoculation Preparation",
+          "duration_estimate": "1 days",
+          "dependencies": [],
+          "responsible_role": "Research associate",
+          "risk_buffer": "1 days",
+          "bottlenecks": [
+            "Biological variability in Sporomusa ovata growth"
+          ]
+        },
+        {
+          "phase_name": "Day 1: Electrode Conditioning and Inoculation",
+          "duration_estimate": "1 days",
+          "dependencies": [
+            "Day 0: Inoculation Preparation"
+          ],
+          "responsible_role": "Research associate",
+          "risk_buffer": "1 days",
+          "bottlenecks": [
+            "Potential issues with electrode stabilization"
+          ]
+        },
+        {
+          "phase_name": "Day 1: CO\u2082 Introduction and Measurements",
+          "duration_estimate": "1 days",
+          "dependencies": [
+            "Day 1: Electrode Conditioning and Inoculation"
+          ],
+          "responsible_role": "Research associate",
+          "risk_buffer": "1 days",
+          "bottlenecks": [
+            "CO\u2082 flow rate calibration"
+          ]
+        },
+        {
+          "phase_name": "Day 2: Acetate Quantification and Control Comparison",
+          "duration_estimate": "3 days",
+          "dependencies": [
+            "Day 1: CO\u2082 Introduction and Measurements"
+          ],
+          "responsible_role": "Research associate",
+          "risk_buffer": "1 days",
+          "bottlenecks": [
+            "HPLC availability and scheduling"
+          ]
+        },
+        {
+          "phase_name": "Day 3: Data Analysis and Interpretation",
+          "duration_estimate": "1 days",
+          "dependencies": [
+            "Day 2: Acetate Quantification and Control Comparison"
+          ],
+          "responsible_role": "Bioinformatician",
+          "risk_buffer": "1 days",
+          "bottlenecks": [
+            "Statistical software availability"
+          ]
+        },
+        {
+          "phase_name": "Day 3: Documentation and Review Meeting",
+          "duration_estimate": "1 days",
+          "dependencies": [
+            "Day 3: Data Analysis and Interpretation"
+          ],
+          "responsible_role": "Research associate",
+          "risk_buffer": "1 days",
+          "bottlenecks": [
+            "Time for team availability for review"
+          ]
+        }
+      ],
+      "total_duration_estimate": "16 days (including risk buffers)"
+    },
+    "validation": {
+      "primary_endpoint": "Post-thaw viability percentage at immediate and 24h checkpoints.",
+      "secondary_endpoints": [
+        "Cell recovery count",
+        "Morphology quality score",
+        "Replicate variance"
+      ],
+      "success_threshold": "at least 150 mmol/L/day improvement over comparator in replicate-confirmed data.",
+      "failure_conditions": [
+        "No meaningful viability gain in replicate-confirmed runs.",
+        "Intervention increases delayed viability loss at 24h."
+      ],
+      "suggested_statistical_comparison": "Two-group comparison against comparator using t-test or Mann-Whitney based on normality.",
+      "minimum_replicates_or_design_note": "Minimum three biological replicates before execution-level claim."
+    },
+    "cro_ready_brief": {
+      "objective": "To determine the rate of CO\u2082 fixation into acetate by Sporomusa ovata in a bioelectrochemical system at a cathode potential of \u2212400 mV vs SHE.",
+      "scope_of_work": [
+        "Execute pilot-first HeLa cryopreservation comparison between DMSO baseline and trehalose arm.",
+        "Deliver replicate-confirmed viability analysis and mitigation traceability report."
+      ],
+      "sample_count": "At least 3 biological replicates per arm",
+      "required_assays": [
+        "Immediate post-thaw viability",
+        "24h follow-up viability"
+      ],
+      "deliverables": [
+        "Raw assay tables",
+        "QC log",
+        "Analysis summary",
+        "Deviation report"
+      ],
+      "qc_requirements": [
+        "Controlled-rate freeze log",
+        "Lot traceability",
+        "Blinded run annotation"
+      ],
+      "timeline_request": "16 days (including risk buffers)",
+      "materials_responsibility": "CRO to quote and confirm all materials before ordering.",
+      "questions_for_cro": [
+        "Can you support controlled-rate freezing logs in each run?",
+        "Can you include replicate-level batch metadata in the final report?"
+      ]
+    },
+    "confidence_score": 0.75
+  }
+}

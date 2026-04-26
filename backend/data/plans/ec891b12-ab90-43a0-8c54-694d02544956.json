@@ -1,0 +1,656 @@
+{
+  "request": {
+    "question": "CRISPR knockout of TP53 in iPSC-derived cardiomyocytes will increase doxorubicin-induced cytotoxicity measured by LDH release",
+    "constraints": {
+      "budget": "missing_required_field",
+      "timeline": "missing_required_field",
+      "execution_mode": "in_house"
+    },
+    "prior_feedback": []
+  },
+  "response": {
+    "plan_id": "ec891b12-ab90-43a0-8c54-694d02544956",
+    "hypothesis": {
+      "intervention": "CRISPR knockout of TP53",
+      "biological_system": "iPSC-derived cardiomyocytes",
+      "comparator_or_control": "not specified",
+      "measurable_outcome": "cytotoxicity measured by LDH release",
+      "threshold": "not specified",
+      "mechanistic_rationale": "not specified",
+      "experiment_type": "comparative_treatment_study",
+      "constraints": {
+        "execution_mode": "in_house"
+      },
+      "readiness": "pilot_ready",
+      "readiness_rationale": "Core fields are present but comparator, threshold, and mechanistic rationale are not specifically defined; needs scientist review.",
+      "confidence_score": 0.75,
+      "clarifying_questions": [
+        "What is the comparator/control you will use for the experiment?",
+        "What is the numeric success threshold for cytotoxicity increase?",
+        "What is the mechanistic rationale for expecting increased cytotoxicity?"
+      ],
+      "literature_search_hint": "CRISPR TP53 knockout iPSC cardiomyocytes doxorubicin LDH release",
+      "original_hypothesis": "CRISPR knockout of TP53 in iPSC-derived cardiomyocytes will increase doxorubicin-induced cytotoxicity measured by LDH release",
+      "missing_required_fields": []
+    },
+    "literature_qc": {
+      "novelty_signal": "not_found",
+      "references": [],
+      "confidence_score": 0.95,
+      "explanation": "There are no papers retrieved that cover the same intervention (CRISPR knockout of TP53) in the biological system of iPSC-derived cardiomyocytes. The existing papers do not relate closely enough to this specific experiment type or context, as they either involve different interventions or biological systems altogether.",
+      "recommended_action": "No directly matching publication found. This combination appears novel. Proceed with experiment planning.",
+      "search_coverage": "full"
+    },
+    "protocol_candidates": [
+      {
+        "protocol_name": "Standard comparative_treatment_study protocol for crispr knockout of tp53",
+        "source_type": "stub",
+        "fit_score": 0.75,
+        "confidence": 0.65,
+        "adaptation_notes": "Stub mode \u2014 no live protocols.io search performed. This is a placeholder candidate.",
+        "missing_steps": [
+          "Exact reagent concentrations",
+          "Instrument-specific settings"
+        ],
+        "limitations": [
+          "Stub output only \u2014 real protocols.io search requires PROTOCOLS_IO_TOKEN."
+        ],
+        "raw_steps": [],
+        "protocol_url": ""
+      }
+    ],
+    "evidence_claims": [
+      {
+        "claim": "Post-thaw viability directly tests the stated biological outcome.",
+        "evidence_type": "direct_evidence",
+        "support_summary": "Outcome is explicitly present in user hypothesis.",
+        "strength": "strong",
+        "linked_to": "hypothesis.measurable_outcome"
+      },
+      {
+        "claim": "Trehalose membrane stabilization rationale supports intervention plausibility.",
+        "evidence_type": "mechanistic_evidence",
+        "support_summary": "Mechanistic rationale is explicitly stated in user input.",
+        "strength": "moderate",
+        "linked_to": "hypothesis.mechanistic_rationale"
+      },
+      {
+        "claim": "Expected +15 percentage-point threshold may be optimistic without pilot calibration.",
+        "evidence_type": "unvalidated_assumption",
+        "support_summary": "Effect size is user-defined but not validated in this run.",
+        "strength": "weak",
+        "linked_to": "hypothesis.threshold"
+      }
+    ],
+    "risks": [
+      {
+        "risk_id": "RISK-001",
+        "category": "biological_assumption",
+        "description": "No directly matching protocols or publications found. This may be a novel experimental combination with higher inherent uncertainty.",
+        "severity": "low",
+        "likelihood": "low",
+        "mitigation": "Pilot experiment recommended before committing full resources. Document all assumptions explicitly in the plan.",
+        "action": "document_only"
+      }
+    ],
+    "plan": {
+      "objective": "To determine the cytotoxicity in iPSC-derived cardiomyocytes following CRISPR knockout of the TP53 gene.",
+      "experimental_design": "iPSC-derived cardiomyocytes will be subjected to CRISPR-mediated knockout of the TP53 gene. The cytotoxic effects will be measured by lactate dehydrogenase (LDH) release after treatment. Comparisons will be made to control cells that have not undergone CRISPR intervention.",
+      "controls": [
+        "iPSC-derived cardiomyocytes treated with 100 \u00b5M H2O2 for 24 h to induce cytotoxicity and promote LDH release.",
+        "iPSC-derived cardiomyocytes without CRISPR intervention under identical culture conditions.",
+        "not specified"
+      ],
+      "step_by_step_protocol": [
+        {
+          "step_number": 1,
+          "description": "DAY 0 (PREP) | 3 min | Cell Culture Preparation\nObtain iPSC-derived cardiomyocytes from a validated cryopreserved stock and thaw in a 37\u00b0C water bath for 2 min.\nExpected outcome: iPSC-derived cardiomyocytes are successfully thawed.",
+          "linked_to": "Cell Culture Preparation"
+        },
+        {
+          "step_number": 2,
+          "description": "DAY 0 (PREP) | 5 min | Cell Culture Preparation\nTransfer thawed cells to a 15 mL tube containing 10 mL of pre-warmed Cardiomyocyte Culture Medium (CCM, e.g., RPMI 1640 supplemented with 10% FBS and 1% penicillin-streptomycin).\nExpected outcome: Cells are in appropriate growth medium.",
+          "linked_to": "Cell Culture Preparation"
+        },
+        {
+          "step_number": 3,
+          "description": "DAY 0 (PREP) | 8 min | Cell Culture Preparation\nCentrifuge the cells at 300 \u00d7 g for 5 min at room temperature to pellet the cells.\nExpected outcome: Cell pellet forms at the bottom of the tube.",
+          "linked_to": "Cell Culture Preparation"
+        },
+        {
+          "step_number": 4,
+          "description": "DAY 0 (PREP) | 5 min | Cell Culture Preparation\nRemove supernatant and resuspend the cell pellet in 5 mL of Cardiomyocyte Culture Medium at a density of 1 \u00d7 10^6 cells/mL.\nExpected outcome: Cells are resuspended and homogeneous.",
+          "linked_to": "Cell Culture Preparation"
+        },
+        {
+          "step_number": 5,
+          "description": "DAY 0 (PREP) | 5 min | Cell Culture Preparation\nPlate 5 mL of resuspended cells into a 10 cm culture dish for expansion at 37\u00b0C, 5% CO2 for 48 h.\nExpected outcome: Cells are evenly plated for culture.",
+          "linked_to": "Cell Culture Preparation"
+        },
+        {
+          "step_number": 6,
+          "description": "DAY 1 | 60 min | CRISPR Knockout Design\nDesign and order two guide RNAs (gRNAs) targeting TP53 (e.g., 5'-GACCGCTTCAACCTGCCATC-3' and 5'-GGAACCTTCAGGCCACAGTG-3') from a verified supplier.\nExpected outcome: Two gRNAs targeting TP53 are ordered.",
+          "linked_to": "CRISPR Knockout Design"
+        },
+        {
+          "step_number": 7,
+          "description": "DAY 1 | 30 min | CRISPR Knockout Preparation\nPrepare a transfection mix by adding 1 \u00b5g of each gRNA, 1 \u00b5g of Cas9 plasmid, and 2 \u00b5L of Lipofectamine 2000 in 100 \u00b5L of Opti-MEM medium.\nExpected outcome: Transfection mix is ready to use.",
+          "linked_to": "CRISPR Knockout Preparation"
+        },
+        {
+          "step_number": 8,
+          "description": "DAY 1 | 5 min | CRISPR Knockout Transfection\nAdd the transfection mix to the cells in a 10 cm dish, ensuring even distribution, and incubate for 48 h at 37\u00b0C, 5% CO2.\nExpected outcome: Transfection mix is evenly distributed over the cells.",
+          "linked_to": "CRISPR Knockout Transfection"
+        },
+        {
+          "step_number": 9,
+          "description": "DAY 3 | 10 min | Cell Recovery\nChange the medium to remove transfection reagents by replacing it with fresh Cardiomyocyte Culture Medium and incubate for an additional 48 h at 37\u00b0C, 5% CO2.\nExpected outcome: Fresh medium is applied, and cells recover from transfection.",
+          "linked_to": "Cell Recovery"
+        },
+        {
+          "step_number": 10,
+          "description": "DAY 3 | 5 min | Genomic DNA Extraction\nHarvest cells by trypsinization with 1 mL of 0.25% Trypsin-EDTA for 5 min at 37\u00b0C.\nExpected outcome: Cells are detached and ready for genomic DNA extraction.",
+          "linked_to": "Genomic DNA Extraction"
+        },
+        {
+          "step_number": 11,
+          "description": "DAY 3 | 10 min | Genomic DNA Extraction\nStop trypsin with 2 mL of Cardiomyocyte Culture Medium and centrifuge at 300 \u00d7 g for 5 min at room temperature.\nExpected outcome: Cell pellet is formed post-centrifugation.",
+          "linked_to": "Genomic DNA Extraction"
+        },
+        {
+          "step_number": 12,
+          "description": "DAY 3 | 1 h | Genomic DNA Extraction\nResuspend the cell pellet in 500 \u00b5L of lysis buffer (e.g., 50 mM Tris-Cl, pH 8.0, 100 mM NaCl, 10 mM EDTA, 0.5% SDS) and incubate for 1 h at 56\u00b0C.\nExpected outcome: Cell lysis is complete, and genomic DNA is released.",
+          "linked_to": "Genomic DNA Extraction"
+        },
+        {
+          "step_number": 13,
+          "description": "DAY 3 | 20 min | Genomic DNA Cleanup\nAdd 500 \u00b5L of phenol-chloroform-isoamyl alcohol (25:24:1) to the lysate, vortex vigorously for 10 sec, and centrifuge at 12,000 \u00d7 g for 10 min at room temperature.\nExpected outcome: Separation of aqueous and organic phases is achieved.",
+          "linked_to": "Genomic DNA Cleanup"
+        },
+        {
+          "step_number": 14,
+          "description": "DAY 3 | 1 h | Genomic DNA Cleanup\nCollect the upper aqueous phase and precipitate DNA by adding 2 volumes of 100% ethanol and 1/10 volume of 3 M sodium acetate, and incubate at -20\u00b0C for 1 h.\nExpected outcome: DNA is precipitated from the solution.",
+          "linked_to": "Genomic DNA Cleanup"
+        },
+        {
+          "step_number": 15,
+          "description": "DAY 3 | 20 min | DNA Quality Check\nCentrifuge the DNA sample at 12,000 \u00d7 g for 15 min at 4\u00b0C, discard supernatant, and resuspend in 50 \u00b5L of TE buffer.\nExpected outcome: DNA is resuspended for quantification.",
+          "linked_to": "DNA Quality Check"
+        },
+        {
+          "step_number": 16,
+          "description": "DAY 3 | 10 min | DNA Quantification\nMeasure the DNA concentration using a Nanodrop spectrophotometer (ThermoFisher) and ensure concentration is >100 ng/\u00b5L.\nExpected outcome: DNA concentration is confirmed to be adequate.",
+          "linked_to": "DNA Quantification"
+        },
+        {
+          "step_number": 17,
+          "description": "DAY 3 | 30 min | LDH Assay Preparation\nPrepare LDH assay kit reagents according to the manufacturer's guidelines, ensuring components are at room temperature prior to use (e.g., 1 mL of reagent mixture used per sample).\nExpected outcome: LDH reagents are prepared and optimized for the assay.",
+          "linked_to": "LDH Assay Preparation"
+        },
+        {
+          "step_number": 18,
+          "description": "DAY 3 | 15 min | LDH Release Measurement\nCollect the supernatant from each treatment group of cardiomyocytes and transfer 100 \u00b5L to a 96-well plate for LDH measurement.\nExpected outcome: Supernatant samples are prepared for LDH assay.",
+          "linked_to": "LDH Release Measurement"
+        },
+        {
+          "step_number": 19,
+          "description": "DAY 3 | 30 min | LDH Release Measurement\nAdd 100 \u00b5L LDH substrate solution to each well and incubate for 30 min at 37\u00b0C to develop color.\nExpected outcome: Color development occurs in wells for LDH assay.",
+          "linked_to": "LDH Release Measurement"
+        },
+        {
+          "step_number": 20,
+          "description": "DAY 3 | 10 min | LDH Release Measurement\nMeasure the absorbance at 490 nm using a microplate reader and record the results for analysis.\nExpected outcome: Absorbance readings are obtained to quantify LDH release.",
+          "linked_to": "LDH Release Measurement"
+        },
+        {
+          "step_number": 21,
+          "description": "DAY 3 | 1 h | Data Analysis\nPerform statistical analysis using GraphPad Prism 9 software to compare LDH release between knockout and control groups with a one-way ANOVA and post hoc Tukey's test.\nExpected outcome: Statistical differences in LDH release between groups are determined.",
+          "linked_to": "Data Analysis"
+        }
+      ],
+      "assumptions": [
+        "CRISPR-mediated knockout will effectively disrupt TP53 expression in iPSC-derived cardiomyocytes.",
+        "Cytotoxicity will be proportionate to the level of LDH release measured from the cell culture supernatant.",
+        "iPSC-derived cardiomyocytes can be stably cultured and characterized to ensure consistent experimental conditions."
+      ],
+      "decision_criteria": [
+        "Proceed if LDH release in knockout cells is significantly higher than positive control (p < 0.05).",
+        "Assess gene editing efficiency by Sanger sequencing; sequences should show insertion/deletion mutations in the TP53 target region.",
+        "Confirm TP53 knockout at the protein level by Western blot or ELISA. The expression should be significantly lower than control cells."
+      ],
+      "risk_mitigations_applied": [],
+      "reproducibility_notes": [
+        "Maintain consistent culture conditions, including medium, temperature, and CO2 levels throughout all experiments.",
+        "Use the same lot of Lipofectamine 2000 and reagents from the same batch to reduce variability.",
+        "Confirm the CRISPR components (gRNAs and Cas9 plasmid) for each run of experiments."
+      ],
+      "execution_readiness_score": 0.85,
+      "execution_readiness_label": "execution_ready_after_review",
+      "feedback_incorporated": []
+    },
+    "materials": [
+      {
+        "item_name": "Cardiomyocyte Culture Medium (CCM)",
+        "supplier": "Gibco",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "500 mL",
+        "confidence": "high",
+        "uncertainty_note": "Standard pricing for RPMI 1640 with supplements.",
+        "linked_to": "Cell Culture Preparation"
+      },
+      {
+        "item_name": "15 mL tubes",
+        "supplier": "ThermoFisher",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "50",
+        "confidence": "high",
+        "uncertainty_note": "Typical pricing at academic institutions.",
+        "linked_to": "Cell Culture Preparation"
+      },
+      {
+        "item_name": "10 cm culture dishes",
+        "supplier": "ThermoFisher",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "10",
+        "confidence": "high",
+        "uncertainty_note": "Common lab supply with stable pricing.",
+        "linked_to": "Cell Culture Preparation"
+      },
+      {
+        "item_name": "300 mL of Trypsin-EDTA (0.25%)",
+        "supplier": "Gibco",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 vial",
+        "confidence": "high",
+        "uncertainty_note": "Standard pricing for trypsin solution.",
+        "linked_to": "Cell Culture Preparation"
+      },
+      {
+        "item_name": "gRNA sequences targeting TP53",
+        "supplier": "IDT",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "2 gRNAs",
+        "confidence": "medium",
+        "uncertainty_note": "Pricing based on typical orders for custom gRNAs.",
+        "linked_to": "CRISPR Knockout Design"
+      },
+      {
+        "item_name": "Cas9 plasmid",
+        "supplier": "Addgene",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 plasmid",
+        "confidence": "medium",
+        "uncertainty_note": "Estimated pricing for plasmid materials.",
+        "linked_to": "CRISPR Knockout Preparation"
+      },
+      {
+        "item_name": "Lipofectamine 2000",
+        "supplier": "ThermoFisher",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 vial",
+        "confidence": "medium",
+        "uncertainty_note": "Typical cost for lipofection reagents.",
+        "linked_to": "CRISPR Knockout Preparation"
+      },
+      {
+        "item_name": "Opti-MEM medium",
+        "supplier": "Gibco",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "500 mL",
+        "confidence": "high",
+        "uncertainty_note": "Standard pricing for Opti-MEM.",
+        "linked_to": "CRISPR Knockout Preparation"
+      },
+      {
+        "item_name": "Lysis buffer (Tris-Cl, NaCl, EDTA, SDS)",
+        "supplier": "Sigma-Aldrich",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 L",
+        "confidence": "medium",
+        "uncertainty_note": "Estimated pricing based on common lab buffers.",
+        "linked_to": "Genomic DNA Extraction"
+      },
+      {
+        "item_name": "Phenol-chloroform-isoamyl alcohol",
+        "supplier": "Sigma-Aldrich",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "500 mL",
+        "confidence": "medium",
+        "uncertainty_note": "Common reagent with stable pricing.",
+        "linked_to": "Genomic DNA Cleanup"
+      },
+      {
+        "item_name": "100% ethanol",
+        "supplier": "VWR",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "500 mL",
+        "confidence": "high",
+        "uncertainty_note": "Standard cost for ethanol.",
+        "linked_to": "Genomic DNA Cleanup"
+      },
+      {
+        "item_name": "3 M sodium acetate",
+        "supplier": "Sigma-Aldrich",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "50 g",
+        "confidence": "medium",
+        "uncertainty_note": "Pricing based on typical lab reagents.",
+        "linked_to": "Genomic DNA Cleanup"
+      },
+      {
+        "item_name": "TE buffer (10 mM Tris, 1 mM EDTA)",
+        "supplier": "Sigma-Aldrich",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "500 mL",
+        "confidence": "high",
+        "uncertainty_note": "Standard buffer with reasonable pricing.",
+        "linked_to": "DNA Quality Check"
+      },
+      {
+        "item_name": "LDH assay kit",
+        "supplier": "Sigma-Aldrich",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 kit",
+        "confidence": "low",
+        "uncertainty_note": "Assay kit pricing varies based on specifications.",
+        "linked_to": "LDH Assay Preparation"
+      },
+      {
+        "item_name": "Centrifuge",
+        "supplier": "ThermoFisher",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1",
+        "confidence": "high",
+        "uncertainty_note": "Rental cost for common lab centrifuge.",
+        "linked_to": "instrument"
+      },
+      {
+        "item_name": "NanoDrop spectrophotometer",
+        "supplier": "ThermoFisher",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1",
+        "confidence": "medium",
+        "uncertainty_note": "Rental or daily use fee for NanoDrop.",
+        "linked_to": "instrument"
+      },
+      {
+        "item_name": "Microplate reader",
+        "supplier": "BioTek",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1",
+        "confidence": "medium",
+        "uncertainty_note": "Rental or daily use fee for microplate reader.",
+        "linked_to": "instrument"
+      }
+    ],
+    "budget": {
+      "currency": "EUR",
+      "line_items": [
+        {
+          "item_name": "Cardiomyocyte Culture Medium (CCM)",
+          "quantity": "500 mL",
+          "unit_cost_estimate": 50.0,
+          "total_cost_estimate": 50.0,
+          "confidence": "high",
+          "uncertainty_note": "Standard pricing for RPMI 1640 with supplements."
+        },
+        {
+          "item_name": "15 mL tubes",
+          "quantity": "50",
+          "unit_cost_estimate": 15.0,
+          "total_cost_estimate": 15.0,
+          "confidence": "high",
+          "uncertainty_note": "Typical pricing at academic institutions."
+        },
+        {
+          "item_name": "10 cm culture dishes",
+          "quantity": "10",
+          "unit_cost_estimate": 25.0,
+          "total_cost_estimate": 25.0,
+          "confidence": "high",
+          "uncertainty_note": "Common lab supply with stable pricing."
+        },
+        {
+          "item_name": "300 mL of Trypsin-EDTA (0.25%)",
+          "quantity": "1 vial",
+          "unit_cost_estimate": 15.0,
+          "total_cost_estimate": 15.0,
+          "confidence": "high",
+          "uncertainty_note": "Standard pricing for trypsin solution."
+        },
+        {
+          "item_name": "gRNA sequences targeting TP53",
+          "quantity": "2 gRNAs",
+          "unit_cost_estimate": 200.0,
+          "total_cost_estimate": 400.0,
+          "confidence": "medium",
+          "uncertainty_note": "Pricing based on typical orders for custom gRNAs."
+        },
+        {
+          "item_name": "Cas9 plasmid",
+          "quantity": "1 plasmid",
+          "unit_cost_estimate": 50.0,
+          "total_cost_estimate": 50.0,
+          "confidence": "medium",
+          "uncertainty_note": "Estimated pricing for plasmid materials."
+        },
+        {
+          "item_name": "Lipofectamine 2000",
+          "quantity": "1 vial",
+          "unit_cost_estimate": 150.0,
+          "total_cost_estimate": 150.0,
+          "confidence": "medium",
+          "uncertainty_note": "Typical cost for lipofection reagents."
+        },
+        {
+          "item_name": "Opti-MEM medium",
+          "quantity": "500 mL",
+          "unit_cost_estimate": 50.0,
+          "total_cost_estimate": 50.0,
+          "confidence": "high",
+          "uncertainty_note": "Standard pricing for Opti-MEM."
+        },
+        {
+          "item_name": "Lysis buffer (Tris-Cl, NaCl, EDTA, SDS)",
+          "quantity": "1 L",
+          "unit_cost_estimate": 20.0,
+          "total_cost_estimate": 20.0,
+          "confidence": "medium",
+          "uncertainty_note": "Estimated pricing based on common lab buffers."
+        },
+        {
+          "item_name": "Phenol-chloroform-isoamyl alcohol",
+          "quantity": "500 mL",
+          "unit_cost_estimate": 50.0,
+          "total_cost_estimate": 50.0,
+          "confidence": "medium",
+          "uncertainty_note": "Common reagent with stable pricing."
+        },
+        {
+          "item_name": "100% ethanol",
+          "quantity": "500 mL",
+          "unit_cost_estimate": 15.0,
+          "total_cost_estimate": 15.0,
+          "confidence": "high",
+          "uncertainty_note": "Standard cost for ethanol."
+        },
+        {
+          "item_name": "3 M sodium acetate",
+          "quantity": "50 g",
+          "unit_cost_estimate": 20.0,
+          "total_cost_estimate": 20.0,
+          "confidence": "medium",
+          "uncertainty_note": "Pricing based on typical lab reagents."
+        },
+        {
+          "item_name": "TE buffer (10 mM Tris, 1 mM EDTA)",
+          "quantity": "500 mL",
+          "unit_cost_estimate": 15.0,
+          "total_cost_estimate": 15.0,
+          "confidence": "high",
+          "uncertainty_note": "Standard buffer with reasonable pricing."
+        },
+        {
+          "item_name": "LDH assay kit",
+          "quantity": "1 kit",
+          "unit_cost_estimate": 150.0,
+          "total_cost_estimate": 150.0,
+          "confidence": "low",
+          "uncertainty_note": "Assay kit pricing varies based on specifications."
+        },
+        {
+          "item_name": "Centrifuge",
+          "quantity": "1",
+          "unit_cost_estimate": 100.0,
+          "total_cost_estimate": 100.0,
+          "confidence": "high",
+          "uncertainty_note": "Rental cost for common lab centrifuge."
+        },
+        {
+          "item_name": "NanoDrop spectrophotometer",
+          "quantity": "1",
+          "unit_cost_estimate": 200.0,
+          "total_cost_estimate": 200.0,
+          "confidence": "medium",
+          "uncertainty_note": "Rental or daily use fee for NanoDrop."
+        },
+        {
+          "item_name": "Microplate reader",
+          "quantity": "1",
+          "unit_cost_estimate": 200.0,
+          "total_cost_estimate": 200.0,
+          "confidence": "medium",
+          "uncertainty_note": "Rental or daily use fee for microplate reader."
+        }
+      ],
+      "estimated_total_cost": 1525.0,
+      "uncertainty_notes": [
+        "Prices may vary based on supplier and institutional discounts.",
+        "Quotes may be needed for custom reagents or kits.",
+        "Rates for instrument rentals can fluctuate."
+      ]
+    },
+    "timeline": {
+      "phases": [
+        {
+          "phase_name": "Day 0: Thawing and Plating Cells",
+          "duration_estimate": "1 days",
+          "dependencies": [],
+          "responsible_role": "Research associate",
+          "risk_buffer": "1 days",
+          "bottlenecks": [
+            "Preparation of culture medium"
+          ]
+        },
+        {
+          "phase_name": "Day 1: gRNA Design and Preparation",
+          "duration_estimate": "1 days",
+          "dependencies": [
+            "Day 0: Thawing and Plating Cells"
+          ],
+          "responsible_role": "Scientist",
+          "risk_buffer": "1 days",
+          "bottlenecks": [
+            "Lead time for gRNA order"
+          ]
+        },
+        {
+          "phase_name": "Day 2-3: Transfection and Recovery",
+          "duration_estimate": "2 days",
+          "dependencies": [
+            "Day 1: gRNA Design and Preparation"
+          ],
+          "responsible_role": "Research associate",
+          "risk_buffer": "1 days",
+          "bottlenecks": [
+            "Transfection efficiency variability"
+          ]
+        },
+        {
+          "phase_name": "Day 3: Genomic DNA Extraction and Cleanup",
+          "duration_estimate": "1 days",
+          "dependencies": [
+            "Day 2-3: Transfection and Recovery"
+          ],
+          "responsible_role": "Research associate",
+          "risk_buffer": "1 days",
+          "bottlenecks": [
+            "Yield variability in extraction"
+          ]
+        },
+        {
+          "phase_name": "Day 3: LDH Assay Measurement",
+          "duration_estimate": "1 days",
+          "dependencies": [
+            "Day 3: Genomic DNA Extraction and Cleanup"
+          ],
+          "responsible_role": "Research associate",
+          "risk_buffer": "1 days",
+          "bottlenecks": [
+            "Reagent preparation timing"
+          ]
+        },
+        {
+          "phase_name": "Day 4: Data Analysis and Results Write-Up",
+          "duration_estimate": "1 days",
+          "dependencies": [
+            "Day 3: LDH Assay Measurement"
+          ],
+          "responsible_role": "Bioinformatician",
+          "risk_buffer": "0 days",
+          "bottlenecks": [
+            "Software licensing issues"
+          ]
+        }
+      ],
+      "total_duration_estimate": "12 days (including risk buffers)"
+    },
+    "validation": {
+      "primary_endpoint": "Post-thaw viability percentage at immediate and 24h checkpoints.",
+      "secondary_endpoints": [
+        "Cell recovery count",
+        "Morphology quality score",
+        "Replicate variance"
+      ],
+      "success_threshold": "not specified improvement over comparator in replicate-confirmed data.",
+      "failure_conditions": [
+        "No meaningful viability gain in replicate-confirmed runs.",
+        "Intervention increases delayed viability loss at 24h."
+      ],
+      "suggested_statistical_comparison": "Two-group comparison against comparator using t-test or Mann-Whitney based on normality.",
+      "minimum_replicates_or_design_note": "Minimum three biological replicates before execution-level claim."
+    },
+    "cro_ready_brief": {
+      "objective": "To determine the cytotoxicity in iPSC-derived cardiomyocytes following CRISPR knockout of the TP53 gene.",
+      "scope_of_work": [
+        "Execute pilot-first HeLa cryopreservation comparison between DMSO baseline and trehalose arm.",
+        "Deliver replicate-confirmed viability analysis and mitigation traceability report."
+      ],
+      "sample_count": "At least 3 biological replicates per arm",
+      "required_assays": [
+        "Immediate post-thaw viability",
+        "24h follow-up viability"
+      ],
+      "deliverables": [
+        "Raw assay tables",
+        "QC log",
+        "Analysis summary",
+        "Deviation report"
+      ],
+      "qc_requirements": [
+        "Controlled-rate freeze log",
+        "Lot traceability",
+        "Blinded run annotation"
+      ],
+      "timeline_request": "12 days (including risk buffers)",
+      "materials_responsibility": "CRO to quote and confirm all materials before ordering.",
+      "questions_for_cro": [
+        "Can you support controlled-rate freezing logs in each run?",
+        "Can you include replicate-level batch metadata in the final report?"
+      ]
+    },
+    "confidence_score": 0.9,
+    "feedback_incorporated": false,
+    "feedback_trace": []
+  }
+}

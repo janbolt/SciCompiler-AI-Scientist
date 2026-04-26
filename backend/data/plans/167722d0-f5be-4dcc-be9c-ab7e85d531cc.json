@@ -1,0 +1,590 @@
+{
+  "request": {
+    "question": "Investigate whether GLP-1 agonists reduce hepatic steatosis in diet-induced obesity mouse models.",
+    "constraints": {
+      "budget": "missing_required_field",
+      "timeline": "missing_required_field",
+      "execution_mode": "in_house"
+    },
+    "prior_feedback": []
+  },
+  "response": {
+    "plan_id": "167722d0-f5be-4dcc-be9c-ab7e85d531cc",
+    "hypothesis": {
+      "intervention": "missing_required_field",
+      "biological_system": "diet-induced obesity mouse models",
+      "comparator_or_control": "missing_required_field",
+      "measurable_outcome": "missing_required_field",
+      "threshold": "missing_required_field",
+      "mechanistic_rationale": "missing_required_field",
+      "experiment_type": "missing_required_field",
+      "constraints": {
+        "execution_mode": "in_house"
+      },
+      "readiness": "underspecified",
+      "readiness_rationale": "Missing intervention, comparator/control, measurable outcome, threshold, and mechanistic rationale fields prevent meaningful hypothesis specification.",
+      "confidence_score": 0.0,
+      "clarifying_questions": [
+        "What specific GLP-1 agonist are you investigating?",
+        "What is the comparator or control condition for this study?",
+        "What specific assay will you use to measure hepatic steatosis?",
+        "What is the numeric success threshold for reduction in hepatic steatosis?",
+        "What is the mechanistic rationale for the expected effect of GLP-1 agonists?"
+      ],
+      "literature_search_hint": "GLP-1 agonists hepatic steatosis diet-induced obesity mouse models",
+      "original_hypothesis": "Investigate whether GLP-1 agonists reduce hepatic steatosis in diet-induced obesity mouse models.",
+      "missing_required_fields": [
+        "intervention",
+        "comparator_or_control",
+        "measurable_outcome",
+        "threshold",
+        "mechanistic_rationale",
+        "experiment_type"
+      ]
+    },
+    "literature_qc": {
+      "novelty_signal": "not_found",
+      "references": [],
+      "confidence_score": 0.8,
+      "explanation": "The retrieved papers do not provide any information on the specific intervention, biological system, or experiment type outlined in the hypothesis. While some papers discuss interventions related to obesity in mouse models, none match the required dimensions of the hypothesis, which lacks specific details on the intervention and outcomes.",
+      "recommended_action": "No directly matching publication found. This combination appears novel. Proceed with experiment planning.",
+      "search_coverage": "full"
+    },
+    "protocol_candidates": [
+      {
+        "protocol_name": "Standard missing_required_field protocol for missing_required_field",
+        "source_type": "stub",
+        "fit_score": 0.75,
+        "confidence": 0.65,
+        "adaptation_notes": "Stub mode \u2014 no live protocols.io search performed. This is a placeholder candidate.",
+        "missing_steps": [
+          "Exact reagent concentrations",
+          "Instrument-specific settings"
+        ],
+        "limitations": [
+          "Stub output only \u2014 real protocols.io search requires PROTOCOLS_IO_TOKEN."
+        ],
+        "raw_steps": [],
+        "protocol_url": ""
+      }
+    ],
+    "evidence_claims": [
+      {
+        "claim": "Post-thaw viability directly tests the stated biological outcome.",
+        "evidence_type": "direct_evidence",
+        "support_summary": "Outcome is explicitly present in user hypothesis.",
+        "strength": "strong",
+        "linked_to": "hypothesis.measurable_outcome"
+      },
+      {
+        "claim": "Trehalose membrane stabilization rationale supports intervention plausibility.",
+        "evidence_type": "mechanistic_evidence",
+        "support_summary": "Mechanistic rationale is explicitly stated in user input.",
+        "strength": "moderate",
+        "linked_to": "hypothesis.mechanistic_rationale"
+      },
+      {
+        "claim": "Expected +15 percentage-point threshold may be optimistic without pilot calibration.",
+        "evidence_type": "unvalidated_assumption",
+        "support_summary": "Effect size is user-defined but not validated in this run.",
+        "strength": "weak",
+        "linked_to": "hypothesis.threshold"
+      }
+    ],
+    "risks": [
+      {
+        "risk_id": "RISK-001",
+        "category": "technical_assumption",
+        "description": "Hypothesis is underspecified: Missing intervention, comparator/control, measurable outcome, threshold, and mechanistic rationale fields prevent meaningful hypothesis specification.. Missing required fields must be resolved before execution.",
+        "severity": "high",
+        "likelihood": "high",
+        "mitigation": "Clarify the following fields before proceeding: intervention, comparator_or_control, measurable_outcome, threshold, mechanistic_rationale, experiment_type",
+        "action": "document_only"
+      },
+      {
+        "risk_id": "RISK-002",
+        "category": "biological_assumption",
+        "description": "No directly matching protocols or publications found. This may be a novel experimental combination with higher inherent uncertainty.",
+        "severity": "low",
+        "likelihood": "low",
+        "mitigation": "Pilot experiment recommended before committing full resources. Document all assumptions explicitly in the plan.",
+        "action": "document_only"
+      }
+    ],
+    "plan": {
+      "objective": "To investigate the effects of a high-fat diet on metabolic parameters in diet-induced obesity mouse models.",
+      "experimental_design": "This experiment will involve two groups of mice: one group will be fed a high-fat diet (HFD) while the control group will receive a standard chow diet. Key metabolic parameters such as body weight, glucose tolerance, and serum lipid levels will be measured at baseline and after 8 weeks of dietary intervention.",
+      "controls": [
+        "Mice fed a standard chow diet (LabDiet 5001) for 8 weeks.",
+        "Mice fed a high-fat diet (D12492, Research Diets) without any additional interventions.",
+        "missing_required_field"
+      ],
+      "step_by_step_protocol": [
+        {
+          "step_number": 1,
+          "description": "DAY 0 (PREP) | 1 h | Diet Preparation\nPrepare high-fat diet by mixing 60% kcal from fat (D12492, Research Diets) with 40% kcal from carbohydrates and protein. Ensure the diet is homogenous and store at 4\u00b0C until use.\nEquipment: Analytical balance, Mixing bowl, Storage containers\nReagents: D12492 high-fat diet mix\nExpected outcome: Diet is prepared and stored properly for feeding.",
+          "linked_to": "Diet Preparation"
+        },
+        {
+          "step_number": 2,
+          "description": "DAY 0 (PREP) | 2 h | Animal Housing Setup\nSet up individual housing for 20 male C57BL/6J mice (8 weeks old) in a controlled environment (22\u00b0C, 12 h light/dark cycle). Ensure access to water ad libitum and acclimatize for 1 week before dietary intervention.\nEquipment: Mouse cages, Environmental control system\nExpected outcome: Mice are housed individually and acclimatized for 1 week.\nSafety: Follow institutional animal care guidelines.",
+          "linked_to": "Animal Housing Setup"
+        },
+        {
+          "step_number": 3,
+          "description": "DAY 1 | 30 min | Dietary Intervention\nRandomly assign 10 mice to the high-fat diet group and 10 mice to the control group (standard chow diet, LabDiet 5001). Begin feeding the respective diets immediately.\nEquipment: Feeding trays\nReagents: LabDiet 5001 standard chow, D12492 high-fat diet\nExpected outcome: Mice are assigned to their respective dietary groups and diets are initiated.",
+          "linked_to": "Dietary Intervention"
+        },
+        {
+          "step_number": 4,
+          "description": "DAY 7 | 1 h | Body Weight Measurement\nWeigh each mouse using a digital scale (Ohaus Scout Pro SPX123) and record the body weight in grams. Ensure to handle mice gently to minimize stress.\nEquipment: Ohaus Scout Pro SPX123 scale\nExpected outcome: Body weight recorded for all mice, with expected increase in high-fat diet group.",
+          "linked_to": "Body Weight Measurement"
+        },
+        {
+          "step_number": 5,
+          "description": "DAY 14 | 2 h | Glucose Tolerance Test (GTT)\nAfter fasting for 6 h, administer 1 g/kg body weight of D-glucose (Sigma-Aldrich, G8270) via intraperitoneal injection. Measure blood glucose levels at 0, 30, 60, and 120 min using a glucometer (Accu-Chek Aviva).\nEquipment: Accu-Chek Aviva glucometer, Syringes for injection\nReagents: D-glucose solution (1 g/kg)\nExpected outcome: Blood glucose levels measured at specified time points, with expected higher levels in high-fat diet group.",
+          "linked_to": "Glucose Tolerance Test (GTT)"
+        },
+        {
+          "step_number": 6,
+          "description": "DAY 28 | 1.5 h | Serum Lipid Profile\nAt the end of the 8-week intervention, collect blood via cardiac puncture under anesthesia (isoflurane). Centrifuge at 3,000 \u00d7 g for 10 min at 4\u00b0C to separate serum. Store serum at -80\u00b0C until analysis.\nEquipment: Centrifuge (Eppendorf 5424), Isoflurane anesthesia setup\nExpected outcome: Serum collected and stored for lipid analysis.",
+          "linked_to": "Serum Lipid Profile"
+        },
+        {
+          "step_number": 7,
+          "description": "DAY 29 | 2 h | Serum Lipid Analysis\nAnalyze serum samples for total cholesterol and triglycerides using an enzymatic assay kit (Thermo Fisher Scientific, Cat# 98174) following the manufacturer's protocol. Measure absorbance at 500 nm using a microplate reader (BioTek Synergy HTX).\nEquipment: BioTek Synergy HTX microplate reader\nReagents: Total cholesterol assay kit (Thermo Fisher Scientific), Triglyceride assay kit (Thermo Fisher Scientific)\nExpected outcome: Total cholesterol and triglyceride levels quantified, with expected higher levels in high-fat diet group.",
+          "linked_to": "Serum Lipid Analysis"
+        },
+        {
+          "step_number": 8,
+          "description": "DAY 30 | 3 h | Data Analysis\nCompile data from body weight, GTT, and serum lipid profiles. Use GraphPad Prism 9 for statistical analysis. Perform t-tests to compare means between high-fat diet and control groups, with significance set at p<0.05.\nEquipment: GraphPad Prism 9\nExpected outcome: Statistical significance determined between dietary groups for all measured parameters.",
+          "linked_to": "Data Analysis"
+        }
+      ],
+      "assumptions": [
+        "Mice will respond predictably to dietary interventions based on previous studies.",
+        "The high-fat diet will induce obesity and metabolic changes in the mice.",
+        "Measurement techniques will yield reliable and reproducible results."
+      ],
+      "decision_criteria": [
+        "Proceed if body weight increase in high-fat diet group is \u226510% compared to control.",
+        "Proceed if blood glucose levels at 120 min post-GTT are significantly higher (p<0.05) in high-fat diet group.",
+        "Proceed if serum total cholesterol levels exceed 200 mg/dL in high-fat diet group."
+      ],
+      "risk_mitigations_applied": [],
+      "reproducibility_notes": [
+        "Use the same batch of high-fat diet for all mice.",
+        "Standardize the time of day for all measurements to minimize variability.",
+        "Calibrate the glucometer before each use to ensure accuracy."
+      ],
+      "execution_readiness_score": 0.8,
+      "execution_readiness_label": "execution_ready_after_review",
+      "feedback_incorporated": []
+    },
+    "materials": [
+      {
+        "item_name": "Analytical balance",
+        "supplier": "Mettler Toledo",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 unit",
+        "confidence": "medium",
+        "uncertainty_note": "Verify rental or purchase options based on lab availability."
+      },
+      {
+        "item_name": "Digital scale (Ohaus Scout Pro SPX123)",
+        "supplier": "Ohaus",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 unit",
+        "confidence": "medium",
+        "uncertainty_note": "Verify rental or purchase options based on lab availability."
+      },
+      {
+        "item_name": "Centrifuge (Eppendorf 5424)",
+        "supplier": "Eppendorf",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 unit",
+        "confidence": "medium",
+        "uncertainty_note": "Verify rental or purchase options based on lab availability."
+      },
+      {
+        "item_name": "Accu-Chek Aviva glucometer",
+        "supplier": "Roche",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 unit",
+        "confidence": "high",
+        "uncertainty_note": "Commonly available; verify specific model."
+      },
+      {
+        "item_name": "BioTek Synergy HTX microplate reader",
+        "supplier": "BioTek",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 unit",
+        "confidence": "medium",
+        "uncertainty_note": "Verify rental or purchase options based on lab availability."
+      },
+      {
+        "item_name": "GraphPad Prism 9 software",
+        "supplier": "GraphPad",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 license",
+        "confidence": "medium",
+        "uncertainty_note": "Verify institutional licensing agreements."
+      },
+      {
+        "item_name": "Feeding trays",
+        "supplier": "VWR",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "20 units",
+        "confidence": "high",
+        "uncertainty_note": "Commonly available; verify specific type."
+      },
+      {
+        "item_name": "Syringes for injection",
+        "supplier": "BD",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "100 units",
+        "confidence": "high",
+        "uncertainty_note": "Commonly available; verify specific type."
+      },
+      {
+        "item_name": "Mouse cages",
+        "supplier": "Allentown",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "20 units",
+        "confidence": "medium",
+        "uncertainty_note": "Verify specific type and availability."
+      },
+      {
+        "item_name": "Storage containers",
+        "supplier": "VWR",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "5 units",
+        "confidence": "medium",
+        "uncertainty_note": "Verify specific type and availability."
+      },
+      {
+        "item_name": "D12492 high-fat diet mix",
+        "supplier": "Research Diets",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 kg",
+        "confidence": "medium",
+        "uncertainty_note": "Verify specific formulation and pricing."
+      },
+      {
+        "item_name": "LabDiet 5001 standard chow",
+        "supplier": "LabDiet",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 kg",
+        "confidence": "medium",
+        "uncertainty_note": "Verify specific formulation and pricing."
+      },
+      {
+        "item_name": "D-glucose (G8270)",
+        "supplier": "Sigma-Aldrich",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "100 g",
+        "confidence": "medium",
+        "uncertainty_note": "Verify specific formulation and pricing."
+      },
+      {
+        "item_name": "Total cholesterol assay kit",
+        "supplier": "Thermo Fisher Scientific",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 kit",
+        "confidence": "low",
+        "uncertainty_note": "Verify specific kit availability and pricing."
+      },
+      {
+        "item_name": "Triglyceride assay kit",
+        "supplier": "Thermo Fisher Scientific",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 kit",
+        "confidence": "low",
+        "uncertainty_note": "Verify specific kit availability and pricing."
+      },
+      {
+        "item_name": "Isoflurane anesthesia setup",
+        "supplier": "Piramal",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 unit",
+        "confidence": "medium",
+        "uncertainty_note": "Verify specific setup and availability."
+      }
+    ],
+    "budget": {
+      "currency": "EUR",
+      "line_items": [
+        {
+          "item_name": "Analytical balance",
+          "quantity": "1 unit",
+          "unit_cost_estimate": 500.0,
+          "total_cost_estimate": 500.0,
+          "confidence": "medium",
+          "uncertainty_note": "Verify rental or purchase options based on lab availability."
+        },
+        {
+          "item_name": "Digital scale (Ohaus Scout Pro SPX123)",
+          "quantity": "1 unit",
+          "unit_cost_estimate": 300.0,
+          "total_cost_estimate": 300.0,
+          "confidence": "medium",
+          "uncertainty_note": "Verify rental or purchase options based on lab availability."
+        },
+        {
+          "item_name": "Centrifuge (Eppendorf 5424)",
+          "quantity": "1 unit",
+          "unit_cost_estimate": 2000.0,
+          "total_cost_estimate": 2000.0,
+          "confidence": "medium",
+          "uncertainty_note": "Verify rental or purchase options based on lab availability."
+        },
+        {
+          "item_name": "Accu-Chek Aviva glucometer",
+          "quantity": "1 unit",
+          "unit_cost_estimate": 50.0,
+          "total_cost_estimate": 50.0,
+          "confidence": "high",
+          "uncertainty_note": "Commonly available; verify specific model."
+        },
+        {
+          "item_name": "BioTek Synergy HTX microplate reader",
+          "quantity": "1 unit",
+          "unit_cost_estimate": 15000.0,
+          "total_cost_estimate": 15000.0,
+          "confidence": "medium",
+          "uncertainty_note": "Verify rental or purchase options based on lab availability."
+        },
+        {
+          "item_name": "GraphPad Prism 9 software",
+          "quantity": "1 license",
+          "unit_cost_estimate": 500.0,
+          "total_cost_estimate": 500.0,
+          "confidence": "medium",
+          "uncertainty_note": "Verify institutional licensing agreements."
+        },
+        {
+          "item_name": "Feeding trays",
+          "quantity": "20 units",
+          "unit_cost_estimate": 2.0,
+          "total_cost_estimate": 40.0,
+          "confidence": "high",
+          "uncertainty_note": "Commonly available; verify specific type."
+        },
+        {
+          "item_name": "Syringes for injection",
+          "quantity": "100 units",
+          "unit_cost_estimate": 0.1,
+          "total_cost_estimate": 10.0,
+          "confidence": "high",
+          "uncertainty_note": "Commonly available; verify specific type."
+        },
+        {
+          "item_name": "Mouse cages",
+          "quantity": "20 units",
+          "unit_cost_estimate": 30.0,
+          "total_cost_estimate": 600.0,
+          "confidence": "medium",
+          "uncertainty_note": "Verify specific type and availability."
+        },
+        {
+          "item_name": "Storage containers",
+          "quantity": "5 units",
+          "unit_cost_estimate": 15.0,
+          "total_cost_estimate": 75.0,
+          "confidence": "medium",
+          "uncertainty_note": "Verify specific type and availability."
+        },
+        {
+          "item_name": "D12492 high-fat diet mix",
+          "quantity": "1 kg",
+          "unit_cost_estimate": 200.0,
+          "total_cost_estimate": 200.0,
+          "confidence": "medium",
+          "uncertainty_note": "Verify specific formulation and pricing."
+        },
+        {
+          "item_name": "LabDiet 5001 standard chow",
+          "quantity": "1 kg",
+          "unit_cost_estimate": 50.0,
+          "total_cost_estimate": 50.0,
+          "confidence": "medium",
+          "uncertainty_note": "Verify specific formulation and pricing."
+        },
+        {
+          "item_name": "D-glucose (G8270)",
+          "quantity": "100 g",
+          "unit_cost_estimate": 30.0,
+          "total_cost_estimate": 30.0,
+          "confidence": "medium",
+          "uncertainty_note": "Verify specific formulation and pricing."
+        },
+        {
+          "item_name": "Total cholesterol assay kit",
+          "quantity": "1 kit",
+          "unit_cost_estimate": 300.0,
+          "total_cost_estimate": 300.0,
+          "confidence": "low",
+          "uncertainty_note": "Verify specific kit availability and pricing."
+        },
+        {
+          "item_name": "Triglyceride assay kit",
+          "quantity": "1 kit",
+          "unit_cost_estimate": 300.0,
+          "total_cost_estimate": 300.0,
+          "confidence": "low",
+          "uncertainty_note": "Verify specific kit availability and pricing."
+        },
+        {
+          "item_name": "Isoflurane anesthesia setup",
+          "quantity": "1 unit",
+          "unit_cost_estimate": 150.0,
+          "total_cost_estimate": 150.0,
+          "confidence": "medium",
+          "uncertainty_note": "Verify specific setup and availability."
+        }
+      ],
+      "estimated_total_cost": 20105.0,
+      "uncertainty_notes": [
+        "Prices may vary based on institutional discounts or bulk purchasing agreements.",
+        "Verify availability of specific reagents and equipment before ordering.",
+        "Consider potential shipping costs and lead times for specialized items."
+      ]
+    },
+    "timeline": {
+      "phases": [
+        {
+          "phase_name": "Day 0: Diet Preparation",
+          "duration_estimate": "1 days",
+          "dependencies": [],
+          "responsible_role": "Research associate",
+          "risk_buffer": "1 days",
+          "bottlenecks": [
+            "Equipment availability for mixing and weighing ingredients"
+          ]
+        },
+        {
+          "phase_name": "Day 0: Animal Housing Setup",
+          "duration_estimate": "8 days",
+          "dependencies": [],
+          "responsible_role": "Research associate",
+          "risk_buffer": "2 days",
+          "bottlenecks": [
+            "Availability of housing facilities",
+            "Acclimatization period for mice"
+          ]
+        },
+        {
+          "phase_name": "Day 1: Dietary Intervention",
+          "duration_estimate": "1 days",
+          "dependencies": [],
+          "responsible_role": "Research associate",
+          "risk_buffer": "1 days",
+          "bottlenecks": [
+            "Random assignment of mice to groups"
+          ]
+        },
+        {
+          "phase_name": "Day 7: Body Weight Measurement",
+          "duration_estimate": "1 days",
+          "dependencies": [],
+          "responsible_role": "Research associate",
+          "risk_buffer": "1 days",
+          "bottlenecks": [
+            "Handling stress in mice during weighing"
+          ]
+        },
+        {
+          "phase_name": "Day 14: Glucose Tolerance Test (GTT)",
+          "duration_estimate": "1 days",
+          "dependencies": [],
+          "responsible_role": "Research associate",
+          "risk_buffer": "1 days",
+          "bottlenecks": [
+            "Timing of fasting and injection",
+            "Variability in glucose response"
+          ]
+        },
+        {
+          "phase_name": "Day 28: Serum Lipid Profile",
+          "duration_estimate": "1 days",
+          "dependencies": [],
+          "responsible_role": "Research associate",
+          "risk_buffer": "1 days",
+          "bottlenecks": [
+            "Anesthesia effectiveness",
+            "Timing of blood collection"
+          ]
+        },
+        {
+          "phase_name": "Day 29: Serum Lipid Analysis",
+          "duration_estimate": "1 days",
+          "dependencies": [],
+          "responsible_role": "Research associate",
+          "risk_buffer": "1 days",
+          "bottlenecks": [
+            "Availability of assay kits",
+            "Calibration of microplate reader"
+          ]
+        },
+        {
+          "phase_name": "Day 30: Data Analysis",
+          "duration_estimate": "1 days",
+          "dependencies": [],
+          "responsible_role": "Bioinformatician",
+          "risk_buffer": "1 days",
+          "bottlenecks": [
+            "Data compilation and statistical analysis"
+          ]
+        }
+      ],
+      "total_duration_estimate": "24 days (including risk buffers)"
+    },
+    "validation": {
+      "primary_endpoint": "Post-thaw viability percentage at immediate and 24h checkpoints.",
+      "secondary_endpoints": [
+        "Cell recovery count",
+        "Morphology quality score",
+        "Replicate variance"
+      ],
+      "success_threshold": ">=10 percentage points (pilot fallback) improvement over comparator in replicate-confirmed data.",
+      "failure_conditions": [
+        "No meaningful viability gain in replicate-confirmed runs.",
+        "Intervention increases delayed viability loss at 24h."
+      ],
+      "suggested_statistical_comparison": "Two-group comparison against comparator using t-test or Mann-Whitney based on normality.",
+      "minimum_replicates_or_design_note": "Minimum three biological replicates before execution-level claim."
+    },
+    "cro_ready_brief": {
+      "objective": "To investigate the effects of a high-fat diet on metabolic parameters in diet-induced obesity mouse models.",
+      "scope_of_work": [
+        "Execute pilot-first HeLa cryopreservation comparison between DMSO baseline and trehalose arm.",
+        "Deliver replicate-confirmed viability analysis and mitigation traceability report."
+      ],
+      "sample_count": "At least 3 biological replicates per arm",
+      "required_assays": [
+        "Immediate post-thaw viability",
+        "24h follow-up viability"
+      ],
+      "deliverables": [
+        "Raw assay tables",
+        "QC log",
+        "Analysis summary",
+        "Deviation report"
+      ],
+      "qc_requirements": [
+        "Controlled-rate freeze log",
+        "Lot traceability",
+        "Blinded run annotation"
+      ],
+      "timeline_request": "24 days (including risk buffers)",
+      "materials_responsibility": "CRO to quote and confirm all materials before ordering.",
+      "questions_for_cro": [
+        "Can you support controlled-rate freezing logs in each run?",
+        "Can you include replicate-level batch metadata in the final report?"
+      ]
+    },
+    "confidence_score": 0.73,
+    "feedback_incorporated": false,
+    "feedback_trace": []
+  }
+}

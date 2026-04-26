@@ -1,0 +1,393 @@
+[
+  {
+    "plan_id": "03df0fa8-bdad-44be-bb1c-9f622707a92a",
+    "feedback": "Add explicit viability assay calibration note.",
+    "requested_changes": [
+      "validation calibration details"
+    ],
+    "section": "overall_plan",
+    "severity": "medium",
+    "created_at": "2026-04-26T06:50:56.246217Z"
+  },
+  {
+    "plan_id": "0469b4e9-2227-4b2b-849b-725cfd0ea901",
+    "section": "plan",
+    "feedback_text": "Clarify replicate gate for execution readiness.",
+    "requested_changes": [
+      "replicate gate in plan text"
+    ],
+    "severity": "major",
+    "global_feedback": "",
+    "created_at": "2026-04-26T04:55:08.142931Z"
+  },
+  {
+    "plan_id": "0de3114f-9499-49d3-be2f-c0b4dba6c510",
+    "feedback": "Add explicit viability assay calibration note.",
+    "requested_changes": [
+      "validation calibration details"
+    ],
+    "section": "overall_plan",
+    "severity": "medium",
+    "created_at": "2026-04-26T06:58:12.703782Z"
+  },
+  {
+    "plan_id": "0ea5adad-48d6-45b0-92b8-7c79495e7819",
+    "section": "plan",
+    "feedback_text": "Clarify replicate gate for execution readiness.",
+    "requested_changes": [
+      "replicate gate in plan text"
+    ],
+    "severity": "major",
+    "global_feedback": "",
+    "created_at": "2026-04-26T05:36:57.044233Z"
+  },
+  {
+    "plan_id": "13f40026-b038-4c7c-b954-0ddb4e3dea8b",
+    "feedback": "Add explicit viability assay calibration note.",
+    "requested_changes": [
+      "validation calibration details"
+    ],
+    "section": "overall_plan",
+    "severity": "medium",
+    "created_at": "2026-04-26T01:09:36.381504Z"
+  },
+  {
+    "plan_id": "1df947e5-fd11-4e65-8da9-5754f1461332",
+    "feedback": "Clarify replicate gate for execution readiness.",
+    "requested_changes": [
+      "replicate gate in plan text"
+    ],
+    "section": "overall_plan",
+    "severity": "medium",
+    "created_at": "2026-04-25T23:40:49.190404Z"
+  },
+  {
+    "plan_id": "1f346383-a354-4fa2-8651-97c5f4bbe0fb",
+    "feedback": "Clarify replicate gate for execution readiness.",
+    "requested_changes": [
+      "replicate gate in plan text"
+    ],
+    "section": "overall_plan",
+    "severity": "medium",
+    "created_at": "2026-04-25T23:30:13.106081Z"
+  },
+  {
+    "plan_id": "22d3447b-108f-4826-8d16-06690f1a9ed1",
+    "feedback": "Clarify replicate gate for execution readiness.",
+    "requested_changes": [
+      "replicate gate in plan text"
+    ],
+    "section": "overall_plan",
+    "severity": "medium",
+    "created_at": "2026-04-26T01:33:04.125698Z"
+  },
+  {
+    "plan_id": "26d89574-7623-4621-bb12-0fd51ef5d21c",
+    "section": "plan",
+    "feedback_text": "Clarify replicate gate for execution readiness.",
+    "requested_changes": [
+      "replicate gate in plan text"
+    ],
+    "severity": "major",
+    "global_feedback": "",
+    "created_at": "2026-04-26T06:11:31.088400Z"
+  },
+  {
+    "plan_id": "285daf28-e29c-4b05-bc25-2772a6e0a6cc",
+    "feedback": "Clarify replicate gate for execution readiness.",
+    "requested_changes": [
+      "replicate gate in plan text"
+    ],
+    "section": "overall_plan",
+    "severity": "medium",
+    "created_at": "2026-04-26T00:40:52.274482Z"
+  },
+  {
+    "plan_id": "2c141af7-bb27-414f-8668-f4287f4e1a11",
+    "section": "plan",
+    "feedback_text": "Clarify replicate gate for execution readiness.",
+    "requested_changes": [
+      "replicate gate in plan text"
+    ],
+    "severity": "major",
+    "global_feedback": "",
+    "created_at": "2026-04-26T05:07:08.433668Z"
+  },
+  {
+    "plan_id": "2dedd0d9-49a4-4b35-a05e-cca61f1e020a",
+    "section": "plan",
+    "feedback_text": "Clarify replicate gate for execution readiness.",
+    "requested_changes": [
+      "replicate gate in plan text"
+    ],
+    "severity": "major",
+    "global_feedback": "",
+    "created_at": "2026-04-26T04:51:08.360729Z"
+  },
+  {
+    "plan_id": "38a71e8b-a0c8-4d53-8f73-7c1e4b234120",
+    "section": "plan",
+    "feedback_text": "Clarify replicate gate for execution readiness.",
+    "requested_changes": [
+      "replicate gate in plan text"
+    ],
+    "severity": "major",
+    "global_feedback": "",
+    "created_at": "2026-04-26T05:26:48.797156Z"
+  },
+  {
+    "plan_id": "3d679c73-1c93-46d4-94db-6f45d7b35a83",
+    "section": "plan",
+    "feedback_text": "Clarify replicate gate for execution readiness.",
+    "requested_changes": [
+      "replicate gate in plan text"
+    ],
+    "severity": "major",
+    "global_feedback": "",
+    "created_at": "2026-04-26T05:02:29.599445Z"
+  },
+  {
+    "plan_id": "3d866010-eb3c-4c62-9463-7c4431b2482f",
+    "feedback": "Clarify replicate gate for execution readiness.",
+    "requested_changes": [
+      "replicate gate in plan text"
+    ],
+    "section": "overall_plan",
+    "severity": "medium",
+    "created_at": "2026-04-26T08:13:45.738476Z"
+  },
+  {
+    "plan_id": "470b8cd0-4e08-4e32-a238-f523db93c8fa",
+    "feedback": "Add explicit viability assay calibration note.",
+    "requested_changes": [
+      "validation calibration details"
+    ],
+    "section": "overall_plan",
+    "severity": "medium",
+    "created_at": "2026-04-25T23:40:49.185531Z"
+  },
+  {
+    "plan_id": "54e9208d-8194-47f4-a35f-cb81fce5c00e",
+    "feedback": "Add explicit viability assay calibration note.",
+    "requested_changes": [
+      "validation calibration details"
+    ],
+    "section": "overall_plan",
+    "severity": "medium",
+    "created_at": "2026-04-26T06:53:04.805426Z"
+  },
+  {
+    "plan_id": "559a8a9a-5117-4f40-af29-97fd37e70deb",
+    "feedback": "Add explicit viability assay calibration note.",
+    "requested_changes": [
+      "validation calibration details"
+    ],
+    "section": "overall_plan",
+    "severity": "medium",
+    "created_at": "2026-04-26T01:38:26.196677Z"
+  },
+  {
+    "plan_id": "5b9de05e-cae1-4f79-afc0-19dda432e32f",
+    "feedback": "Add explicit viability assay calibration note.",
+    "requested_changes": [
+      "validation calibration details"
+    ],
+    "section": "overall_plan",
+    "severity": "medium",
+    "created_at": "2026-04-26T07:25:09.942475Z"
+  },
+  {
+    "plan_id": "61051490-b40d-40d3-98a7-74eaf251f5d3",
+    "feedback": "Add explicit viability assay calibration note.",
+    "requested_changes": [
+      "validation calibration details"
+    ],
+    "section": "overall_plan",
+    "severity": "medium",
+    "created_at": "2026-04-26T01:33:04.122053Z"
+  },
+  {
+    "plan_id": "67de8c1e-a243-4171-b397-d752d12ef783",
+    "feedback": "Add explicit viability assay calibration note.",
+    "requested_changes": [
+      "validation calibration details"
+    ],
+    "section": "overall_plan",
+    "severity": "medium",
+    "created_at": "2026-04-26T06:54:56.505889Z"
+  },
+  {
+    "plan_id": "6ecc8438-51d7-44c4-a2d5-2d9e6284a612",
+    "feedback": "Add explicit viability assay calibration note.",
+    "requested_changes": [
+      "validation calibration details"
+    ],
+    "section": "overall_plan",
+    "severity": "medium",
+    "created_at": "2026-04-26T08:13:33.585504Z"
+  },
+  {
+    "plan_id": "7c8e8cb8-cec2-4577-b83a-7459194ea88f",
+    "feedback": "Add explicit viability assay calibration note.",
+    "requested_changes": [
+      "validation calibration details"
+    ],
+    "section": "overall_plan",
+    "severity": "medium",
+    "created_at": "2026-04-26T07:36:45.025473Z"
+  },
+  {
+    "plan_id": "876d0c03-389f-40ae-a46b-85a3bb26753a",
+    "feedback": "Add explicit viability assay calibration note.",
+    "requested_changes": [
+      "validation calibration details"
+    ],
+    "section": "overall_plan",
+    "severity": "medium",
+    "created_at": "2026-04-26T07:06:56.625435Z"
+  },
+  {
+    "plan_id": "8ff2261e-7260-476e-b633-13aeae8385df",
+    "feedback": "Clarify replicate gate for execution readiness.",
+    "requested_changes": [
+      "replicate gate in plan text"
+    ],
+    "section": "overall_plan",
+    "severity": "medium",
+    "created_at": "2026-04-26T01:37:44.215217Z"
+  },
+  {
+    "plan_id": "9e9dc765-38a5-4cf3-b6fb-d4e00304da68",
+    "feedback": "Add explicit viability assay calibration note.",
+    "requested_changes": [
+      "validation calibration details"
+    ],
+    "section": "overall_plan",
+    "severity": "medium",
+    "created_at": "2026-04-26T01:37:44.209424Z"
+  },
+  {
+    "plan_id": "a8dc15a4-d1be-492d-ba0e-88c2122b1a7a",
+    "section": "plan",
+    "feedback_text": "Clarify replicate gate for execution readiness.",
+    "requested_changes": [
+      "replicate gate in plan text"
+    ],
+    "severity": "major",
+    "global_feedback": "",
+    "created_at": "2026-04-26T04:53:17.089221Z"
+  },
+  {
+    "plan_id": "ade6a16c-7a7a-4971-b6c6-34892f4d0967",
+    "feedback": "Add explicit viability assay calibration note.",
+    "requested_changes": [
+      "validation calibration details"
+    ],
+    "section": "overall_plan",
+    "severity": "medium",
+    "created_at": "2026-04-25T23:30:13.101407Z"
+  },
+  {
+    "plan_id": "b36f86f1-963b-4f5f-8e79-e606f8e42a54",
+    "feedback": "Add explicit viability assay calibration note.",
+    "requested_changes": [
+      "validation calibration details"
+    ],
+    "section": "overall_plan",
+    "severity": "medium",
+    "created_at": "2026-04-26T00:40:52.270357Z"
+  },
+  {
+    "plan_id": "bfd115f9-938a-4c6b-89cf-d08f8cc9522e",
+    "feedback": "Clarify replicate gate for execution readiness.",
+    "requested_changes": [
+      "replicate gate in plan text"
+    ],
+    "section": "overall_plan",
+    "severity": "medium",
+    "created_at": "2026-04-26T01:38:26.202430Z"
+  },
+  {
+    "plan_id": "d674ede9-09cd-4d0a-813e-a737c01a079a",
+    "section": "plan",
+    "feedback_text": "The protocol is missing post-thaw recovery",
+    "requested_changes": [
+      "add 30-minute post-thaw recovery at 37\u00b0C before trypan blue counting"
+    ],
+    "severity": "major",
+    "global_feedback": "",
+    "created_at": "2026-04-26T04:55:58.166723Z"
+  },
+  {
+    "plan_id": "d674ede9-09cd-4d0a-813e-a737c01a079a",
+    "section": "plan",
+    "feedback_text": "legacy regen",
+    "requested_changes": [
+      "change one"
+    ],
+    "severity": "major",
+    "global_feedback": "",
+    "created_at": "2026-04-26T04:55:58.182824Z"
+  },
+  {
+    "plan_id": "e0588904-e113-42b5-9f7f-03e753597a4e",
+    "section": "plan",
+    "feedback_text": "Clarify replicate gate for execution readiness.",
+    "requested_changes": [
+      "replicate gate in plan text"
+    ],
+    "severity": "major",
+    "global_feedback": "",
+    "created_at": "2026-04-26T04:58:24.813637Z"
+  },
+  {
+    "plan_id": "e21e62a4-41c3-46fc-829c-bc1faaafaa87",
+    "section": "plan",
+    "feedback_text": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+    "requested_changes": [],
+    "severity": "major",
+    "global_feedback": "",
+    "created_at": "2026-04-26T04:55:58.178255Z"
+  },
+  {
+    "plan_id": "ee636004-0cc3-4f47-8952-dd80819745a7",
+    "feedback": "Clarify replicate gate for execution readiness.",
+    "requested_changes": [
+      "replicate gate in plan text"
+    ],
+    "section": "overall_plan",
+    "severity": "medium",
+    "created_at": "2026-04-26T01:09:36.386663Z"
+  },
+  {
+    "plan_id": "f2dd1b66-5e34-4dcc-90ed-559e76880c7e",
+    "feedback": "Add explicit viability assay calibration note.",
+    "requested_changes": [
+      "validation calibration details"
+    ],
+    "section": "overall_plan",
+    "severity": "medium",
+    "created_at": "2026-04-26T08:11:18.735816Z"
+  },
+  {
+    "plan_id": "ffe1ecbd-14e2-45de-b16d-f1a1545460ad",
+    "feedback": "Add explicit viability assay calibration note.",
+    "requested_changes": [
+      "validation calibration details"
+    ],
+    "section": "overall_plan",
+    "severity": "medium",
+    "created_at": "2026-04-26T07:02:17.610984Z"
+  },
+  {
+    "plan_id": "fb486a0d-7b21-490f-a8e4-4b160988f5a2",
+    "section": "plan",
+    "feedback_text": "Add controlled-rate freezing at 1\u00b0C/min before plunge.",
+    "requested_changes": [
+      "Add Mr. Frosty step"
+    ],
+    "severity": "major",
+    "global_feedback": "Be more rigorous.",
+    "created_at": "2026-04-26T07:11:51.801121Z"
+  }
+]

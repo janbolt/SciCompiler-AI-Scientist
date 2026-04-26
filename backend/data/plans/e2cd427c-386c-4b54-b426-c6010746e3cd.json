@@ -1,0 +1,2200 @@
+{
+  "request": {
+    "question": "Expressing a heterologous xylose isomerase from Piromyces sp. in Saccharomyces cerevisiae [CEN.PK](http://CEN.PK) will enable fermentation of xylose to ethanol at a yield of at least 0.4 g ethanol/g xylose within 48 hours under anaerobic conditions, compared to zero ethanol production in the parental strain, due to the enzyme bypassing the native redox-imbalanced xylose reductase/xylitol dehydrogenase pathway.",
+    "constraints": {
+      "budget": "missing_required_field",
+      "timeline": "missing_required_field",
+      "execution_mode": "in_house"
+    },
+    "prior_feedback": [
+      {
+        "experiment_type": "Reagent Preparation",
+        "section": "steps",
+        "rating": 5,
+        "note": "jkl\u00f6jkl\u00f6",
+        "timestamp": "2026-04-26T06:54:52.901Z"
+      },
+      {
+        "experiment_type": "Reagent Preparation",
+        "section": "materials",
+        "rating": 5,
+        "note": "something is off",
+        "timestamp": "2026-04-26T06:54:52.901Z"
+      }
+    ]
+  },
+  "response": {
+    "plan_id": "e2cd427c-386c-4b54-b426-c6010746e3cd",
+    "hypothesis": {
+      "intervention": "Expressing a heterologous xylose isomerase from Piromyces sp. in Saccharomyces cerevisiae CEN.PK",
+      "biological_system": "Saccharomyces cerevisiae CEN.PK",
+      "comparator_or_control": "parental strain",
+      "measurable_outcome": "fermentation of xylose to ethanol",
+      "threshold": "at least 0.4 g ethanol/g xylose within 48 hours",
+      "mechanistic_rationale": "the enzyme bypassing the native redox-imbalanced xylose reductase/xylitol dehydrogenase pathway",
+      "experiment_type": "metabolic_engineering_fermentation",
+      "constraints": {
+        "execution_mode": "in_house"
+      },
+      "readiness": "pilot_ready",
+      "readiness_rationale": "The core fields are present, with a numeric ethanol yield threshold and mechanistic rationale. However, the ethanol/xylose quantification method is not specified, the comparator is only named as the parental strain without an exact strain identifier, and the expression approach lacks construct details, so scientist review is needed before CRO handoff.",
+      "confidence_score": 0.82,
+      "clarifying_questions": [
+        "What specific assay/analytical method will be used to quantify ethanol production and xylose consumption (e.g., HPLC)?",
+        "What exact parental strain identifier will be used as the comparator/control?",
+        "What is the specific expression construct or delivery method for the Piromyces sp. xylose isomerase (e.g., plasmid/integration system and promoter)?"
+      ],
+      "literature_search_hint": "Piromyces xylose isomerase Saccharomyces cerevisiae CEN.PK xylose ethanol fermentation",
+      "original_hypothesis": "Expressing a heterologous xylose isomerase from Piromyces sp. in Saccharomyces cerevisiae [CEN.PK](http://CEN.PK) will enable fermentation of xylose to ethanol at a yield of at least 0.4 g ethanol/g xylose within 48 hours under anaerobic conditions, compared to zero ethanol production in the parental strain, due to the enzyme bypassing the native redox-imbalanced xylose reductase/xylitol dehydrogenase pathway.",
+      "missing_required_fields": []
+    },
+    "literature_qc": {
+      "novelty_signal": "exact_match_found",
+      "references": [
+        {
+          "title": "Xylose isomerase overexpression along with engineering of the pentose phosphate pathway and evolutionary engineering enable rapid xylose utilization and ethanol production by Saccharomyces cerevisiae.",
+          "protocol_url": "https://doi.org/10.1016/j.ymben.2012.07.011",
+          "authors": [
+            "Hang Zhou",
+            "Jing-Sheng Cheng",
+            "Benjamin L Wang",
+            "et al."
+          ],
+          "published_year": 2012,
+          "match_type": "full_scope",
+          "relevance_note": "This paper directly concerns xylose isomerase overexpression in Saccharomyces cerevisiae for xylose utilization and ethanol production, matching the core metabolic-engineering fermentation experiment; the title suggests pathway engineering/evolutionary engineering may accompany XI expression, but it still covers the same intervention class and outcome context.",
+          "is_stub": false
+        },
+        {
+          "title": "Development of Efficient Xylose Fermentation in Saccharomyces cerevisiae: Xylose Isomerase as a\u00a0Key Component",
+          "protocol_url": "https://doi.org/10.1007/10_2007_057",
+          "authors": [
+            "Antonius J. A. van Maris",
+            "Aaron A. Winkler",
+            "Marko Kuyper",
+            "et al."
+          ],
+          "published_year": 2007,
+          "match_type": "full_scope",
+          "relevance_note": "This paper explicitly frames efficient xylose fermentation in Saccharomyces cerevisiae with xylose isomerase as a key component, which is the same experimental context of engineering S. cerevisiae to ferment xylose to ethanol via XI expression.",
+          "is_stub": false
+        },
+        {
+          "title": "Metal Dependence of the Xylose Isomerase from Piromyces sp. E2 Explored by Activity Profiling and Protein Crystallography",
+          "protocol_url": "https://doi.org/10.1021/acs.biochem.7b00777",
+          "authors": [
+            "Misun Lee",
+            "H. Rozeboom",
+            "Paul P. de Waal",
+            "et al."
+          ],
+          "published_year": 2017,
+          "match_type": "full_scope",
+          "relevance_note": "This paper specifically identifies xylose isomerase from Piromyces sp. E2 as enabling Saccharomyces cerevisiae to ferment xylose to ethanol, directly matching the heterologous Piromyces XI intervention and fermentation outcome, although it focuses on biochemical/structural characterization rather than the original strain-construction fermentation test.",
+          "is_stub": false
+        }
+      ],
+      "confidence_score": 0.95,
+      "explanation": "On the intervention dimension, the retrieved set includes xylose isomerase expression/overexpression in S. cerevisiae [0,3] and specifically Piromyces sp. E2 xylose isomerase used to equip S. cerevisiae for xylose-to-ethanol fermentation [5]. On the biological-system dimension, multiple papers are in Saccharomyces cerevisiae, and the CEN.PK background is strongly implicated by the classic xylose-isomerase yeast engineering literature even though not all abstracts/titles state the exact strain. On the experiment-type dimension, the papers concern metabolic engineering and fermentation of xylose to ethanol, so the core experiment has already been described even if the exact comparator or fermentation thresholds are not specified here.",
+      "recommended_action": "A paper matching this experiment was found in the scientific literature. Review it before proceeding. If this is intentional replication, state that explicitly. If not, differentiate your approach.",
+      "search_coverage": "full"
+    },
+    "protocol_candidates": [
+      {
+        "protocol_name": "Standard metabolic_engineering_fermentation protocol for expressing a heterologous xylose isomerase from piromyces sp. in saccharomyces cerevisiae cen.pk",
+        "source_type": "stub",
+        "fit_score": 0.75,
+        "confidence": 0.65,
+        "adaptation_notes": "Stub mode \u2014 no live protocols.io search performed. This is a placeholder candidate.",
+        "missing_steps": [
+          "Exact reagent concentrations",
+          "Instrument-specific settings"
+        ],
+        "limitations": [
+          "Stub output only \u2014 real protocols.io search requires PROTOCOLS_IO_TOKEN."
+        ],
+        "raw_steps": [],
+        "protocol_url": ""
+      }
+    ],
+    "evidence_claims": [
+      {
+        "claim": "Post-thaw viability directly tests the stated biological outcome.",
+        "evidence_type": "direct_evidence",
+        "support_summary": "Outcome is explicitly present in user hypothesis.",
+        "strength": "strong",
+        "linked_to": "hypothesis.measurable_outcome"
+      },
+      {
+        "claim": "Trehalose membrane stabilization rationale supports intervention plausibility.",
+        "evidence_type": "mechanistic_evidence",
+        "support_summary": "Mechanistic rationale is explicitly stated in user input.",
+        "strength": "moderate",
+        "linked_to": "hypothesis.mechanistic_rationale"
+      },
+      {
+        "claim": "Expected +15 percentage-point threshold may be optimistic without pilot calibration.",
+        "evidence_type": "unvalidated_assumption",
+        "support_summary": "Effect size is user-defined but not validated in this run.",
+        "strength": "weak",
+        "linked_to": "hypothesis.threshold"
+      }
+    ],
+    "risks": [
+      {
+        "risk_id": "RISK-001",
+        "category": "biological_assumption",
+        "description": "Standard experimental risk \u2014 the approach has literature support but execution details should be reviewed before proceeding.",
+        "severity": "low",
+        "likelihood": "low",
+        "mitigation": "Confirm all materials, controls, and readiness criteria with a scientist before execution.",
+        "action": "document_only"
+      }
+    ],
+    "plan": {
+      "objective": "Determine whether heterologous expression of Piromyces sp. xylose isomerase enables Saccharomyces cerevisiae CEN.PK to convert xylose to ethanol at \u22650.4 g ethanol/g xylose within 48 h under oxygen-limited fermentation.",
+      "experimental_design": "A pilot metabolic-engineering fermentation compares CEN.PK transformed with a URA3-marked plasmid expressing Piromyces sp. xylose isomerase against parental CEN.PK and an uninoculated medium blank in biological triplicate. Transformants are selected, verified by colony PCR, precultured under selective conditions, transferred to defined xylose fermentation medium at matched biomass, and sampled over 48 h for HPLC quantification of xylose, ethanol, xylitol, glycerol, and acetate. The proceed gate is ethanol yield from the engineered strain relative to xylose consumed, with parental strain defining background ethanol formation on xylose.",
+      "controls": [
+        "Previously validated Saccharomyces cerevisiae CEN.PK-XI reference strain harboring Piromyces sp. E2 xylA on a URA3 plasmid with documented ethanol yield \u22650.35 g/g xylose in 48 h.",
+        "Uninoculated 50 mL fermentation containing 20 g/L D-xylose defined medium in 120 mL serum bottles under N2 at 30 \u00b0C for 48 h.",
+        "parental strain"
+      ],
+      "step_by_step_protocol": [
+        {
+          "step_number": 1,
+          "description": "DAY 0 (PREP) | 15 min | Setup and scheduling\nReserve a New Brunswick Innova 44R shaking incubator at 30 \u00b0C, an Agilent 1260 Infinity II HPLC system at 55 \u00b0C, a Bio-Rad T100 thermal cycler at 95 \u00b0C denaturation capability, and a Thermo Scientific Heracell VIOS incubator at 30 \u00b0C for Days 1\u20137.\nExpected outcome: Instrument reservations cover at least 7 consecutive days with no scheduling conflicts longer than 30 min.",
+          "linked_to": "Setup and scheduling"
+        },
+        {
+          "step_number": 2,
+          "description": "DAY 0 (PREP) | 1.5 h | Reagent preparation\nAutoclave 1.0 L of 2\u00d7 YP base containing 20 g/L yeast extract and 40 g/L peptone at 121 \u00b0C for 20 min in a Systec VX-95 autoclave.\nExpected outcome: Sterilization cycle reaches 121 \u00b0C for 20 min with autoclave printout confirming F0 \u226515.\nSafety: Hot-liquid burn risk \u2014 wear heat-resistant gloves and face protection.",
+          "linked_to": "Reagent preparation"
+        },
+        {
+          "step_number": 3,
+          "description": "DAY 0 (PREP) | 30 min | Reagent preparation\nFilter-sterilize 500 mL of 400 g/L D-xylose stock through a 0.22 \u00b5m PES bottle-top filter at 22 \u00b0C into a sterile 500 mL bottle.\nExpected outcome: Clear sterile xylose stock with no visible particulates and final volume \u2265480 mL.",
+          "linked_to": "Reagent preparation"
+        },
+        {
+          "step_number": 4,
+          "description": "DAY 0 (PREP) | 45 min | Reagent preparation\nDispense 25 mL aliquots of SD-URA agar containing 6.7 g/L yeast nitrogen base without amino acids, 1.92 g/L yeast synthetic drop-out medium lacking uracil, 20 g/L glucose, and 20 g/L agar into 90 mm sterile Petri dishes at 50 \u00b0C.\nExpected outcome: At least 20 plates contain 25 \u00b1 2 mL agar with smooth surfaces and no bubbles covering >5% of plate area.\nSafety: Molten agar burn risk \u2014 wear thermal gloves and lab coat.",
+          "linked_to": "Reagent preparation"
+        },
+        {
+          "step_number": 5,
+          "description": "DAY 1 | 10 min | Yeast transformation\nThaw one 100 \u00b5L aliquot of chemically competent Saccharomyces cerevisiae CEN.PK cells on ice at 0\u20134 \u00b0C for 10 min.\nExpected outcome: Cell suspension is fully thawed with no ice crystals visible in the 100 \u00b5L aliquot.\nSafety: BSL-1 GMO handling \u2014 decontaminate yeast waste with 10% bleach for 30 min.",
+          "linked_to": "Yeast transformation"
+        },
+        {
+          "step_number": 6,
+          "description": "DAY 1 | 10 min | Yeast transformation\nMix 50 \u00b5L competent CEN.PK cells with 1.0 \u00b5g pURA3-TDH3-Piromyces-xylA plasmid DNA, 5 \u00b5L denatured salmon sperm carrier DNA at 10 mg/mL, 240 \u00b5L 50% w/v PEG 3350, 36 \u00b5L 1.0 M lithium acetate, and 59 \u00b5L sterile water in a 1.5 mL tube at 22 \u00b0C.\nExpected outcome: Transformation mixture volume is 390 \u00b1 10 \u00b5L with visibly homogeneous viscosity after mixing.\nSafety: Lithium acetate is irritant \u2014 wear nitrile gloves and eye protection.",
+          "linked_to": "Yeast transformation"
+        },
+        {
+          "step_number": 7,
+          "description": "DAY 1 | 30 min | Yeast transformation\nIncubate the transformation mixture at 30 \u00b0C for 30 min in an Eppendorf ThermoMixer C at 300 rpm.\nExpected outcome: Tube contents remain suspended with no pellet larger than 2 mm at the tube bottom.\nSafety: BSL-1 GMO handling \u2014 keep tube closed outside the biosafety cabinet.",
+          "linked_to": "Yeast transformation"
+        },
+        {
+          "step_number": 8,
+          "description": "DAY 1 | 20 min | Yeast transformation\nHeat-shock the transformation mixture at 42 \u00b0C for 20 min in an Eppendorf ThermoMixer C without shaking.\nExpected outcome: Tube reaches 42 \u00b1 1 \u00b0C for the full 20 min interval according to block display.\nSafety: BSL-1 GMO handling \u2014 keep tube closed outside the biosafety cabinet.",
+          "linked_to": "Yeast transformation"
+        },
+        {
+          "step_number": 9,
+          "description": "DAY 1 | 5 min | Yeast transformation\nCentrifuge the transformation mixture at 3,000 \u00d7 g for 2 min at 22 \u00b0C in an Eppendorf 5424R centrifuge.\nExpected outcome: A compact yeast pellet of 1\u20133 mm diameter is visible at the bottom of the tube.\nSafety: Balance tubes within 0.01 g before centrifugation.",
+          "linked_to": "Yeast transformation"
+        },
+        {
+          "step_number": 10,
+          "description": "DAY 1 | 5 min | Yeast transformation\nResuspend the yeast pellet in 200 \u00b5L sterile 0.9% w/v NaCl at 22 \u00b0C by pipetting 10 strokes with a P200 tip.\nExpected outcome: Suspension is uniform with no clumps larger than 1 mm visible.\nSafety: BSL-1 GMO handling \u2014 work in a disinfected biosafety cabinet.",
+          "linked_to": "Yeast transformation"
+        },
+        {
+          "step_number": 11,
+          "description": "DAY 1 | 10 min | Yeast transformation\nSpread 100 \u00b5L resuspended yeast cells onto each SD-URA agar plate with sterile 3 mm glass beads at 22 \u00b0C.\nExpected outcome: Cell suspension is distributed over \u226590% of the agar surface on each plate.\nSafety: BSL-1 GMO handling \u2014 collect used beads into 10% bleach for 30 min.",
+          "linked_to": "Yeast transformation"
+        },
+        {
+          "step_number": 12,
+          "description": "DAY 1 | 48 h | Yeast transformation\nIncubate SD-URA transformation plates at 30 \u00b0C for 48 h in a Thermo Scientific Heracell VIOS incubator.\nExpected outcome: Transformation plates show 20\u2013300 uracil-prototrophic colonies per 100 \u00b5L plating volume by 48 h.\nSafety: BSL-1 GMO handling \u2014 keep plates sealed with one layer of Parafilm.",
+          "linked_to": "Yeast transformation"
+        },
+        {
+          "step_number": 13,
+          "description": "DAY 3 | 15 min | Transformant verification\nPick 8 single colonies into 20 \u00b5L sterile 20 mM NaOH in 0.2 mL PCR tubes at 22 \u00b0C.\nExpected outcome: Each PCR tube contains one visible yeast cell suspension with turbidity above sterile NaOH blank.\nSafety: NaOH is caustic \u2014 wear nitrile gloves and eye protection.",
+          "linked_to": "Transformant verification"
+        },
+        {
+          "step_number": 14,
+          "description": "DAY 3 | 15 min | Transformant verification\nLyse colony suspensions at 95 \u00b0C for 10 min in a Bio-Rad T100 thermal cycler.\nExpected outcome: Lysates show no intact colony clumps larger than 0.5 mm after heating.\nSafety: Hot-tube burn risk \u2014 allow tubes to cool to \u226430 \u00b0C before opening.",
+          "linked_to": "Transformant verification"
+        },
+        {
+          "step_number": 15,
+          "description": "DAY 3 | 1.5 h | Transformant verification\nAmplify xylA insert from 1 \u00b5L colony lysate in a 25 \u00b5L PCR containing 1\u00d7 Q5 Hot Start Master Mix, 0.5 \u00b5M forward primer, and 0.5 \u00b5M reverse primer for 35 cycles of 98 \u00b0C for 10 s, 60 \u00b0C for 20 s, and 72 \u00b0C for 90 s.\nExpected outcome: PCR reaction completes 35 cycles with expected amplicon size approximately 1.3 kb for positive colonies.\nSafety: Use aerosol-resistant tips to prevent amplicon contamination.",
+          "linked_to": "Transformant verification"
+        },
+        {
+          "step_number": 16,
+          "description": "DAY 3 | 50 min | Transformant verification\nElectrophorese 5 \u00b5L PCR product on a 1.0% w/v agarose gel in 1\u00d7 TAE at 100 V for 35 min using a Bio-Rad Mini-Sub Cell GT.\nExpected outcome: At least 3 of 8 colonies show a single xylA band at 1.2\u20131.4 kb and no-template control shows no visible band.\nSafety: Wear UV/blue-light eye protection when imaging stained gels.",
+          "linked_to": "Transformant verification"
+        },
+        {
+          "step_number": 17,
+          "description": "DAY 3 | 20 min | Seed culture\nInoculate three PCR-positive xylA colonies, one CEN.PK-XI positive-control colony, and three parental CEN.PK colonies into separate 50 mL baffled flasks containing 10 mL YPD with 20 g/L glucose at 30 \u00b0C.\nExpected outcome: Seven flasks each contain 10 mL broth with one defined yeast inoculum and initial OD600 <0.05.\nSafety: BSL-1 GMO handling \u2014 label engineered cultures with GMO identifier.",
+          "linked_to": "Seed culture"
+        },
+        {
+          "step_number": 18,
+          "description": "DAY 3 | 16 h | Seed culture\nShake seed cultures at 30 \u00b0C and 200 rpm for 16 h in a New Brunswick Innova 44R incubator with a 25 mm orbit.\nExpected outcome: Seed cultures reach OD600 3.0\u20138.0 after 16 h.\nSafety: BSL-1 GMO handling \u2014 keep flask caps secured in the shaker.",
+          "linked_to": "Seed culture"
+        },
+        {
+          "step_number": 19,
+          "description": "DAY 4 | 20 min | Fermentation inoculum preparation\nMeasure OD600 of each seed culture at 600 nm using a Thermo Scientific NanoDrop OneC after diluting 100 \u00b5L culture into 900 \u00b5L sterile 0.9% w/v NaCl.\nExpected outcome: Diluted OD600 readings fall within 0.2\u20130.8 absorbance units for back-calculation.\nSafety: Disinfect pedestal with 70% ethanol after yeast measurements.",
+          "linked_to": "Fermentation inoculum preparation"
+        },
+        {
+          "step_number": 20,
+          "description": "DAY 4 | 30 min | Fermentation setup\nDispense 50 mL fermentation medium containing 20 g/L D-xylose, 6.7 g/L yeast nitrogen base without amino acids, 1.92 g/L complete supplement mixture, 10 mg/L ergosterol, 420 mg/L Tween 80, and 50 mM potassium phthalate pH 5.0 into each 120 mL serum bottle at 22 \u00b0C.\nExpected outcome: Each serum bottle contains 50.0 \u00b1 0.5 mL medium with pH 5.0 \u00b1 0.1.",
+          "linked_to": "Fermentation setup"
+        },
+        {
+          "step_number": 21,
+          "description": "DAY 4 | 1.5 h | Fermentation setup\nSparge each serum bottle with sterile N2 gas at 100 mL/min for 10 min through a 0.22 \u00b5m PTFE inline filter at 22 \u00b0C.\nExpected outcome: Dissolved oxygen probe reading in a representative bottle is \u22640.5 mg/L at the end of sparging.\nSafety: Nitrogen asphyxiation risk \u2014 sparge in a ventilated area with oxygen monitor active.",
+          "linked_to": "Fermentation setup"
+        },
+        {
+          "step_number": 22,
+          "description": "DAY 4 | 20 min | Fermentation setup\nSeal each serum bottle with a 20 mm butyl rubber stopper and an aluminum crimp cap at 22 \u00b0C using a Wheaton hand crimper.\nExpected outcome: Each bottle holds pressure for 1 min without audible gas leakage when gently squeezed at the stopper.\nSafety: Crimping pinch hazard \u2014 keep fingers clear of crimper jaws.",
+          "linked_to": "Fermentation setup"
+        },
+        {
+          "step_number": 23,
+          "description": "DAY 4 | 30 min | Fermentation inoculation\nInoculate sealed fermentation bottles through the stopper with calculated seed-culture volumes to achieve OD600 1.0 in 50 mL final volume for engineered, parental, and positive-control cultures.\nExpected outcome: Each inoculated bottle has calculated starting OD600 1.00 \u00b1 0.05 with final volume 50.0 \u00b1 0.5 mL.\nSafety: Needlestick risk \u2014 use a sharps container immediately after syringe use.",
+          "linked_to": "Fermentation inoculation"
+        },
+        {
+          "step_number": 24,
+          "description": "DAY 4 | 48 h | Fermentation\nIncubate fermentation bottles at 30 \u00b0C and 120 rpm for 48 h in a New Brunswick Innova 44R shaker with a 25 mm orbit.\nExpected outcome: Bottle pressure remains below visible stopper deformation and cultures remain suspended with no settled biomass layer thicker than 2 mm.\nSafety: Pressurized-bottle risk \u2014 inspect stopper integrity before handling.",
+          "linked_to": "Fermentation"
+        },
+        {
+          "step_number": 25,
+          "description": "DAY 6 | 25 min | Fermentation sampling\nWithdraw 1.0 mL culture broth from each serum bottle at 48 h using a sterile 1 mL syringe and 23G needle at 22 \u00b0C.\nExpected outcome: Each bottle yields 1.0 \u00b1 0.1 mL broth sample without visible stopper coring particles.\nSafety: Needlestick risk \u2014 use a sharps container immediately after syringe use.",
+          "linked_to": "Fermentation sampling"
+        },
+        {
+          "step_number": 26,
+          "description": "DAY 6 | 15 min | Sample clarification\nCentrifuge 1.0 mL fermentation broth samples at 16,000 \u00d7 g for 10 min at 4 \u00b0C in an Eppendorf 5424R centrifuge.\nExpected outcome: Supernatants are visibly clear with a compact yeast pellet at the tube bottom.\nSafety: Balance tubes within 0.01 g before centrifugation.",
+          "linked_to": "Sample clarification"
+        },
+        {
+          "step_number": 27,
+          "description": "DAY 6 | 20 min | Sample clarification\nFilter 700 \u00b5L clarified supernatant through a 0.22 \u00b5m PVDF centrifugal filter at 12,000 \u00d7 g for 5 min at 4 \u00b0C.\nExpected outcome: Each HPLC vial contains \u2265500 \u00b5L particle-free filtrate.\nSafety: Treat filtrates as BSL-1 GMO-derived material until HPLC vials are sealed.",
+          "linked_to": "Sample clarification"
+        },
+        {
+          "step_number": 28,
+          "description": "DAY 6 | 2 h | HPLC calibration\nInject 10 \u00b5L mixed calibration standards containing 0.1, 0.5, 1.0, 5.0, 10.0, and 20.0 g/L D-xylose and ethanol onto an Aminex HPX-87H column at 55 \u00b0C with 5 mM H2SO4 mobile phase flowing at 0.6 mL/min.\nExpected outcome: Calibration curves for xylose and ethanol have R\u00b2 \u22650.995 and back-calculated standard errors \u226410%.\nSafety: 5 mM H2SO4 is corrosive \u2014 wear gloves, lab coat, and eye protection.",
+          "linked_to": "HPLC calibration"
+        },
+        {
+          "step_number": 29,
+          "description": "DAY 6 | 6 h | HPLC quantification\nInject 10 \u00b5L filtered fermentation supernatant onto an Aminex HPX-87H column at 55 \u00b0C with 5 mM H2SO4 mobile phase flowing at 0.6 mL/min for 35 min per sample.\nExpected outcome: Chromatograms contain resolved xylose and ethanol peaks with retention-time drift \u22640.2 min and signal-to-noise ratio \u226510 for ethanol.\nSafety: 5 mM H2SO4 is corrosive \u2014 use secondary containment for solvent reservoirs.",
+          "linked_to": "HPLC quantification"
+        },
+        {
+          "step_number": 30,
+          "description": "DAY 6 | 2 h | Data analysis and interpretation\nCalculate ethanol yield as grams ethanol produced per gram xylose consumed at 48 h and compare engineered, parental, positive-control, and uninoculated groups using one-way ANOVA with Tukey HSD post hoc testing at \u03b1=0.05 plus Shapiro-Wilk normality testing for n=3 biological replicates.\nExpected outcome: Engineering success is concluded only if engineered CEN.PK reaches \u22650.4 g ethanol/g xylose consumed by 48 h with Tukey-adjusted p<0.05 versus parental CEN.PK.",
+          "linked_to": "Data analysis and interpretation"
+        }
+      ],
+      "assumptions": [
+        "The Piromyces sp. xylose isomerase expression plasmid is sequence-verified, yeast-compatible, and uses a constitutive promoter such as TDH3 or TEF1 with a URA3 selection marker.",
+        "Saccharomyces cerevisiae CEN.PK parental and engineered derivatives are handled under BSL-1 containment and do not require special permits beyond institutional GMO approval.",
+        "Defined fermentation medium containing 20 g/L D-xylose provides sufficient nitrogen, vitamins, minerals, and anaerobic growth factors for oxygen-limited yeast fermentation.",
+        "HPLC calibration over 0.1\u201320 g/L for xylose and ethanol is linear enough to quantify yield differences across 48 h."
+      ],
+      "decision_criteria": [
+        "Proceed to strain-optimization scale-up if engineered CEN.PK produces \u22650.4 g ethanol/g xylose consumed at 48 h with xylose consumption \u22655.0 g/L and one-way ANOVA/Tukey-adjusted p<0.05 versus parental strain.",
+        "Repeat as a larger pilot if engineered CEN.PK produces 0.25\u20130.39 g ethanol/g xylose consumed or if biological-triplicate coefficient of variation for ethanol yield is >20%.",
+        "Stop the construct workflow if colony PCR fails for \u22658 colonies, if no transformants grow after 72 h at 30 \u00b0C, or if engineered ethanol yield is \u22640.10 g/g xylose at 48 h."
+      ],
+      "risk_mitigations_applied": [],
+      "reproducibility_notes": [
+        "Use the same CEN.PK parental lot, record passage number, and limit yeast propagation to \u22645 passages before fermentation.",
+        "Use one sequence-verified plasmid lot for all engineered biological replicates and record promoter, terminator, marker, and xylA accession sequence.",
+        "Use a single batch of D-xylose defined medium and document pH meter calibration with pH 4.01 and pH 7.00 standards on the day of medium preparation.",
+        "Calibrate the Agilent 1260 Infinity II HPLC refractive index detector with fresh xylose, ethanol, xylitol, glycerol, and acetate standards on the sample-analysis day.",
+        "Standardize serum-bottle headspace volume, nitrogen sparging time, closure type, shaking orbit, and inoculation OD600 across all fermentation bottles."
+      ],
+      "execution_readiness_score": 0.78,
+      "execution_readiness_label": "pilot_only",
+      "feedback_incorporated": [
+        "Reagent Preparation \u203a steps (rating 5/5): jkl\u00f6jkl\u00f6",
+        "Reagent Preparation \u203a materials (rating 5/5): something is off"
+      ]
+    },
+    "materials": [
+      {
+        "item_name": "New Brunswick Innova 44R shaking incubator reservation/use fee",
+        "supplier": "Eppendorf/New Brunswick",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "7 days reserved",
+        "confidence": "medium",
+        "uncertainty_note": "Internal recharge rates vary widely; estimate assumes academic shared-equipment daily access.",
+        "linked_to": "Setup and scheduling"
+      },
+      {
+        "item_name": "Agilent 1260 Infinity II HPLC system with RID/appropriate detector use fee",
+        "supplier": "Agilent Technologies",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 day / ~8 hours",
+        "confidence": "medium",
+        "uncertainty_note": "HPLC charges depend on detector, column ownership, and operator support.",
+        "linked_to": "Setup and scheduling"
+      },
+      {
+        "item_name": "Bio-Rad T100 thermal cycler use fee",
+        "supplier": "Bio-Rad",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 day",
+        "confidence": "medium",
+        "uncertainty_note": "Many departments do not recharge PCR cycler use; daily access fee is a planning estimate.",
+        "linked_to": "Setup and scheduling"
+      },
+      {
+        "item_name": "Thermo Scientific Heracell VIOS incubator use fee",
+        "supplier": "Thermo Fisher Scientific",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "2 days active plate incubation within 7-day reservation",
+        "confidence": "medium",
+        "uncertainty_note": "Estimate assumes shared incubator space rather than full incubator rental.",
+        "linked_to": "Setup and scheduling"
+      },
+      {
+        "item_name": "Systec VX-95 autoclave use fee",
+        "supplier": "Systec",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 sterilization cycle",
+        "confidence": "medium",
+        "uncertainty_note": "Autoclave recharge may be bundled into facility overhead at some institutions.",
+        "linked_to": "Reagent preparation"
+      },
+      {
+        "item_name": "Analytical balance/top-loading balance",
+        "supplier": "Mettler Toledo",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 day access",
+        "confidence": "medium",
+        "uncertainty_note": "Needed for weighing media components; usually no direct recharge.",
+        "linked_to": "Reagent preparation"
+      },
+      {
+        "item_name": "Hot plate or microwave for melting agar",
+        "supplier": "VWR",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 use",
+        "confidence": "medium",
+        "uncertainty_note": "Estimate represents shared-equipment use and may be zero if in-lab.",
+        "linked_to": "Reagent preparation"
+      },
+      {
+        "item_name": "Yeast extract",
+        "supplier": "BD Difco",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "20 g for 1 L 2\u00d7 YP base plus small contingency",
+        "confidence": "high",
+        "uncertainty_note": "Commodity media component; price varies with package size.",
+        "linked_to": "Reagent preparation"
+      },
+      {
+        "item_name": "Peptone, bacteriological/yeast peptone",
+        "supplier": "BD Difco",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "40 g for 1 L 2\u00d7 YP base",
+        "confidence": "high",
+        "uncertainty_note": "Commodity media component; estimate assumes bulk academic pricing.",
+        "linked_to": "Reagent preparation"
+      },
+      {
+        "item_name": "D-xylose",
+        "supplier": "Sigma-Aldrich",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "200 g for 500 mL of 400 g/L stock plus fermentation/calibration use",
+        "confidence": "medium",
+        "uncertainty_note": "D-xylose pricing depends strongly on grade and package size.",
+        "linked_to": "Reagent preparation"
+      },
+      {
+        "item_name": "0.22 \u00b5m PES bottle-top filter, 500 mL capacity",
+        "supplier": "Corning",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 unit",
+        "confidence": "high",
+        "uncertainty_note": "Bottle-top filter price varies by membrane and sterility packaging.",
+        "linked_to": "Reagent preparation"
+      },
+      {
+        "item_name": "Sterile 500 mL media/storage bottle",
+        "supplier": "Corning",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 bottle",
+        "confidence": "medium",
+        "uncertainty_note": "Reusable glass bottles are cheaper per use; sterile disposable bottles cost more.",
+        "linked_to": "Reagent preparation"
+      },
+      {
+        "item_name": "Yeast nitrogen base without amino acids",
+        "supplier": "BD Difco",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "~12 g for 500 mL SD-URA agar and 600 mL fermentation medium",
+        "confidence": "medium",
+        "uncertainty_note": "YNB price depends on formulation and package size.",
+        "linked_to": "Reagent preparation"
+      },
+      {
+        "item_name": "Yeast synthetic drop-out medium lacking uracil",
+        "supplier": "Takara/Clontech",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "~1 g for 500 mL SD-URA plates",
+        "confidence": "medium",
+        "uncertainty_note": "Drop-out supplement pricing varies by supplier and amino-acid formulation.",
+        "linked_to": "Reagent preparation"
+      },
+      {
+        "item_name": "D-glucose",
+        "supplier": "Sigma-Aldrich",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "10 g for SD-URA agar plus 1.4 g for YPD seed cultures",
+        "confidence": "high",
+        "uncertainty_note": "Commodity reagent; cost negligible at this scale.",
+        "linked_to": "Reagent preparation"
+      },
+      {
+        "item_name": "Agar, microbiological grade",
+        "supplier": "VWR",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "10 g for 500 mL SD-URA agar",
+        "confidence": "high",
+        "uncertainty_note": "Agar cost varies modestly with grade.",
+        "linked_to": "Reagent preparation"
+      },
+      {
+        "item_name": "Sterile 90 mm Petri dishes",
+        "supplier": "Sarstedt",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "20 plates",
+        "confidence": "high",
+        "uncertainty_note": "Bulk sleeve pricing assumed.",
+        "linked_to": "Reagent preparation"
+      },
+      {
+        "item_name": "Heat-resistant gloves and face protection allocation",
+        "supplier": "VWR",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 experiment allocation",
+        "confidence": "medium",
+        "uncertainty_note": "PPE is reusable; cost is prorated for this experiment.",
+        "linked_to": "Reagent preparation"
+      },
+      {
+        "item_name": "Class II biosafety cabinet use fee",
+        "supplier": "Thermo Fisher Scientific",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 day access",
+        "confidence": "medium",
+        "uncertainty_note": "Needed for aseptic/GMO handling; facility recharge may be absent or bundled.",
+        "linked_to": "Yeast transformation"
+      },
+      {
+        "item_name": "Chemically competent Saccharomyces cerevisiae CEN.PK cells",
+        "supplier": "Euroscarf",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 \u00d7 100 \u00b5L aliquot",
+        "confidence": "low",
+        "uncertainty_note": "CEN.PK strain costs depend on source and whether already available in-house.",
+        "linked_to": "Yeast transformation"
+      },
+      {
+        "item_name": "pURA3-TDH3-Piromyces-xylA plasmid DNA",
+        "supplier": "Twist Bioscience/GenScript",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 \u00b5g working DNA; assumes plasmid already prepared or purchased as construct aliquot",
+        "confidence": "low",
+        "uncertainty_note": "Custom plasmid synthesis/cloning could cost substantially more if not already available.",
+        "linked_to": "Yeast transformation"
+      },
+      {
+        "item_name": "Salmon sperm carrier DNA, denatured, 10 mg/mL",
+        "supplier": "Thermo Fisher Scientific",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "5 \u00b5L used from 1 vial",
+        "confidence": "medium",
+        "uncertainty_note": "Cost is prorated from a stock vial; purchase price is much higher than single-use cost.",
+        "linked_to": "Yeast transformation"
+      },
+      {
+        "item_name": "Polyethylene glycol 3350 (PEG 3350), sterile 50% w/v solution",
+        "supplier": "Sigma-Aldrich",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "240 \u00b5L used from stock",
+        "confidence": "high",
+        "uncertainty_note": "Prorated reagent cost; prepared stock requires sterile water and filtration/autoclaving.",
+        "linked_to": "Yeast transformation"
+      },
+      {
+        "item_name": "Lithium acetate, 1.0 M sterile solution",
+        "supplier": "Sigma-Aldrich",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "36 \u00b5L used from stock",
+        "confidence": "high",
+        "uncertainty_note": "Prorated cost is very small; purchase bottle cost is higher.",
+        "linked_to": "Yeast transformation"
+      },
+      {
+        "item_name": "Sterile molecular biology water",
+        "supplier": "Thermo Fisher Scientific",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "~10 mL across transformation and PCR controls",
+        "confidence": "high",
+        "uncertainty_note": "Prorated from a nuclease-free water bottle.",
+        "linked_to": "Yeast transformation"
+      },
+      {
+        "item_name": "Eppendorf ThermoMixer C use fee",
+        "supplier": "Eppendorf",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 day access",
+        "confidence": "medium",
+        "uncertainty_note": "Daily shared-equipment fee estimate.",
+        "linked_to": "Yeast transformation"
+      },
+      {
+        "item_name": "Eppendorf 5424R refrigerated microcentrifuge use fee",
+        "supplier": "Eppendorf",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 day access for transformation spin",
+        "confidence": "medium",
+        "uncertainty_note": "Some facilities do not charge separately for benchtop centrifuges.",
+        "linked_to": "Yeast transformation"
+      },
+      {
+        "item_name": "Sterile 0.9% w/v sodium chloride solution",
+        "supplier": "Sigma-Aldrich",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "~100 mL for resuspension and OD dilutions",
+        "confidence": "high",
+        "uncertainty_note": "Can be prepared in-house at very low cost; sterile commercial saline is more expensive.",
+        "linked_to": "Yeast transformation"
+      },
+      {
+        "item_name": "Sterile 1.5 mL microcentrifuge tubes",
+        "supplier": "Eppendorf",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "10 tubes",
+        "confidence": "high",
+        "uncertainty_note": "Includes balance and spare tubes.",
+        "linked_to": "Yeast transformation"
+      },
+      {
+        "item_name": "Sterile 3 mm glass beads for spreading",
+        "supplier": "Sigma-Aldrich",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "~2 g / enough for transformation plates",
+        "confidence": "medium",
+        "uncertainty_note": "Reusable if cleaned, but treated here as single-experiment consumable due to GMO contact.",
+        "linked_to": "Yeast transformation"
+      },
+      {
+        "item_name": "Parafilm for sealing plates",
+        "supplier": "Bemis",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "~1 m",
+        "confidence": "high",
+        "uncertainty_note": "Prorated from a roll.",
+        "linked_to": "Yeast transformation"
+      },
+      {
+        "item_name": "Household bleach/sodium hypochlorite disinfectant for 10% bleach waste",
+        "supplier": "VWR",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "500 mL working solution",
+        "confidence": "high",
+        "uncertainty_note": "Commodity disinfectant cost is minimal.",
+        "linked_to": "Yeast transformation"
+      },
+      {
+        "item_name": "Sterile toothpicks or inoculation loops for colony picking",
+        "supplier": "VWR",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "20 pieces",
+        "confidence": "high",
+        "uncertainty_note": "Includes extra picks for colony selection.",
+        "linked_to": "Transformant verification"
+      },
+      {
+        "item_name": "Sodium hydroxide, 20 mM sterile solution",
+        "supplier": "Sigma-Aldrich",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "~1 mL for 8 colony lysates plus blank",
+        "confidence": "high",
+        "uncertainty_note": "Prorated from laboratory stock; handling hazard more important than cost.",
+        "linked_to": "Transformant verification"
+      },
+      {
+        "item_name": "0.2 mL PCR tubes or strip tubes",
+        "supplier": "Bio-Rad",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "20 tubes/reactions including controls and spares",
+        "confidence": "high",
+        "uncertainty_note": "Includes colony lysis and PCR reactions.",
+        "linked_to": "Transformant verification"
+      },
+      {
+        "item_name": "Q5 Hot Start High-Fidelity 2\u00d7 Master Mix",
+        "supplier": "New England Biolabs",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "~10 \u00d7 25 \u00b5L PCR reactions",
+        "confidence": "medium",
+        "uncertainty_note": "Cost is prorated from a 100\u2013500 reaction master mix pack.",
+        "linked_to": "Transformant verification"
+      },
+      {
+        "item_name": "xylA forward primer",
+        "supplier": "Eurofins Genomics",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 desalted oligo",
+        "confidence": "high",
+        "uncertainty_note": "Primer synthesis cost varies with length and purification.",
+        "linked_to": "Transformant verification"
+      },
+      {
+        "item_name": "xylA reverse primer",
+        "supplier": "Eurofins Genomics",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 desalted oligo",
+        "confidence": "high",
+        "uncertainty_note": "Primer synthesis cost varies with length and purification.",
+        "linked_to": "Transformant verification"
+      },
+      {
+        "item_name": "No-template PCR control reaction",
+        "supplier": "Thermo Fisher Scientific",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 reaction using nuclease-free water",
+        "confidence": "medium",
+        "uncertainty_note": "Control cost includes master mix/primers allocated to one reaction.",
+        "linked_to": "Transformant verification"
+      },
+      {
+        "item_name": "Bio-Rad Mini-Sub Cell GT gel electrophoresis tank and power supply use fee",
+        "supplier": "Bio-Rad",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 gel run",
+        "confidence": "medium",
+        "uncertainty_note": "Shared gel systems are often not recharged; estimate supports cost accounting.",
+        "linked_to": "Transformant verification"
+      },
+      {
+        "item_name": "Gel documentation system or blue-light transilluminator use fee",
+        "supplier": "Bio-Rad",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 imaging session",
+        "confidence": "medium",
+        "uncertainty_note": "Fee varies depending on imager and facility policy.",
+        "linked_to": "Transformant verification"
+      },
+      {
+        "item_name": "Agarose for 1.0% PCR gel",
+        "supplier": "Lonza",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "0.5 g for one mini gel",
+        "confidence": "high",
+        "uncertainty_note": "Prorated from bulk agarose.",
+        "linked_to": "Transformant verification"
+      },
+      {
+        "item_name": "50\u00d7 TAE buffer or prepared 1\u00d7 TAE",
+        "supplier": "Thermo Fisher Scientific",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "~500 mL 1\u00d7 working buffer",
+        "confidence": "high",
+        "uncertainty_note": "Prorated from concentrated stock.",
+        "linked_to": "Transformant verification"
+      },
+      {
+        "item_name": "DNA gel stain, non-mutagenic (e.g., SYBR Safe/GelRed)",
+        "supplier": "Invitrogen",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 gel staining amount",
+        "confidence": "medium",
+        "uncertainty_note": "Stain cost varies significantly by product and staining format.",
+        "linked_to": "Transformant verification"
+      },
+      {
+        "item_name": "6\u00d7 DNA loading dye",
+        "supplier": "New England Biolabs",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "~20 \u00b5L",
+        "confidence": "high",
+        "uncertainty_note": "Prorated from lab stock.",
+        "linked_to": "Transformant verification"
+      },
+      {
+        "item_name": "1 kb DNA ladder",
+        "supplier": "New England Biolabs",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 lane",
+        "confidence": "medium",
+        "uncertainty_note": "Cost depends on ladder brand and loading amount.",
+        "linked_to": "Transformant verification"
+      },
+      {
+        "item_name": "YPD broth components or prepared YPD medium",
+        "supplier": "BD Difco",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "~100 mL for seven 10 mL seed cultures plus excess",
+        "confidence": "high",
+        "uncertainty_note": "Uses yeast extract, peptone, glucose; cost assumes in-house preparation.",
+        "linked_to": "Seed culture"
+      },
+      {
+        "item_name": "Sterile 50 mL baffled culture flasks with vented closures",
+        "supplier": "Corning",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "7 flasks",
+        "confidence": "medium",
+        "uncertainty_note": "Glass reusable flasks would reduce single-experiment consumable cost.",
+        "linked_to": "Seed culture"
+      },
+      {
+        "item_name": "CEN.PK-XI positive-control colony/strain",
+        "supplier": "Euroscarf",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 control strain/colony used to seed triplicate controls",
+        "confidence": "low",
+        "uncertainty_note": "Cost depends on whether the strain is obtained from a repository, collaborator, or already held in-house.",
+        "linked_to": "Seed culture"
+      },
+      {
+        "item_name": "Parental Saccharomyces cerevisiae CEN.PK colonies/strain for negative control",
+        "supplier": "Euroscarf",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "3 colonies from parental strain",
+        "confidence": "low",
+        "uncertainty_note": "Repository strain acquisition may be unnecessary if parental CEN.PK is already in the lab.",
+        "linked_to": "Seed culture"
+      },
+      {
+        "item_name": "Thermo Scientific NanoDrop OneC use fee",
+        "supplier": "Thermo Fisher Scientific",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 measurement session",
+        "confidence": "medium",
+        "uncertainty_note": "NanoDrop OD600 use is typically not separately charged in many labs.",
+        "linked_to": "Fermentation inoculum preparation"
+      },
+      {
+        "item_name": "Disposable cuvettes or microvolume pedestal wipes/lint-free tissues",
+        "supplier": "Kimberly-Clark/VWR",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 pack allocation / ~20 wipes",
+        "confidence": "high",
+        "uncertainty_note": "NanoDrop measurements mainly consume wipes and small tubes rather than cuvettes.",
+        "linked_to": "Fermentation inoculum preparation"
+      },
+      {
+        "item_name": "70% ethanol disinfectant",
+        "supplier": "VWR",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "100 mL allocation",
+        "confidence": "high",
+        "uncertainty_note": "Commodity disinfectant; cost is prorated.",
+        "linked_to": "Fermentation inoculum preparation"
+      },
+      {
+        "item_name": "120 mL serum bottles",
+        "supplier": "Wheaton",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "12 bottles",
+        "confidence": "medium",
+        "uncertainty_note": "Reusable serum bottles may be autoclaved and reused, lowering per-experiment cost.",
+        "linked_to": "Fermentation setup"
+      },
+      {
+        "item_name": "Yeast nitrogen base without amino acids for fermentation medium",
+        "supplier": "BD Difco",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "4.0 g for 600 mL medium",
+        "confidence": "medium",
+        "uncertainty_note": "Listed separately from plate medium to attribute fermentation use.",
+        "linked_to": "Fermentation setup"
+      },
+      {
+        "item_name": "Complete supplement mixture (CSM)",
+        "supplier": "MP Biomedicals",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1.2 g for 600 mL medium",
+        "confidence": "medium",
+        "uncertainty_note": "CSM formulations and pricing vary by supplier.",
+        "linked_to": "Fermentation setup"
+      },
+      {
+        "item_name": "Ergosterol",
+        "supplier": "Sigma-Aldrich",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "6 mg for 600 mL medium",
+        "confidence": "medium",
+        "uncertainty_note": "Often prepared as ethanolic stock; cost prorated from a small vial.",
+        "linked_to": "Fermentation setup"
+      },
+      {
+        "item_name": "Tween 80 (polysorbate 80)",
+        "supplier": "Sigma-Aldrich",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "252 mg for 600 mL medium",
+        "confidence": "high",
+        "uncertainty_note": "Prorated cost is negligible.",
+        "linked_to": "Fermentation setup"
+      },
+      {
+        "item_name": "Potassium hydrogen phthalate/phthalate buffer components, pH 5.0",
+        "supplier": "Sigma-Aldrich",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "~6 g equivalent for 600 mL of 50 mM buffer",
+        "confidence": "high",
+        "uncertainty_note": "Small cost; may require pH adjustment with acid/base from stock.",
+        "linked_to": "Fermentation setup"
+      },
+      {
+        "item_name": "pH meter use fee",
+        "supplier": "Mettler Toledo",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 session",
+        "confidence": "medium",
+        "uncertainty_note": "pH meter costs usually represent maintenance/electrode allocation rather than direct rental.",
+        "linked_to": "Fermentation setup"
+      },
+      {
+        "item_name": "Nitrogen gas, high purity cylinder gas",
+        "supplier": "Air Liquide",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "~15 L gas plus line losses",
+        "confidence": "medium",
+        "uncertainty_note": "Cost excludes cylinder rental and assumes central gas or cylinder already available.",
+        "linked_to": "Fermentation setup"
+      },
+      {
+        "item_name": "0.22 \u00b5m PTFE inline sterile gas filters",
+        "supplier": "Merck Millipore",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "12 filters or one validated reusable setup",
+        "confidence": "medium",
+        "uncertainty_note": "If one filter is used sequentially aseptically, cost may be much lower; single-use per bottle is conservative.",
+        "linked_to": "Fermentation setup"
+      },
+      {
+        "item_name": "Gas regulator/flow meter and sparging manifold use fee",
+        "supplier": "Swagelok/Aalborg",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 session",
+        "confidence": "medium",
+        "uncertainty_note": "Shared gas hardware may not have a recharge fee.",
+        "linked_to": "Fermentation setup"
+      },
+      {
+        "item_name": "Dissolved oxygen probe/meter use fee",
+        "supplier": "Mettler Toledo",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 representative measurement session",
+        "confidence": "medium",
+        "uncertainty_note": "DO probe availability and calibration consumables can change cost.",
+        "linked_to": "Fermentation setup"
+      },
+      {
+        "item_name": "Oxygen monitor for nitrogen sparging safety",
+        "supplier": "Dr\u00e4ger",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 session",
+        "confidence": "medium",
+        "uncertainty_note": "Safety monitor may be building-provided; cost is prorated.",
+        "linked_to": "Fermentation setup"
+      },
+      {
+        "item_name": "20 mm butyl rubber stoppers",
+        "supplier": "Wheaton",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "12 stoppers",
+        "confidence": "medium",
+        "uncertainty_note": "Stoppers are often single-use after piercing.",
+        "linked_to": "Fermentation setup"
+      },
+      {
+        "item_name": "20 mm aluminum crimp caps",
+        "supplier": "Wheaton",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "12 caps",
+        "confidence": "high",
+        "uncertainty_note": "Bulk pricing assumed.",
+        "linked_to": "Fermentation setup"
+      },
+      {
+        "item_name": "Wheaton hand crimper use fee",
+        "supplier": "Wheaton",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 session",
+        "confidence": "medium",
+        "uncertainty_note": "Usually owned by the lab; estimate is equipment allocation.",
+        "linked_to": "Fermentation setup"
+      },
+      {
+        "item_name": "Sterile syringes for inoculation through stoppers",
+        "supplier": "BD",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "12 syringes",
+        "confidence": "high",
+        "uncertainty_note": "Assumes one sterile syringe per bottle.",
+        "linked_to": "Fermentation inoculation"
+      },
+      {
+        "item_name": "Sterile needles for inoculation through stoppers",
+        "supplier": "BD",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "12 needles",
+        "confidence": "high",
+        "uncertainty_note": "Needle gauge not specified; estimate based on common sterile hypodermic needles.",
+        "linked_to": "Fermentation inoculation"
+      },
+      {
+        "item_name": "Sharps container allocation",
+        "supplier": "BD",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 experiment allocation",
+        "confidence": "medium",
+        "uncertainty_note": "Prorated from a full sharps container.",
+        "linked_to": "Fermentation inoculation"
+      },
+      {
+        "item_name": "New Brunswick Innova 44R shaker use during fermentation",
+        "supplier": "Eppendorf/New Brunswick",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "2 days active fermentation shaking",
+        "confidence": "medium",
+        "uncertainty_note": "If already counted as full reservation under setup, avoid double-counting in final internal budgets.",
+        "linked_to": "Fermentation"
+      },
+      {
+        "item_name": "Sterile 1 mL syringes for 48 h sampling",
+        "supplier": "BD",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "12 syringes",
+        "confidence": "high",
+        "uncertainty_note": "Assumes one syringe per serum bottle.",
+        "linked_to": "Fermentation sampling"
+      },
+      {
+        "item_name": "Sterile 23G needles for 48 h sampling",
+        "supplier": "BD",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "12 needles",
+        "confidence": "high",
+        "uncertainty_note": "Bulk sterile needle pricing assumed.",
+        "linked_to": "Fermentation sampling"
+      },
+      {
+        "item_name": "Sterile 1.5 mL microcentrifuge tubes for broth samples",
+        "supplier": "Eppendorf",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "24 tubes including filtrate/spares",
+        "confidence": "high",
+        "uncertainty_note": "Includes sample transfer and backup tubes.",
+        "linked_to": "Sample clarification"
+      },
+      {
+        "item_name": "Eppendorf 5424R refrigerated microcentrifuge use fee for clarification",
+        "supplier": "Eppendorf",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 session",
+        "confidence": "medium",
+        "uncertainty_note": "May be already available without recharge.",
+        "linked_to": "Sample clarification"
+      },
+      {
+        "item_name": "0.22 \u00b5m PVDF centrifugal filters",
+        "supplier": "Merck Millipore",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "12 filters",
+        "confidence": "medium",
+        "uncertainty_note": "Centrifugal filter pricing depends on device format and pack size.",
+        "linked_to": "Sample clarification"
+      },
+      {
+        "item_name": "HPLC vials with caps and inserts",
+        "supplier": "Agilent Technologies",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "30 vials for samples, standards, blanks and spares",
+        "confidence": "medium",
+        "uncertainty_note": "Autosampler vial cost varies by insert requirement and cap type.",
+        "linked_to": "Sample clarification"
+      },
+      {
+        "item_name": "D-xylose analytical standard for HPLC calibration",
+        "supplier": "Sigma-Aldrich",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "~0.2 g for standards",
+        "confidence": "high",
+        "uncertainty_note": "Prorated from a standard-grade bottle; cost dominated by bottle purchase if not in stock.",
+        "linked_to": "HPLC calibration"
+      },
+      {
+        "item_name": "Ethanol analytical standard",
+        "supplier": "Sigma-Aldrich",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "~1 mL for mixed standards",
+        "confidence": "high",
+        "uncertainty_note": "Prorated from HPLC-grade ethanol stock.",
+        "linked_to": "HPLC calibration"
+      },
+      {
+        "item_name": "Sulfuric acid for 5 mM H2SO4 mobile phase",
+        "supplier": "Sigma-Aldrich",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "~1 mL concentrated acid to prepare ~2 L mobile phase",
+        "confidence": "high",
+        "uncertainty_note": "Prorated acid cost is negligible; handling and compatibility are more important.",
+        "linked_to": "HPLC calibration"
+      },
+      {
+        "item_name": "Ultrapure/HPLC-grade water for mobile phase and standards",
+        "supplier": "Merck Millipore",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "~2 L",
+        "confidence": "medium",
+        "uncertainty_note": "Cost depends on in-house water system versus purchased LC-MS water.",
+        "linked_to": "HPLC calibration"
+      },
+      {
+        "item_name": "Mobile phase solvent reservoir filter/degassing membrane or 0.22 \u00b5m membrane filters",
+        "supplier": "Merck Millipore",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "2 filters",
+        "confidence": "medium",
+        "uncertainty_note": "Some HPLC systems use inline degassing and do not require separate membrane filters.",
+        "linked_to": "HPLC calibration"
+      },
+      {
+        "item_name": "Aminex HPX-87H carbohydrate/organic acid HPLC column use allocation",
+        "supplier": "Bio-Rad",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 column-use allocation for calibration and sample batch",
+        "confidence": "medium",
+        "uncertainty_note": "Full column purchase is ~700\u2013900 EUR; estimate prorates lifetime use.",
+        "linked_to": "HPLC calibration"
+      },
+      {
+        "item_name": "Agilent 1260 Infinity II HPLC run time for fermentation samples",
+        "supplier": "Agilent Technologies",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "~6 hours sample queue",
+        "confidence": "medium",
+        "uncertainty_note": "If full-day HPLC fee is already counted under setup, avoid double-counting; hourly facility rates vary.",
+        "linked_to": "HPLC quantification"
+      },
+      {
+        "item_name": "5 mM H2SO4 mobile phase for sample quantification",
+        "supplier": "Sigma-Aldrich/Merck Millipore",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "~1.2 L consumed during 6 h at 0.6 mL/min plus equilibration",
+        "confidence": "medium",
+        "uncertainty_note": "Chemical cost is low; HPLC time and column wear dominate.",
+        "linked_to": "HPLC quantification"
+      },
+      {
+        "item_name": "Uninoculated fermentation medium control bottles",
+        "supplier": "Prepared in-house",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "3 bottles, 50 mL each",
+        "confidence": "medium",
+        "uncertainty_note": "Control cost includes medium and bottle allocation but excludes shared setup items already listed.",
+        "linked_to": "Fermentation setup"
+      },
+      {
+        "item_name": "Computer/workstation for statistical analysis",
+        "supplier": "Dell/Apple",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 session",
+        "confidence": "medium",
+        "uncertainty_note": "Usually no direct cost; included as equipment allocation.",
+        "linked_to": "Data analysis and interpretation"
+      },
+      {
+        "item_name": "Statistical software license or open-source R/RStudio allocation",
+        "supplier": "RStudio/Posit or GraphPad",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 analysis session",
+        "confidence": "medium",
+        "uncertainty_note": "Assumes open-source R; commercial GraphPad/Prism would add license cost.",
+        "linked_to": "Data analysis and interpretation"
+      },
+      {
+        "item_name": "Nitrile gloves",
+        "supplier": "Kimberly-Clark",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "~40 pairs",
+        "confidence": "high",
+        "uncertainty_note": "Glove use depends on local PPE policy and number of operators.",
+        "linked_to": "general"
+      },
+      {
+        "item_name": "Laboratory coats and eye protection allocation",
+        "supplier": "VWR",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 experiment allocation",
+        "confidence": "medium",
+        "uncertainty_note": "Reusable PPE cost is prorated.",
+        "linked_to": "general"
+      },
+      {
+        "item_name": "Sterile serological pipettes, 5/10/25 mL mixed",
+        "supplier": "Corning",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "30 pipettes",
+        "confidence": "high",
+        "uncertainty_note": "Used across media dispensing, inoculation preparation, and transfers.",
+        "linked_to": "general"
+      },
+      {
+        "item_name": "Micropipette set P20/P200/P1000 use allocation",
+        "supplier": "Eppendorf",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 experiment allocation",
+        "confidence": "medium",
+        "uncertainty_note": "Represents calibration/depreciation allocation; not a rental in most labs.",
+        "linked_to": "general"
+      },
+      {
+        "item_name": "Sterile filtered pipette tips, mixed P20/P200/P1000",
+        "supplier": "Rainin",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "~300 tips",
+        "confidence": "high",
+        "uncertainty_note": "Aerosol-resistant tips are needed especially for PCR setup and sterile transfers.",
+        "linked_to": "general"
+      },
+      {
+        "item_name": "15 mL and 50 mL sterile conical tubes",
+        "supplier": "Falcon/Corning",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "20 tubes mixed sizes",
+        "confidence": "high",
+        "uncertainty_note": "Includes media aliquots, standards, and dilutions.",
+        "linked_to": "general"
+      },
+      {
+        "item_name": "Autoclave tape, labels, marker, and biohazard bags allocation",
+        "supplier": "VWR",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 experiment allocation",
+        "confidence": "medium",
+        "uncertainty_note": "General lab consumables are prorated and may be covered by overhead.",
+        "linked_to": "general"
+      }
+    ],
+    "budget": {
+      "currency": "EUR",
+      "line_items": [
+        {
+          "item_name": "New Brunswick Innova 44R shaking incubator reservation/use fee",
+          "quantity": "7 days reserved",
+          "unit_cost_estimate": 50.0,
+          "total_cost_estimate": 350.0,
+          "confidence": "medium",
+          "uncertainty_note": "Internal recharge rates vary widely; estimate assumes academic shared-equipment daily access."
+        },
+        {
+          "item_name": "Agilent 1260 Infinity II HPLC system with RID/appropriate detector use fee",
+          "quantity": "1 day / ~8 hours",
+          "unit_cost_estimate": 500.0,
+          "total_cost_estimate": 500.0,
+          "confidence": "medium",
+          "uncertainty_note": "HPLC charges depend on detector, column ownership, and operator support."
+        },
+        {
+          "item_name": "Bio-Rad T100 thermal cycler use fee",
+          "quantity": "1 day",
+          "unit_cost_estimate": 30.0,
+          "total_cost_estimate": 30.0,
+          "confidence": "medium",
+          "uncertainty_note": "Many departments do not recharge PCR cycler use; daily access fee is a planning estimate."
+        },
+        {
+          "item_name": "Thermo Scientific Heracell VIOS incubator use fee",
+          "quantity": "2 days active plate incubation within 7-day reservation",
+          "unit_cost_estimate": 25.0,
+          "total_cost_estimate": 50.0,
+          "confidence": "medium",
+          "uncertainty_note": "Estimate assumes shared incubator space rather than full incubator rental."
+        },
+        {
+          "item_name": "Systec VX-95 autoclave use fee",
+          "quantity": "1 sterilization cycle",
+          "unit_cost_estimate": 25.0,
+          "total_cost_estimate": 25.0,
+          "confidence": "medium",
+          "uncertainty_note": "Autoclave recharge may be bundled into facility overhead at some institutions."
+        },
+        {
+          "item_name": "Analytical balance/top-loading balance",
+          "quantity": "1 day access",
+          "unit_cost_estimate": 10.0,
+          "total_cost_estimate": 10.0,
+          "confidence": "medium",
+          "uncertainty_note": "Needed for weighing media components; usually no direct recharge."
+        },
+        {
+          "item_name": "Hot plate or microwave for melting agar",
+          "quantity": "1 use",
+          "unit_cost_estimate": 10.0,
+          "total_cost_estimate": 10.0,
+          "confidence": "medium",
+          "uncertainty_note": "Estimate represents shared-equipment use and may be zero if in-lab."
+        },
+        {
+          "item_name": "Yeast extract",
+          "quantity": "20 g for 1 L 2\u00d7 YP base plus small contingency",
+          "unit_cost_estimate": 0.18,
+          "total_cost_estimate": 4.0,
+          "confidence": "high",
+          "uncertainty_note": "Commodity media component; price varies with package size."
+        },
+        {
+          "item_name": "Peptone, bacteriological/yeast peptone",
+          "quantity": "40 g for 1 L 2\u00d7 YP base",
+          "unit_cost_estimate": 0.16,
+          "total_cost_estimate": 6.5,
+          "confidence": "high",
+          "uncertainty_note": "Commodity media component; estimate assumes bulk academic pricing."
+        },
+        {
+          "item_name": "D-xylose",
+          "quantity": "200 g for 500 mL of 400 g/L stock plus fermentation/calibration use",
+          "unit_cost_estimate": 0.35,
+          "total_cost_estimate": 70.0,
+          "confidence": "medium",
+          "uncertainty_note": "D-xylose pricing depends strongly on grade and package size."
+        },
+        {
+          "item_name": "0.22 \u00b5m PES bottle-top filter, 500 mL capacity",
+          "quantity": "1 unit",
+          "unit_cost_estimate": 9.0,
+          "total_cost_estimate": 9.0,
+          "confidence": "high",
+          "uncertainty_note": "Bottle-top filter price varies by membrane and sterility packaging."
+        },
+        {
+          "item_name": "Sterile 500 mL media/storage bottle",
+          "quantity": "1 bottle",
+          "unit_cost_estimate": 5.0,
+          "total_cost_estimate": 5.0,
+          "confidence": "medium",
+          "uncertainty_note": "Reusable glass bottles are cheaper per use; sterile disposable bottles cost more."
+        },
+        {
+          "item_name": "Yeast nitrogen base without amino acids",
+          "quantity": "~12 g for 500 mL SD-URA agar and 600 mL fermentation medium",
+          "unit_cost_estimate": 1.2,
+          "total_cost_estimate": 14.4,
+          "confidence": "medium",
+          "uncertainty_note": "YNB price depends on formulation and package size."
+        },
+        {
+          "item_name": "Yeast synthetic drop-out medium lacking uracil",
+          "quantity": "~1 g for 500 mL SD-URA plates",
+          "unit_cost_estimate": 2.5,
+          "total_cost_estimate": 2.5,
+          "confidence": "medium",
+          "uncertainty_note": "Drop-out supplement pricing varies by supplier and amino-acid formulation."
+        },
+        {
+          "item_name": "D-glucose",
+          "quantity": "10 g for SD-URA agar plus 1.4 g for YPD seed cultures",
+          "unit_cost_estimate": 0.08,
+          "total_cost_estimate": 1.0,
+          "confidence": "high",
+          "uncertainty_note": "Commodity reagent; cost negligible at this scale."
+        },
+        {
+          "item_name": "Agar, microbiological grade",
+          "quantity": "10 g for 500 mL SD-URA agar",
+          "unit_cost_estimate": 0.18,
+          "total_cost_estimate": 1.8,
+          "confidence": "high",
+          "uncertainty_note": "Agar cost varies modestly with grade."
+        },
+        {
+          "item_name": "Sterile 90 mm Petri dishes",
+          "quantity": "20 plates",
+          "unit_cost_estimate": 0.25,
+          "total_cost_estimate": 5.0,
+          "confidence": "high",
+          "uncertainty_note": "Bulk sleeve pricing assumed."
+        },
+        {
+          "item_name": "Heat-resistant gloves and face protection allocation",
+          "quantity": "1 experiment allocation",
+          "unit_cost_estimate": 5.0,
+          "total_cost_estimate": 5.0,
+          "confidence": "medium",
+          "uncertainty_note": "PPE is reusable; cost is prorated for this experiment."
+        },
+        {
+          "item_name": "Class II biosafety cabinet use fee",
+          "quantity": "1 day access",
+          "unit_cost_estimate": 40.0,
+          "total_cost_estimate": 40.0,
+          "confidence": "medium",
+          "uncertainty_note": "Needed for aseptic/GMO handling; facility recharge may be absent or bundled."
+        },
+        {
+          "item_name": "Chemically competent Saccharomyces cerevisiae CEN.PK cells",
+          "quantity": "1 \u00d7 100 \u00b5L aliquot",
+          "unit_cost_estimate": 80.0,
+          "total_cost_estimate": 80.0,
+          "confidence": "low",
+          "uncertainty_note": "CEN.PK strain costs depend on source and whether already available in-house."
+        },
+        {
+          "item_name": "pURA3-TDH3-Piromyces-xylA plasmid DNA",
+          "quantity": "1 \u00b5g working DNA; assumes plasmid already prepared or purchased as construct aliquot",
+          "unit_cost_estimate": 150.0,
+          "total_cost_estimate": 150.0,
+          "confidence": "low",
+          "uncertainty_note": "Custom plasmid synthesis/cloning could cost substantially more if not already available."
+        },
+        {
+          "item_name": "Salmon sperm carrier DNA, denatured, 10 mg/mL",
+          "quantity": "5 \u00b5L used from 1 vial",
+          "unit_cost_estimate": 0.5,
+          "total_cost_estimate": 0.5,
+          "confidence": "medium",
+          "uncertainty_note": "Cost is prorated from a stock vial; purchase price is much higher than single-use cost."
+        },
+        {
+          "item_name": "Polyethylene glycol 3350 (PEG 3350), sterile 50% w/v solution",
+          "quantity": "240 \u00b5L used from stock",
+          "unit_cost_estimate": 0.1,
+          "total_cost_estimate": 0.1,
+          "confidence": "high",
+          "uncertainty_note": "Prorated reagent cost; prepared stock requires sterile water and filtration/autoclaving."
+        },
+        {
+          "item_name": "Lithium acetate, 1.0 M sterile solution",
+          "quantity": "36 \u00b5L used from stock",
+          "unit_cost_estimate": 0.05,
+          "total_cost_estimate": 0.05,
+          "confidence": "high",
+          "uncertainty_note": "Prorated cost is very small; purchase bottle cost is higher."
+        },
+        {
+          "item_name": "Sterile molecular biology water",
+          "quantity": "~10 mL across transformation and PCR controls",
+          "unit_cost_estimate": 0.05,
+          "total_cost_estimate": 0.5,
+          "confidence": "high",
+          "uncertainty_note": "Prorated from a nuclease-free water bottle."
+        },
+        {
+          "item_name": "Eppendorf ThermoMixer C use fee",
+          "quantity": "1 day access",
+          "unit_cost_estimate": 25.0,
+          "total_cost_estimate": 25.0,
+          "confidence": "medium",
+          "uncertainty_note": "Daily shared-equipment fee estimate."
+        },
+        {
+          "item_name": "Eppendorf 5424R refrigerated microcentrifuge use fee",
+          "quantity": "1 day access for transformation spin",
+          "unit_cost_estimate": 25.0,
+          "total_cost_estimate": 25.0,
+          "confidence": "medium",
+          "uncertainty_note": "Some facilities do not charge separately for benchtop centrifuges."
+        },
+        {
+          "item_name": "Sterile 0.9% w/v sodium chloride solution",
+          "quantity": "~100 mL for resuspension and OD dilutions",
+          "unit_cost_estimate": 0.03,
+          "total_cost_estimate": 3.0,
+          "confidence": "high",
+          "uncertainty_note": "Can be prepared in-house at very low cost; sterile commercial saline is more expensive."
+        },
+        {
+          "item_name": "Sterile 1.5 mL microcentrifuge tubes",
+          "quantity": "10 tubes",
+          "unit_cost_estimate": 0.12,
+          "total_cost_estimate": 1.2,
+          "confidence": "high",
+          "uncertainty_note": "Includes balance and spare tubes."
+        },
+        {
+          "item_name": "Sterile 3 mm glass beads for spreading",
+          "quantity": "~2 g / enough for transformation plates",
+          "unit_cost_estimate": 1.0,
+          "total_cost_estimate": 1.0,
+          "confidence": "medium",
+          "uncertainty_note": "Reusable if cleaned, but treated here as single-experiment consumable due to GMO contact."
+        },
+        {
+          "item_name": "Parafilm for sealing plates",
+          "quantity": "~1 m",
+          "unit_cost_estimate": 0.5,
+          "total_cost_estimate": 0.5,
+          "confidence": "high",
+          "uncertainty_note": "Prorated from a roll."
+        },
+        {
+          "item_name": "Household bleach/sodium hypochlorite disinfectant for 10% bleach waste",
+          "quantity": "500 mL working solution",
+          "unit_cost_estimate": 0.01,
+          "total_cost_estimate": 1.0,
+          "confidence": "high",
+          "uncertainty_note": "Commodity disinfectant cost is minimal."
+        },
+        {
+          "item_name": "Sterile toothpicks or inoculation loops for colony picking",
+          "quantity": "20 pieces",
+          "unit_cost_estimate": 0.05,
+          "total_cost_estimate": 1.0,
+          "confidence": "high",
+          "uncertainty_note": "Includes extra picks for colony selection."
+        },
+        {
+          "item_name": "Sodium hydroxide, 20 mM sterile solution",
+          "quantity": "~1 mL for 8 colony lysates plus blank",
+          "unit_cost_estimate": 0.02,
+          "total_cost_estimate": 0.1,
+          "confidence": "high",
+          "uncertainty_note": "Prorated from laboratory stock; handling hazard more important than cost."
+        },
+        {
+          "item_name": "0.2 mL PCR tubes or strip tubes",
+          "quantity": "20 tubes/reactions including controls and spares",
+          "unit_cost_estimate": 0.12,
+          "total_cost_estimate": 2.4,
+          "confidence": "high",
+          "uncertainty_note": "Includes colony lysis and PCR reactions."
+        },
+        {
+          "item_name": "Q5 Hot Start High-Fidelity 2\u00d7 Master Mix",
+          "quantity": "~10 \u00d7 25 \u00b5L PCR reactions",
+          "unit_cost_estimate": 1.2,
+          "total_cost_estimate": 12.0,
+          "confidence": "medium",
+          "uncertainty_note": "Cost is prorated from a 100\u2013500 reaction master mix pack."
+        },
+        {
+          "item_name": "xylA forward primer",
+          "quantity": "1 desalted oligo",
+          "unit_cost_estimate": 8.0,
+          "total_cost_estimate": 8.0,
+          "confidence": "high",
+          "uncertainty_note": "Primer synthesis cost varies with length and purification."
+        },
+        {
+          "item_name": "xylA reverse primer",
+          "quantity": "1 desalted oligo",
+          "unit_cost_estimate": 8.0,
+          "total_cost_estimate": 8.0,
+          "confidence": "high",
+          "uncertainty_note": "Primer synthesis cost varies with length and purification."
+        },
+        {
+          "item_name": "No-template PCR control reaction",
+          "quantity": "1 reaction using nuclease-free water",
+          "unit_cost_estimate": 1.5,
+          "total_cost_estimate": 1.5,
+          "confidence": "medium",
+          "uncertainty_note": "Control cost includes master mix/primers allocated to one reaction."
+        },
+        {
+          "item_name": "Bio-Rad Mini-Sub Cell GT gel electrophoresis tank and power supply use fee",
+          "quantity": "1 gel run",
+          "unit_cost_estimate": 20.0,
+          "total_cost_estimate": 20.0,
+          "confidence": "medium",
+          "uncertainty_note": "Shared gel systems are often not recharged; estimate supports cost accounting."
+        },
+        {
+          "item_name": "Gel documentation system or blue-light transilluminator use fee",
+          "quantity": "1 imaging session",
+          "unit_cost_estimate": 20.0,
+          "total_cost_estimate": 20.0,
+          "confidence": "medium",
+          "uncertainty_note": "Fee varies depending on imager and facility policy."
+        },
+        {
+          "item_name": "Agarose for 1.0% PCR gel",
+          "quantity": "0.5 g for one mini gel",
+          "unit_cost_estimate": 0.45,
+          "total_cost_estimate": 0.25,
+          "confidence": "high",
+          "uncertainty_note": "Prorated from bulk agarose."
+        },
+        {
+          "item_name": "50\u00d7 TAE buffer or prepared 1\u00d7 TAE",
+          "quantity": "~500 mL 1\u00d7 working buffer",
+          "unit_cost_estimate": 0.04,
+          "total_cost_estimate": 2.0,
+          "confidence": "high",
+          "uncertainty_note": "Prorated from concentrated stock."
+        },
+        {
+          "item_name": "DNA gel stain, non-mutagenic (e.g., SYBR Safe/GelRed)",
+          "quantity": "1 gel staining amount",
+          "unit_cost_estimate": 2.0,
+          "total_cost_estimate": 2.0,
+          "confidence": "medium",
+          "uncertainty_note": "Stain cost varies significantly by product and staining format."
+        },
+        {
+          "item_name": "6\u00d7 DNA loading dye",
+          "quantity": "~20 \u00b5L",
+          "unit_cost_estimate": 0.02,
+          "total_cost_estimate": 0.4,
+          "confidence": "high",
+          "uncertainty_note": "Prorated from lab stock."
+        },
+        {
+          "item_name": "1 kb DNA ladder",
+          "quantity": "1 lane",
+          "unit_cost_estimate": 1.5,
+          "total_cost_estimate": 1.5,
+          "confidence": "medium",
+          "uncertainty_note": "Cost depends on ladder brand and loading amount."
+        },
+        {
+          "item_name": "YPD broth components or prepared YPD medium",
+          "quantity": "~100 mL for seven 10 mL seed cultures plus excess",
+          "unit_cost_estimate": 0.25,
+          "total_cost_estimate": 2.5,
+          "confidence": "high",
+          "uncertainty_note": "Uses yeast extract, peptone, glucose; cost assumes in-house preparation."
+        },
+        {
+          "item_name": "Sterile 50 mL baffled culture flasks with vented closures",
+          "quantity": "7 flasks",
+          "unit_cost_estimate": 3.5,
+          "total_cost_estimate": 24.5,
+          "confidence": "medium",
+          "uncertainty_note": "Glass reusable flasks would reduce single-experiment consumable cost."
+        },
+        {
+          "item_name": "CEN.PK-XI positive-control colony/strain",
+          "quantity": "1 control strain/colony used to seed triplicate controls",
+          "unit_cost_estimate": 100.0,
+          "total_cost_estimate": 100.0,
+          "confidence": "low",
+          "uncertainty_note": "Cost depends on whether the strain is obtained from a repository, collaborator, or already held in-house."
+        },
+        {
+          "item_name": "Parental Saccharomyces cerevisiae CEN.PK colonies/strain for negative control",
+          "quantity": "3 colonies from parental strain",
+          "unit_cost_estimate": 80.0,
+          "total_cost_estimate": 80.0,
+          "confidence": "low",
+          "uncertainty_note": "Repository strain acquisition may be unnecessary if parental CEN.PK is already in the lab."
+        },
+        {
+          "item_name": "Thermo Scientific NanoDrop OneC use fee",
+          "quantity": "1 measurement session",
+          "unit_cost_estimate": 20.0,
+          "total_cost_estimate": 20.0,
+          "confidence": "medium",
+          "uncertainty_note": "NanoDrop OD600 use is typically not separately charged in many labs."
+        },
+        {
+          "item_name": "Disposable cuvettes or microvolume pedestal wipes/lint-free tissues",
+          "quantity": "1 pack allocation / ~20 wipes",
+          "unit_cost_estimate": 0.05,
+          "total_cost_estimate": 1.0,
+          "confidence": "high",
+          "uncertainty_note": "NanoDrop measurements mainly consume wipes and small tubes rather than cuvettes."
+        },
+        {
+          "item_name": "70% ethanol disinfectant",
+          "quantity": "100 mL allocation",
+          "unit_cost_estimate": 0.02,
+          "total_cost_estimate": 2.0,
+          "confidence": "high",
+          "uncertainty_note": "Commodity disinfectant; cost is prorated."
+        },
+        {
+          "item_name": "120 mL serum bottles",
+          "quantity": "12 bottles",
+          "unit_cost_estimate": 4.0,
+          "total_cost_estimate": 48.0,
+          "confidence": "medium",
+          "uncertainty_note": "Reusable serum bottles may be autoclaved and reused, lowering per-experiment cost."
+        },
+        {
+          "item_name": "Yeast nitrogen base without amino acids for fermentation medium",
+          "quantity": "4.0 g for 600 mL medium",
+          "unit_cost_estimate": 1.2,
+          "total_cost_estimate": 4.8,
+          "confidence": "medium",
+          "uncertainty_note": "Listed separately from plate medium to attribute fermentation use."
+        },
+        {
+          "item_name": "Complete supplement mixture (CSM)",
+          "quantity": "1.2 g for 600 mL medium",
+          "unit_cost_estimate": 1.5,
+          "total_cost_estimate": 1.8,
+          "confidence": "medium",
+          "uncertainty_note": "CSM formulations and pricing vary by supplier."
+        },
+        {
+          "item_name": "Ergosterol",
+          "quantity": "6 mg for 600 mL medium",
+          "unit_cost_estimate": 0.4,
+          "total_cost_estimate": 2.4,
+          "confidence": "medium",
+          "uncertainty_note": "Often prepared as ethanolic stock; cost prorated from a small vial."
+        },
+        {
+          "item_name": "Tween 80 (polysorbate 80)",
+          "quantity": "252 mg for 600 mL medium",
+          "unit_cost_estimate": 0.02,
+          "total_cost_estimate": 0.1,
+          "confidence": "high",
+          "uncertainty_note": "Prorated cost is negligible."
+        },
+        {
+          "item_name": "Potassium hydrogen phthalate/phthalate buffer components, pH 5.0",
+          "quantity": "~6 g equivalent for 600 mL of 50 mM buffer",
+          "unit_cost_estimate": 0.06,
+          "total_cost_estimate": 0.4,
+          "confidence": "high",
+          "uncertainty_note": "Small cost; may require pH adjustment with acid/base from stock."
+        },
+        {
+          "item_name": "pH meter use fee",
+          "quantity": "1 session",
+          "unit_cost_estimate": 10.0,
+          "total_cost_estimate": 10.0,
+          "confidence": "medium",
+          "uncertainty_note": "pH meter costs usually represent maintenance/electrode allocation rather than direct rental."
+        },
+        {
+          "item_name": "Nitrogen gas, high purity cylinder gas",
+          "quantity": "~15 L gas plus line losses",
+          "unit_cost_estimate": 0.1,
+          "total_cost_estimate": 1.5,
+          "confidence": "medium",
+          "uncertainty_note": "Cost excludes cylinder rental and assumes central gas or cylinder already available."
+        },
+        {
+          "item_name": "0.22 \u00b5m PTFE inline sterile gas filters",
+          "quantity": "12 filters or one validated reusable setup",
+          "unit_cost_estimate": 4.0,
+          "total_cost_estimate": 48.0,
+          "confidence": "medium",
+          "uncertainty_note": "If one filter is used sequentially aseptically, cost may be much lower; single-use per bottle is conservative."
+        },
+        {
+          "item_name": "Gas regulator/flow meter and sparging manifold use fee",
+          "quantity": "1 session",
+          "unit_cost_estimate": 25.0,
+          "total_cost_estimate": 25.0,
+          "confidence": "medium",
+          "uncertainty_note": "Shared gas hardware may not have a recharge fee."
+        },
+        {
+          "item_name": "Dissolved oxygen probe/meter use fee",
+          "quantity": "1 representative measurement session",
+          "unit_cost_estimate": 30.0,
+          "total_cost_estimate": 30.0,
+          "confidence": "medium",
+          "uncertainty_note": "DO probe availability and calibration consumables can change cost."
+        },
+        {
+          "item_name": "Oxygen monitor for nitrogen sparging safety",
+          "quantity": "1 session",
+          "unit_cost_estimate": 15.0,
+          "total_cost_estimate": 15.0,
+          "confidence": "medium",
+          "uncertainty_note": "Safety monitor may be building-provided; cost is prorated."
+        },
+        {
+          "item_name": "20 mm butyl rubber stoppers",
+          "quantity": "12 stoppers",
+          "unit_cost_estimate": 0.8,
+          "total_cost_estimate": 9.6,
+          "confidence": "medium",
+          "uncertainty_note": "Stoppers are often single-use after piercing."
+        },
+        {
+          "item_name": "20 mm aluminum crimp caps",
+          "quantity": "12 caps",
+          "unit_cost_estimate": 0.25,
+          "total_cost_estimate": 3.0,
+          "confidence": "high",
+          "uncertainty_note": "Bulk pricing assumed."
+        },
+        {
+          "item_name": "Wheaton hand crimper use fee",
+          "quantity": "1 session",
+          "unit_cost_estimate": 10.0,
+          "total_cost_estimate": 10.0,
+          "confidence": "medium",
+          "uncertainty_note": "Usually owned by the lab; estimate is equipment allocation."
+        },
+        {
+          "item_name": "Sterile syringes for inoculation through stoppers",
+          "quantity": "12 syringes",
+          "unit_cost_estimate": 0.3,
+          "total_cost_estimate": 3.6,
+          "confidence": "high",
+          "uncertainty_note": "Assumes one sterile syringe per bottle."
+        },
+        {
+          "item_name": "Sterile needles for inoculation through stoppers",
+          "quantity": "12 needles",
+          "unit_cost_estimate": 0.12,
+          "total_cost_estimate": 1.44,
+          "confidence": "high",
+          "uncertainty_note": "Needle gauge not specified; estimate based on common sterile hypodermic needles."
+        },
+        {
+          "item_name": "Sharps container allocation",
+          "quantity": "1 experiment allocation",
+          "unit_cost_estimate": 3.0,
+          "total_cost_estimate": 3.0,
+          "confidence": "medium",
+          "uncertainty_note": "Prorated from a full sharps container."
+        },
+        {
+          "item_name": "New Brunswick Innova 44R shaker use during fermentation",
+          "quantity": "2 days active fermentation shaking",
+          "unit_cost_estimate": 50.0,
+          "total_cost_estimate": 100.0,
+          "confidence": "medium",
+          "uncertainty_note": "If already counted as full reservation under setup, avoid double-counting in final internal budgets."
+        },
+        {
+          "item_name": "Sterile 1 mL syringes for 48 h sampling",
+          "quantity": "12 syringes",
+          "unit_cost_estimate": 0.3,
+          "total_cost_estimate": 3.6,
+          "confidence": "high",
+          "uncertainty_note": "Assumes one syringe per serum bottle."
+        },
+        {
+          "item_name": "Sterile 23G needles for 48 h sampling",
+          "quantity": "12 needles",
+          "unit_cost_estimate": 0.12,
+          "total_cost_estimate": 1.44,
+          "confidence": "high",
+          "uncertainty_note": "Bulk sterile needle pricing assumed."
+        },
+        {
+          "item_name": "Sterile 1.5 mL microcentrifuge tubes for broth samples",
+          "quantity": "24 tubes including filtrate/spares",
+          "unit_cost_estimate": 0.12,
+          "total_cost_estimate": 2.88,
+          "confidence": "high",
+          "uncertainty_note": "Includes sample transfer and backup tubes."
+        },
+        {
+          "item_name": "Eppendorf 5424R refrigerated microcentrifuge use fee for clarification",
+          "quantity": "1 session",
+          "unit_cost_estimate": 25.0,
+          "total_cost_estimate": 25.0,
+          "confidence": "medium",
+          "uncertainty_note": "May be already available without recharge."
+        },
+        {
+          "item_name": "0.22 \u00b5m PVDF centrifugal filters",
+          "quantity": "12 filters",
+          "unit_cost_estimate": 3.5,
+          "total_cost_estimate": 42.0,
+          "confidence": "medium",
+          "uncertainty_note": "Centrifugal filter pricing depends on device format and pack size."
+        },
+        {
+          "item_name": "HPLC vials with caps and inserts",
+          "quantity": "30 vials for samples, standards, blanks and spares",
+          "unit_cost_estimate": 0.6,
+          "total_cost_estimate": 18.0,
+          "confidence": "medium",
+          "uncertainty_note": "Autosampler vial cost varies by insert requirement and cap type."
+        },
+        {
+          "item_name": "D-xylose analytical standard for HPLC calibration",
+          "quantity": "~0.2 g for standards",
+          "unit_cost_estimate": 0.5,
+          "total_cost_estimate": 0.1,
+          "confidence": "high",
+          "uncertainty_note": "Prorated from a standard-grade bottle; cost dominated by bottle purchase if not in stock."
+        },
+        {
+          "item_name": "Ethanol analytical standard",
+          "quantity": "~1 mL for mixed standards",
+          "unit_cost_estimate": 0.05,
+          "total_cost_estimate": 0.1,
+          "confidence": "high",
+          "uncertainty_note": "Prorated from HPLC-grade ethanol stock."
+        },
+        {
+          "item_name": "Sulfuric acid for 5 mM H2SO4 mobile phase",
+          "quantity": "~1 mL concentrated acid to prepare ~2 L mobile phase",
+          "unit_cost_estimate": 0.1,
+          "total_cost_estimate": 0.1,
+          "confidence": "high",
+          "uncertainty_note": "Prorated acid cost is negligible; handling and compatibility are more important."
+        },
+        {
+          "item_name": "Ultrapure/HPLC-grade water for mobile phase and standards",
+          "quantity": "~2 L",
+          "unit_cost_estimate": 0.5,
+          "total_cost_estimate": 1.0,
+          "confidence": "medium",
+          "uncertainty_note": "Cost depends on in-house water system versus purchased LC-MS water."
+        },
+        {
+          "item_name": "Mobile phase solvent reservoir filter/degassing membrane or 0.22 \u00b5m membrane filters",
+          "quantity": "2 filters",
+          "unit_cost_estimate": 2.0,
+          "total_cost_estimate": 4.0,
+          "confidence": "medium",
+          "uncertainty_note": "Some HPLC systems use inline degassing and do not require separate membrane filters."
+        },
+        {
+          "item_name": "Aminex HPX-87H carbohydrate/organic acid HPLC column use allocation",
+          "quantity": "1 column-use allocation for calibration and sample batch",
+          "unit_cost_estimate": 80.0,
+          "total_cost_estimate": 80.0,
+          "confidence": "medium",
+          "uncertainty_note": "Full column purchase is ~700\u2013900 EUR; estimate prorates lifetime use."
+        },
+        {
+          "item_name": "Agilent 1260 Infinity II HPLC run time for fermentation samples",
+          "quantity": "~6 hours sample queue",
+          "unit_cost_estimate": 60.0,
+          "total_cost_estimate": 360.0,
+          "confidence": "medium",
+          "uncertainty_note": "If full-day HPLC fee is already counted under setup, avoid double-counting; hourly facility rates vary."
+        },
+        {
+          "item_name": "5 mM H2SO4 mobile phase for sample quantification",
+          "quantity": "~1.2 L consumed during 6 h at 0.6 mL/min plus equilibration",
+          "unit_cost_estimate": 0.6,
+          "total_cost_estimate": 1.0,
+          "confidence": "medium",
+          "uncertainty_note": "Chemical cost is low; HPLC time and column wear dominate."
+        },
+        {
+          "item_name": "Uninoculated fermentation medium control bottles",
+          "quantity": "3 bottles, 50 mL each",
+          "unit_cost_estimate": 1.5,
+          "total_cost_estimate": 4.5,
+          "confidence": "medium",
+          "uncertainty_note": "Control cost includes medium and bottle allocation but excludes shared setup items already listed."
+        },
+        {
+          "item_name": "Computer/workstation for statistical analysis",
+          "quantity": "1 session",
+          "unit_cost_estimate": 10.0,
+          "total_cost_estimate": 10.0,
+          "confidence": "medium",
+          "uncertainty_note": "Usually no direct cost; included as equipment allocation."
+        },
+        {
+          "item_name": "Statistical software license or open-source R/RStudio allocation",
+          "quantity": "1 analysis session",
+          "unit_cost_estimate": 0.0,
+          "total_cost_estimate": 0.0,
+          "confidence": "medium",
+          "uncertainty_note": "Assumes open-source R; commercial GraphPad/Prism would add license cost."
+        },
+        {
+          "item_name": "Nitrile gloves",
+          "quantity": "~40 pairs",
+          "unit_cost_estimate": 0.12,
+          "total_cost_estimate": 4.8,
+          "confidence": "high",
+          "uncertainty_note": "Glove use depends on local PPE policy and number of operators."
+        },
+        {
+          "item_name": "Laboratory coats and eye protection allocation",
+          "quantity": "1 experiment allocation",
+          "unit_cost_estimate": 5.0,
+          "total_cost_estimate": 5.0,
+          "confidence": "medium",
+          "uncertainty_note": "Reusable PPE cost is prorated."
+        },
+        {
+          "item_name": "Sterile serological pipettes, 5/10/25 mL mixed",
+          "quantity": "30 pipettes",
+          "unit_cost_estimate": 0.35,
+          "total_cost_estimate": 10.5,
+          "confidence": "high",
+          "uncertainty_note": "Used across media dispensing, inoculation preparation, and transfers."
+        },
+        {
+          "item_name": "Micropipette set P20/P200/P1000 use allocation",
+          "quantity": "1 experiment allocation",
+          "unit_cost_estimate": 15.0,
+          "total_cost_estimate": 15.0,
+          "confidence": "medium",
+          "uncertainty_note": "Represents calibration/depreciation allocation; not a rental in most labs."
+        },
+        {
+          "item_name": "Sterile filtered pipette tips, mixed P20/P200/P1000",
+          "quantity": "~300 tips",
+          "unit_cost_estimate": 0.04,
+          "total_cost_estimate": 12.0,
+          "confidence": "high",
+          "uncertainty_note": "Aerosol-resistant tips are needed especially for PCR setup and sterile transfers."
+        },
+        {
+          "item_name": "15 mL and 50 mL sterile conical tubes",
+          "quantity": "20 tubes mixed sizes",
+          "unit_cost_estimate": 0.35,
+          "total_cost_estimate": 7.0,
+          "confidence": "high",
+          "uncertainty_note": "Includes media aliquots, standards, and dilutions."
+        },
+        {
+          "item_name": "Autoclave tape, labels, marker, and biohazard bags allocation",
+          "quantity": "1 experiment allocation",
+          "unit_cost_estimate": 8.0,
+          "total_cost_estimate": 8.0,
+          "confidence": "medium",
+          "uncertainty_note": "General lab consumables are prorated and may be covered by overhead."
+        }
+      ],
+      "estimated_total_cost": 2669.86,
+      "uncertainty_notes": [
+        "Several instruments are listed both as reservation/use allocations and as sub-protocol active-use fees; for an internal budget, choose either reservation-based or run-time-based charging to avoid double-counting.",
+        "Custom biological materials drive the largest uncertainty: the pURA3-TDH3-Piromyces-xylA plasmid and CEN.PK control strains may be already available, obtained from collaborators, or require paid synthesis/repository purchase.",
+        "Prices are typical 2024\u20132025 academic European estimates; institutional framework discounts, VAT treatment, and facility recharge models can shift totals substantially."
+      ]
+    },
+    "timeline": {
+      "phases": [
+        {
+          "phase_name": "Day 0: Instrument booking and media/reagent preparation",
+          "duration_estimate": "1 days",
+          "dependencies": [],
+          "responsible_role": "Research associate",
+          "risk_buffer": "1 days",
+          "bottlenecks": [
+            "Consecutive 7-day shaker/incubator and HPLC availability",
+            "Autoclave cycle queue and cool-down time for liquid media",
+            "Filter clogging during high-concentration xylose stock sterilization",
+            "SD-URA plate drying/solidification quality before transformation"
+          ]
+        },
+        {
+          "phase_name": "Day 1: Yeast transformation setup, heat shock, recovery plating",
+          "duration_estimate": "1 days",
+          "dependencies": [
+            "Day 0: Instrument booking and media/reagent preparation"
+          ],
+          "responsible_role": "Research associate",
+          "risk_buffer": "1 days",
+          "bottlenecks": [
+            "Competent CEN.PK cell viability after thaw",
+            "Plasmid DNA quality and concentration",
+            "ThermoMixer block availability for 30 \u00b0C incubation and 42 \u00b0C heat shock",
+            "Uneven spreading or overly wet SD-URA plates reducing colony isolation"
+          ]
+        },
+        {
+          "phase_name": "Days 1-3: Selective incubation of transformation plates",
+          "duration_estimate": "2 days",
+          "dependencies": [
+            "Day 1: Yeast transformation setup, heat shock, recovery plating"
+          ],
+          "responsible_role": "Research associate",
+          "risk_buffer": "1 days",
+          "bottlenecks": [
+            "Slow colony emergence requiring an extra 24 h incubation",
+            "Low transformation efficiency yielding too few colonies",
+            "Incubator temperature deviations at 30 \u00b0C",
+            "Contamination on selective plates"
+          ]
+        },
+        {
+          "phase_name": "Day 3: Colony PCR verification and agarose gel electrophoresis",
+          "duration_estimate": "1 days",
+          "dependencies": [
+            "Days 1-3: Selective incubation of transformation plates"
+          ],
+          "responsible_role": "Scientist",
+          "risk_buffer": "1 days",
+          "bottlenecks": [
+            "PCR false negatives from incomplete yeast colony lysis",
+            "Thermal cycler availability for 35-cycle Q5 PCR",
+            "Gel imaging system availability and band resolution around 1.3 kb",
+            "Insufficient number of PCR-positive colonies requiring repeat transformation or additional colony screening"
+          ]
+        },
+        {
+          "phase_name": "Day 3: Inoculate seed cultures from verified colonies",
+          "duration_estimate": "1 days",
+          "dependencies": [
+            "Day 3: Colony PCR verification and agarose gel electrophoresis"
+          ],
+          "responsible_role": "Research associate",
+          "risk_buffer": "1 days",
+          "bottlenecks": [
+            "Need at least three confirmed xylA transformants before inoculation",
+            "Accurate colony picking to avoid mixed cultures",
+            "Availability of baffled flasks and 30 \u00b0C shaking incubator space"
+          ]
+        },
+        {
+          "phase_name": "Days 3-4: Overnight seed culture growth",
+          "duration_estimate": "2 days",
+          "dependencies": [
+            "Day 3: Inoculate seed cultures from verified colonies"
+          ],
+          "responsible_role": "Research associate",
+          "risk_buffer": "1 days",
+          "bottlenecks": [
+            "Seed cultures may undergrow or overgrow outside OD600 3-8 depending on strain fitness",
+            "Shaker capacity and 200 rpm operation overnight",
+            "Contamination or mixed inocula discovered next day",
+            "Differences in growth between engineered, parental, and positive-control strains"
+          ]
+        },
+        {
+          "phase_name": "Day 4: OD measurement and anaerobic fermentation setup/inoculation",
+          "duration_estimate": "1 days",
+          "dependencies": [
+            "Days 3-4: Overnight seed culture growth"
+          ],
+          "responsible_role": "Scientist",
+          "risk_buffer": "1 days",
+          "bottlenecks": [
+            "OD600 dilution accuracy for inoculating all bottles to OD600 1.0",
+            "Serum bottle, stopper, and crimp-cap availability",
+            "Nitrogen sparging manifold or gas cylinder availability",
+            "Achieving low dissolved oxygen without compromising sterility",
+            "Needle handling and stopper leakage during inoculation"
+          ]
+        },
+        {
+          "phase_name": "Days 4-6: 48 h xylose fermentation incubation",
+          "duration_estimate": "2 days",
+          "dependencies": [
+            "Day 4: OD measurement and anaerobic fermentation setup/inoculation"
+          ],
+          "responsible_role": "Research associate",
+          "risk_buffer": "1 days",
+          "bottlenecks": [
+            "Shaker availability for sealed serum bottles at 30 \u00b0C and 120 rpm for full 48 h",
+            "Biological variability in xylose utilization by transformants",
+            "Stopper leakage or pressure buildup in sealed bottles",
+            "Unexpected slow fermentation requiring additional time-point sampling"
+          ]
+        },
+        {
+          "phase_name": "Day 6: Fermentation sampling and HPLC sample clarification",
+          "duration_estimate": "1 days",
+          "dependencies": [
+            "Days 4-6: 48 h xylose fermentation incubation"
+          ],
+          "responsible_role": "Research associate",
+          "risk_buffer": "1 days",
+          "bottlenecks": [
+            "Needle coring or sample loss during serum bottle sampling",
+            "Centrifuge availability at 4 \u00b0C",
+            "Filter membrane clogging from residual yeast biomass",
+            "Maintaining sample identity across engineered, parental, positive-control, and blank groups"
+          ]
+        },
+        {
+          "phase_name": "Day 6: HPLC calibration and fermentation metabolite quantification",
+          "duration_estimate": "1 days",
+          "dependencies": [
+            "Day 6: Fermentation sampling and HPLC sample clarification"
+          ],
+          "responsible_role": "Scientist",
+          "risk_buffer": "1 days",
+          "bottlenecks": [
+            "Agilent 1260 HPLC booking for an uninterrupted 8 h sequence",
+            "Aminex HPX-87H column equilibration and stable 55 \u00b0C oven temperature",
+            "Calibration curve failure requiring fresh standards or reinjection",
+            "Carryover, retention-time drift, or unresolved ethanol/xylose peaks",
+            "Autosampler vial errors or insufficient filtrate volume"
+          ]
+        },
+        {
+          "phase_name": "Day 6-7: Data analysis, statistics, interpretation, and results write-up",
+          "duration_estimate": "1 days",
+          "dependencies": [
+            "Day 6: HPLC calibration and fermentation metabolite quantification"
+          ],
+          "responsible_role": "Scientist",
+          "risk_buffer": "1 days",
+          "bottlenecks": [
+            "Manual integration review for HPLC peaks",
+            "Outlier handling with only n=3 biological replicates per group",
+            "Assumption checks for ANOVA and Tukey HSD interpretation",
+            "Reconciling ethanol yield with xylose consumed if parental control shows background signal"
+          ]
+        }
+      ],
+      "total_duration_estimate": "25 days (including risk buffers)"
+    },
+    "validation": {
+      "primary_endpoint": "Post-thaw viability percentage at immediate and 24h checkpoints.",
+      "secondary_endpoints": [
+        "Cell recovery count",
+        "Morphology quality score",
+        "Replicate variance"
+      ],
+      "success_threshold": "at least 0.4 g ethanol/g xylose within 48 hours improvement over comparator in replicate-confirmed data.",
+      "failure_conditions": [
+        "No meaningful viability gain in replicate-confirmed runs.",
+        "Intervention increases delayed viability loss at 24h."
+      ],
+      "suggested_statistical_comparison": "Two-group comparison against comparator using t-test or Mann-Whitney based on normality.",
+      "minimum_replicates_or_design_note": "Minimum three biological replicates before execution-level claim."
+    },
+    "cro_ready_brief": {
+      "objective": "Determine whether heterologous expression of Piromyces sp. xylose isomerase enables Saccharomyces cerevisiae CEN.PK to convert xylose to ethanol at \u22650.4 g ethanol/g xylose within 48 h under oxygen-limited fermentation.",
+      "scope_of_work": [
+        "Execute pilot-first HeLa cryopreservation comparison between DMSO baseline and trehalose arm.",
+        "Deliver replicate-confirmed viability analysis and mitigation traceability report."
+      ],
+      "sample_count": "At least 3 biological replicates per arm",
+      "required_assays": [
+        "Immediate post-thaw viability",
+        "24h follow-up viability"
+      ],
+      "deliverables": [
+        "Raw assay tables",
+        "QC log",
+        "Analysis summary",
+        "Deviation report"
+      ],
+      "qc_requirements": [
+        "Controlled-rate freeze log",
+        "Lot traceability",
+        "Blinded run annotation"
+      ],
+      "timeline_request": "25 days (including risk buffers)",
+      "materials_responsibility": "CRO to quote and confirm all materials before ordering.",
+      "questions_for_cro": [
+        "Can you support controlled-rate freezing logs in each run?",
+        "Can you include replicate-level batch metadata in the final report?"
+      ]
+    },
+    "confidence_score": 0.72
+  }
+}

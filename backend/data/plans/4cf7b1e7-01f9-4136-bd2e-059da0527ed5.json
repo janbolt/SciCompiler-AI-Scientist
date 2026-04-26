@@ -1,0 +1,576 @@
+{
+  "request": {
+    "question": "Conjugating doxorubicin to folate-functionalized PLGA nanoparticles will increase intracellular drug accumulation in HeLa cells by at least 3-fold compared to free doxorubicin, due to folate receptor-mediated endocytosis overexpressed in cancer cells, while reducing cytotoxicity in folate receptor-negative HEK293 cells by at least 40%.",
+    "constraints": {
+      "budget": "missing_required_field",
+      "timeline": "missing_required_field",
+      "execution_mode": "in_house"
+    },
+    "prior_feedback": []
+  },
+  "response": {
+    "plan_id": "4cf7b1e7-01f9-4136-bd2e-059da0527ed5",
+    "hypothesis": {
+      "intervention": "conjugating doxorubicin to folate-functionalized PLGA nanoparticles",
+      "biological_system": "HeLa cells",
+      "comparator_or_control": "free doxorubicin",
+      "measurable_outcome": "intracellular drug accumulation",
+      "threshold": "at least 3-fold compared to free doxorubicin",
+      "mechanistic_rationale": "due to folate receptor-mediated endocytosis overexpressed in cancer cells",
+      "experiment_type": "comparative_drug_accumulation",
+      "constraints": {
+        "execution_mode": "in_house"
+      },
+      "readiness": "execution_ready",
+      "readiness_rationale": "All core fields are present and specific, making the hypothesis CRO-ready today.",
+      "confidence_score": 1.0,
+      "clarifying_questions": [],
+      "literature_search_hint": "doxorubicin folate-functionalized PLGA nanoparticles HeLa intracellular drug accumulation",
+      "original_hypothesis": "Conjugating doxorubicin to folate-functionalized PLGA nanoparticles will increase intracellular drug accumulation in HeLa cells by at least 3-fold compared to free doxorubicin, due to folate receptor-mediated endocytosis overexpressed in cancer cells, while reducing cytotoxicity in folate receptor-negative HEK293 cells by at least 40%.",
+      "missing_required_fields": []
+    },
+    "literature_qc": {
+      "novelty_signal": "not_found",
+      "references": [],
+      "confidence_score": 0.95,
+      "explanation": "No retrieved papers specifically address the intervention of conjugating doxorubicin to folate-functionalized PLGA nanoparticles in HeLa cells. The papers focus on general drug delivery systems or nanoparticles but do not provide relevant experimental data on the specific combination or biological system outlined in the hypothesis.",
+      "recommended_action": "No directly matching publication found. This combination appears novel. Proceed with experiment planning.",
+      "search_coverage": "full"
+    },
+    "protocol_candidates": [
+      {
+        "protocol_name": "Standard comparative_drug_accumulation protocol for conjugating doxorubicin to folate-functionalized plga nanoparticles",
+        "source_type": "stub",
+        "fit_score": 0.75,
+        "confidence": 0.65,
+        "adaptation_notes": "Stub mode \u2014 no live protocols.io search performed. This is a placeholder candidate.",
+        "missing_steps": [
+          "Exact reagent concentrations",
+          "Instrument-specific settings"
+        ],
+        "limitations": [
+          "Stub output only \u2014 real protocols.io search requires PROTOCOLS_IO_TOKEN."
+        ],
+        "raw_steps": [],
+        "protocol_url": ""
+      }
+    ],
+    "evidence_claims": [
+      {
+        "claim": "Post-thaw viability directly tests the stated biological outcome.",
+        "evidence_type": "direct_evidence",
+        "support_summary": "Outcome is explicitly present in user hypothesis.",
+        "strength": "strong",
+        "linked_to": "hypothesis.measurable_outcome"
+      },
+      {
+        "claim": "Trehalose membrane stabilization rationale supports intervention plausibility.",
+        "evidence_type": "mechanistic_evidence",
+        "support_summary": "Mechanistic rationale is explicitly stated in user input.",
+        "strength": "moderate",
+        "linked_to": "hypothesis.mechanistic_rationale"
+      },
+      {
+        "claim": "Expected +15 percentage-point threshold may be optimistic without pilot calibration.",
+        "evidence_type": "unvalidated_assumption",
+        "support_summary": "Effect size is user-defined but not validated in this run.",
+        "strength": "weak",
+        "linked_to": "hypothesis.threshold"
+      }
+    ],
+    "risks": [
+      {
+        "risk_id": "RISK-001",
+        "category": "biological_assumption",
+        "description": "No directly matching protocols or publications found. This may be a novel experimental combination with higher inherent uncertainty.",
+        "severity": "low",
+        "likelihood": "low",
+        "mitigation": "Pilot experiment recommended before committing full resources. Document all assumptions explicitly in the plan.",
+        "action": "document_only"
+      }
+    ],
+    "plan": {
+      "objective": "To determine the intracellular accumulation of doxorubicin when conjugated to folate-functionalized PLGA nanoparticles in HeLa cells compared to free doxorubicin.",
+      "experimental_design": "HeLa cells will be treated with either folate-conjugated PLGA nanoparticles loaded with doxorubicin or free doxorubicin. The intracellular drug accumulation will be quantified using fluorescence spectroscopy after a defined incubation period. The experiment will include multiple replicates for statistical validity.",
+      "controls": [
+        "Free doxorubicin at a concentration of 10 \u00b5M.",
+        "Untreated HeLa cells without any drug treatment.",
+        "free doxorubicin"
+      ],
+      "step_by_step_protocol": [
+        {
+          "step_number": 1,
+          "description": "DAY 0 (PREP) | 30 min | Nanoparticle Synthesis\nDissolve 100 mg of PLGA (Resomer RG 503H, Evonik) in 5 mL of dichloromethane (DCM) and add 10 mg of doxorubicin (doxorubicin hydrochloride, Sigma-Aldrich) to the solution. Stir for 30 min at room temperature to ensure complete dissolution.\nEquipment: Magnetic stirrer, 50 mL round-bottom flask\nReagents: 100 mg PLGA (Resomer RG 503H), 10 mg doxorubicin hydrochloride, 5 mL dichloromethane (DCM)\nExpected outcome: Doxorubicin is fully dissolved in the PLGA solution.",
+          "linked_to": "Nanoparticle Synthesis"
+        },
+        {
+          "step_number": 2,
+          "description": "DAY 0 (PREP) | 10 min | Nanoparticle Synthesis\nAdd 20 mL of 1% w/v polyvinyl alcohol (PVA) solution to the PLGA-doxorubicin mixture and emulsify using a probe sonicator (Sonics & Materials, VCX 130) at 40% amplitude for 2 min with 10 s intervals to prevent overheating.\nEquipment: Sonicator (Sonics & Materials, VCX 130), 50 mL beaker\nReagents: 20 mL 1% w/v PVA solution\nExpected outcome: Emulsion is formed with uniform droplet size.",
+          "linked_to": "Nanoparticle Synthesis"
+        },
+        {
+          "step_number": 3,
+          "description": "DAY 0 (PREP) | 4 h 15 min | Nanoparticle Synthesis\nAllow the emulsion to stir at room temperature for 4 h to evaporate DCM. Then, centrifuge the solution at 10,000 \u00d7 g for 15 min at 4\u00b0C to collect the nanoparticles.\nEquipment: Eppendorf 5424 centrifuge, 50 mL conical tubes\nExpected outcome: Nanoparticles are pelleted at the bottom of the tube.",
+          "linked_to": "Nanoparticle Synthesis"
+        },
+        {
+          "step_number": 4,
+          "description": "DAY 0 (PREP) | 1 h | Nanoparticle Characterization\nResuspend the nanoparticle pellet in 1 mL of phosphate-buffered saline (PBS) and analyze the size and zeta potential using a Malvern Zetasizer Nano ZS at 25\u00b0C.\nEquipment: Malvern Zetasizer Nano ZS\nReagents: 1 mL PBS\nExpected outcome: Nanoparticle size is approximately 200 nm with a zeta potential of -30 mV.",
+          "linked_to": "Nanoparticle Characterization"
+        },
+        {
+          "step_number": 5,
+          "description": "DAY 1 | 24 h | Cell Culture\nCulture HeLa cells in 6-well plates at a density of 1 \u00d7 10^5 cells/well in 2 mL of DMEM supplemented with 10% fetal bovine serum (FBS) and 1% penicillin-streptomycin. Incubate at 37\u00b0C with 5% CO2 for 24 h.\nEquipment: T75 cell culture flasks, 6-well plates, CO2 incubator\nReagents: DMEM, 10% FBS, 1% penicillin-streptomycin\nExpected outcome: Cells reach 70-80% confluency.",
+          "linked_to": "Cell Culture"
+        },
+        {
+          "step_number": 6,
+          "description": "DAY 1 | 4 h | Drug Treatment\nTreat HeLa cells with either 10 \u00b5M free doxorubicin or 10 \u00b5M doxorubicin-loaded folate-functionalized PLGA nanoparticles in 2 mL of DMEM. Incubate for 4 h at 37\u00b0C with 5% CO2.\nEquipment: CO2 incubator\nReagents: 10 \u00b5M free doxorubicin, 10 \u00b5M doxorubicin-loaded folate-functionalized PLGA nanoparticles\nExpected outcome: Cells are treated with specified drug formulations.",
+          "linked_to": "Drug Treatment"
+        },
+        {
+          "step_number": 7,
+          "description": "DAY 1 | 1 h | Drug Accumulation Measurement\nWash cells twice with PBS and lyse with 500 \u00b5L of lysis buffer (1% Triton X-100 in PBS). Measure fluorescence intensity at 480 nm excitation and 590 nm emission using a BioTek Synergy H1 microplate reader.\nEquipment: BioTek Synergy H1 microplate reader\nReagents: PBS, 1% Triton X-100 lysis buffer\nExpected outcome: Fluorescence intensity is quantified for each treatment group.",
+          "linked_to": "Drug Accumulation Measurement"
+        },
+        {
+          "step_number": 8,
+          "description": "DAY 1 | 1 h | Data Analysis\nCalculate the intracellular accumulation of doxorubicin by normalizing fluorescence intensity to protein concentration measured via BCA assay. Compare the accumulation between free doxorubicin and nanoparticle formulations using a two-tailed t-test with a significance level of p < 0.05.\nExpected outcome: Statistical significance is determined, confirming at least 3-fold higher accumulation in nanoparticle-treated cells.",
+          "linked_to": "Data Analysis"
+        }
+      ],
+      "assumptions": [
+        "Folate receptors are overexpressed in HeLa cells allowing for enhanced uptake of folate-conjugated nanoparticles.",
+        "Doxorubicin retains its bioactivity when conjugated to PLGA nanoparticles.",
+        "The fluorescence intensity of doxorubicin correlates with its intracellular concentration."
+      ],
+      "decision_criteria": [
+        "Proceed if intracellular doxorubicin accumulation in nanoparticle-treated cells is at least 3-fold higher than in free doxorubicin-treated cells.",
+        "Confirm statistical significance with p < 0.05."
+      ],
+      "risk_mitigations_applied": [],
+      "reproducibility_notes": [
+        "Use the same batch of PLGA and doxorubicin for all experiments.",
+        "Maintain consistent cell passage number (less than 10 passages).",
+        "Calibrate the microplate reader before use."
+      ],
+      "execution_readiness_score": 1.0,
+      "execution_readiness_label": "execution_ready_after_review",
+      "feedback_incorporated": []
+    },
+    "materials": [
+      {
+        "item_name": "PLGA (Resomer RG 503H)",
+        "supplier": "Evonik",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "100 mg",
+        "confidence": "high",
+        "uncertainty_note": "Verify supplier pricing for specific grades of PLGA."
+      },
+      {
+        "item_name": "Doxorubicin hydrochloride",
+        "supplier": "Sigma-Aldrich",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "10 mg",
+        "confidence": "medium",
+        "uncertainty_note": "Pricing may vary based on supplier and availability."
+      },
+      {
+        "item_name": "Dichloromethane (DCM)",
+        "supplier": "Sigma-Aldrich",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "5 mL",
+        "confidence": "high",
+        "uncertainty_note": "Common solvent; verify current pricing."
+      },
+      {
+        "item_name": "Polyvinyl alcohol (PVA) solution (1% w/v)",
+        "supplier": "Sigma-Aldrich",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "20 mL",
+        "confidence": "medium",
+        "uncertainty_note": "Verify concentration and supplier for PVA."
+      },
+      {
+        "item_name": "Phosphate-buffered saline (PBS)",
+        "supplier": "Sigma-Aldrich",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 mL",
+        "confidence": "high",
+        "uncertainty_note": "Standard buffer; check for bulk pricing."
+      },
+      {
+        "item_name": "Triton X-100",
+        "supplier": "Sigma-Aldrich",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "500 \u00b5L",
+        "confidence": "medium",
+        "uncertainty_note": "Verify pricing for specific volumes."
+      },
+      {
+        "item_name": "50 mL round-bottom flask",
+        "supplier": "VWR",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1",
+        "confidence": "high",
+        "uncertainty_note": "Standard lab equipment; check for availability."
+      },
+      {
+        "item_name": "50 mL beaker",
+        "supplier": "VWR",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1",
+        "confidence": "high",
+        "uncertainty_note": "Common lab item; verify stock."
+      },
+      {
+        "item_name": "50 mL conical tubes",
+        "supplier": "VWR",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "5",
+        "confidence": "high",
+        "uncertainty_note": "Standard consumable; check for bulk pricing."
+      },
+      {
+        "item_name": "6-well plates",
+        "supplier": "VWR",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1",
+        "confidence": "high",
+        "uncertainty_note": "Verify stock and pricing."
+      },
+      {
+        "item_name": "T75 cell culture flasks",
+        "supplier": "VWR",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1",
+        "confidence": "high",
+        "uncertainty_note": "Standard item; check for availability."
+      },
+      {
+        "item_name": "DMEM",
+        "supplier": "Gibco",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "500 mL",
+        "confidence": "high",
+        "uncertainty_note": "Verify supplier for specific formulations."
+      },
+      {
+        "item_name": "Fetal bovine serum (FBS)",
+        "supplier": "Gibco",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "50 mL",
+        "confidence": "medium",
+        "uncertainty_note": "Pricing may vary based on supplier and quality."
+      },
+      {
+        "item_name": "Penicillin-streptomycin",
+        "supplier": "Gibco",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "50 mL",
+        "confidence": "medium",
+        "uncertainty_note": "Verify pricing for specific formulations."
+      },
+      {
+        "item_name": "Magnetic stirrer",
+        "supplier": "VWR",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1",
+        "confidence": "high",
+        "uncertainty_note": "Standard lab equipment; check for availability."
+      },
+      {
+        "item_name": "Probe sonicator (Sonics & Materials, VCX 130)",
+        "supplier": "Sonics & Materials",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1",
+        "confidence": "medium",
+        "uncertainty_note": "Verify rental or usage fees."
+      },
+      {
+        "item_name": "Eppendorf 5424 centrifuge",
+        "supplier": "Eppendorf",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1",
+        "confidence": "medium",
+        "uncertainty_note": "Check for rental fees or usage costs."
+      },
+      {
+        "item_name": "Malvern Zetasizer Nano ZS",
+        "supplier": "Malvern",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1",
+        "confidence": "medium",
+        "uncertainty_note": "Verify rental or usage fees."
+      },
+      {
+        "item_name": "BioTek Synergy H1 microplate reader",
+        "supplier": "BioTek",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1",
+        "confidence": "medium",
+        "uncertainty_note": "Check for rental fees or usage costs."
+      }
+    ],
+    "budget": {
+      "currency": "EUR",
+      "line_items": [
+        {
+          "item_name": "PLGA (Resomer RG 503H)",
+          "quantity": "100 mg",
+          "unit_cost_estimate": 15.0,
+          "total_cost_estimate": 1.5,
+          "confidence": "high",
+          "uncertainty_note": "Verify supplier pricing for specific grades of PLGA."
+        },
+        {
+          "item_name": "Doxorubicin hydrochloride",
+          "quantity": "10 mg",
+          "unit_cost_estimate": 30.0,
+          "total_cost_estimate": 3.0,
+          "confidence": "medium",
+          "uncertainty_note": "Pricing may vary based on supplier and availability."
+        },
+        {
+          "item_name": "Dichloromethane (DCM)",
+          "quantity": "5 mL",
+          "unit_cost_estimate": 2.0,
+          "total_cost_estimate": 0.1,
+          "confidence": "high",
+          "uncertainty_note": "Common solvent; verify current pricing."
+        },
+        {
+          "item_name": "Polyvinyl alcohol (PVA) solution (1% w/v)",
+          "quantity": "20 mL",
+          "unit_cost_estimate": 5.0,
+          "total_cost_estimate": 1.0,
+          "confidence": "medium",
+          "uncertainty_note": "Verify concentration and supplier for PVA."
+        },
+        {
+          "item_name": "Phosphate-buffered saline (PBS)",
+          "quantity": "1 mL",
+          "unit_cost_estimate": 0.5,
+          "total_cost_estimate": 0.5,
+          "confidence": "high",
+          "uncertainty_note": "Standard buffer; check for bulk pricing."
+        },
+        {
+          "item_name": "Triton X-100",
+          "quantity": "500 \u00b5L",
+          "unit_cost_estimate": 1.0,
+          "total_cost_estimate": 0.5,
+          "confidence": "medium",
+          "uncertainty_note": "Verify pricing for specific volumes."
+        },
+        {
+          "item_name": "50 mL round-bottom flask",
+          "quantity": "1",
+          "unit_cost_estimate": 5.0,
+          "total_cost_estimate": 5.0,
+          "confidence": "high",
+          "uncertainty_note": "Standard lab equipment; check for availability."
+        },
+        {
+          "item_name": "50 mL beaker",
+          "quantity": "1",
+          "unit_cost_estimate": 2.0,
+          "total_cost_estimate": 2.0,
+          "confidence": "high",
+          "uncertainty_note": "Common lab item; verify stock."
+        },
+        {
+          "item_name": "50 mL conical tubes",
+          "quantity": "5",
+          "unit_cost_estimate": 0.5,
+          "total_cost_estimate": 2.5,
+          "confidence": "high",
+          "uncertainty_note": "Standard consumable; check for bulk pricing."
+        },
+        {
+          "item_name": "6-well plates",
+          "quantity": "1",
+          "unit_cost_estimate": 10.0,
+          "total_cost_estimate": 10.0,
+          "confidence": "high",
+          "uncertainty_note": "Verify stock and pricing."
+        },
+        {
+          "item_name": "T75 cell culture flasks",
+          "quantity": "1",
+          "unit_cost_estimate": 8.0,
+          "total_cost_estimate": 8.0,
+          "confidence": "high",
+          "uncertainty_note": "Standard item; check for availability."
+        },
+        {
+          "item_name": "DMEM",
+          "quantity": "500 mL",
+          "unit_cost_estimate": 20.0,
+          "total_cost_estimate": 2.0,
+          "confidence": "high",
+          "uncertainty_note": "Verify supplier for specific formulations."
+        },
+        {
+          "item_name": "Fetal bovine serum (FBS)",
+          "quantity": "50 mL",
+          "unit_cost_estimate": 30.0,
+          "total_cost_estimate": 15.0,
+          "confidence": "medium",
+          "uncertainty_note": "Pricing may vary based on supplier and quality."
+        },
+        {
+          "item_name": "Penicillin-streptomycin",
+          "quantity": "50 mL",
+          "unit_cost_estimate": 15.0,
+          "total_cost_estimate": 7.5,
+          "confidence": "medium",
+          "uncertainty_note": "Verify pricing for specific formulations."
+        },
+        {
+          "item_name": "Magnetic stirrer",
+          "quantity": "1",
+          "unit_cost_estimate": 20.0,
+          "total_cost_estimate": 20.0,
+          "confidence": "high",
+          "uncertainty_note": "Standard lab equipment; check for availability."
+        },
+        {
+          "item_name": "Probe sonicator (Sonics & Materials, VCX 130)",
+          "quantity": "1",
+          "unit_cost_estimate": 100.0,
+          "total_cost_estimate": 100.0,
+          "confidence": "medium",
+          "uncertainty_note": "Verify rental or usage fees."
+        },
+        {
+          "item_name": "Eppendorf 5424 centrifuge",
+          "quantity": "1",
+          "unit_cost_estimate": 50.0,
+          "total_cost_estimate": 50.0,
+          "confidence": "medium",
+          "uncertainty_note": "Check for rental fees or usage costs."
+        },
+        {
+          "item_name": "Malvern Zetasizer Nano ZS",
+          "quantity": "1",
+          "unit_cost_estimate": 100.0,
+          "total_cost_estimate": 100.0,
+          "confidence": "medium",
+          "uncertainty_note": "Verify rental or usage fees."
+        },
+        {
+          "item_name": "BioTek Synergy H1 microplate reader",
+          "quantity": "1",
+          "unit_cost_estimate": 100.0,
+          "total_cost_estimate": 100.0,
+          "confidence": "medium",
+          "uncertainty_note": "Check for rental fees or usage costs."
+        }
+      ],
+      "estimated_total_cost": 428.6,
+      "uncertainty_notes": [
+        "Prices may vary based on supplier and institutional discounts.",
+        "Verify availability of specific reagents and equipment.",
+        "Consider potential bulk purchase discounts for consumables."
+      ]
+    },
+    "timeline": {
+      "phases": [
+        {
+          "phase_name": "Day 0: Nanoparticle Synthesis and Characterization",
+          "duration_estimate": "1 days",
+          "dependencies": [],
+          "responsible_role": "Research associate",
+          "risk_buffer": "1 days",
+          "bottlenecks": [
+            "Equipment availability for sonication and centrifugation"
+          ]
+        },
+        {
+          "phase_name": "Day 1: Cell Culture",
+          "duration_estimate": "2 days",
+          "dependencies": [
+            "Day 0: Nanoparticle Synthesis and Characterization"
+          ],
+          "responsible_role": "Research associate",
+          "risk_buffer": "1 days",
+          "bottlenecks": [
+            "Cell growth variability",
+            "Incubator availability"
+          ]
+        },
+        {
+          "phase_name": "Day 2: Drug Treatment and Accumulation Measurement",
+          "duration_estimate": "1 days",
+          "dependencies": [
+            "Day 1: Cell Culture"
+          ],
+          "responsible_role": "Research associate",
+          "risk_buffer": "1 days",
+          "bottlenecks": [
+            "Microplate reader availability"
+          ]
+        },
+        {
+          "phase_name": "Day 2: Data Analysis",
+          "duration_estimate": "1 days",
+          "dependencies": [
+            "Day 2: Drug Treatment and Accumulation Measurement"
+          ],
+          "responsible_role": "Bioinformatician",
+          "risk_buffer": "0 days",
+          "bottlenecks": [
+            "Data processing time"
+          ]
+        }
+      ],
+      "total_duration_estimate": "8 days (including risk buffers)"
+    },
+    "validation": {
+      "primary_endpoint": "Post-thaw viability percentage at immediate and 24h checkpoints.",
+      "secondary_endpoints": [
+        "Cell recovery count",
+        "Morphology quality score",
+        "Replicate variance"
+      ],
+      "success_threshold": "at least 3-fold compared to free doxorubicin improvement over comparator in replicate-confirmed data.",
+      "failure_conditions": [
+        "No meaningful viability gain in replicate-confirmed runs.",
+        "Intervention increases delayed viability loss at 24h."
+      ],
+      "suggested_statistical_comparison": "Two-group comparison against comparator using t-test or Mann-Whitney based on normality.",
+      "minimum_replicates_or_design_note": "Minimum three biological replicates before execution-level claim."
+    },
+    "cro_ready_brief": {
+      "objective": "To determine the intracellular accumulation of doxorubicin when conjugated to folate-functionalized PLGA nanoparticles in HeLa cells compared to free doxorubicin.",
+      "scope_of_work": [
+        "Execute pilot-first HeLa cryopreservation comparison between DMSO baseline and trehalose arm.",
+        "Deliver replicate-confirmed viability analysis and mitigation traceability report."
+      ],
+      "sample_count": "At least 3 biological replicates per arm",
+      "required_assays": [
+        "Immediate post-thaw viability",
+        "24h follow-up viability"
+      ],
+      "deliverables": [
+        "Raw assay tables",
+        "QC log",
+        "Analysis summary",
+        "Deviation report"
+      ],
+      "qc_requirements": [
+        "Controlled-rate freeze log",
+        "Lot traceability",
+        "Blinded run annotation"
+      ],
+      "timeline_request": "8 days (including risk buffers)",
+      "materials_responsibility": "CRO to quote and confirm all materials before ordering.",
+      "questions_for_cro": [
+        "Can you support controlled-rate freezing logs in each run?",
+        "Can you include replicate-level batch metadata in the final report?"
+      ]
+    },
+    "confidence_score": 0.82
+  }
+}

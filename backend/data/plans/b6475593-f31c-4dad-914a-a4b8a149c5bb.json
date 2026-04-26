@@ -1,0 +1,677 @@
+{
+  "request": {
+    "question": "Replacing sucrose with trehalose as a cryoprotectant in the freezing medium will increase post-thaw viability of HeLa cells by at least 15 percentage points compared to the standard DMSO protocol, due to trehalose's superior membrane stabilization at low temperatures.",
+    "constraints": {
+      "budget": "missing_required_field",
+      "timeline": "missing_required_field",
+      "execution_mode": "in_house"
+    },
+    "prior_feedback": []
+  },
+  "response": {
+    "plan_id": "b6475593-f31c-4dad-914a-a4b8a149c5bb",
+    "hypothesis": {
+      "intervention": "Replacing sucrose with trehalose as a cryoprotectant in the freezing medium",
+      "biological_system": "HeLa cells",
+      "comparator_or_control": "standard DMSO protocol",
+      "measurable_outcome": "post-thaw viability",
+      "threshold": "at least 15 percentage points higher than DMSO control",
+      "mechanistic_rationale": "due to trehalose's superior membrane stabilization at low temperatures",
+      "experiment_type": "comparative_cryopreservation",
+      "constraints": {
+        "execution_mode": "in_house"
+      },
+      "readiness": "execution_ready",
+      "readiness_rationale": "All core fields are present and specific, making the hypothesis CRO-ready today.",
+      "confidence_score": 1.0,
+      "clarifying_questions": [],
+      "literature_search_hint": "trehalose sucrose cryoprotectant HeLa post-thaw viability",
+      "original_hypothesis": "Replacing sucrose with trehalose as a cryoprotectant in the freezing medium will increase post-thaw viability of HeLa cells by at least 15 percentage points compared to the standard DMSO protocol, due to trehalose's superior membrane stabilization at low temperatures.",
+      "missing_required_fields": []
+    },
+    "literature_qc": {
+      "novelty_signal": "not_found",
+      "references": [],
+      "confidence_score": 0.8,
+      "explanation": "No retrieved papers specifically address the use of trehalose as a cryoprotectant in HeLa cells compared to a standard DMSO protocol. The papers focus on different biological systems (e.g., sperm from various species) or do not directly relate to the specific experimental context of HeLa cells and post-thaw viability outcomes.",
+      "recommended_action": "No directly matching publication found. This combination appears novel. Proceed with experiment planning.",
+      "search_coverage": "full"
+    },
+    "protocol_candidates": [
+      {
+        "protocol_name": "Standard comparative_cryopreservation protocol for replacing sucrose with trehalose as a cryoprotectant in the freezing medium",
+        "source_type": "stub",
+        "fit_score": 0.75,
+        "confidence": 0.65,
+        "adaptation_notes": "Stub mode \u2014 no live protocols.io search performed. This is a placeholder candidate.",
+        "missing_steps": [
+          "Exact reagent concentrations",
+          "Instrument-specific settings"
+        ],
+        "limitations": [
+          "Stub output only \u2014 real protocols.io search requires PROTOCOLS_IO_TOKEN."
+        ],
+        "raw_steps": [],
+        "protocol_url": ""
+      }
+    ],
+    "evidence_claims": [
+      {
+        "claim": "Post-thaw viability directly tests the stated biological outcome.",
+        "evidence_type": "direct_evidence",
+        "support_summary": "Outcome is explicitly present in user hypothesis.",
+        "strength": "strong",
+        "linked_to": "hypothesis.measurable_outcome"
+      },
+      {
+        "claim": "Trehalose membrane stabilization rationale supports intervention plausibility.",
+        "evidence_type": "mechanistic_evidence",
+        "support_summary": "Mechanistic rationale is explicitly stated in user input.",
+        "strength": "moderate",
+        "linked_to": "hypothesis.mechanistic_rationale"
+      },
+      {
+        "claim": "Expected +15 percentage-point threshold may be optimistic without pilot calibration.",
+        "evidence_type": "unvalidated_assumption",
+        "support_summary": "Effect size is user-defined but not validated in this run.",
+        "strength": "weak",
+        "linked_to": "hypothesis.threshold"
+      }
+    ],
+    "risks": [
+      {
+        "risk_id": "RISK-001",
+        "category": "biological_assumption",
+        "description": "No directly matching protocols or publications found. This may be a novel experimental combination with higher inherent uncertainty.",
+        "severity": "low",
+        "likelihood": "low",
+        "mitigation": "Pilot experiment recommended before committing full resources. Document all assumptions explicitly in the plan.",
+        "action": "document_only"
+      }
+    ],
+    "plan": {
+      "objective": "To determine the effect of trehalose as a cryoprotectant on post-thaw viability of HeLa cells compared to a standard DMSO protocol.",
+      "experimental_design": "HeLa cells will be cryopreserved using two different protocols: one with trehalose and one with DMSO. Each condition will be replicated three times to ensure statistical validity. Post-thaw viability will be assessed using trypan blue exclusion after a 30-minute recovery period at 37\u00b0C.",
+      "controls": [
+        "HeLa cells cryopreserved using 10% DMSO in freezing medium.",
+        "HeLa cells without any cryoprotectant in freezing medium (fresh cells).",
+        "standard DMSO protocol"
+      ],
+      "step_by_step_protocol": [
+        {
+          "step_number": 1,
+          "description": "DAY 0 (PREP) | 1 h | Reagent Preparation\nPrepare 10% (w/v) trehalose solution by dissolving 10 g of trehalose (Sigma-Aldrich, T9531) in 100 mL of sterile phosphate-buffered saline (PBS) at room temperature. Filter-sterilize using a 0.22 \u00b5m filter (Millipore) and store at 4\u00b0C until use.\nEquipment: Magnetic stirrer, 0.22 \u00b5m filter, Sterile 100 mL bottle\nReagents: 10% (w/v) trehalose in PBS\nExpected outcome: Trehalose solution is sterile and clear, ready for use in cryopreservation.",
+          "linked_to": "Reagent Preparation"
+        },
+        {
+          "step_number": 2,
+          "description": "DAY 0 (PREP) | 30 min | Reagent Preparation\nPrepare 10% (v/v) DMSO solution by diluting 10 mL of DMSO (Sigma-Aldrich, D8418) in 90 mL of sterile PBS. Store at 4\u00b0C until use.\nEquipment: Sterile 100 mL bottle\nReagents: 10% (v/v) DMSO in PBS\nExpected outcome: DMSO solution is clear and ready for use in cryopreservation.\nSafety: DMSO is a skin irritant; wear gloves and goggles.",
+          "linked_to": "Reagent Preparation"
+        },
+        {
+          "step_number": 3,
+          "description": "DAY 0 (PREP) | 24 h | Cell Culture\nCulture HeLa cells in DMEM (Gibco, 11965) supplemented with 10% fetal bovine serum (FBS) (Gibco, 26140) and 1% penicillin-streptomycin (Gibco, 15140) at 37\u00b0C in a 5% CO2 incubator until 80% confluence is reached.\nEquipment: 5% CO2 incubator, T-75 culture flasks\nReagents: DMEM, 10% FBS, 1% penicillin-streptomycin\nExpected outcome: HeLa cells reach 80% confluence, ready for cryopreservation.",
+          "linked_to": "Cell Culture"
+        },
+        {
+          "step_number": 4,
+          "description": "DAY 1 | 30 min | Cell Harvesting\nDetach HeLa cells using 0.25% trypsin-EDTA (Gibco, 25200) for 5 min at 37\u00b0C. Neutralize with complete DMEM and centrifuge at 300 \u00d7 g for 5 min at room temperature. Discard supernatant and resuspend cells in 1 mL of either trehalose or DMSO solution.\nEquipment: Centrifuge (Eppendorf 5424), Pipettes, Tubes\nReagents: 0.25% trypsin-EDTA, Complete DMEM\nExpected outcome: Cells are successfully detached, pelleted, and resuspended in cryoprotectant solution.",
+          "linked_to": "Cell Harvesting"
+        },
+        {
+          "step_number": 5,
+          "description": "DAY 1 | 1 h | Cryopreservation\nAliquot 1 mL of cell suspension (1 \u00d7 10^6 cells/mL) into cryovials (Nunc) containing either trehalose or DMSO solution. Place cryovials in a controlled-rate freezer (Planer Kryo 10) and cool at a rate of -1\u00b0C/min to -80\u00b0C.\nEquipment: Controlled-rate freezer (Planer Kryo 10), Cryovials (Nunc)\nExpected outcome: Cells are frozen at -80\u00b0C without ice crystal formation.",
+          "linked_to": "Cryopreservation"
+        },
+        {
+          "step_number": 6,
+          "description": "DAY 1 | 30 min | Storage\nTransfer cryovials to liquid nitrogen storage for long-term preservation.\nEquipment: Liquid nitrogen storage tank\nExpected outcome: Cryovials are securely stored in liquid nitrogen.\nSafety: Liquid nitrogen poses a frostbite risk; handle with gloves.",
+          "linked_to": "Storage"
+        },
+        {
+          "step_number": 7,
+          "description": "DAY 30 | 10 min | Thawing\nRetrieve cryovials from liquid nitrogen and immediately thaw in a 37\u00b0C water bath for 2 min until just thawed. Transfer contents to a 15 mL tube containing 9 mL of complete DMEM to dilute the cryoprotectant.\nEquipment: 37\u00b0C water bath, 15 mL tubes\nReagents: Complete DMEM\nExpected outcome: Cells are thawed and diluted, ready for recovery.",
+          "linked_to": "Thawing"
+        },
+        {
+          "step_number": 8,
+          "description": "DAY 30 | 30 min | Recovery\nIncubate the diluted cells at 37\u00b0C for 30 min to allow recovery before viability assessment.\nEquipment: 5% CO2 incubator\nExpected outcome: Cells recover from cryopreservation, ready for viability assessment.",
+          "linked_to": "Recovery"
+        },
+        {
+          "step_number": 9,
+          "description": "DAY 30 | 30 min | Viability Assessment\nAfter recovery, mix 100 \u00b5L of cell suspension with 100 \u00b5L of 0.4% trypan blue solution (Gibco, 15250). Count viable cells using a hemocytometer under a light microscope (Olympus CX23).\nEquipment: Hemocytometer (Olympus CX23), Pipettes\nReagents: 0.4% trypan blue solution\nExpected outcome: Viability percentage is determined, with viable cells excluding trypan blue stain.",
+          "linked_to": "Viability Assessment"
+        },
+        {
+          "step_number": 10,
+          "description": "DAY 30 | 1 h | Data Analysis\nCalculate post-thaw viability percentage for each condition. Use ANOVA to compare means between trehalose and DMSO groups, with a significance level set at p < 0.05.\nExpected outcome: Statistical significance is determined, with post-thaw viability of trehalose being at least 15 percentage points higher than DMSO control.",
+          "linked_to": "Data Analysis"
+        },
+        {
+          "step_number": 11,
+          "description": "DAY 30 | Varies | Replication\nRepeat the entire experiment three times to ensure reproducibility of results and statistical validity.\nExpected outcome: Data from three independent experiments are collected for robust statistical analysis.",
+          "linked_to": "Replication"
+        }
+      ],
+      "assumptions": [
+        "Trehalose will provide better membrane stabilization than DMSO during freezing and thawing processes.",
+        "HeLa cells will survive the cryopreservation process with both cryoprotectants, allowing for viability assessment.",
+        "The trypan blue exclusion method will accurately reflect cell viability post-thaw."
+      ],
+      "decision_criteria": [
+        "Proceed if post-thaw viability with trehalose is \u2265 15 percentage points higher than DMSO control.",
+        "Proceed if viability of both conditions is above 70% to ensure cells are healthy for further experiments."
+      ],
+      "risk_mitigations_applied": [],
+      "reproducibility_notes": [
+        "Use the same lot of trehalose and DMSO for all experiments.",
+        "Maintain consistent cell passage number (\u2264 10 passages) for all HeLa cells used.",
+        "Calibrate the controlled-rate freezer before each experiment to ensure consistent cooling rates."
+      ],
+      "execution_readiness_score": 1.0,
+      "execution_readiness_label": "execution_ready_after_review",
+      "feedback_incorporated": [
+        "PRIOR SCIENTIST CORRECTIONS FOR SIMILAR EXPERIMENTS:\nA scientist has previously flagged these specific issues on similar comparative_cryopreservation experiments. You MUST implement each correction below in your output unless it directly contradicts the current hypothesis:\n1. replicate gate in plan text\n2. add 30-minute post-thaw recovery at 37\u00b0C before trypan blue counting\n3. change one"
+      ]
+    },
+    "materials": [
+      {
+        "item_name": "Magnetic stirrer",
+        "supplier": "ThermoFisher",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 unit",
+        "confidence": "high",
+        "uncertainty_note": "Standard pricing for magnetic stirrers in academic labs."
+      },
+      {
+        "item_name": "0.22 \u00b5m filter",
+        "supplier": "Millipore",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 unit",
+        "confidence": "high",
+        "uncertainty_note": "Standard pricing for 0.22 \u00b5m filters."
+      },
+      {
+        "item_name": "5% CO2 incubator",
+        "supplier": "ThermoFisher",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 unit",
+        "confidence": "high",
+        "uncertainty_note": "Standard pricing for CO2 incubators."
+      },
+      {
+        "item_name": "Centrifuge (Eppendorf 5424)",
+        "supplier": "Eppendorf",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 unit",
+        "confidence": "high",
+        "uncertainty_note": "Standard pricing for Eppendorf centrifuges."
+      },
+      {
+        "item_name": "Controlled-rate freezer (Planer Kryo 10)",
+        "supplier": "Planer",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 unit",
+        "confidence": "high",
+        "uncertainty_note": "Standard pricing for controlled-rate freezers."
+      },
+      {
+        "item_name": "Liquid nitrogen storage tank",
+        "supplier": "ThermoFisher",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 unit",
+        "confidence": "high",
+        "uncertainty_note": "Standard pricing for liquid nitrogen storage tanks."
+      },
+      {
+        "item_name": "37\u00b0C water bath",
+        "supplier": "ThermoFisher",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 unit",
+        "confidence": "high",
+        "uncertainty_note": "Standard pricing for water baths."
+      },
+      {
+        "item_name": "Hemocytometer (Olympus CX23)",
+        "supplier": "Olympus",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 unit",
+        "confidence": "high",
+        "uncertainty_note": "Standard pricing for hemocytometers."
+      },
+      {
+        "item_name": "Sterile 100 mL bottle",
+        "supplier": "ThermoFisher",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "5 units",
+        "confidence": "high",
+        "uncertainty_note": "Standard pricing for sterile bottles."
+      },
+      {
+        "item_name": "Cryovials (Nunc)",
+        "supplier": "Nunc",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "50 units",
+        "confidence": "high",
+        "uncertainty_note": "Standard pricing for cryovials."
+      },
+      {
+        "item_name": "Pipettes",
+        "supplier": "ThermoFisher",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 set",
+        "confidence": "high",
+        "uncertainty_note": "Standard pricing for pipette sets."
+      },
+      {
+        "item_name": "15 mL tubes",
+        "supplier": "ThermoFisher",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "50 units",
+        "confidence": "high",
+        "uncertainty_note": "Standard pricing for 15 mL tubes."
+      },
+      {
+        "item_name": "Trehalose (Sigma-Aldrich, T9531)",
+        "supplier": "Sigma-Aldrich",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 g",
+        "confidence": "high",
+        "uncertainty_note": "Standard pricing for trehalose."
+      },
+      {
+        "item_name": "DMSO (Sigma-Aldrich, D8418)",
+        "supplier": "Sigma-Aldrich",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "10 mL",
+        "confidence": "high",
+        "uncertainty_note": "Standard pricing for DMSO."
+      },
+      {
+        "item_name": "DMEM (Gibco, 11965)",
+        "supplier": "Gibco",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "500 mL",
+        "confidence": "high",
+        "uncertainty_note": "Standard pricing for DMEM."
+      },
+      {
+        "item_name": "Fetal Bovine Serum (FBS) (Gibco, 26140)",
+        "supplier": "Gibco",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "100 mL",
+        "confidence": "high",
+        "uncertainty_note": "Standard pricing for FBS."
+      },
+      {
+        "item_name": "Penicillin-streptomycin (Gibco, 15140)",
+        "supplier": "Gibco",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "10 mL",
+        "confidence": "high",
+        "uncertainty_note": "Standard pricing for penicillin-streptomycin."
+      },
+      {
+        "item_name": "0.25% Trypsin-EDTA (Gibco, 25200)",
+        "supplier": "Gibco",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "10 mL",
+        "confidence": "high",
+        "uncertainty_note": "Standard pricing for trypsin-EDTA."
+      },
+      {
+        "item_name": "0.4% Trypan blue solution (Gibco, 15250)",
+        "supplier": "Gibco",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "10 mL",
+        "confidence": "high",
+        "uncertainty_note": "Standard pricing for trypan blue."
+      }
+    ],
+    "budget": {
+      "currency": "EUR",
+      "line_items": [
+        {
+          "item_name": "Magnetic stirrer",
+          "quantity": "1 unit",
+          "unit_cost_estimate": 150.0,
+          "total_cost_estimate": 150.0,
+          "confidence": "high",
+          "uncertainty_note": "Standard pricing for magnetic stirrers in academic labs."
+        },
+        {
+          "item_name": "0.22 \u00b5m filter",
+          "quantity": "1 unit",
+          "unit_cost_estimate": 50.0,
+          "total_cost_estimate": 50.0,
+          "confidence": "high",
+          "uncertainty_note": "Standard pricing for 0.22 \u00b5m filters."
+        },
+        {
+          "item_name": "5% CO2 incubator",
+          "quantity": "1 unit",
+          "unit_cost_estimate": 200.0,
+          "total_cost_estimate": 200.0,
+          "confidence": "high",
+          "uncertainty_note": "Standard pricing for CO2 incubators."
+        },
+        {
+          "item_name": "Centrifuge (Eppendorf 5424)",
+          "quantity": "1 unit",
+          "unit_cost_estimate": 300.0,
+          "total_cost_estimate": 300.0,
+          "confidence": "high",
+          "uncertainty_note": "Standard pricing for Eppendorf centrifuges."
+        },
+        {
+          "item_name": "Controlled-rate freezer (Planer Kryo 10)",
+          "quantity": "1 unit",
+          "unit_cost_estimate": 500.0,
+          "total_cost_estimate": 500.0,
+          "confidence": "high",
+          "uncertainty_note": "Standard pricing for controlled-rate freezers."
+        },
+        {
+          "item_name": "Liquid nitrogen storage tank",
+          "quantity": "1 unit",
+          "unit_cost_estimate": 400.0,
+          "total_cost_estimate": 400.0,
+          "confidence": "high",
+          "uncertainty_note": "Standard pricing for liquid nitrogen storage tanks."
+        },
+        {
+          "item_name": "37\u00b0C water bath",
+          "quantity": "1 unit",
+          "unit_cost_estimate": 200.0,
+          "total_cost_estimate": 200.0,
+          "confidence": "high",
+          "uncertainty_note": "Standard pricing for water baths."
+        },
+        {
+          "item_name": "Hemocytometer (Olympus CX23)",
+          "quantity": "1 unit",
+          "unit_cost_estimate": 100.0,
+          "total_cost_estimate": 100.0,
+          "confidence": "high",
+          "uncertainty_note": "Standard pricing for hemocytometers."
+        },
+        {
+          "item_name": "Sterile 100 mL bottle",
+          "quantity": "5 units",
+          "unit_cost_estimate": 5.0,
+          "total_cost_estimate": 25.0,
+          "confidence": "high",
+          "uncertainty_note": "Standard pricing for sterile bottles."
+        },
+        {
+          "item_name": "Cryovials (Nunc)",
+          "quantity": "50 units",
+          "unit_cost_estimate": 0.5,
+          "total_cost_estimate": 25.0,
+          "confidence": "high",
+          "uncertainty_note": "Standard pricing for cryovials."
+        },
+        {
+          "item_name": "Pipettes",
+          "quantity": "1 set",
+          "unit_cost_estimate": 100.0,
+          "total_cost_estimate": 100.0,
+          "confidence": "high",
+          "uncertainty_note": "Standard pricing for pipette sets."
+        },
+        {
+          "item_name": "15 mL tubes",
+          "quantity": "50 units",
+          "unit_cost_estimate": 0.2,
+          "total_cost_estimate": 10.0,
+          "confidence": "high",
+          "uncertainty_note": "Standard pricing for 15 mL tubes."
+        },
+        {
+          "item_name": "Trehalose (Sigma-Aldrich, T9531)",
+          "quantity": "1 g",
+          "unit_cost_estimate": 0.5,
+          "total_cost_estimate": 0.5,
+          "confidence": "high",
+          "uncertainty_note": "Standard pricing for trehalose."
+        },
+        {
+          "item_name": "DMSO (Sigma-Aldrich, D8418)",
+          "quantity": "10 mL",
+          "unit_cost_estimate": 5.0,
+          "total_cost_estimate": 5.0,
+          "confidence": "high",
+          "uncertainty_note": "Standard pricing for DMSO."
+        },
+        {
+          "item_name": "DMEM (Gibco, 11965)",
+          "quantity": "500 mL",
+          "unit_cost_estimate": 20.0,
+          "total_cost_estimate": 20.0,
+          "confidence": "high",
+          "uncertainty_note": "Standard pricing for DMEM."
+        },
+        {
+          "item_name": "Fetal Bovine Serum (FBS) (Gibco, 26140)",
+          "quantity": "100 mL",
+          "unit_cost_estimate": 25.0,
+          "total_cost_estimate": 25.0,
+          "confidence": "high",
+          "uncertainty_note": "Standard pricing for FBS."
+        },
+        {
+          "item_name": "Penicillin-streptomycin (Gibco, 15140)",
+          "quantity": "10 mL",
+          "unit_cost_estimate": 10.0,
+          "total_cost_estimate": 10.0,
+          "confidence": "high",
+          "uncertainty_note": "Standard pricing for penicillin-streptomycin."
+        },
+        {
+          "item_name": "0.25% Trypsin-EDTA (Gibco, 25200)",
+          "quantity": "10 mL",
+          "unit_cost_estimate": 5.0,
+          "total_cost_estimate": 5.0,
+          "confidence": "high",
+          "uncertainty_note": "Standard pricing for trypsin-EDTA."
+        },
+        {
+          "item_name": "0.4% Trypan blue solution (Gibco, 15250)",
+          "quantity": "10 mL",
+          "unit_cost_estimate": 5.0,
+          "total_cost_estimate": 5.0,
+          "confidence": "high",
+          "uncertainty_note": "Standard pricing for trypan blue."
+        }
+      ],
+      "estimated_total_cost": 2130.5,
+      "uncertainty_notes": [
+        "Institutional discounts may apply to some items, affecting final costs.",
+        "Prices for specialized reagents may vary based on supplier availability.",
+        "Quantities are estimated based on the protocol; actual usage may differ."
+      ]
+    },
+    "timeline": {
+      "phases": [
+        {
+          "phase_name": "Day 0: Reagent Preparation",
+          "duration_estimate": "1 days",
+          "dependencies": [],
+          "responsible_role": "Research associate",
+          "risk_buffer": "1 days",
+          "bottlenecks": [
+            "Equipment availability for reagent preparation"
+          ]
+        },
+        {
+          "phase_name": "Day 0: Cell Culture Setup",
+          "duration_estimate": "1 days",
+          "dependencies": [],
+          "responsible_role": "Research associate",
+          "risk_buffer": "1 days",
+          "bottlenecks": [
+            "Cell line availability",
+            "Incubator space"
+          ]
+        },
+        {
+          "phase_name": "Day 1: Cell Culture",
+          "duration_estimate": "1 days",
+          "dependencies": [
+            "Day 0: Cell Culture Setup"
+          ],
+          "responsible_role": "Research associate",
+          "risk_buffer": "1 days",
+          "bottlenecks": [
+            "Biological variability in cell growth"
+          ]
+        },
+        {
+          "phase_name": "Day 1: Cell Harvesting",
+          "duration_estimate": "1 days",
+          "dependencies": [
+            "Day 1: Cell Culture"
+          ],
+          "responsible_role": "Research associate",
+          "risk_buffer": "1 days",
+          "bottlenecks": [
+            "Trypsin-EDTA availability",
+            "Centrifuge booking"
+          ]
+        },
+        {
+          "phase_name": "Day 1: Cryopreservation",
+          "duration_estimate": "1 days",
+          "dependencies": [
+            "Day 1: Cell Harvesting"
+          ],
+          "responsible_role": "Research associate",
+          "risk_buffer": "1 days",
+          "bottlenecks": [
+            "Controlled-rate freezer availability"
+          ]
+        },
+        {
+          "phase_name": "Day 1: Storage",
+          "duration_estimate": "1 days",
+          "dependencies": [
+            "Day 1: Cryopreservation"
+          ],
+          "responsible_role": "Research associate",
+          "risk_buffer": "1 days",
+          "bottlenecks": [
+            "Liquid nitrogen availability"
+          ]
+        },
+        {
+          "phase_name": "Day 30: Thawing",
+          "duration_estimate": "1 days",
+          "dependencies": [],
+          "responsible_role": "Research associate",
+          "risk_buffer": "1 days",
+          "bottlenecks": [
+            "Water bath availability"
+          ]
+        },
+        {
+          "phase_name": "Day 30: Post-Thaw Recovery",
+          "duration_estimate": "1 days",
+          "dependencies": [
+            "Day 30: Thawing"
+          ],
+          "responsible_role": "Research associate",
+          "risk_buffer": "1 days",
+          "bottlenecks": [
+            "Incubator space"
+          ]
+        },
+        {
+          "phase_name": "Day 30: Viability Assessment",
+          "duration_estimate": "1 days",
+          "dependencies": [
+            "Day 30: Post-Thaw Recovery"
+          ],
+          "responsible_role": "Research associate",
+          "risk_buffer": "1 days",
+          "bottlenecks": [
+            "Hemocytometer availability"
+          ]
+        },
+        {
+          "phase_name": "Day 30: Data Analysis",
+          "duration_estimate": "1 days",
+          "dependencies": [
+            "Day 30: Viability Assessment"
+          ],
+          "responsible_role": "Bioinformatician",
+          "risk_buffer": "1 days",
+          "bottlenecks": [
+            "Statistical software availability"
+          ]
+        },
+        {
+          "phase_name": "Day 30: Replication",
+          "duration_estimate": "3 days",
+          "dependencies": [
+            "Day 30: Data Analysis"
+          ],
+          "responsible_role": "Research associate",
+          "risk_buffer": "1 days",
+          "bottlenecks": [
+            "Cell line availability",
+            "Reagent availability"
+          ]
+        }
+      ],
+      "total_duration_estimate": "24 days (including risk buffers)"
+    },
+    "validation": {
+      "primary_endpoint": "Post-thaw viability percentage at immediate and 24h checkpoints.",
+      "secondary_endpoints": [
+        "Cell recovery count",
+        "Morphology quality score",
+        "Replicate variance"
+      ],
+      "success_threshold": "at least 15 percentage points higher than DMSO control improvement over comparator in replicate-confirmed data.",
+      "failure_conditions": [
+        "No meaningful viability gain in replicate-confirmed runs.",
+        "Intervention increases delayed viability loss at 24h."
+      ],
+      "suggested_statistical_comparison": "Two-group comparison against comparator using t-test or Mann-Whitney based on normality.",
+      "minimum_replicates_or_design_note": "Minimum three biological replicates before execution-level claim."
+    },
+    "cro_ready_brief": {
+      "objective": "To determine the effect of trehalose as a cryoprotectant on post-thaw viability of HeLa cells compared to a standard DMSO protocol.",
+      "scope_of_work": [
+        "Execute pilot-first HeLa cryopreservation comparison between DMSO baseline and trehalose arm.",
+        "Deliver replicate-confirmed viability analysis and mitigation traceability report."
+      ],
+      "sample_count": "At least 3 biological replicates per arm",
+      "required_assays": [
+        "Immediate post-thaw viability",
+        "24h follow-up viability"
+      ],
+      "deliverables": [
+        "Raw assay tables",
+        "QC log",
+        "Analysis summary",
+        "Deviation report"
+      ],
+      "qc_requirements": [
+        "Controlled-rate freeze log",
+        "Lot traceability",
+        "Blinded run annotation"
+      ],
+      "timeline_request": "24 days (including risk buffers)",
+      "materials_responsibility": "CRO to quote and confirm all materials before ordering.",
+      "questions_for_cro": [
+        "Can you support controlled-rate freezing logs in each run?",
+        "Can you include replicate-level batch metadata in the final report?"
+      ]
+    },
+    "confidence_score": 0.82,
+    "feedback_incorporated": false,
+    "feedback_trace": []
+  }
+}

@@ -1,0 +1,147 @@
+{
+  "comparative_cryopreservation__replace_sucrose": [
+    {
+      "fingerprint": "comparative_cryopreservation__replace_sucrose",
+      "section": "plan",
+      "feedback_text": "Clarify replicate gate for execution readiness.",
+      "requested_changes": [
+        "replicate gate in plan text"
+      ],
+      "experiment_type": "comparative_cryopreservation",
+      "created_at": "2026-04-26T04:51:08.360729Z",
+      "applied_count": 45
+    },
+    {
+      "fingerprint": "comparative_cryopreservation__replace_sucrose",
+      "section": "plan",
+      "feedback_text": "Clarify replicate gate for execution readiness.",
+      "requested_changes": [
+        "replicate gate in plan text"
+      ],
+      "experiment_type": "comparative_cryopreservation",
+      "created_at": "2026-04-26T04:53:17.089221Z",
+      "applied_count": 434
+    },
+    {
+      "fingerprint": "comparative_cryopreservation__replace_sucrose",
+      "section": "plan",
+      "feedback_text": "Clarify replicate gate for execution readiness.",
+      "requested_changes": [
+        "replicate gate in plan text"
+      ],
+      "experiment_type": "comparative_cryopreservation",
+      "created_at": "2026-04-26T04:55:08.142931Z",
+      "applied_count": 0
+    },
+    {
+      "fingerprint": "comparative_cryopreservation__replace_sucrose",
+      "section": "plan",
+      "feedback_text": "The protocol is missing post-thaw recovery",
+      "requested_changes": [
+        "add 30-minute post-thaw recovery at 37\u00b0C before trypan blue counting"
+      ],
+      "experiment_type": "comparative_cryopreservation",
+      "created_at": "2026-04-26T04:55:58.166723Z",
+      "applied_count": 445
+    },
+    {
+      "fingerprint": "comparative_cryopreservation__replace_sucrose",
+      "section": "plan",
+      "feedback_text": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+      "requested_changes": [],
+      "experiment_type": "comparative_cryopreservation",
+      "created_at": "2026-04-26T04:55:58.178255Z",
+      "applied_count": 0
+    },
+    {
+      "fingerprint": "comparative_cryopreservation__replace_sucrose",
+      "section": "plan",
+      "feedback_text": "legacy regen",
+      "requested_changes": [
+        "change one"
+      ],
+      "experiment_type": "comparative_cryopreservation",
+      "created_at": "2026-04-26T04:55:58.182824Z",
+      "applied_count": 389
+    },
+    {
+      "fingerprint": "comparative_cryopreservation__replace_sucrose",
+      "section": "plan",
+      "feedback_text": "Clarify replicate gate for execution readiness.",
+      "requested_changes": [
+        "replicate gate in plan text"
+      ],
+      "experiment_type": "comparative_cryopreservation",
+      "created_at": "2026-04-26T04:58:24.813637Z",
+      "applied_count": 0
+    },
+    {
+      "fingerprint": "comparative_cryopreservation__replace_sucrose",
+      "section": "plan",
+      "feedback_text": "Clarify replicate gate for execution readiness.",
+      "requested_changes": [
+        "replicate gate in plan text"
+      ],
+      "experiment_type": "comparative_cryopreservation",
+      "created_at": "2026-04-26T05:02:29.599445Z",
+      "applied_count": 0
+    },
+    {
+      "fingerprint": "comparative_cryopreservation__replace_sucrose",
+      "section": "plan",
+      "feedback_text": "Clarify replicate gate for execution readiness.",
+      "requested_changes": [
+        "replicate gate in plan text"
+      ],
+      "experiment_type": "comparative_cryopreservation",
+      "created_at": "2026-04-26T05:07:08.433668Z",
+      "applied_count": 0
+    },
+    {
+      "fingerprint": "comparative_cryopreservation__replace_sucrose",
+      "section": "plan",
+      "feedback_text": "Clarify replicate gate for execution readiness.",
+      "requested_changes": [
+        "replicate gate in plan text"
+      ],
+      "experiment_type": "comparative_cryopreservation",
+      "created_at": "2026-04-26T05:26:48.797156Z",
+      "applied_count": 0
+    },
+    {
+      "fingerprint": "comparative_cryopreservation__replace_sucrose",
+      "section": "plan",
+      "feedback_text": "Clarify replicate gate for execution readiness.",
+      "requested_changes": [
+        "replicate gate in plan text"
+      ],
+      "experiment_type": "comparative_cryopreservation",
+      "created_at": "2026-04-26T05:36:57.044233Z",
+      "applied_count": 0
+    },
+    {
+      "fingerprint": "comparative_cryopreservation__replace_sucrose",
+      "section": "plan",
+      "feedback_text": "Clarify replicate gate for execution readiness.",
+      "requested_changes": [
+        "replicate gate in plan text"
+      ],
+      "experiment_type": "comparative_cryopreservation",
+      "created_at": "2026-04-26T06:11:31.088400Z",
+      "applied_count": 74
+    }
+  ],
+  "comparative_cryopreservation__250_mm": [
+    {
+      "fingerprint": "comparative_cryopreservation__250_mm",
+      "section": "plan",
+      "feedback_text": "Add controlled-rate freezing at 1\u00b0C/min before plunge.",
+      "requested_changes": [
+        "Add Mr. Frosty step"
+      ],
+      "experiment_type": "comparative_cryopreservation",
+      "created_at": "2026-04-26T07:11:51.801121Z",
+      "applied_count": 36
+    }
+  ]
+}

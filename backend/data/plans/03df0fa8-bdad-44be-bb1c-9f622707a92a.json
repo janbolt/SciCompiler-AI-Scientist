@@ -1,0 +1,322 @@
+{
+  "request": {
+    "question": "Replacing sucrose with trehalose as a cryoprotectant in the freezing medium will increase post-thaw viability of HeLa cells by at least 15 percentage points compared to the standard DMSO protocol, due to trehalose\u2019s superior membrane stabilization at low temperatures.",
+    "constraints": {
+      "budget": "missing_required_field",
+      "timeline": "missing_required_field",
+      "execution_mode": "hybrid"
+    },
+    "prior_feedback": []
+  },
+  "response": {
+    "plan_id": "03df0fa8-bdad-44be-bb1c-9f622707a92a",
+    "hypothesis": {
+      "intervention": "replace sucrose with trehalose as the cryoprotectant in the freezing medium",
+      "biological_system": "HeLa cells",
+      "comparator_or_control": "standard DMSO protocol",
+      "measurable_outcome": "post-thaw viability",
+      "threshold": "at least 15 percentage points higher than the standard DMSO protocol",
+      "mechanistic_rationale": "trehalose's superior membrane stabilization at low temperatures",
+      "experiment_type": "comparative_cryopreservation",
+      "constraints": {
+        "execution_mode": "hybrid"
+      },
+      "readiness": "execution_ready",
+      "readiness_rationale": "All six core fields are explicitly stated in the hypothesis with a concrete intervention, named cell line, defined comparator, named outcome, numeric threshold, and a biological mechanism.",
+      "confidence_score": 0.95,
+      "clarifying_questions": [],
+      "literature_search_hint": "trehalose DMSO cryopreservation HeLa viability trypan blue",
+      "original_hypothesis": "Replacing sucrose with trehalose as a cryoprotectant in the freezing medium will increase post-thaw viability of HeLa cells by at least 15 percentage points compared to the standard DMSO protocol, due to trehalose\u2019s superior membrane stabilization at low temperatures.",
+      "missing_required_fields": []
+    },
+    "literature_qc": {
+      "novelty_signal": "similar_work_exists",
+      "references": [
+        {
+          "title": "Trehalose-based cryopreservation of mammalian cells",
+          "protocol_url": "https://www.semanticscholar.org/paper/stub-reference-1",
+          "authors": [
+            "Stub Author"
+          ],
+          "published_year": 2021,
+          "match_type": "stub",
+          "relevance_note": "Covers trehalose as a cryoprotectant in mammalian systems.",
+          "is_stub": true
+        }
+      ],
+      "confidence_score": 0.72,
+      "explanation": "Papers using trehalose as a cryoprotectant exist in the literature, primarily in the context of cell preservation and lyophilization. No paper was found combining trehalose with HeLa cells specifically using trypan blue viability as the primary endpoint.",
+      "recommended_action": "Related publications exist. Review the references, cite relevant prior work in your plan, and explicitly state how your experiment differs or extends the existing approach.",
+      "search_coverage": "full"
+    },
+    "protocol_candidates": [
+      {
+        "protocol_name": "Standard comparative_cryopreservation protocol for replace sucrose with trehalose as the cryoprotectant in the freezing medium",
+        "source_type": "stub",
+        "fit_score": 0.75,
+        "confidence": 0.65,
+        "adaptation_notes": "Stub mode \u2014 no live protocols.io search performed. This is a placeholder candidate.",
+        "missing_steps": [
+          "Exact reagent concentrations",
+          "Instrument-specific settings"
+        ],
+        "limitations": [
+          "Stub output only \u2014 real protocols.io search requires PROTOCOLS_IO_TOKEN."
+        ],
+        "raw_steps": [],
+        "protocol_url": ""
+      }
+    ],
+    "evidence_claims": [
+      {
+        "claim": "Post-thaw viability directly tests the stated biological outcome.",
+        "evidence_type": "direct_evidence",
+        "support_summary": "Outcome is explicitly present in user hypothesis.",
+        "strength": "strong",
+        "linked_to": "hypothesis.measurable_outcome"
+      },
+      {
+        "claim": "Trehalose membrane stabilization rationale supports intervention plausibility.",
+        "evidence_type": "mechanistic_evidence",
+        "support_summary": "Mechanistic rationale is explicitly stated in user input.",
+        "strength": "moderate",
+        "linked_to": "hypothesis.mechanistic_rationale"
+      },
+      {
+        "claim": "Expected +15 percentage-point threshold may be optimistic without pilot calibration.",
+        "evidence_type": "unvalidated_assumption",
+        "support_summary": "Effect size is user-defined but not validated in this run.",
+        "strength": "weak",
+        "linked_to": "hypothesis.threshold"
+      },
+      {
+        "claim": "Related work exists but exact comparators and setup differ.",
+        "evidence_type": "indirect_evidence",
+        "support_summary": "Literature QC returns similar_work_exists with placeholder references.",
+        "strength": "moderate",
+        "linked_to": "literature_qc.novelty_signal"
+      }
+    ],
+    "risks": [
+      {
+        "risk_id": "RISK-001",
+        "category": "biological_assumption",
+        "description": "Standard experimental risk \u2014 the approach has literature support but execution details should be reviewed before proceeding.",
+        "severity": "low",
+        "likelihood": "low",
+        "mitigation": "Confirm all materials, controls, and readiness criteria with a scientist before execution.",
+        "action": "document_only"
+      }
+    ],
+    "plan": {
+      "objective": "Evaluate whether replace sucrose with trehalose as the cryoprotectant in the freezing medium produces post-thaw viability under specified conditions.",
+      "experimental_design": "Controlled comparative_cryopreservation comparing replace sucrose with trehalose as the cryoprotectant in the freezing medium against standard DMSO protocol.",
+      "controls": [
+        "standard DMSO protocol"
+      ],
+      "step_by_step_protocol": [
+        {
+          "step_number": 1,
+          "description": "Standardize culture or sample conditions before treatment.",
+          "linked_to": "user_input"
+        },
+        {
+          "step_number": 2,
+          "description": "Prepare standard DMSO protocol (control) and intervention arms.",
+          "linked_to": "hypothesis.intervention"
+        },
+        {
+          "step_number": 3,
+          "description": "Apply intervention and log batch metadata.",
+          "linked_to": "reproducibility"
+        },
+        {
+          "step_number": 4,
+          "description": "Measure post-thaw viability per protocol.",
+          "linked_to": "validation.primary_endpoint"
+        },
+        {
+          "step_number": 5,
+          "description": "Record results and perform initial data analysis.",
+          "linked_to": "results"
+        }
+      ],
+      "assumptions": [
+        "Sample handling and processing are standardized across arms.",
+        "Reagent preparation follows documented SOP versions."
+      ],
+      "decision_criteria": [
+        "Proceed if intervention meets threshold: at least 15 percentage points higher than the standard DMSO protocol.",
+        "Request scientist review before execution approval."
+      ],
+      "risk_mitigations_applied": [],
+      "reproducibility_notes": [
+        "Record operator, reagent lots, instrument settings, and timestamps per batch.",
+        "Maintain identical assay conditions across all experimental arms."
+      ],
+      "execution_readiness_score": 0.75,
+      "execution_readiness_label": "execution_ready_after_review",
+      "feedback_incorporated": []
+    },
+    "materials": [
+      {
+        "item_name": "HeLa cells sample",
+        "supplier": "Supplier to be determined",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 unit",
+        "confidence": "medium",
+        "uncertainty_note": "Exact catalog and lot to be confirmed by lab procurement."
+      },
+      {
+        "item_name": "replace sucrose with trehalose as the cryoprotectant in the freezing medium (reagent grade)",
+        "supplier": "Sigma-Aldrich (candidate supplier)",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "As required by protocol",
+        "confidence": "low",
+        "uncertainty_note": "Pricing and grade are approximate pending protocol finalisation."
+      },
+      {
+        "item_name": "Standard consumables (tips, tubes, plates)",
+        "supplier": "Lab supplier",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 package",
+        "confidence": "medium",
+        "uncertainty_note": "Stub estimate \u2014 verify against actual protocol scale."
+      }
+    ],
+    "budget": {
+      "currency": "EUR",
+      "line_items": [
+        {
+          "item_name": "HeLa cells sample",
+          "quantity": "1 unit",
+          "unit_cost_estimate": 300.0,
+          "total_cost_estimate": 300.0,
+          "confidence": "medium",
+          "uncertainty_note": "Approximate \u2014 verify quotation."
+        },
+        {
+          "item_name": "replace sucrose with trehalose as the cryoprotectant in the freezing medium (reagent grade)",
+          "quantity": "As required",
+          "unit_cost_estimate": 150.0,
+          "total_cost_estimate": 150.0,
+          "confidence": "low",
+          "uncertainty_note": "Low confidence until exact grade and quantity are fixed."
+        },
+        {
+          "item_name": "Standard consumables",
+          "quantity": "1 package",
+          "unit_cost_estimate": 200.0,
+          "total_cost_estimate": 200.0,
+          "confidence": "medium",
+          "uncertainty_note": "Stub estimate."
+        }
+      ],
+      "estimated_total_cost": 650.0,
+      "uncertainty_notes": [
+        "Stub mode \u2014 all costs are placeholder estimates.",
+        "Use verify_before_ordering before any procurement decisions."
+      ]
+    },
+    "timeline": {
+      "phases": [
+        {
+          "phase_name": "Protocol finalisation and reagent verification",
+          "duration_estimate": "3 days",
+          "dependencies": [],
+          "responsible_role": "Research associate",
+          "risk_buffer": "1 day",
+          "bottlenecks": [
+            "Supplier confirmation",
+            "SOP sign-off"
+          ]
+        },
+        {
+          "phase_name": "Pilot experiment run",
+          "duration_estimate": "5 days",
+          "dependencies": [
+            "Protocol finalisation and reagent verification"
+          ],
+          "responsible_role": "Scientist",
+          "risk_buffer": "2 days",
+          "bottlenecks": [
+            "Sample preparation",
+            "Equipment availability"
+          ]
+        },
+        {
+          "phase_name": "Replicate confirmation run",
+          "duration_estimate": "7 days",
+          "dependencies": [
+            "Pilot experiment run"
+          ],
+          "responsible_role": "Scientist",
+          "risk_buffer": "2 days",
+          "bottlenecks": [
+            "Biological replicate scheduling"
+          ]
+        },
+        {
+          "phase_name": "Data analysis and review",
+          "duration_estimate": "3 days",
+          "dependencies": [
+            "Replicate confirmation run"
+          ],
+          "responsible_role": "PI",
+          "risk_buffer": "1 day",
+          "bottlenecks": [
+            "Statistical review turnaround"
+          ]
+        }
+      ],
+      "total_duration_estimate": "24 days (including risk buffers)"
+    },
+    "validation": {
+      "primary_endpoint": "Post-thaw viability percentage at immediate and 24h checkpoints.",
+      "secondary_endpoints": [
+        "Cell recovery count",
+        "Morphology quality score",
+        "Replicate variance"
+      ],
+      "success_threshold": "at least 15 percentage points higher than the standard DMSO protocol improvement over comparator in replicate-confirmed data.",
+      "failure_conditions": [
+        "No meaningful viability gain in replicate-confirmed runs.",
+        "Intervention increases delayed viability loss at 24h."
+      ],
+      "suggested_statistical_comparison": "Two-group comparison against comparator using t-test or Mann-Whitney based on normality.",
+      "minimum_replicates_or_design_note": "Minimum three biological replicates before execution-level claim."
+    },
+    "cro_ready_brief": {
+      "objective": "Evaluate whether replace sucrose with trehalose as the cryoprotectant in the freezing medium produces post-thaw viability under specified conditions.",
+      "scope_of_work": [
+        "Execute pilot-first HeLa cryopreservation comparison between DMSO baseline and trehalose arm.",
+        "Deliver replicate-confirmed viability analysis and mitigation traceability report."
+      ],
+      "sample_count": "At least 3 biological replicates per arm",
+      "required_assays": [
+        "Immediate post-thaw viability",
+        "24h follow-up viability"
+      ],
+      "deliverables": [
+        "Raw assay tables",
+        "QC log",
+        "Analysis summary",
+        "Deviation report"
+      ],
+      "qc_requirements": [
+        "Controlled-rate freeze log",
+        "Lot traceability",
+        "Blinded run annotation"
+      ],
+      "timeline_request": "24 days (including risk buffers)",
+      "materials_responsibility": "CRO to quote and confirm all materials before ordering.",
+      "questions_for_cro": [
+        "Can you support controlled-rate freezing logs in each run?",
+        "Can you include replicate-level batch metadata in the final report?"
+      ]
+    },
+    "confidence_score": 0.7,
+    "feedback_incorporated": false,
+    "feedback_trace": []
+  }
+}

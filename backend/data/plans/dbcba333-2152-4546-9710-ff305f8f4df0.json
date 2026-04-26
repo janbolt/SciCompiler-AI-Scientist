@@ -1,0 +1,655 @@
+{
+  "request": {
+    "question": "Does adding 250mM trehalose to freezing medium improve HeLa post-thaw viability vs DMSO?",
+    "constraints": {
+      "budget": "missing_required_field",
+      "timeline": "missing_required_field",
+      "execution_mode": "in_house"
+    },
+    "prior_feedback": []
+  },
+  "response": {
+    "plan_id": "dbcba333-2152-4546-9710-ff305f8f4df0",
+    "hypothesis": {
+      "intervention": "adding 250mM trehalose to freezing medium",
+      "biological_system": "HeLa",
+      "comparator_or_control": "DMSO",
+      "measurable_outcome": "post-thaw viability",
+      "threshold": "missing_required_field",
+      "mechanistic_rationale": "missing_required_field",
+      "experiment_type": "comparative_cryopreservation",
+      "constraints": {
+        "execution_mode": "in_house"
+      },
+      "readiness": "pilot_ready",
+      "readiness_rationale": "The intervention, biological system, comparator, and measurable outcome are specified, but the success criterion and mechanistic rationale are missing.",
+      "confidence_score": 0.8,
+      "clarifying_questions": [
+        "What is the numeric success threshold (e.g. >=15% improvement)?",
+        "What is the mechanistic rationale for using trehalose in this context?"
+      ],
+      "literature_search_hint": "trehalose freezing medium HeLa viability DMSO",
+      "original_hypothesis": "Does adding 250mM trehalose to freezing medium improve HeLa post-thaw viability vs DMSO?",
+      "missing_required_fields": [
+        "threshold",
+        "mechanistic_rationale"
+      ]
+    },
+    "literature_qc": {
+      "novelty_signal": "similar_work_exists",
+      "references": [
+        {
+          "title": "Ethylene Glycol and Trehalose Cryopreservation of Cell-Laden Hydrogel Microspheres Enabled by Microfluidic Fabrication.",
+          "protocol_url": "https://doi.org/10.1021/acs.biomac.5c00559",
+          "authors": [
+            "Jiangnan Yu",
+            "Pengfei Pan",
+            "Xiaoli Li",
+            "et al."
+          ],
+          "published_year": 2025,
+          "match_type": "full_scope",
+          "relevance_note": "This paper discusses the use of trehalose in cryopreservation, which is directly relevant to the proposed hypothesis of adding trehalose to a freezing medium.",
+          "is_stub": false
+        }
+      ],
+      "confidence_score": 0.95,
+      "explanation": "The intervention of adding trehalose to a freezing medium is covered in paper [4], which discusses the use of trehalose in cryopreservation, although it focuses on cell-laden hydrogel microspheres rather than HeLa cells specifically. The biological system of HeLa cells is not directly addressed in the retrieved papers, but the general context of cryopreservation is present. The experiment type of comparative cryopreservation is also relevant as it relates to the assessment of post-thaw viability, which is a common outcome in cryopreservation studies.",
+      "recommended_action": "Related publications exist. Review the references, cite relevant prior work in your plan, and explicitly state how your experiment differs or extends the existing approach.",
+      "search_coverage": "full"
+    },
+    "protocol_candidates": [
+      {
+        "protocol_name": "Standard comparative_cryopreservation protocol for adding 250mm trehalose to freezing medium",
+        "source_type": "stub",
+        "fit_score": 0.75,
+        "confidence": 0.65,
+        "adaptation_notes": "Stub mode \u2014 no live protocols.io search performed. This is a placeholder candidate.",
+        "missing_steps": [
+          "Exact reagent concentrations",
+          "Instrument-specific settings"
+        ],
+        "limitations": [
+          "Stub output only \u2014 real protocols.io search requires PROTOCOLS_IO_TOKEN."
+        ],
+        "raw_steps": [],
+        "protocol_url": ""
+      }
+    ],
+    "evidence_claims": [
+      {
+        "claim": "Post-thaw viability directly tests the stated biological outcome.",
+        "evidence_type": "direct_evidence",
+        "support_summary": "Outcome is explicitly present in user hypothesis.",
+        "strength": "strong",
+        "linked_to": "hypothesis.measurable_outcome"
+      },
+      {
+        "claim": "Trehalose membrane stabilization rationale supports intervention plausibility.",
+        "evidence_type": "mechanistic_evidence",
+        "support_summary": "Mechanistic rationale is explicitly stated in user input.",
+        "strength": "moderate",
+        "linked_to": "hypothesis.mechanistic_rationale"
+      },
+      {
+        "claim": "Expected +15 percentage-point threshold may be optimistic without pilot calibration.",
+        "evidence_type": "unvalidated_assumption",
+        "support_summary": "Effect size is user-defined but not validated in this run.",
+        "strength": "weak",
+        "linked_to": "hypothesis.threshold"
+      },
+      {
+        "claim": "Related work exists but exact comparators and setup differ.",
+        "evidence_type": "indirect_evidence",
+        "support_summary": "Literature QC returns similar_work_exists with placeholder references.",
+        "strength": "moderate",
+        "linked_to": "literature_qc.novelty_signal"
+      }
+    ],
+    "risks": [
+      {
+        "risk_id": "RISK-001",
+        "category": "biological_assumption",
+        "description": "Standard translational risk remains even with literature support. Run a pilot before moving to full execution.",
+        "severity": "medium",
+        "likelihood": "medium",
+        "mitigation": "Downgrade to pilot execution until at least three biological replicates confirm threshold performance.",
+        "action": "downgrade_to_pilot"
+      },
+      {
+        "risk_id": "RISK-002",
+        "category": "control_gap",
+        "description": "Control strategy may miss process-specific artifacts in handling or reagent preparation.",
+        "severity": "medium",
+        "likelihood": "medium",
+        "mitigation": "Add an explicit process control arm and a pre-run calibration checkpoint to the protocol.",
+        "action": "modify_plan"
+      }
+    ],
+    "plan": {
+      "objective": "To compare the post-thaw viability of HeLa cells cryopreserved in freezing medium containing 250 mM trehalose versus DMSO.",
+      "experimental_design": "HeLa cells will be divided into two groups: one group will be cryopreserved in freezing medium with 250 mM trehalose, and the other group will be cryopreserved in DMSO. After thawing, cells will be allowed to recover for 30 minutes at 37\u00b0C before viability assessment using trypan blue exclusion method. Each condition will be replicated three times to ensure statistical validity.",
+      "controls": [
+        "HeLa cells cryopreserved in DMSO (10% v/v) as a standard cryoprotectant.",
+        "HeLa cells without any cryoprotectant, frozen in medium only (control for cryopreservation effects).",
+        "DMSO"
+      ],
+      "step_by_step_protocol": [
+        {
+          "step_number": 1,
+          "description": "DAY 0 (PREP) | 1 h | Reagent Preparation\nPrepare freezing medium by mixing 90% FBS (v/v) with 10% DMSO (v/v) for the control group. For the trehalose group, prepare freezing medium by mixing 90% FBS (v/v) with 10% DMSO (v/v) and adding 250 mM trehalose (Sigma-Aldrich, T9531) to the solution. Filter sterilize both solutions using a 0.22 \u00b5m filter.\nEquipment: Sterile 50 mL conical tubes, 0.22 \u00b5m filter, Pipettes and tips\nReagents: 90% FBS (v/v), 10% DMSO (v/v), 250 mM trehalose (Sigma-Aldrich, T9531)\nExpected outcome: Both freezing media are prepared and sterile filtered, ready for use in cell cryopreservation.\nSafety: DMSO is a skin irritant; wear gloves and goggles.",
+          "linked_to": "Reagent Preparation"
+        },
+        {
+          "step_number": 2,
+          "description": "DAY 0 (PREP) | 24 h | Cell Culture\nCulture HeLa cells in DMEM supplemented with 10% FBS and 1% penicillin-streptomycin at 37\u00b0C, 5% CO2 until they reach 70-80% confluence (approximately 24 h).\nEquipment: T75 culture flasks, Incubator (Thermo Scientific, Heracell 150i)\nReagents: DMEM (Gibco, 11965-092), 10% FBS (v/v), 1% penicillin-streptomycin (Gibco, 15140-122)\nExpected outcome: HeLa cells reach 70-80% confluence, ready for harvesting.",
+          "linked_to": "Cell Culture"
+        },
+        {
+          "step_number": 3,
+          "description": "DAY 1 | 30 min | Cell Harvesting\nDetach HeLa cells using 0.25% trypsin-EDTA (Gibco, 25200-056) for 5 min at 37\u00b0C. Neutralize trypsin with an equal volume of complete DMEM. Centrifuge cells at 300 \u00d7 g for 5 min at room temperature, and resuspend in appropriate freezing medium (either trehalose or DMSO).\nEquipment: Centrifuge (Eppendorf 5424), Pipettes and tips\nReagents: 0.25% trypsin-EDTA (Gibco, 25200-056), Complete DMEM (with 10% FBS and 1% penicillin-streptomycin)\nExpected outcome: HeLa cells are detached, centrifuged, and resuspended in freezing medium.",
+          "linked_to": "Cell Harvesting"
+        },
+        {
+          "step_number": 4,
+          "description": "DAY 1 | 2 h | Cryopreservation\nAliquot 1 mL of HeLa cell suspension (1 \u00d7 10^6 cells/mL) into cryovials (Nunc, 368632). Place cryovials in a controlled-rate freezer (Thermo Scientific, Revco) set to cool at -1\u00b0C/min until reaching -80\u00b0C, then transfer to liquid nitrogen for long-term storage.\nEquipment: Controlled-rate freezer (Thermo Scientific, Revco), Cryovials (Nunc, 368632)\nExpected outcome: HeLa cells are successfully frozen and stored in liquid nitrogen.",
+          "linked_to": "Cryopreservation"
+        },
+        {
+          "step_number": 5,
+          "description": "DAY 1 | 5 min | Thawing Cells\nRetrieve cryovials from liquid nitrogen and immediately immerse in a 37\u00b0C water bath. Gently agitate until ice is completely melted (approximately 2-3 min).\nEquipment: 37\u00b0C water bath (Thermo Scientific, 1000D)\nExpected outcome: Cryovials are thawed completely without overheating.",
+          "linked_to": "Thawing Cells"
+        },
+        {
+          "step_number": 6,
+          "description": "DAY 1 | 40 min | Recovery Phase\nTransfer thawed HeLa cells to a 15 mL conical tube containing 10 mL of complete DMEM. Centrifuge at 300 \u00d7 g for 5 min at room temperature to remove cryoprotectant. Resuspend cells in 1 mL of complete DMEM and incubate at 37\u00b0C for 30 min.\nEquipment: Centrifuge (Eppendorf 5424), 15 mL conical tubes\nExpected outcome: Cells are recovered and resuspended, ready for viability assessment.",
+          "linked_to": "Recovery Phase"
+        },
+        {
+          "step_number": 7,
+          "description": "DAY 1 | 30 min | Viability Assessment\nMix 10 \u00b5L of cell suspension with 10 \u00b5L of trypan blue solution (0.4% w/v, Sigma-Aldrich, T8154) and load onto a hemocytometer. Count viable (unstained) and non-viable (stained) cells under a microscope (Olympus, CKX53) at 10x magnification.\nEquipment: Hemocytometer (Hausser Scientific), Microscope (Olympus, CKX53)\nReagents: Trypan blue solution (0.4% w/v, Sigma-Aldrich, T8154)\nExpected outcome: Viability percentage is determined based on cell counts.",
+          "linked_to": "Viability Assessment"
+        },
+        {
+          "step_number": 8,
+          "description": "DAY 1 | 1 h | Data Analysis\nCalculate post-thaw viability percentage using the formula: (number of viable cells / total cells) \u00d7 100. Compare the viability percentages between the trehalose and DMSO groups using a two-tailed t-test with a significance level of p < 0.05.\nExpected outcome: Statistical analysis yields p-value for comparison of viability between groups.",
+          "linked_to": "Data Analysis"
+        },
+        {
+          "step_number": 9,
+          "description": "DAY 1 | 2 days | Replication\nRepeat the entire experiment (steps 1-8) two additional times to ensure replicability of results. Each replicate should follow the same protocol and conditions as outlined.\nExpected outcome: Three independent replicates of the experiment are completed.",
+          "linked_to": "Replication"
+        },
+        {
+          "step_number": 10,
+          "description": "DAY 1 | 1 h | Documentation\nDocument all experimental conditions, observations, and results in a lab notebook. Ensure all data is recorded accurately for future reference and reproducibility.\nExpected outcome: Complete and accurate records of the experiment are maintained.",
+          "linked_to": "Documentation"
+        },
+        {
+          "step_number": 11,
+          "description": "DAY 1 | 30 min | Safety Review\nConduct a safety review of all materials used, ensuring proper disposal of biological waste and adherence to safety protocols regarding DMSO and cell culture materials.\nExpected outcome: All safety protocols are followed, and waste is disposed of correctly.",
+          "linked_to": "Safety Review"
+        },
+        {
+          "step_number": 12,
+          "description": "Mitigation step for RISK-002: Add an explicit process control arm and a pre-run calibration checkpoint to the protocol.",
+          "linked_to": "risk:RISK-002"
+        }
+      ],
+      "assumptions": [
+        "Trehalose enhances post-thaw viability in HeLa cells compared to DMSO.",
+        "The freezing and thawing protocols are optimized for HeLa cells.",
+        "Cell viability can be accurately assessed using trypan blue exclusion."
+      ],
+      "decision_criteria": [
+        "Proceed if post-thaw viability in trehalose group is significantly greater than 70%.",
+        "Proceed if statistical analysis shows p < 0.05 between trehalose and DMSO groups.",
+        "Proceed if all three replicates yield consistent viability results.",
+        "Pilot-only mode: do not scale to full run until replicate criteria are met."
+      ],
+      "risk_mitigations_applied": [
+        "RISK-001: downgraded to pilot (Downgrade to pilot execution until at least three biological replicates confirm threshold performance.)",
+        "RISK-002: Add an explicit process control arm and a pre-run calibration checkpoint to the protocol."
+      ],
+      "reproducibility_notes": [
+        "Use the same lot of FBS for all experiments.",
+        "Maintain consistent cell passage number (less than 10 passages).",
+        "Calibrate the centrifuge before each use to ensure consistent g-forces."
+      ],
+      "execution_readiness_score": 0.62,
+      "execution_readiness_label": "pilot_only",
+      "feedback_incorporated": [
+        "PRIOR SCIENTIST CORRECTIONS FOR SIMILAR EXPERIMENTS:\nA scientist has previously flagged these specific issues on similar comparative_cryopreservation experiments. You MUST implement each correction below in your output unless it directly contradicts the current hypothesis:\n1. replicate gate in plan text\n2. add 30-minute post-thaw recovery at 37\u00b0C before trypan blue counting\n3. change one"
+      ]
+    },
+    "materials": [
+      {
+        "item_name": "Centrifuge",
+        "supplier": "Eppendorf",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1",
+        "confidence": "high",
+        "uncertainty_note": "Standard pricing for daily use of a centrifuge."
+      },
+      {
+        "item_name": "Controlled-rate freezer",
+        "supplier": "Thermo Scientific",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1",
+        "confidence": "high",
+        "uncertainty_note": "Standard pricing for daily use of a controlled-rate freezer."
+      },
+      {
+        "item_name": "37\u00b0C water bath",
+        "supplier": "Thermo Scientific",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1",
+        "confidence": "high",
+        "uncertainty_note": "Standard pricing for daily use of a water bath."
+      },
+      {
+        "item_name": "Microscope",
+        "supplier": "Olympus",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1",
+        "confidence": "high",
+        "uncertainty_note": "Standard pricing for daily use of a microscope."
+      },
+      {
+        "item_name": "Sterile 50 mL conical tubes",
+        "supplier": "Thermo Fisher",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "10",
+        "confidence": "high",
+        "uncertainty_note": "Standard pricing for sterile conical tubes."
+      },
+      {
+        "item_name": "Cryovials",
+        "supplier": "Nunc",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "10",
+        "confidence": "high",
+        "uncertainty_note": "Standard pricing for cryovials."
+      },
+      {
+        "item_name": "Pipette tips",
+        "supplier": "Thermo Fisher",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "100",
+        "confidence": "high",
+        "uncertainty_note": "Standard pricing for pipette tips."
+      },
+      {
+        "item_name": "Fetal Bovine Serum (FBS)",
+        "supplier": "Gibco",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "500 mL",
+        "confidence": "high",
+        "uncertainty_note": "Standard pricing for FBS."
+      },
+      {
+        "item_name": "DMSO",
+        "supplier": "Sigma-Aldrich",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "100 mL",
+        "confidence": "high",
+        "uncertainty_note": "Standard pricing for DMSO."
+      },
+      {
+        "item_name": "Trehalose",
+        "supplier": "Sigma-Aldrich",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 g",
+        "confidence": "low",
+        "uncertainty_note": "Pricing may vary; verify before ordering."
+      },
+      {
+        "item_name": "DMEM",
+        "supplier": "Gibco",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "500 mL",
+        "confidence": "high",
+        "uncertainty_note": "Standard pricing for DMEM."
+      },
+      {
+        "item_name": "Penicillin-streptomycin",
+        "supplier": "Gibco",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "100 mL",
+        "confidence": "high",
+        "uncertainty_note": "Standard pricing for penicillin-streptomycin."
+      },
+      {
+        "item_name": "Trypsin-EDTA",
+        "supplier": "Gibco",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "100 mL",
+        "confidence": "high",
+        "uncertainty_note": "Standard pricing for trypsin-EDTA."
+      },
+      {
+        "item_name": "Trypan blue solution (0.4% w/v)",
+        "supplier": "Sigma-Aldrich",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "10 mL",
+        "confidence": "low",
+        "uncertainty_note": "Pricing may vary; verify before ordering."
+      },
+      {
+        "item_name": "Control group (DMSO)",
+        "supplier": "N/A",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1",
+        "confidence": "high",
+        "uncertainty_note": "Control group is part of the experimental design."
+      },
+      {
+        "item_name": "Experimental group (Trehalose)",
+        "supplier": "N/A",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1",
+        "confidence": "high",
+        "uncertainty_note": "Experimental group is part of the experimental design."
+      }
+    ],
+    "budget": {
+      "currency": "EUR",
+      "line_items": [
+        {
+          "item_name": "Centrifuge",
+          "quantity": "1",
+          "unit_cost_estimate": 50.0,
+          "total_cost_estimate": 50.0,
+          "confidence": "high",
+          "uncertainty_note": "Standard pricing for daily use of a centrifuge."
+        },
+        {
+          "item_name": "Controlled-rate freezer",
+          "quantity": "1",
+          "unit_cost_estimate": 200.0,
+          "total_cost_estimate": 200.0,
+          "confidence": "high",
+          "uncertainty_note": "Standard pricing for daily use of a controlled-rate freezer."
+        },
+        {
+          "item_name": "37\u00b0C water bath",
+          "quantity": "1",
+          "unit_cost_estimate": 30.0,
+          "total_cost_estimate": 30.0,
+          "confidence": "high",
+          "uncertainty_note": "Standard pricing for daily use of a water bath."
+        },
+        {
+          "item_name": "Microscope",
+          "quantity": "1",
+          "unit_cost_estimate": 100.0,
+          "total_cost_estimate": 100.0,
+          "confidence": "high",
+          "uncertainty_note": "Standard pricing for daily use of a microscope."
+        },
+        {
+          "item_name": "Sterile 50 mL conical tubes",
+          "quantity": "10",
+          "unit_cost_estimate": 0.5,
+          "total_cost_estimate": 5.0,
+          "confidence": "high",
+          "uncertainty_note": "Standard pricing for sterile conical tubes."
+        },
+        {
+          "item_name": "Cryovials",
+          "quantity": "10",
+          "unit_cost_estimate": 0.8,
+          "total_cost_estimate": 8.0,
+          "confidence": "high",
+          "uncertainty_note": "Standard pricing for cryovials."
+        },
+        {
+          "item_name": "Pipette tips",
+          "quantity": "100",
+          "unit_cost_estimate": 0.05,
+          "total_cost_estimate": 5.0,
+          "confidence": "high",
+          "uncertainty_note": "Standard pricing for pipette tips."
+        },
+        {
+          "item_name": "Fetal Bovine Serum (FBS)",
+          "quantity": "500 mL",
+          "unit_cost_estimate": 50.0,
+          "total_cost_estimate": 50.0,
+          "confidence": "high",
+          "uncertainty_note": "Standard pricing for FBS."
+        },
+        {
+          "item_name": "DMSO",
+          "quantity": "100 mL",
+          "unit_cost_estimate": 20.0,
+          "total_cost_estimate": 20.0,
+          "confidence": "high",
+          "uncertainty_note": "Standard pricing for DMSO."
+        },
+        {
+          "item_name": "Trehalose",
+          "quantity": "1 g",
+          "unit_cost_estimate": 30.0,
+          "total_cost_estimate": 30.0,
+          "confidence": "low",
+          "uncertainty_note": "Pricing may vary; verify before ordering."
+        },
+        {
+          "item_name": "DMEM",
+          "quantity": "500 mL",
+          "unit_cost_estimate": 30.0,
+          "total_cost_estimate": 30.0,
+          "confidence": "high",
+          "uncertainty_note": "Standard pricing for DMEM."
+        },
+        {
+          "item_name": "Penicillin-streptomycin",
+          "quantity": "100 mL",
+          "unit_cost_estimate": 15.0,
+          "total_cost_estimate": 15.0,
+          "confidence": "high",
+          "uncertainty_note": "Standard pricing for penicillin-streptomycin."
+        },
+        {
+          "item_name": "Trypsin-EDTA",
+          "quantity": "100 mL",
+          "unit_cost_estimate": 20.0,
+          "total_cost_estimate": 20.0,
+          "confidence": "high",
+          "uncertainty_note": "Standard pricing for trypsin-EDTA."
+        },
+        {
+          "item_name": "Trypan blue solution (0.4% w/v)",
+          "quantity": "10 mL",
+          "unit_cost_estimate": 15.0,
+          "total_cost_estimate": 15.0,
+          "confidence": "low",
+          "uncertainty_note": "Pricing may vary; verify before ordering."
+        },
+        {
+          "item_name": "Control group (DMSO)",
+          "quantity": "1",
+          "unit_cost_estimate": 0.0,
+          "total_cost_estimate": 0.0,
+          "confidence": "high",
+          "uncertainty_note": "Control group is part of the experimental design."
+        },
+        {
+          "item_name": "Experimental group (Trehalose)",
+          "quantity": "1",
+          "unit_cost_estimate": 0.0,
+          "total_cost_estimate": 0.0,
+          "confidence": "high",
+          "uncertainty_note": "Experimental group is part of the experimental design."
+        }
+      ],
+      "estimated_total_cost": 578.0,
+      "uncertainty_notes": [
+        "Pricing for trehalose and trypan blue may vary; verify before ordering.",
+        "The replicate gate has been included in the plan text as per feedback.",
+        "A 30-minute post-thaw recovery step has been added before trypan blue counting."
+      ]
+    },
+    "timeline": {
+      "phases": [
+        {
+          "phase_name": "Day 0: Reagent Preparation",
+          "duration_estimate": "1 days",
+          "dependencies": [],
+          "responsible_role": "Research associate",
+          "risk_buffer": "1 days",
+          "bottlenecks": []
+        },
+        {
+          "phase_name": "Day 0: Cell Culture",
+          "duration_estimate": "1 days",
+          "dependencies": [],
+          "responsible_role": "Research associate",
+          "risk_buffer": "1 days",
+          "bottlenecks": []
+        },
+        {
+          "phase_name": "Day 1: Cell Harvesting",
+          "duration_estimate": "1 days",
+          "dependencies": [
+            "Day 0: Cell Culture"
+          ],
+          "responsible_role": "Research associate",
+          "risk_buffer": "1 days",
+          "bottlenecks": []
+        },
+        {
+          "phase_name": "Day 1: Cryopreservation",
+          "duration_estimate": "1 days",
+          "dependencies": [
+            "Day 1: Cell Harvesting"
+          ],
+          "responsible_role": "Research associate",
+          "risk_buffer": "1 days",
+          "bottlenecks": []
+        },
+        {
+          "phase_name": "Day 1: Thawing Cells",
+          "duration_estimate": "1 days",
+          "dependencies": [
+            "Day 1: Cryopreservation"
+          ],
+          "responsible_role": "Research associate",
+          "risk_buffer": "1 days",
+          "bottlenecks": []
+        },
+        {
+          "phase_name": "Day 1: Post-Thaw Recovery Phase",
+          "duration_estimate": "1 days",
+          "dependencies": [
+            "Day 1: Thawing Cells"
+          ],
+          "responsible_role": "Research associate",
+          "risk_buffer": "1 days",
+          "bottlenecks": []
+        },
+        {
+          "phase_name": "Day 1: Viability Assessment",
+          "duration_estimate": "1 days",
+          "dependencies": [
+            "Day 1: Post-Thaw Recovery Phase"
+          ],
+          "responsible_role": "Research associate",
+          "risk_buffer": "1 days",
+          "bottlenecks": []
+        },
+        {
+          "phase_name": "Day 1: Data Analysis",
+          "duration_estimate": "1 days",
+          "dependencies": [
+            "Day 1: Viability Assessment"
+          ],
+          "responsible_role": "Scientist",
+          "risk_buffer": "1 days",
+          "bottlenecks": []
+        },
+        {
+          "phase_name": "Day 1: Documentation",
+          "duration_estimate": "1 days",
+          "dependencies": [
+            "Day 1: Data Analysis"
+          ],
+          "responsible_role": "Research associate",
+          "risk_buffer": "1 days",
+          "bottlenecks": []
+        },
+        {
+          "phase_name": "Day 1: Safety Review",
+          "duration_estimate": "1 days",
+          "dependencies": [
+            "Day 1: Documentation"
+          ],
+          "responsible_role": "Lab manager",
+          "risk_buffer": "1 days",
+          "bottlenecks": []
+        },
+        {
+          "phase_name": "Day 3-4: Replication",
+          "duration_estimate": "2 days",
+          "dependencies": [
+            "Day 1: Safety Review"
+          ],
+          "responsible_role": "Research associate",
+          "risk_buffer": "1 days",
+          "bottlenecks": [
+            "Equipment booking for cell culture and cryopreservation may cause delays."
+          ]
+        }
+      ],
+      "total_duration_estimate": "23 days (including risk buffers)"
+    },
+    "validation": {
+      "primary_endpoint": "Post-thaw viability percentage at immediate and 24h checkpoints.",
+      "secondary_endpoints": [
+        "Cell recovery count",
+        "Morphology quality score",
+        "Replicate variance"
+      ],
+      "success_threshold": ">=10 percentage points (pilot fallback) improvement over comparator in replicate-confirmed data.",
+      "failure_conditions": [
+        "No meaningful viability gain in replicate-confirmed runs.",
+        "Intervention increases delayed viability loss at 24h."
+      ],
+      "suggested_statistical_comparison": "Two-group comparison against comparator using t-test or Mann-Whitney based on normality.",
+      "minimum_replicates_or_design_note": "Minimum three biological replicates before execution-level claim."
+    },
+    "cro_ready_brief": {
+      "objective": "To compare the post-thaw viability of HeLa cells cryopreserved in freezing medium containing 250 mM trehalose versus DMSO.",
+      "scope_of_work": [
+        "Execute pilot-first HeLa cryopreservation comparison between DMSO baseline and trehalose arm.",
+        "Deliver replicate-confirmed viability analysis and mitigation traceability report."
+      ],
+      "sample_count": "At least 3 biological replicates per arm",
+      "required_assays": [
+        "Immediate post-thaw viability",
+        "24h follow-up viability"
+      ],
+      "deliverables": [
+        "Raw assay tables",
+        "QC log",
+        "Analysis summary",
+        "Deviation report"
+      ],
+      "qc_requirements": [
+        "Controlled-rate freeze log",
+        "Lot traceability",
+        "Blinded run annotation"
+      ],
+      "timeline_request": "23 days (including risk buffers)",
+      "materials_responsibility": "CRO to quote and confirm all materials before ordering.",
+      "questions_for_cro": [
+        "Can you support controlled-rate freezing logs in each run?",
+        "Can you include replicate-level batch metadata in the final report?"
+      ]
+    },
+    "confidence_score": 0.64,
+    "feedback_incorporated": false,
+    "feedback_trace": []
+  }
+}

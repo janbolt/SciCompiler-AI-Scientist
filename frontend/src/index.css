@@ -1,0 +1,173 @@
+@import "tailwindcss";
+
+:root {
+  /* Backgrounds */
+  --color-bg: #f5f3ef;
+  --color-bg-dark: #1e3a3a;
+  --color-card: #ffffff;
+
+  /* Text */
+  --color-text: #1a1a1a;
+  --color-text-muted: #6b7280;
+  --color-text-dark-section: rgba(255,255,255,0.85);
+
+  /* Borders */
+  --color-border: #e8e4de;
+
+  /* Accents */
+  --color-accent: #2ec4b0;
+  --color-accent-deep: #1e9e8c;
+  --color-accent-light: #e8faf8;
+  --color-accent-label: #5a9e9e;
+  --color-coral: #e07060;
+  --color-coral-light: #fdf0ee;
+
+  /* Code */
+  --color-code-bg: #1e3535;
+  --color-code-text: #c8f0ec;
+
+  /* Novelty badges (kept semantic) */
+  --color-badge-green: #2D6A4F;
+  --color-badge-amber: #B5700A;
+  --color-badge-red: #A63232;
+
+  /* Edit overlay */
+  --color-edit: #fffbea;
+
+  /* Fonts */
+  --font-serif: "Playfair Display", Georgia, "Times New Roman", serif;
+  --font-sans: "DM Sans", system-ui, -apple-system, sans-serif;
+  --font-mono: "Space Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  /* Card radius */
+  --radius-card: 14px;
+  --radius-btn: 999px;
+}
+
+@theme inline {
+  --color-bg: var(--color-bg);
+  --color-text: var(--color-text);
+  --color-border: var(--color-border);
+  --color-accent: var(--color-accent);
+  --color-accent-light: var(--color-accent-light);
+  --color-code-bg: var(--color-code-bg);
+  --color-code-text: var(--color-code-text);
+  --color-muted: var(--color-text-muted);
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-size: 15px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+button {
+  font-family: var(--font-sans);
+  cursor: pointer;
+}
+
+textarea,
+input {
+  font-family: var(--font-sans);
+}
+
+.font-serif {
+  font-family: var(--font-serif);
+}
+
+.font-mono {
+  font-family: var(--font-mono);
+}
+
+/* Eyebrow label — teal, all-caps, wide tracking */
+.eyebrow {
+  font-family: var(--font-sans);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-accent-label);
+}
+
+/* Legacy alias kept for components that use it */
+.small-caps {
+  font-family: var(--font-sans);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-accent-label);
+}
+
+.card {
+  background: var(--color-card);
+  border-radius: var(--radius-card);
+  border: 1px solid var(--color-border);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+}
+
+.code-block {
+  background: var(--color-code-bg);
+  color: var(--color-code-text);
+  font-family: var(--font-mono);
+  padding: 14px 18px;
+  border-radius: 10px;
+  font-size: 0.8rem;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+[contenteditable="true"] {
+  background: var(--color-edit);
+  outline: none;
+  border-radius: 4px;
+}
+
+[contenteditable="true"]:focus {
+  box-shadow: inset 0 0 0 1.5px var(--color-accent);
+}
+
+.divider {
+  border-bottom: 1px solid var(--color-border);
+}
+
+/* Pill badge (coral tag) */
+.tag-coral {
+  background: var(--color-coral-light);
+  color: var(--color-coral);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 3px 9px;
+  border-radius: 999px;
+}
+
+/* CRO badge */
+.tag-cro {
+  background: var(--color-accent-light);
+  color: var(--color-accent-deep);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 3px 9px;
+  border-radius: 999px;
+}

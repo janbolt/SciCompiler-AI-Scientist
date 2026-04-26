@@ -1,0 +1,603 @@
+{
+  "request": {
+    "question": "CRISPR knockout of TP53 in iPSC-derived cardiomyocytes will increase doxorubicin-induced cytotoxicity measured by LDH release",
+    "constraints": {
+      "budget": "missing_required_field",
+      "timeline": "missing_required_field",
+      "execution_mode": "in_house"
+    },
+    "prior_feedback": []
+  },
+  "response": {
+    "plan_id": "958b5325-62b4-497e-b576-bdea25079bbd",
+    "hypothesis": {
+      "intervention": "CRISPR knockout of TP53",
+      "biological_system": "iPSC-derived cardiomyocytes",
+      "comparator_or_control": "(to be specified)",
+      "measurable_outcome": "cytotoxicity (measured by LDH release)",
+      "threshold": "(numeric target TBD)",
+      "mechanistic_rationale": "(details TBD)",
+      "experiment_type": "comparative_cytotoxicity_study",
+      "constraints": {
+        "execution_mode": "in_house"
+      },
+      "readiness": "pilot_ready",
+      "readiness_rationale": "The intervention and biological system are specified, but the comparator/control and numeric thresholds are missing.",
+      "confidence_score": 0.7,
+      "clarifying_questions": [
+        "What is the control condition for comparison?",
+        "What is the numeric threshold for increased cytotoxicity?",
+        "What are the details of the mechanistic rationale for the increase in cytotoxicity?"
+      ],
+      "literature_search_hint": "CRISPR TP53 knockout iPSC-derived cardiomyocytes doxorubicin cytotoxicity LDH",
+      "original_hypothesis": "CRISPR knockout of TP53 in iPSC-derived cardiomyocytes will increase doxorubicin-induced cytotoxicity measured by LDH release",
+      "missing_required_fields": []
+    },
+    "literature_qc": {
+      "novelty_signal": "similar_work_exists",
+      "references": [
+        {
+          "title": "Cellular and electrophysiological characterization of triadin knockout syndrome using induced pluripotent stem cell-derived cardiomyocytes",
+          "protocol_url": "https://doi.org/10.1016/j.stemcr.2023.04.005",
+          "authors": [
+            "Daniel J. Clemens",
+            "D. Ye",
+            "Lili Wang",
+            "et al."
+          ],
+          "published_year": 2023,
+          "match_type": "full_scope",
+          "relevance_note": "Paper discusses CRISPR-Cas9 application in iPSC-derived cardiomyocytes, relevant to the intervention and biological system.",
+          "is_stub": false
+        },
+        {
+          "title": "Applications of genome editing technology in the targeted therapy of human diseases: mechanisms, advances and prospects",
+          "protocol_url": "https://doi.org/10.1038/s41392-019-0089-y",
+          "authors": [
+            "Hongyi Li",
+            "Yang Yang",
+            "Weiqi Hong",
+            "et al."
+          ],
+          "published_year": 2020,
+          "match_type": "full_scope",
+          "relevance_note": "This paper provides a background on genome editing technologies and their applications in diseases, relevant to understanding the context of the intervention.",
+          "is_stub": false
+        },
+        {
+          "title": "TAB2 deficiency induces dilated cardiomyopathy by promoting mitochondrial calcium overload in human iPSC-derived cardiomyocytes",
+          "protocol_url": "https://doi.org/10.1186/s10020-025-01103-x",
+          "authors": [
+            "Wenrui Sun",
+            "Jianchao Zhang",
+            "Shuang Li",
+            "et al."
+          ],
+          "published_year": 2025,
+          "match_type": "full_scope",
+          "relevance_note": "Investigates mechanisms in iPSC-derived cardiomyocytes, which may provide related insights into cellular mechanisms relevant to cytotoxicity.",
+          "is_stub": false
+        }
+      ],
+      "confidence_score": 0.95,
+      "explanation": "The intervention of CRISPR knockout is represented in paper [3], which discusses CRISPR-Cas9 gene editing in iPSC-derived cardiomyocytes, although it focuses on a different gene (TRDN) than TP53. The biological system of iPSC-derived cardiomyocytes is also present in multiple papers, indicating relevant experimental context. However, none of the papers specifically measure cytotoxicity in relation to LDH release or directly address TP53 knockout, which leaves the exact parameters of the hypothesis unfulfilled, thus classifying the work as similar rather than exact.",
+      "recommended_action": "Related publications exist. Review the references, cite relevant prior work in your plan, and explicitly state how your experiment differs or extends the existing approach.",
+      "search_coverage": "full"
+    },
+    "protocol_candidates": [
+      {
+        "protocol_name": "Standard comparative_cytotoxicity_study protocol for crispr knockout of tp53",
+        "source_type": "stub",
+        "fit_score": 0.75,
+        "confidence": 0.65,
+        "adaptation_notes": "Stub mode \u2014 no live protocols.io search performed. This is a placeholder candidate.",
+        "missing_steps": [
+          "Exact reagent concentrations",
+          "Instrument-specific settings"
+        ],
+        "limitations": [
+          "Stub output only \u2014 real protocols.io search requires PROTOCOLS_IO_TOKEN."
+        ],
+        "raw_steps": [],
+        "protocol_url": ""
+      }
+    ],
+    "evidence_claims": [
+      {
+        "claim": "Post-thaw viability directly tests the stated biological outcome.",
+        "evidence_type": "direct_evidence",
+        "support_summary": "Outcome is explicitly present in user hypothesis.",
+        "strength": "strong",
+        "linked_to": "hypothesis.measurable_outcome"
+      },
+      {
+        "claim": "Trehalose membrane stabilization rationale supports intervention plausibility.",
+        "evidence_type": "mechanistic_evidence",
+        "support_summary": "Mechanistic rationale is explicitly stated in user input.",
+        "strength": "moderate",
+        "linked_to": "hypothesis.mechanistic_rationale"
+      },
+      {
+        "claim": "Expected +15 percentage-point threshold may be optimistic without pilot calibration.",
+        "evidence_type": "unvalidated_assumption",
+        "support_summary": "Effect size is user-defined but not validated in this run.",
+        "strength": "weak",
+        "linked_to": "hypothesis.threshold"
+      },
+      {
+        "claim": "Related work exists but exact comparators and setup differ.",
+        "evidence_type": "indirect_evidence",
+        "support_summary": "Literature QC returns similar_work_exists with placeholder references.",
+        "strength": "moderate",
+        "linked_to": "literature_qc.novelty_signal"
+      }
+    ],
+    "risks": [
+      {
+        "risk_id": "RISK-001",
+        "category": "biological_assumption",
+        "description": "Standard translational risk remains even with literature support. Run a pilot before moving to full execution.",
+        "severity": "medium",
+        "likelihood": "medium",
+        "mitigation": "Downgrade to pilot execution until at least three biological replicates confirm threshold performance.",
+        "action": "downgrade_to_pilot"
+      },
+      {
+        "risk_id": "RISK-002",
+        "category": "control_gap",
+        "description": "Control strategy may miss process-specific artifacts in handling or reagent preparation.",
+        "severity": "medium",
+        "likelihood": "medium",
+        "mitigation": "Add an explicit process control arm and a pre-run calibration checkpoint to the protocol.",
+        "action": "modify_plan"
+      }
+    ],
+    "plan": {
+      "objective": "Determine the cytotoxicity of TP53 knockout iPSC-derived cardiomyocytes measured by LDH release compared to control cells.",
+      "experimental_design": "This experiment involves generating TP53 knockout iPSC-derived cardiomyocytes through CRISPR-Cas9 technology, followed by measuring cytotoxicity using an LDH assay. The results will be compared against wild-type iPSC-derived cardiomyocytes to ascertain the effect of TP53 knockout on cell viability.",
+      "controls": [
+        "Normal iPSC-derived cardiomyocytes treated with 0.5% Triton X-100 to induce maximal LDH release.",
+        "Wild-type iPSC-derived cardiomyocytes in non-cytotoxic conditions (no treatment).",
+        "(to be specified)"
+      ],
+      "step_by_step_protocol": [
+        {
+          "step_number": 1,
+          "description": "DAY 0 (PREP) | 5 min | Cell Culture Maintenance\nThaw iPSC-derived cardiomyocytes (iCell Cardiomyocytes, Fujifilm) in a 37\u00b0C water bath until just thawed (approx. 2 min).\nExpected outcome: Viable cardiomyocytes ready for culture.",
+          "linked_to": "Cell Culture Maintenance"
+        },
+        {
+          "step_number": 2,
+          "description": "DAY 0 (PREP) | 10 min | Cell Culture Maintenance\nTransfer thawed cardiomyocytes to a 15 mL conical tube containing 10 mL of pre-warmed cardiomyocyte maintenance medium (CM, CAT#: MABT-001, Merck) and centrifuge at 300 \u00d7 g for 5 min at room temperature.\nExpected outcome: Pelleted cardiomyocytes for resuspension.",
+          "linked_to": "Cell Culture Maintenance"
+        },
+        {
+          "step_number": 3,
+          "description": "DAY 0 (PREP) | 5 min | Cell Culture Maintenance\nResuspend the pelleted cardiomyocytes in 2 mL of cardiomyocyte maintenance medium and plate in a 24-well plate at a density of 5 \u00d7 10^5 cells/well (1 mL per well).\nExpected outcome: Cardiomyocytes properly seeded in 24-well plates.",
+          "linked_to": "Cell Culture Maintenance"
+        },
+        {
+          "step_number": 4,
+          "description": "DAY 0 (PREP) | 2 h | CRISPR Design\nDesign sgRNA targeting TP53 using an online CRISPR design tool and order two unique sgRNAs for improved knockout efficiency.\nExpected outcome: Two sgRNA sequences for TP53 obtained.",
+          "linked_to": "CRISPR Design"
+        },
+        {
+          "step_number": 5,
+          "description": "DAY 1 | 20 min | CRISPR Transfection\nPrepare lipofectamine 2000 transfection mixture by combining 2 \u00b5g of each sgRNA with 4 \u00b5L of lipofectamine in 100 \u00b5L of Opti-MEM for 20 min at room temperature.\nExpected outcome: Transfection complex ready for application.",
+          "linked_to": "CRISPR Transfection"
+        },
+        {
+          "step_number": 6,
+          "description": "DAY 1 | 5 min | CRISPR Transfection\nReplace maintenance medium in the 24-well plates with 500 \u00b5L of fresh cardiomyocyte maintenance medium and add 100 \u00b5L of the transfection mixture to each well containing cardiomyocytes.\nExpected outcome: Transfection of cardiomyocytes initiated.",
+          "linked_to": "CRISPR Transfection"
+        },
+        {
+          "step_number": 7,
+          "description": "DAY 1 | 24 h | CRISPR Transfection\nIncubate transfected cardiomyocytes for 24 h in an incubator at 37\u00b0C with 5% CO2.\nExpected outcome: Transfected cardiomyocytes cultured.",
+          "linked_to": "CRISPR Transfection"
+        },
+        {
+          "step_number": 8,
+          "description": "DAY 2 | 5 min | Media Change\nAfter 24 h, replace the medium with 1 mL of cardiomyocyte maintenance medium to remove the transfection reagent.\nExpected outcome: Transfection medium replaced.",
+          "linked_to": "Media Change"
+        },
+        {
+          "step_number": 9,
+          "description": "DAY 3 | 15 min | Cell Lysis for HDR\nHarvest cardiomyocytes for HDR analysis at 48 h post-transfection by washing cells with 1 mL of PBS and lysing with 100 \u00b5L of RIPA buffer for 10 min on ice.\nExpected outcome: Cell lysate collected for HDR quantification.",
+          "linked_to": "Cell Lysis for HDR"
+        },
+        {
+          "step_number": 10,
+          "description": "DAY 3 | 2 h | HDR Confirmation\nPerform PCR for HDR confirmation using 1 \u00b5L of lysate as template with specific primers for TP53 knockout.\nExpected outcome: PCR amplicon indicating successful TP53 knockout.",
+          "linked_to": "HDR Confirmation"
+        },
+        {
+          "step_number": 11,
+          "description": "DAY 4 | 10 min | Cell Viability Assay\nDetach cardiomyocytes by adding 200 \u00b5L of trypsin-EDTA per well for 5 min at 37\u00b0C, and then neutralize with 800 \u00b5L of complete cardiomyocyte maintenance medium.\nExpected outcome: Single-cell suspension of cardiomyocytes.",
+          "linked_to": "Cell Viability Assay"
+        },
+        {
+          "step_number": 12,
+          "description": "DAY 4 | 15 min | Cytotoxicity Assay\nPrepare LDH assay according to the kit manufacturer (e.g., LDH Cytotoxicity Assay Kit, Thermo Fisher): Add 100 \u00b5L of cardiomyocyte suspension to assay wells in a 96-well plate.\nExpected outcome: LDH assay wells prepared for readings.",
+          "linked_to": "Cytotoxicity Assay"
+        },
+        {
+          "step_number": 13,
+          "description": "DAY 4 | 30 min | Cytotoxicity Assay\nAdd 100 \u00b5L of the reaction mixture from the LDH kit to each well of cardiomyocytes in the 96-well plate and incubate at room temperature for 30 min.\nExpected outcome: Reaction mixture incubated to develop color.",
+          "linked_to": "Cytotoxicity Assay"
+        },
+        {
+          "step_number": 14,
+          "description": "DAY 4 | 10 min | Cytotoxicity Assay\nMeasure the absorbance at 490 nm using a plate reader (e.g., BioTek Synergy HT) to quantify LDH release.\nExpected outcome: Absorbance values for LDH quantification obtained.",
+          "linked_to": "Cytotoxicity Assay"
+        },
+        {
+          "step_number": 15,
+          "description": "DAY 4 | 1 h | Data Analysis\nAnalyze LDH release data using GraphPad Prism\u00ae software to compare TP53 knockout versus wild-type cardiomyocytes, applying unpaired t-test for significance with a p-value threshold of <0.05.\nExpected outcome: Statistical significance assessed for cytotoxicity levels.",
+          "linked_to": "Data Analysis"
+        },
+        {
+          "step_number": 16,
+          "description": "DAY 4 | 30 min | Data Interpretation\nInterpret results in relation to cytotoxicity and summarize findings including LDH release differences and biological implications.\nExpected outcome: Comprehensive report on the effects of TP53 knockout.",
+          "linked_to": "Data Interpretation"
+        },
+        {
+          "step_number": 17,
+          "description": "Mitigation step for RISK-002: Add an explicit process control arm and a pre-run calibration checkpoint to the protocol.",
+          "linked_to": "risk:RISK-002"
+        }
+      ],
+      "assumptions": [
+        "CRISPR-Cas9 technology effectively generates TP53 knockout in iPSC-derived cardiomyocytes.",
+        "LDH release is a reliable measure of cytotoxicity in cardiomyocytes.",
+        "iPSC-derived cardiomyocytes maintain functional viability during culture and treatment."
+      ],
+      "decision_criteria": [
+        "Cytotoxicity assessed by LDH release should be significantly different (p < 0.05) between TP53 knockout and wild-type cells.",
+        "LDH levels in positive control should exceed 150% of wild-type levels.",
+        "Cell viability in negative control should remain above 90%.",
+        "Pilot-only mode: do not scale to full run until replicate criteria are met."
+      ],
+      "risk_mitigations_applied": [
+        "RISK-001: downgraded to pilot (Downgrade to pilot execution until at least three biological replicates confirm threshold performance.)",
+        "RISK-002: Add an explicit process control arm and a pre-run calibration checkpoint to the protocol."
+      ],
+      "reproducibility_notes": [
+        "Use the same batch of iPSC-derived cardiomyocytes for all experiments.",
+        "Standardize the sgRNA and transfection conditions across trials.",
+        "Perform PCR with the same thermal cycler settings for HDR analysis."
+      ],
+      "execution_readiness_score": 0.62,
+      "execution_readiness_label": "pilot_only",
+      "feedback_incorporated": []
+    },
+    "materials": [
+      {
+        "item_name": "15 mL conical tubes",
+        "supplier": "ThermoFisher",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "10 tubes",
+        "confidence": "high",
+        "uncertainty_note": "Standard pricing for laboratory consumables.",
+        "linked_to": "Cell Culture Maintenance"
+      },
+      {
+        "item_name": "iCell Cardiomyocytes",
+        "supplier": "Fujifilm",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 vial",
+        "confidence": "medium",
+        "uncertainty_note": "Specialized cell line with variable pricing.",
+        "linked_to": "Cell Culture Maintenance"
+      },
+      {
+        "item_name": "Cardiomyocyte Maintenance Medium (MABT-001)",
+        "supplier": "Merck",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "500 mL",
+        "confidence": "high",
+        "uncertainty_note": "Standardized culture medium pricing.",
+        "linked_to": "Cell Culture Maintenance"
+      },
+      {
+        "item_name": "24-well plates",
+        "supplier": "ThermoFisher",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "5 plates",
+        "confidence": "high",
+        "uncertainty_note": "Expected pricing for sterile plates.",
+        "linked_to": "Cell Culture Maintenance"
+      },
+      {
+        "item_name": "sgRNA for TP53",
+        "supplier": "Integrated DNA Technologies (IDT)",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "2",
+        "confidence": "medium",
+        "uncertainty_note": "Pricing can vary based on design requirements.",
+        "linked_to": "CRISPR Design"
+      },
+      {
+        "item_name": "Lipofectamine 2000",
+        "supplier": "ThermoFisher",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 mL",
+        "confidence": "medium",
+        "uncertainty_note": "Pricing may vary; verify before ordering.",
+        "linked_to": "CRISPR Transfection"
+      },
+      {
+        "item_name": "Opti-MEM medium",
+        "supplier": "ThermoFisher",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "100 mL",
+        "confidence": "high",
+        "uncertainty_note": "Standard pricing for serum-free medium.",
+        "linked_to": "CRISPR Transfection"
+      },
+      {
+        "item_name": "RIPA Buffer",
+        "supplier": "ThermoFisher",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "50 mL",
+        "confidence": "high",
+        "uncertainty_note": "Common buffer in use; stable pricing.",
+        "linked_to": "Cell Lysis for HDR"
+      },
+      {
+        "item_name": "PCR primers for TP53",
+        "supplier": "Integrated DNA Technologies (IDT)",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 set",
+        "confidence": "medium",
+        "uncertainty_note": "Depends on primer design complexity.",
+        "linked_to": "HDR Confirmation"
+      },
+      {
+        "item_name": "Trypsin-EDTA",
+        "supplier": "Gibco",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "100 mL",
+        "confidence": "high",
+        "uncertainty_note": "Standard pricing for trypsin solutions.",
+        "linked_to": "Cell Viability Assay"
+      },
+      {
+        "item_name": "LDH Cytotoxicity Assay Kit",
+        "supplier": "Thermo Fisher",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 kit",
+        "confidence": "medium",
+        "uncertainty_note": "Price can vary based on supplier and kit type.",
+        "linked_to": "Cytotoxicity Assay"
+      },
+      {
+        "item_name": "Plate Reader (BioTek Synergy HT)",
+        "supplier": "BioTek",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 day rental",
+        "confidence": "medium",
+        "uncertainty_note": "Daily rental fees; consider institutional availability.",
+        "linked_to": "general"
+      }
+    ],
+    "budget": {
+      "currency": "EUR",
+      "line_items": [
+        {
+          "item_name": "15 mL conical tubes",
+          "quantity": "10 tubes",
+          "unit_cost_estimate": 0.5,
+          "total_cost_estimate": 5.0,
+          "confidence": "high",
+          "uncertainty_note": "Standard pricing for laboratory consumables."
+        },
+        {
+          "item_name": "iCell Cardiomyocytes",
+          "quantity": "1 vial",
+          "unit_cost_estimate": 600.0,
+          "total_cost_estimate": 600.0,
+          "confidence": "medium",
+          "uncertainty_note": "Specialized cell line with variable pricing."
+        },
+        {
+          "item_name": "Cardiomyocyte Maintenance Medium (MABT-001)",
+          "quantity": "500 mL",
+          "unit_cost_estimate": 90.0,
+          "total_cost_estimate": 90.0,
+          "confidence": "high",
+          "uncertainty_note": "Standardized culture medium pricing."
+        },
+        {
+          "item_name": "24-well plates",
+          "quantity": "5 plates",
+          "unit_cost_estimate": 10.0,
+          "total_cost_estimate": 50.0,
+          "confidence": "high",
+          "uncertainty_note": "Expected pricing for sterile plates."
+        },
+        {
+          "item_name": "sgRNA for TP53",
+          "quantity": "2",
+          "unit_cost_estimate": 150.0,
+          "total_cost_estimate": 300.0,
+          "confidence": "medium",
+          "uncertainty_note": "Pricing can vary based on design requirements."
+        },
+        {
+          "item_name": "Lipofectamine 2000",
+          "quantity": "1 mL",
+          "unit_cost_estimate": 160.0,
+          "total_cost_estimate": 160.0,
+          "confidence": "medium",
+          "uncertainty_note": "Pricing may vary; verify before ordering."
+        },
+        {
+          "item_name": "Opti-MEM medium",
+          "quantity": "100 mL",
+          "unit_cost_estimate": 20.0,
+          "total_cost_estimate": 20.0,
+          "confidence": "high",
+          "uncertainty_note": "Standard pricing for serum-free medium."
+        },
+        {
+          "item_name": "RIPA Buffer",
+          "quantity": "50 mL",
+          "unit_cost_estimate": 25.0,
+          "total_cost_estimate": 25.0,
+          "confidence": "high",
+          "uncertainty_note": "Common buffer in use; stable pricing."
+        },
+        {
+          "item_name": "PCR primers for TP53",
+          "quantity": "1 set",
+          "unit_cost_estimate": 100.0,
+          "total_cost_estimate": 100.0,
+          "confidence": "medium",
+          "uncertainty_note": "Depends on primer design complexity."
+        },
+        {
+          "item_name": "Trypsin-EDTA",
+          "quantity": "100 mL",
+          "unit_cost_estimate": 40.0,
+          "total_cost_estimate": 40.0,
+          "confidence": "high",
+          "uncertainty_note": "Standard pricing for trypsin solutions."
+        },
+        {
+          "item_name": "LDH Cytotoxicity Assay Kit",
+          "quantity": "1 kit",
+          "unit_cost_estimate": 300.0,
+          "total_cost_estimate": 300.0,
+          "confidence": "medium",
+          "uncertainty_note": "Price can vary based on supplier and kit type."
+        },
+        {
+          "item_name": "Plate Reader (BioTek Synergy HT)",
+          "quantity": "1 day rental",
+          "unit_cost_estimate": 150.0,
+          "total_cost_estimate": 150.0,
+          "confidence": "medium",
+          "uncertainty_note": "Daily rental fees; consider institutional availability."
+        }
+      ],
+      "estimated_total_cost": 1840.0,
+      "uncertainty_notes": [
+        "Pricing may vary depending on supplier agreements and institutional discounts.",
+        "Certain reagents (like specialized kits) may have larger pricing fluctuations over time.",
+        "Consumable prices are subject to market changes; it's good to obtain quotes before final ordering."
+      ]
+    },
+    "timeline": {
+      "phases": [
+        {
+          "phase_name": "Day 0: Cell Preparation and CRISPR Design",
+          "duration_estimate": "1 days",
+          "dependencies": [],
+          "responsible_role": "Research associate",
+          "risk_buffer": "1 days",
+          "bottlenecks": [
+            "Availability of cardiomyocytes",
+            "Order lead time for sgRNA"
+          ]
+        },
+        {
+          "phase_name": "Day 1: CRISPR Transfection",
+          "duration_estimate": "2 days",
+          "dependencies": [
+            "Day 0: Cell Preparation and CRISPR Design"
+          ],
+          "responsible_role": "Scientist",
+          "risk_buffer": "1 days",
+          "bottlenecks": [
+            "Transfection mixture batching issues"
+          ]
+        },
+        {
+          "phase_name": "Day 2: Media Change",
+          "duration_estimate": "1 days",
+          "dependencies": [
+            "Day 1: CRISPR Transfection"
+          ],
+          "responsible_role": "Research associate",
+          "risk_buffer": "0 days",
+          "bottlenecks": []
+        },
+        {
+          "phase_name": "Day 3: HDR Analysis and Confirmation",
+          "duration_estimate": "1 days",
+          "dependencies": [
+            "Day 2: Media Change"
+          ],
+          "responsible_role": "Scientist",
+          "risk_buffer": "1 days",
+          "bottlenecks": [
+            "PCR primer availability",
+            "PCR machine booking"
+          ]
+        },
+        {
+          "phase_name": "Day 4: Cytotoxicity Assay and Data Analysis",
+          "duration_estimate": "1 days",
+          "dependencies": [
+            "Day 3: HDR Analysis and Confirmation"
+          ],
+          "responsible_role": "Research associate",
+          "risk_buffer": "1 days",
+          "bottlenecks": [
+            "Plate reader availability",
+            "Data software issues"
+          ]
+        }
+      ],
+      "total_duration_estimate": "10 days (including risk buffers)"
+    },
+    "validation": {
+      "primary_endpoint": "Post-thaw viability percentage at immediate and 24h checkpoints.",
+      "secondary_endpoints": [
+        "Cell recovery count",
+        "Morphology quality score",
+        "Replicate variance"
+      ],
+      "success_threshold": "(numeric target TBD) improvement over comparator in replicate-confirmed data.",
+      "failure_conditions": [
+        "No meaningful viability gain in replicate-confirmed runs.",
+        "Intervention increases delayed viability loss at 24h."
+      ],
+      "suggested_statistical_comparison": "Two-group comparison against comparator using t-test or Mann-Whitney based on normality.",
+      "minimum_replicates_or_design_note": "Minimum three biological replicates before execution-level claim."
+    },
+    "cro_ready_brief": {
+      "objective": "Determine the cytotoxicity of TP53 knockout iPSC-derived cardiomyocytes measured by LDH release compared to control cells.",
+      "scope_of_work": [
+        "Execute pilot-first HeLa cryopreservation comparison between DMSO baseline and trehalose arm.",
+        "Deliver replicate-confirmed viability analysis and mitigation traceability report."
+      ],
+      "sample_count": "At least 3 biological replicates per arm",
+      "required_assays": [
+        "Immediate post-thaw viability",
+        "24h follow-up viability"
+      ],
+      "deliverables": [
+        "Raw assay tables",
+        "QC log",
+        "Analysis summary",
+        "Deviation report"
+      ],
+      "qc_requirements": [
+        "Controlled-rate freeze log",
+        "Lot traceability",
+        "Blinded run annotation"
+      ],
+      "timeline_request": "10 days (including risk buffers)",
+      "materials_responsibility": "CRO to quote and confirm all materials before ordering.",
+      "questions_for_cro": [
+        "Can you support controlled-rate freezing logs in each run?",
+        "Can you include replicate-level batch metadata in the final report?"
+      ]
+    },
+    "confidence_score": 0.78,
+    "feedback_incorporated": false,
+    "feedback_trace": []
+  }
+}
