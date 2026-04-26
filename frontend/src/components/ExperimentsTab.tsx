@@ -1,12 +1,51 @@
 import { useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { ChevronDown, Pencil, ArrowRight, Check, Plus, Trash2, AlertTriangle, FlaskConical } from "lucide-react";
+import { ChevronDown, Pencil, ArrowRight, Check, Plus, Trash2, AlertTriangle, FlaskConical, Info } from "lucide-react";
 import { Experiment, Material } from "../mockData";
 import { usePlan } from "../context/PlanContext";
 import { EditedMaterial, saveExpFeedback, splitQty } from "../lib/feedbackStore";
 import { Modal } from "./Modal";
 import { BenchlingExportModal } from "./BenchlingExportModal";
 import { ReviewPanel } from "./ReviewPanel";
+
+/**
+ * Positive-only CRO badge driven by the bundle-aware LLM classifier
+ * (`cro_compatibility.py`).
+ *
+ * Renders ONLY when the LLM placed this card in a real CRO service bundle.
+ * Cards outside any bundle render no badge — we don't show a "Not CRO" pill.
+ * Hover reveals the bundle name, the real CROs that sell it, and the LLM's
+ * one-sentence rationale.
+ */
+function CroBadge({ experiment }: { experiment: Experiment }) {
+  if (!experiment.cro_compatible) return null;
+
+  const reason = experiment.cro_reason?.trim();
+  const confidence = experiment.cro_confidence ?? 0;
+  const bundleName = experiment.cro_bundle_name?.trim();
+  const bundleExamples = experiment.cro_bundle_examples ?? [];
+
+  // Visible label stays generic ("CRO Compatible"). Bundle name + real
+  // CRO providers + LLM rationale go into the hover tooltip only.
+  const tooltipParts: string[] = [];
+  if (bundleName) tooltipParts.push(`Bundle: ${bundleName}`);
+  if (bundleExamples.length > 0) tooltipParts.push(`Offered by: ${bundleExamples.join(", ")}`);
+  if (reason) tooltipParts.push(reason);
+  if (confidence > 0) tooltipParts.push(`Confidence: ${(confidence * 100).toFixed(0)}%`);
+  const title = tooltipParts.join("\n") || "Routinely outsourced to commercial CROs.";
+
+  return (
+    <span
+      className="tag-cro inline-flex items-center gap-1"
+      title={title}
+      aria-label={`CRO compatible. ${title}`}
+    >
+      <Check size={10} />
+      CRO Compatible
+      <Info size={10} style={{ opacity: 0.7 }} />
+    </span>
+  );
+}
 
 export function ExperimentsTab() {
   const { experiments, hypothesis } = usePlan();
@@ -252,7 +291,7 @@ function ExperimentCard({
             >
               {exp.duration}
             </span>
-            {exp.cro_compatible && <span className="tag-cro">CRO Compatible</span>}
+            <CroBadge experiment={exp} />
           </div>
         </div>
         <motion.span animate={{ rotate: expanded ? 180 : 0 }} transition={{ duration: 0.2 }} style={{ color: "var(--color-text-muted)" }}>

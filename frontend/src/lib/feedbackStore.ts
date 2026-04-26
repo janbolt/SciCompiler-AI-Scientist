@@ -1,21 +1,39 @@
 /**
  * Lightweight localStorage-backed feedback store.
  *
- * Two concern separated under two storage keys:
+ * Two concerns separated under two storage keys:
  *
- * 1. "predictivebio_feedback"  — per-experiment material + step corrections.
+ * 1. "scicompiler_feedback"   — per-experiment material + step corrections.
  *    Written on "Save Changes"; never pre-loaded back into the displayed plan.
  *    Used by the Benchling export and passed as context to the backend.
  *
- * 2. "predictivebio_reviews"   — structured scientist reviews (star ratings +
+ * 2. "scicompiler_reviews"    — structured scientist reviews (star ratings +
  *    section annotations). Written via the ReviewPanel. Passed as
  *    `prior_feedback` in the next POST /demo/run so the backend can incorporate
  *    corrections into the new plan generation.
+ *
+ * Legacy keys ("predictivebio_*") from the previous brand are migrated on
+ * first read so user-entered data isn't lost on the rename.
  */
+
+// ─── One-time migration helper (PredictiveBio → SciCompiler) ─────────────────
+
+function migrateKeyOnce(legacyKey: string, newKey: string): void {
+  try {
+    if (localStorage.getItem(newKey) !== null) return;          // already migrated
+    const legacy = localStorage.getItem(legacyKey);
+    if (legacy === null) return;                                 // nothing to migrate
+    localStorage.setItem(newKey, legacy);
+    localStorage.removeItem(legacyKey);
+  } catch {
+    /* localStorage unavailable / quota — silently skip; data simply won't carry over. */
+  }
+}
 
 // ─── Corrections (per-experiment material / step edits) ───────────────────────
 
-const CORRECTIONS_KEY = "predictivebio_feedback";
+const CORRECTIONS_KEY = "scicompiler_feedback";
+migrateKeyOnce("predictivebio_feedback", CORRECTIONS_KEY);
 
 export type EditedMaterial = {
   name: string;
@@ -62,7 +80,8 @@ export function saveExpFeedback(expId: string, patch: Partial<ExpFeedback>): voi
 
 // ─── Reviews (structured scientist ratings) ───────────────────────────────────
 
-const REVIEWS_KEY = "predictivebio_reviews";
+const REVIEWS_KEY = "scicompiler_reviews";
+migrateKeyOnce("predictivebio_reviews", REVIEWS_KEY);
 
 export type SectionRating = {
   /** 1 (poor) to 5 (excellent) */

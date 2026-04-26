@@ -1,0 +1,548 @@
+{
+  "request": {
+    "question": "Supplementing C57BL/6 mice with Lactobacillus rhamnosus GG for 4 weeks will reduce intestinal permeability by 30% vs controls, measured by FITC-dextran assay, due to upregulation of claudin-1 and occludin.",
+    "constraints": {
+      "budget": "missing_required_field",
+      "timeline": "missing_required_field",
+      "execution_mode": "in_house"
+    },
+    "prior_feedback": []
+  },
+  "response": {
+    "plan_id": "d5515139-75ee-44e7-850e-3a4c9dd02ce0",
+    "hypothesis": {
+      "intervention": "Supplementing C57BL/6 mice with Lactobacillus rhamnosus GG for 4 weeks",
+      "biological_system": "C57BL/6 mice",
+      "comparator_or_control": "controls",
+      "measurable_outcome": "intestinal permeability (measured by FITC-dextran assay)",
+      "threshold": "30% reduction vs controls",
+      "mechanistic_rationale": "upregulation of claudin-1 and occludin",
+      "experiment_type": "in_vivo_efficacy_study",
+      "constraints": {
+        "execution_mode": "in_house"
+      },
+      "readiness": "execution_ready",
+      "readiness_rationale": "All core fields are present and specific. No missing details.",
+      "confidence_score": 1.0,
+      "clarifying_questions": [],
+      "literature_search_hint": "Lactobacillus rhamnosus GG C57BL/6 mice intestinal permeability FITC-dextran claudin-1 occludin",
+      "original_hypothesis": "Supplementing C57BL/6 mice with Lactobacillus rhamnosus GG for 4 weeks will reduce intestinal permeability by 30% vs controls, measured by FITC-dextran assay, due to upregulation of claudin-1 and occludin.",
+      "missing_required_fields": []
+    },
+    "literature_qc": {
+      "novelty_signal": "exact_match_found",
+      "references": [
+        {
+          "title": "Lactobacillus rhamnosus GG culture supernatant ameliorates acute alcohol-induced intestinal permeability and liver injury.",
+          "protocol_url": "https://doi.org/10.1152/ajpgi.00024.2012",
+          "authors": [
+            "Yuhua Wang",
+            "Yanlong Liu",
+            "Anju Sidhu",
+            "et al."
+          ],
+          "published_year": 2012,
+          "match_type": "full_scope",
+          "relevance_note": "This paper directly discusses Lactobacillus rhamnosus GG and its effects on intestinal permeability, which aligns closely with the hypothesis.",
+          "is_stub": false
+        },
+        {
+          "title": "Lactobacillus rhamnosus GG prevents epithelial barrier dysfunction induced by interferon-gamma and fecal supernatants from irritable bowel syndrome patients in human intestinal enteroids and colonoids",
+          "protocol_url": "https://doi.org/10.1080/19490976.2018.1479625",
+          "authors": [
+            "Xu Han",
+            "Allen A. Lee",
+            "Sha Huang",
+            "et al."
+          ],
+          "published_year": 2018,
+          "match_type": "full_scope",
+          "relevance_note": "Though this study is in human models rather than mice, it addresses similar themes of Lactobacillus rhamnosus GG and intestinal barrier function, supporting the relevance of the hypothesis.",
+          "is_stub": false
+        }
+      ],
+      "confidence_score": 0.95,
+      "explanation": "The retrieved paper [3] examines Lactobacillus rhamnosus GG, specifically how it prevents epithelial barrier dysfunction in an in vitro model. The biological system (C57BL/6 mice) is similar to the one proposed in the hypothesis, focusing on the functional outcome of improving intestinal permeability, a measurable outcome aligning with the proposed FITC-dextran assay method. Since the intervention and biological system are closely related, this indicates an prior study directly relevant to the current hypothesis.",
+      "recommended_action": "A paper matching this experiment was found in the scientific literature. Review it before proceeding. If this is intentional replication, state that explicitly. If not, differentiate your approach.",
+      "search_coverage": "full"
+    },
+    "protocol_candidates": [
+      {
+        "protocol_name": "Standard in_vivo_efficacy_study protocol for supplementing c57bl/6 mice with lactobacillus rhamnosus gg for 4 weeks",
+        "source_type": "stub",
+        "fit_score": 0.75,
+        "confidence": 0.65,
+        "adaptation_notes": "Stub mode \u2014 no live protocols.io search performed. This is a placeholder candidate.",
+        "missing_steps": [
+          "Exact reagent concentrations",
+          "Instrument-specific settings"
+        ],
+        "limitations": [
+          "Stub output only \u2014 real protocols.io search requires PROTOCOLS_IO_TOKEN."
+        ],
+        "raw_steps": [],
+        "protocol_url": ""
+      }
+    ],
+    "evidence_claims": [
+      {
+        "claim": "Post-thaw viability directly tests the stated biological outcome.",
+        "evidence_type": "direct_evidence",
+        "support_summary": "Outcome is explicitly present in user hypothesis.",
+        "strength": "strong",
+        "linked_to": "hypothesis.measurable_outcome"
+      },
+      {
+        "claim": "Trehalose membrane stabilization rationale supports intervention plausibility.",
+        "evidence_type": "mechanistic_evidence",
+        "support_summary": "Mechanistic rationale is explicitly stated in user input.",
+        "strength": "moderate",
+        "linked_to": "hypothesis.mechanistic_rationale"
+      },
+      {
+        "claim": "Expected +15 percentage-point threshold may be optimistic without pilot calibration.",
+        "evidence_type": "unvalidated_assumption",
+        "support_summary": "Effect size is user-defined but not validated in this run.",
+        "strength": "weak",
+        "linked_to": "hypothesis.threshold"
+      }
+    ],
+    "risks": [
+      {
+        "risk_id": "RISK-001",
+        "category": "biological_assumption",
+        "description": "Standard translational risk remains even with literature support. Run a pilot before moving to full execution.",
+        "severity": "medium",
+        "likelihood": "medium",
+        "mitigation": "Downgrade to pilot execution until at least three biological replicates confirm threshold performance.",
+        "action": "downgrade_to_pilot"
+      },
+      {
+        "risk_id": "RISK-002",
+        "category": "control_gap",
+        "description": "Control strategy may miss process-specific artifacts in handling or reagent preparation.",
+        "severity": "medium",
+        "likelihood": "medium",
+        "mitigation": "Add an explicit process control arm and a pre-run calibration checkpoint to the protocol.",
+        "action": "modify_plan"
+      }
+    ],
+    "plan": {
+      "objective": "To determine the effects of Lactobacillus rhamnosus GG supplementation on intestinal permeability in C57BL/6 mice.",
+      "experimental_design": "This study will involve dividing C57BL/6 mice into two groups: a Lactobacillus rhamnosus GG treatment group and a control group. Mice in the treatment group will receive the probiotic supplement for four weeks, after which intestinal permeability will be assessed using the FITC-dextran assay.",
+      "controls": [
+        "C57BL/6 mice administered with 20 mL of sterile saline as a negative control.",
+        "C57BL/6 mice receiving 10^9 CFU/mL of Lactobacillus rhamnosus GG in sterile saline solution.",
+        "controls"
+      ],
+      "step_by_step_protocol": [
+        {
+          "step_number": 1,
+          "description": "DAY 0 (PREP) | 2 h | Animal Preparation\nObtain 20 male C57BL/6 mice (6-8 weeks old) from Jackson Laboratory, barcoded for identification.\nExpected outcome: 20 C57BL/6 mice are available for treatment.",
+          "linked_to": "Animal Preparation"
+        },
+        {
+          "step_number": 2,
+          "description": "DAY 0 (PREP) | 7 days | Animal Preparation\nAcclimate mice in separate cages under standard conditions (22\u00b12\u00b0C, humidity 40-60%, 12:12 light/dark cycle) for 1 week prior to experiment.\nExpected outcome: Mice exhibit adapted behavior after 1 week.",
+          "linked_to": "Animal Preparation"
+        },
+        {
+          "step_number": 3,
+          "description": "DAY 0 (PREP) | 24 h | Probiotic Preparation\nCulture Lactobacillus rhamnosus GG in MRS broth at 37\u00b0C for 24 h until reaching an OD600 of 1.0 (approximately 10^9 CFU/mL).\nExpected outcome: Culture reaches 10^9 CFU/mL as determined by OD600 measurement.",
+          "linked_to": "Probiotic Preparation"
+        },
+        {
+          "step_number": 4,
+          "description": "DAY 0 (PREP) | 15 min | Probiotic Preparation\nCentrifuge the culture at 4,000 \u00d7 g for 10 min at 4\u00b0C to pellet the bacteria.\nExpected outcome: Bacterial pellet obtained at the bottom of the centrifuge tube.",
+          "linked_to": "Probiotic Preparation"
+        },
+        {
+          "step_number": 5,
+          "description": "DAY 0 (PREP) | 10 min | Probiotic Preparation\nResuspend the pellet in 20 mL of sterile saline.\nExpected outcome: Bacterial suspension ready for administration.",
+          "linked_to": "Probiotic Preparation"
+        },
+        {
+          "step_number": 6,
+          "description": "DAY 1 | 30 min | Treatment Administration\nRandomly assign mice to two groups (n=10 per group): treatment (Lactobacillus rhamnosus GG) and control (saline) using random number generator.\nExpected outcome: Mice are randomly assigned to experimental groups.",
+          "linked_to": "Treatment Administration"
+        },
+        {
+          "step_number": 7,
+          "description": "DAY 1 | 30 min | Treatment Administration\nAdminister 0.5 mL of Lactobacillus rhamnosus GG suspension (10^9 CFU/mL) to the treatment group by oral gavage each day for 4 weeks.\nExpected outcome: All treatment group mice receive the probiotic without complications.",
+          "linked_to": "Treatment Administration"
+        },
+        {
+          "step_number": 8,
+          "description": "DAY 1 | 30 min | Treatment Administration\nAdminister 0.5 mL of sterile saline to the control group by oral gavage.\nExpected outcome: All control group mice receive saline without complications.",
+          "linked_to": "Treatment Administration"
+        },
+        {
+          "step_number": 9,
+          "description": "DAY 7 | 1 h | Monitoring\nMonitor mice for health and weight weekly, recording any signs of distress or health issues.\nExpected outcome: Weekly health data collected for all mice.",
+          "linked_to": "Monitoring"
+        },
+        {
+          "step_number": 10,
+          "description": "DAY 14 | 1 h | Monitoring\nContinue health monitoring and weight assessments weekly; adjust feed as necessary.\nExpected outcome: Consistent health checks performed, adjustments made as needed.",
+          "linked_to": "Monitoring"
+        },
+        {
+          "step_number": 11,
+          "description": "DAY 21 | 30 min | FITC-dextran Preparation and Administration\nDilute 4000 mg of FITC-dextran (4 kDa, Sigma-Aldrich) in 100 mL of sterile saline to a final concentration of 40 mg/mL.\nExpected outcome: FITC-dextran solution prepared at specified concentration.",
+          "linked_to": "FITC-dextran Preparation and Administration"
+        },
+        {
+          "step_number": 12,
+          "description": "DAY 21 | 30 min | FITC-dextran Administration\nAdminister 0.6 mL of 40 mg/mL FITC-dextran solution by oral gavage to all mice.\nExpected outcome: All mice receive FITC-dextran without complications.",
+          "linked_to": "FITC-dextran Administration"
+        },
+        {
+          "step_number": 13,
+          "description": "DAY 21 | 45 min | Sample Collection\nAfter 4 h of FITC-dextran administration, euthanize mice using isoflurane anesthesia followed by cervical dislocation.\nExpected outcome: All mice are humanely euthanized and ready for tissue collection.",
+          "linked_to": "Sample Collection"
+        },
+        {
+          "step_number": 14,
+          "description": "DAY 21 | 1 h | Tissue Collection\nCollect intestinal tissue samples from all mice for analysis of permeability markers.\nExpected outcome: Tissue samples collected from all mice for further analysis.",
+          "linked_to": "Tissue Collection"
+        },
+        {
+          "step_number": 15,
+          "description": "DAY 21 | 30 min | FITC Analysis\nPrepare tissue samples by homogenizing in 1 mL of PBS and centrifuge at 3,000 \u00d7 g for 10 min.\nExpected outcome: Tissue samples homogenized and centrifuged for supernatant extraction.",
+          "linked_to": "FITC Analysis"
+        },
+        {
+          "step_number": 16,
+          "description": "DAY 21 | 1 h | FITC-dextran Measurement\nMeasure FITC-dextran levels in the supernatant using a fluorometer (BioTek Synergy 4) at an excitation wavelength of 485 nm and emission wavelength of 528 nm.\nExpected outcome: FITC-dextran concentrations quantified for each sample.",
+          "linked_to": "FITC-dextran Measurement"
+        },
+        {
+          "step_number": 17,
+          "description": "DAY 21 | 2 h | Statistical Analysis\nPerform t-tests to compare intestinal permeability measured by FITC-dextran levels between treatment and control groups, setting significance level at p<0.05.\nExpected outcome: Statistical significance determined for differences in permeability.",
+          "linked_to": "Statistical Analysis"
+        },
+        {
+          "step_number": 18,
+          "description": "Mitigation step for RISK-002: Add an explicit process control arm and a pre-run calibration checkpoint to the protocol.",
+          "linked_to": "risk:RISK-002"
+        }
+      ],
+      "assumptions": [
+        "Lactobacillus rhamnosus GG will survive and colonize the intestine of C57BL/6 mice after oral administration.",
+        "FITC-dextran accurately reflects intestinal permeability in the experimental model.",
+        "The intervention period of 4 weeks is sufficient to observe changes in intestinal permeability."
+      ],
+      "decision_criteria": [
+        "Proceed if intestinal permeability is reduced by at least 30% in treatment group compared to the control group.",
+        "Confirm successful administration of Lactobacillus rhamnosus GG before analysis.",
+        "Verify that all mice show normal health indicators prior to sacrifice.",
+        "Pilot-only mode: do not scale to full run until replicate criteria are met."
+      ],
+      "risk_mitigations_applied": [
+        "RISK-001: downgraded to pilot (Downgrade to pilot execution until at least three biological replicates confirm threshold performance.)",
+        "RISK-002: Add an explicit process control arm and a pre-run calibration checkpoint to the protocol."
+      ],
+      "reproducibility_notes": [
+        "Use the same batch of Lactobacillus rhamnosus GG for all administrations.",
+        "Maintain consistent diet and housing conditions for all mice throughout the experiment.",
+        "Calibrate all instruments (weighing scale, fluorometer, etc.) prior to the study."
+      ],
+      "execution_readiness_score": 0.62,
+      "execution_readiness_label": "pilot_only",
+      "feedback_incorporated": []
+    },
+    "materials": [
+      {
+        "item_name": "20 male C57BL/6 mice",
+        "supplier": "Jackson Laboratory",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "20 mice",
+        "confidence": "high",
+        "uncertainty_note": "Pricing based on standard laboratory animal costs.",
+        "linked_to": "Animal Preparation"
+      },
+      {
+        "item_name": "Centrifuge tubes (15 mL)",
+        "supplier": "ThermoFisher",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "50 tubes",
+        "confidence": "high",
+        "uncertainty_note": "Standard pricing for centrifuge tubes, quantities variable.",
+        "linked_to": "general"
+      },
+      {
+        "item_name": "MRS broth",
+        "supplier": "Sigma-Aldrich",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 liter",
+        "confidence": "medium",
+        "uncertainty_note": "Pricing may vary by supplier and volume.",
+        "linked_to": "Probiotic Preparation"
+      },
+      {
+        "item_name": "Sterile saline",
+        "supplier": "ThermoFisher",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "500 mL",
+        "confidence": "high",
+        "uncertainty_note": "Standard saline pricing is stable.",
+        "linked_to": "Probiotic Preparation"
+      },
+      {
+        "item_name": "Lactobacillus rhamnosus GG",
+        "supplier": "ATCC",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 vial",
+        "confidence": "medium",
+        "uncertainty_note": "Pricing for probiotic strains can vary widely.",
+        "linked_to": "Treatment Administration"
+      },
+      {
+        "item_name": "Sterile saline (for control)",
+        "supplier": "ThermoFisher",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "500 mL",
+        "confidence": "high",
+        "uncertainty_note": "Standard saline pricing is stable.",
+        "linked_to": "Treatment Administration"
+      },
+      {
+        "item_name": "FITC-dextran (4 kDa)",
+        "supplier": "Sigma-Aldrich",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "4000 mg",
+        "confidence": "medium",
+        "uncertainty_note": "Pricing may vary by supplier and specific product.",
+        "linked_to": "FITC-dextran Preparation and Administration"
+      },
+      {
+        "item_name": "Isoflurane anesthesia system",
+        "supplier": "VetEquip",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 unit",
+        "confidence": "low",
+        "uncertainty_note": "Anesthesia system costs vary; confirm rental or purchase options.",
+        "linked_to": "Sample Collection"
+      },
+      {
+        "item_name": "Fluorometer (BioTek Synergy 4)",
+        "supplier": "BioTek",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 unit",
+        "confidence": "low",
+        "uncertainty_note": "Costs depend on purchase or rental; verify availability.",
+        "linked_to": "FITC Analysis"
+      },
+      {
+        "item_name": "PBS (Phosphate Buffered Saline)",
+        "supplier": "ThermoFisher",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "500 mL",
+        "confidence": "high",
+        "uncertainty_note": "Stable pricing for PBS.",
+        "linked_to": "FITC Analysis"
+      }
+    ],
+    "budget": {
+      "currency": "EUR",
+      "line_items": [
+        {
+          "item_name": "20 male C57BL/6 mice",
+          "quantity": "20 mice",
+          "unit_cost_estimate": 30.0,
+          "total_cost_estimate": 600.0,
+          "confidence": "high",
+          "uncertainty_note": "Pricing based on standard laboratory animal costs."
+        },
+        {
+          "item_name": "Centrifuge tubes (15 mL)",
+          "quantity": "50 tubes",
+          "unit_cost_estimate": 10.0,
+          "total_cost_estimate": 10.0,
+          "confidence": "high",
+          "uncertainty_note": "Standard pricing for centrifuge tubes, quantities variable."
+        },
+        {
+          "item_name": "MRS broth",
+          "quantity": "1 liter",
+          "unit_cost_estimate": 50.0,
+          "total_cost_estimate": 50.0,
+          "confidence": "medium",
+          "uncertainty_note": "Pricing may vary by supplier and volume."
+        },
+        {
+          "item_name": "Sterile saline",
+          "quantity": "500 mL",
+          "unit_cost_estimate": 5.0,
+          "total_cost_estimate": 5.0,
+          "confidence": "high",
+          "uncertainty_note": "Standard saline pricing is stable."
+        },
+        {
+          "item_name": "Lactobacillus rhamnosus GG",
+          "quantity": "1 vial",
+          "unit_cost_estimate": 200.0,
+          "total_cost_estimate": 200.0,
+          "confidence": "medium",
+          "uncertainty_note": "Pricing for probiotic strains can vary widely."
+        },
+        {
+          "item_name": "Sterile saline (for control)",
+          "quantity": "500 mL",
+          "unit_cost_estimate": 5.0,
+          "total_cost_estimate": 5.0,
+          "confidence": "high",
+          "uncertainty_note": "Standard saline pricing is stable."
+        },
+        {
+          "item_name": "FITC-dextran (4 kDa)",
+          "quantity": "4000 mg",
+          "unit_cost_estimate": 100.0,
+          "total_cost_estimate": 100.0,
+          "confidence": "medium",
+          "uncertainty_note": "Pricing may vary by supplier and specific product."
+        },
+        {
+          "item_name": "Isoflurane anesthesia system",
+          "quantity": "1 unit",
+          "unit_cost_estimate": 100.0,
+          "total_cost_estimate": 100.0,
+          "confidence": "low",
+          "uncertainty_note": "Anesthesia system costs vary; confirm rental or purchase options."
+        },
+        {
+          "item_name": "Fluorometer (BioTek Synergy 4)",
+          "quantity": "1 unit",
+          "unit_cost_estimate": 200.0,
+          "total_cost_estimate": 200.0,
+          "confidence": "low",
+          "uncertainty_note": "Costs depend on purchase or rental; verify availability."
+        },
+        {
+          "item_name": "PBS (Phosphate Buffered Saline)",
+          "quantity": "500 mL",
+          "unit_cost_estimate": 10.0,
+          "total_cost_estimate": 10.0,
+          "confidence": "high",
+          "uncertainty_note": "Stable pricing for PBS."
+        }
+      ],
+      "estimated_total_cost": 1280.0,
+      "uncertainty_notes": [
+        "Price variability possible due to institutional contracts or discounts.",
+        "Confirm bulk pricing for consumables if larger quantities are needed.",
+        "Reagent availability should be checked before ordering."
+      ]
+    },
+    "timeline": {
+      "phases": [
+        {
+          "phase_name": "Day 1: Animal Preparation and Probiotic Culture",
+          "duration_estimate": "5 days",
+          "dependencies": [],
+          "responsible_role": "Research associate",
+          "risk_buffer": "1 days",
+          "bottlenecks": [
+            "Lead time for acquiring mice from Jackson Laboratory"
+          ]
+        },
+        {
+          "phase_name": "Days 2-8: Acclimation of Mice",
+          "duration_estimate": "7 days",
+          "dependencies": [
+            "Day 1: Animal Preparation and Probiotic Culture"
+          ],
+          "responsible_role": "Research associate",
+          "risk_buffer": "1 days",
+          "bottlenecks": [
+            "Acclimation variability among individual mice"
+          ]
+        },
+        {
+          "phase_name": "Days 8-29: Daily Treatment Administration",
+          "duration_estimate": "22 days",
+          "dependencies": [
+            "Days 2-8: Acclimation of Mice"
+          ],
+          "responsible_role": "Research associate",
+          "risk_buffer": "1 days",
+          "bottlenecks": [
+            "Potential complications in administration techniques"
+          ]
+        },
+        {
+          "phase_name": "Day 29: Sample Collection and Analysis",
+          "duration_estimate": "1 days",
+          "dependencies": [
+            "Days 8-29: Daily Treatment Administration"
+          ],
+          "responsible_role": "Scientist",
+          "risk_buffer": "1 days",
+          "bottlenecks": [
+            "Timing of euthanasia and potential issues during sample collection"
+          ]
+        },
+        {
+          "phase_name": "Day 30: Statistical Analysis",
+          "duration_estimate": "1 days",
+          "dependencies": [
+            "Day 29: Sample Collection and Analysis"
+          ],
+          "responsible_role": "Bioinformatician",
+          "risk_buffer": "1 days",
+          "bottlenecks": [
+            "Data processing time and statistical software availability"
+          ]
+        }
+      ],
+      "total_duration_estimate": "41 days (including risk buffers)"
+    },
+    "validation": {
+      "primary_endpoint": "Post-thaw viability percentage at immediate and 24h checkpoints.",
+      "secondary_endpoints": [
+        "Cell recovery count",
+        "Morphology quality score",
+        "Replicate variance"
+      ],
+      "success_threshold": "30% reduction vs controls improvement over comparator in replicate-confirmed data.",
+      "failure_conditions": [
+        "No meaningful viability gain in replicate-confirmed runs.",
+        "Intervention increases delayed viability loss at 24h."
+      ],
+      "suggested_statistical_comparison": "Two-group comparison against comparator using t-test or Mann-Whitney based on normality.",
+      "minimum_replicates_or_design_note": "Minimum three biological replicates before execution-level claim."
+    },
+    "cro_ready_brief": {
+      "objective": "To determine the effects of Lactobacillus rhamnosus GG supplementation on intestinal permeability in C57BL/6 mice.",
+      "scope_of_work": [
+        "Execute pilot-first HeLa cryopreservation comparison between DMSO baseline and trehalose arm.",
+        "Deliver replicate-confirmed viability analysis and mitigation traceability report."
+      ],
+      "sample_count": "At least 3 biological replicates per arm",
+      "required_assays": [
+        "Immediate post-thaw viability",
+        "24h follow-up viability"
+      ],
+      "deliverables": [
+        "Raw assay tables",
+        "QC log",
+        "Analysis summary",
+        "Deviation report"
+      ],
+      "qc_requirements": [
+        "Controlled-rate freeze log",
+        "Lot traceability",
+        "Blinded run annotation"
+      ],
+      "timeline_request": "41 days (including risk buffers)",
+      "materials_responsibility": "CRO to quote and confirm all materials before ordering.",
+      "questions_for_cro": [
+        "Can you support controlled-rate freezing logs in each run?",
+        "Can you include replicate-level batch metadata in the final report?"
+      ]
+    },
+    "confidence_score": 0.78,
+    "feedback_incorporated": false,
+    "feedback_trace": []
+  }
+}

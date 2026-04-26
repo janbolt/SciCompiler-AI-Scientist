@@ -375,6 +375,16 @@ class FrontendExperiment(BaseModel):
     success_criteria: str
     steps: list[str]
     materials: list[FrontendMaterial]
+    # LLM-driven CRO classifier metadata (Field for default safety with old plans).
+    cro_reason: str = Field(default="")
+    cro_blockers: list[str] = Field(default_factory=list)
+    cro_confidence: float = Field(default=0.0, ge=0.0, le=1.0)
+    cro_routine_match: str = Field(default="")
+    # Workflow-bundle metadata: name of the CRO service bundle this card
+    # belongs to (e.g. "CRISPR Cell Line Generation"), the canonical service
+    # category, and 2-3 real CROs that sell that bundle.
+    cro_bundle_name: str = Field(default="")
+    cro_bundle_examples: list[str] = Field(default_factory=list)
 
 
 class FrontendReference(BaseModel):

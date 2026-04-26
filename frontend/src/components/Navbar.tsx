@@ -15,7 +15,7 @@ export function Navbar({ onReset }: Props) {
         className="tracking-tight text-[1.05rem] font-bold"
         style={{ fontFamily: "var(--font-serif)", color: "var(--color-text)" }}
       >
-        PredictiveBio
+        SciCompiler
       </span>
 
       <div className="flex items-center gap-3">

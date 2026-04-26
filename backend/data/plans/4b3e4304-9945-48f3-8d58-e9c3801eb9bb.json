@@ -1,0 +1,615 @@
+{
+  "request": {
+    "question": "Does CRISPR knockout of TP53 in iPSC-derived cardiomyocytes increase doxorubicin sensitivity measured by LDH release?",
+    "constraints": {
+      "budget": "missing_required_field",
+      "timeline": "missing_required_field",
+      "execution_mode": "in_house"
+    },
+    "prior_feedback": []
+  },
+  "response": {
+    "plan_id": "4b3e4304-9945-48f3-8d58-e9c3801eb9bb",
+    "hypothesis": {
+      "intervention": "CRISPR knockout of TP53",
+      "biological_system": "iPSC-derived cardiomyocytes",
+      "comparator_or_control": "not specified",
+      "measurable_outcome": "doxorubicin sensitivity (measured by LDH release)",
+      "threshold": "not specified",
+      "mechanistic_rationale": "missing_required_field",
+      "experiment_type": "comparative_sensitivity_study",
+      "constraints": {
+        "execution_mode": "in_house"
+      },
+      "readiness": "pilot_ready",
+      "readiness_rationale": "Some core fields are partially specified, including the comparator/control and threshold. Mechanistic rationale is missing.",
+      "confidence_score": 0.7,
+      "clarifying_questions": [
+        "What is the comparator/control being used in the experiment?",
+        "What is the numeric threshold for increased sensitivity?"
+      ],
+      "literature_search_hint": "CRISPR TP53 knockout iPSC cardiomyocytes doxorubicin LDH sensitivity",
+      "original_hypothesis": "Does CRISPR knockout of TP53 in iPSC-derived cardiomyocytes increase doxorubicin sensitivity measured by LDH release?",
+      "missing_required_fields": [
+        "mechanistic_rationale"
+      ]
+    },
+    "literature_qc": {
+      "novelty_signal": "not_found",
+      "references": [],
+      "confidence_score": 0.8,
+      "explanation": "The retrieved papers do not provide any relevant data on the CRISPR knockout of TP53 specifically in iPSC-derived cardiomyocytes or assess doxorubicin sensitivity through LDH release. They touch on related topics within cancer and cardiovascular diseases but do not overlap sufficiently with the specific experimental context outlined in the hypothesis.",
+      "recommended_action": "No directly matching publication found. This combination appears novel. Proceed with experiment planning.",
+      "search_coverage": "full"
+    },
+    "protocol_candidates": [
+      {
+        "protocol_name": "Standard comparative_sensitivity_study protocol for crispr knockout of tp53",
+        "source_type": "stub",
+        "fit_score": 0.75,
+        "confidence": 0.65,
+        "adaptation_notes": "Stub mode \u2014 no live protocols.io search performed. This is a placeholder candidate.",
+        "missing_steps": [
+          "Exact reagent concentrations",
+          "Instrument-specific settings"
+        ],
+        "limitations": [
+          "Stub output only \u2014 real protocols.io search requires PROTOCOLS_IO_TOKEN."
+        ],
+        "raw_steps": [],
+        "protocol_url": ""
+      }
+    ],
+    "evidence_claims": [
+      {
+        "claim": "Post-thaw viability directly tests the stated biological outcome.",
+        "evidence_type": "direct_evidence",
+        "support_summary": "Outcome is explicitly present in user hypothesis.",
+        "strength": "strong",
+        "linked_to": "hypothesis.measurable_outcome"
+      },
+      {
+        "claim": "Trehalose membrane stabilization rationale supports intervention plausibility.",
+        "evidence_type": "mechanistic_evidence",
+        "support_summary": "Mechanistic rationale is explicitly stated in user input.",
+        "strength": "moderate",
+        "linked_to": "hypothesis.mechanistic_rationale"
+      },
+      {
+        "claim": "Expected +15 percentage-point threshold may be optimistic without pilot calibration.",
+        "evidence_type": "unvalidated_assumption",
+        "support_summary": "Effect size is user-defined but not validated in this run.",
+        "strength": "weak",
+        "linked_to": "hypothesis.threshold"
+      }
+    ],
+    "risks": [
+      {
+        "risk_id": "RISK-001",
+        "category": "biological_assumption",
+        "description": "No directly matching protocols or publications found. This may be a novel experimental combination with higher inherent uncertainty.",
+        "severity": "low",
+        "likelihood": "low",
+        "mitigation": "Pilot experiment recommended before committing full resources. Document all assumptions explicitly in the plan.",
+        "action": "document_only"
+      }
+    ],
+    "plan": {
+      "objective": "Determine the sensitivity of CRISPR knockout TP53 iPSC-derived cardiomyocytes to doxorubicin as measured by LDH release.",
+      "experimental_design": "iPSC-derived cardiomyocytes will be subjected to CRISPR knockout of TP53. The sensitivity to doxorubicin will be assessed by measuring LDH release from treated and untreated cells. Comparisons will be made between CRISPR-mediated knockout and wild-type controls.",
+      "controls": [
+        "Doxorubicin treatment in wild-type iPSC-derived cardiomyocytes with a known LDH release response curve.",
+        "Untreated iPSC-derived cardiomyocytes without CRISPR KO or doxorubicin exposure.",
+        "not specified"
+      ],
+      "step_by_step_protocol": [
+        {
+          "step_number": 1,
+          "description": "DAY 0 (PREP) | 48 h | Cell Culture\nThaw iPSC-derived cardiomyocytes and expand them in 6-well plates containing 2 mL of cardiac differentiation medium (CDM) per well at 37\u00b0C, 5% CO2 for 48 h.\nExpected outcome: Cells are at approximately 70-80% confluency after 48 h.",
+          "linked_to": "Cell Culture"
+        },
+        {
+          "step_number": 2,
+          "description": "DAY 1 | 2 h | CRISPR Design\nDesign sgRNA targeting TP53 using CRISPR design software (e.g., Benchling).\nExpected outcome: sgRNA sequences designed with efficiency predictions.",
+          "linked_to": "CRISPR Design"
+        },
+        {
+          "step_number": 3,
+          "description": "DAY 1 | 1 h | sgRNA Synthesis\nOrder synthesized sgRNA for TP53 from Integrated DNA Technologies, at a final concentration of 100 \u00b5M in provided buffer.\nExpected outcome: sgRNA delivered in 1 mL aliquots.",
+          "linked_to": "sgRNA Synthesis"
+        },
+        {
+          "step_number": 4,
+          "description": "DAY 1 | 1 h | Electroporation\nElectroporate iPSC-derived cardiomyocytes with 0.5 \u00b5g of sgRNA and 0.5 \u00b5g Cas9 protein using the Neon Transfection System (Thermo Fisher) with a 1100 V, 20 ms pulse.\nExpected outcome: >70% transfection efficiency as measured by a separate fluorescent marker in a control experiment.",
+          "linked_to": "Electroporation"
+        },
+        {
+          "step_number": 5,
+          "description": "DAY 1 | 48 h | Recovery\nCulture electroporated cells in 2 mL CDM at 37\u00b0C, 5% CO2 for 48 h to promote recovery.\nExpected outcome: Healthy, confluent cell appearance.",
+          "linked_to": "Recovery"
+        },
+        {
+          "step_number": 6,
+          "description": "DAY 3 | 7 days | Selection\nAdd 1 \u00b5g/mL puromycin to the medium to select successfully transfected cardiomyocytes for 7 days.\nExpected outcome: Cell population enriched for knockout cells by day 10.",
+          "linked_to": "Selection"
+        },
+        {
+          "step_number": 7,
+          "description": "DAY 10 | 2 h | Validation of Knockout\nExtract genomic DNA from cells using DNeasy Blood & Tissue Kit (Qiagen) to validate TP53 knockout via PCR amplification and Sanger sequencing.\nExpected outcome: Successful amplification of TP53 regions showing insertion/deletion mutations.",
+          "linked_to": "Validation of Knockout"
+        },
+        {
+          "step_number": 8,
+          "description": "DAY 10 | 30 min | LDH Cytotoxicity Assay Preparation\nPrepare LDH assay master mix according to kit instructions (e.g., Takara Bio, 50 \u00b5L master mix).\nExpected outcome: Master mix prepared and ready for use.",
+          "linked_to": "LDH Cytotoxicity Assay Preparation"
+        },
+        {
+          "step_number": 9,
+          "description": "DAY 10 | 24 h | Doxorubicin Treatment\nTreat knockout and control cardiomyocytes with 0.5 \u00b5M doxorubicin for 24 h at 37\u00b0C in 5% CO2.\nExpected outcome: Cell morphology monitored for signs of toxicity.",
+          "linked_to": "Doxorubicin Treatment"
+        },
+        {
+          "step_number": 10,
+          "description": "DAY 11 | 1 h | LDH Assay\nMeasure LDH release into culture supernatants post-doxorubicin treatment using a 96-well plate, adding 50 \u00b5L of assay reagent per 50 \u00b5L supernatant per well.\nExpected outcome: LDH activity measured in absorbance at 490 nm.",
+          "linked_to": "LDH Assay"
+        },
+        {
+          "step_number": 11,
+          "description": "DAY 11 | 1 h | Curve Fitting\nFit LDH release data to a standard curve to quantify doxorubicin sensitivity using GraphPad Prism 9.\nExpected outcome: Concentrations corresponding to LDH release values determined.",
+          "linked_to": "Curve Fitting"
+        },
+        {
+          "step_number": 12,
+          "description": "DAY 11 | 30 min | Statistical Analysis\nPerform unpaired t-tests to compare doxorubicin-induced LDH release in TP53 knockout versus control cardiomyocytes.\nExpected outcome: Statistical significance determined with p-values reported.",
+          "linked_to": "Statistical Analysis"
+        },
+        {
+          "step_number": 13,
+          "description": "DAY 11 | 2 h | Documentation\nCompile experiment data and write detailed report summarizing findings, methodology, and interpretation.\nExpected outcome: Comprehensive experimental report prepared.",
+          "linked_to": "Documentation"
+        },
+        {
+          "step_number": 14,
+          "description": "DAY 12 | 1 h | Review Findings\nPresent findings to lab group for feedback and potential further exploration.\nExpected outcome: Feedback gathered for future experiments and improvements.",
+          "linked_to": "Review Findings"
+        },
+        {
+          "step_number": 15,
+          "description": "DAY 12 | 1 h | Plan Follow-Up Experiments\nDesign follow-up experiments based on preliminary results and feedback received.\nExpected outcome: Outline prepared for next phase experiments.",
+          "linked_to": "Plan Follow-Up Experiments"
+        },
+        {
+          "step_number": 16,
+          "description": "DAY 12 | 30 min | Data Storage\nStore all raw data and experimental notes in a secure digital format for reproducibility.\nExpected outcome: Data securely archived.",
+          "linked_to": "Data Storage"
+        },
+        {
+          "step_number": 17,
+          "description": "DAY 12 | 1 h | Calculate Sensitivity Threshold\nDetermine LDH release threshold for sensitivity classification based on established guidelines.\nExpected outcome: Threshold established for future comparative studies.",
+          "linked_to": "Calculate Sensitivity Threshold"
+        }
+      ],
+      "assumptions": [
+        "CRISPR knockout of TP53 will influence doxorubicin sensitivity in cardiomyocytes.",
+        "LDH release is a reliable measure of cellular damage from doxorubicin.",
+        "The iPSC-derived cardiomyocyte model accurately reflects in vivo conditions."
+      ],
+      "decision_criteria": [
+        "Continue if LDH release from knockout is significantly higher compared to controls attenuation by doxorubicin >30% across all concentration levels.",
+        "Proceed with in vivo validation if there is a discernible difference in doxorubicin sensitivity between groups."
+      ],
+      "risk_mitigations_applied": [],
+      "reproducibility_notes": [
+        "Maintain consistent passage number of iPSC cultures.",
+        "Use identical batches of reagents and consumables for all assays.",
+        "Ensure calibration of pipettes and spectrophotometer is performed prior to experiments."
+      ],
+      "execution_readiness_score": 0.8,
+      "execution_readiness_label": "execution_ready_after_review",
+      "feedback_incorporated": []
+    },
+    "materials": [
+      {
+        "item_name": "6-well plates",
+        "supplier": "ThermoFisher",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "10 plates",
+        "confidence": "high",
+        "uncertainty_note": "Standard pricing for tissue culture plates.",
+        "linked_to": "Cell Culture"
+      },
+      {
+        "item_name": "Cardiac differentiation medium (CDM)",
+        "supplier": "ThermoFisher",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "500 mL",
+        "confidence": "medium",
+        "uncertainty_note": "Price may vary based on vendor and specific formulation.",
+        "linked_to": "Cell Culture"
+      },
+      {
+        "item_name": "CRISPR design software (e.g., Benchling)",
+        "supplier": "Benchling",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 license",
+        "confidence": "low",
+        "uncertainty_note": "Pricing for software licenses depends on institutional agreements.",
+        "linked_to": "CRISPR Design"
+      },
+      {
+        "item_name": "sgRNA for TP53",
+        "supplier": "Integrated DNA Technologies",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 mL",
+        "confidence": "medium",
+        "uncertainty_note": "Pricing based on typical custom oligonucleotide synthesis.",
+        "linked_to": "sgRNA Synthesis"
+      },
+      {
+        "item_name": "Neon Transfection System",
+        "supplier": "Thermo Fisher",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 rental/day",
+        "confidence": "medium",
+        "uncertainty_note": "Rental rates may vary; estimate for typical usage.",
+        "linked_to": "Electroporation"
+      },
+      {
+        "item_name": "Cas9 protein",
+        "supplier": "New England Biolabs",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "20 \u00b5g",
+        "confidence": "medium",
+        "uncertainty_note": "Cost can vary depending on the vendor and preparation.",
+        "linked_to": "Electroporation"
+      },
+      {
+        "item_name": "Puromycin",
+        "supplier": "Sigma-Aldrich",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 g",
+        "confidence": "high",
+        "uncertainty_note": "Widely used antibiotic with stable pricing.",
+        "linked_to": "Selection"
+      },
+      {
+        "item_name": "DNeasy Blood & Tissue Kit",
+        "supplier": "Qiagen",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 kit",
+        "confidence": "medium",
+        "uncertainty_note": "Kit pricing may vary based on institutional purchase agreements.",
+        "linked_to": "Validation of Knockout"
+      },
+      {
+        "item_name": "LDH assay kit",
+        "supplier": "Takara Bio",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 kit",
+        "confidence": "medium",
+        "uncertainty_note": "Expect variability in kit pricing depending on specifications.",
+        "linked_to": "LDH Cytotoxicity Assay Preparation"
+      },
+      {
+        "item_name": "Doxorubicin",
+        "supplier": "Sigma-Aldrich",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "10 mg",
+        "confidence": "medium",
+        "uncertainty_note": "Pricing for chemotherapeutic agents varies based on market.",
+        "linked_to": "Doxorubicin Treatment"
+      },
+      {
+        "item_name": "96-well plates",
+        "supplier": "ThermoFisher",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "5 plates",
+        "confidence": "high",
+        "uncertainty_note": "Standard pricing for plates used in assay applications.",
+        "linked_to": "LDH Assay"
+      },
+      {
+        "item_name": "GraphPad Prism 9 license",
+        "supplier": "GraphPad",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 license",
+        "confidence": "low",
+        "uncertainty_note": "Software pricing may be subject to institutional discounts.",
+        "linked_to": "Curve Fitting"
+      },
+      {
+        "item_name": "Pipette tips",
+        "supplier": "Eppendorf",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 box (1000 tips)",
+        "confidence": "high",
+        "uncertainty_note": "Standard item with consistent pricing across suppliers.",
+        "linked_to": "general"
+      },
+      {
+        "item_name": "Gloves (box of 100)",
+        "supplier": "Kimberly-Clark",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 box",
+        "confidence": "high",
+        "uncertainty_note": "Typical cost for disposable laboratory gloves.",
+        "linked_to": "general"
+      }
+    ],
+    "budget": {
+      "currency": "EUR",
+      "line_items": [
+        {
+          "item_name": "6-well plates",
+          "quantity": "10 plates",
+          "unit_cost_estimate": 15.0,
+          "total_cost_estimate": 150.0,
+          "confidence": "high",
+          "uncertainty_note": "Standard pricing for tissue culture plates."
+        },
+        {
+          "item_name": "Cardiac differentiation medium (CDM)",
+          "quantity": "500 mL",
+          "unit_cost_estimate": 100.0,
+          "total_cost_estimate": 100.0,
+          "confidence": "medium",
+          "uncertainty_note": "Price may vary based on vendor and specific formulation."
+        },
+        {
+          "item_name": "CRISPR design software (e.g., Benchling)",
+          "quantity": "1 license",
+          "unit_cost_estimate": 200.0,
+          "total_cost_estimate": 200.0,
+          "confidence": "low",
+          "uncertainty_note": "Pricing for software licenses depends on institutional agreements."
+        },
+        {
+          "item_name": "sgRNA for TP53",
+          "quantity": "1 mL",
+          "unit_cost_estimate": 150.0,
+          "total_cost_estimate": 150.0,
+          "confidence": "medium",
+          "uncertainty_note": "Pricing based on typical custom oligonucleotide synthesis."
+        },
+        {
+          "item_name": "Neon Transfection System",
+          "quantity": "1 rental/day",
+          "unit_cost_estimate": 100.0,
+          "total_cost_estimate": 100.0,
+          "confidence": "medium",
+          "uncertainty_note": "Rental rates may vary; estimate for typical usage."
+        },
+        {
+          "item_name": "Cas9 protein",
+          "quantity": "20 \u00b5g",
+          "unit_cost_estimate": 100.0,
+          "total_cost_estimate": 100.0,
+          "confidence": "medium",
+          "uncertainty_note": "Cost can vary depending on the vendor and preparation."
+        },
+        {
+          "item_name": "Puromycin",
+          "quantity": "1 g",
+          "unit_cost_estimate": 50.0,
+          "total_cost_estimate": 50.0,
+          "confidence": "high",
+          "uncertainty_note": "Widely used antibiotic with stable pricing."
+        },
+        {
+          "item_name": "DNeasy Blood & Tissue Kit",
+          "quantity": "1 kit",
+          "unit_cost_estimate": 250.0,
+          "total_cost_estimate": 250.0,
+          "confidence": "medium",
+          "uncertainty_note": "Kit pricing may vary based on institutional purchase agreements."
+        },
+        {
+          "item_name": "LDH assay kit",
+          "quantity": "1 kit",
+          "unit_cost_estimate": 200.0,
+          "total_cost_estimate": 200.0,
+          "confidence": "medium",
+          "uncertainty_note": "Expect variability in kit pricing depending on specifications."
+        },
+        {
+          "item_name": "Doxorubicin",
+          "quantity": "10 mg",
+          "unit_cost_estimate": 50.0,
+          "total_cost_estimate": 50.0,
+          "confidence": "medium",
+          "uncertainty_note": "Pricing for chemotherapeutic agents varies based on market."
+        },
+        {
+          "item_name": "96-well plates",
+          "quantity": "5 plates",
+          "unit_cost_estimate": 20.0,
+          "total_cost_estimate": 100.0,
+          "confidence": "high",
+          "uncertainty_note": "Standard pricing for plates used in assay applications."
+        },
+        {
+          "item_name": "GraphPad Prism 9 license",
+          "quantity": "1 license",
+          "unit_cost_estimate": 300.0,
+          "total_cost_estimate": 300.0,
+          "confidence": "low",
+          "uncertainty_note": "Software pricing may be subject to institutional discounts."
+        },
+        {
+          "item_name": "Pipette tips",
+          "quantity": "1 box (1000 tips)",
+          "unit_cost_estimate": 50.0,
+          "total_cost_estimate": 50.0,
+          "confidence": "high",
+          "uncertainty_note": "Standard item with consistent pricing across suppliers."
+        },
+        {
+          "item_name": "Gloves (box of 100)",
+          "quantity": "1 box",
+          "unit_cost_estimate": 30.0,
+          "total_cost_estimate": 30.0,
+          "confidence": "high",
+          "uncertainty_note": "Typical cost for disposable laboratory gloves."
+        }
+      ],
+      "estimated_total_cost": 1830.0,
+      "uncertainty_notes": [
+        "Prices may vary based on supplier agreements and institutional discounts, especially for consumables and chemicals.",
+        "Certain items, such as software licenses, may be subject to additional costs or discounts based on academic affiliation.",
+        "Rental costs for instruments may vary; it's advisable to confirm rates before ordering."
+      ]
+    },
+    "timeline": {
+      "phases": [
+        {
+          "phase_name": "Day 1: Cell Culture Preparation",
+          "duration_estimate": "2 days",
+          "dependencies": [],
+          "responsible_role": "Research associate",
+          "risk_buffer": "0 days",
+          "bottlenecks": [
+            "Cell viability post-thawing"
+          ]
+        },
+        {
+          "phase_name": "Day 3: CRISPR sgRNA Design and Synthesis",
+          "duration_estimate": "1 days",
+          "dependencies": [
+            "Day 1: Cell Culture Preparation"
+          ],
+          "responsible_role": "Scientist",
+          "risk_buffer": "1 days",
+          "bottlenecks": [
+            "Delay in sgRNA design software availability"
+          ]
+        },
+        {
+          "phase_name": "Day 4: Electroporation and Recovery",
+          "duration_estimate": "2 days",
+          "dependencies": [
+            "Day 3: CRISPR sgRNA Design and Synthesis"
+          ],
+          "responsible_role": "Research associate",
+          "risk_buffer": "0 days",
+          "bottlenecks": [
+            "Efficiency of electroporation technique",
+            "Culture conditions during recovery"
+          ]
+        },
+        {
+          "phase_name": "Day 6: Selection of Transfected Cells",
+          "duration_estimate": "8 days",
+          "dependencies": [
+            "Day 4: Electroporation and Recovery"
+          ],
+          "responsible_role": "Research associate",
+          "risk_buffer": "2 days",
+          "bottlenecks": [
+            "Consistency of puromycin selection",
+            "Biological variability in transfection efficiency"
+          ]
+        },
+        {
+          "phase_name": "Day 14: Validation of Knockout and Preparation for Sensitivity Assay",
+          "duration_estimate": "1 days",
+          "dependencies": [
+            "Day 6: Selection of Transfected Cells"
+          ],
+          "responsible_role": "Scientist",
+          "risk_buffer": "0 days",
+          "bottlenecks": [
+            "PCR amplification success",
+            "Variability in sequencing process"
+          ]
+        },
+        {
+          "phase_name": "Day 15: Doxorubicin Treatment and Assay",
+          "duration_estimate": "1 days",
+          "dependencies": [
+            "Day 14: Validation of Knockout and Preparation for Sensitivity Assay"
+          ],
+          "responsible_role": "Research associate",
+          "risk_buffer": "0 days",
+          "bottlenecks": [
+            "Timing of drug treatment administration",
+            "Cell monitoring during treatment"
+          ]
+        },
+        {
+          "phase_name": "Day 16: LDH Assay and Data Analysis",
+          "duration_estimate": "1 days",
+          "dependencies": [
+            "Day 15: Doxorubicin Treatment and Assay"
+          ],
+          "responsible_role": "Research associate",
+          "risk_buffer": "1 days",
+          "bottlenecks": [
+            "Assay precision and reproducibility",
+            "Curve fitting accuracy"
+          ]
+        },
+        {
+          "phase_name": "Day 17: Final Reporting and Review of Findings",
+          "duration_estimate": "1 days",
+          "dependencies": [
+            "Day 16: LDH Assay and Data Analysis"
+          ],
+          "responsible_role": "PI",
+          "risk_buffer": "0 days",
+          "bottlenecks": [
+            "Time for feedback from lab group",
+            "Completeness of documentation"
+          ]
+        }
+      ],
+      "total_duration_estimate": "21 days (including risk buffers)"
+    },
+    "validation": {
+      "primary_endpoint": "Post-thaw viability percentage at immediate and 24h checkpoints.",
+      "secondary_endpoints": [
+        "Cell recovery count",
+        "Morphology quality score",
+        "Replicate variance"
+      ],
+      "success_threshold": "not specified improvement over comparator in replicate-confirmed data.",
+      "failure_conditions": [
+        "No meaningful viability gain in replicate-confirmed runs.",
+        "Intervention increases delayed viability loss at 24h."
+      ],
+      "suggested_statistical_comparison": "Two-group comparison against comparator using t-test or Mann-Whitney based on normality.",
+      "minimum_replicates_or_design_note": "Minimum three biological replicates before execution-level claim."
+    },
+    "cro_ready_brief": {
+      "objective": "Determine the sensitivity of CRISPR knockout TP53 iPSC-derived cardiomyocytes to doxorubicin as measured by LDH release.",
+      "scope_of_work": [
+        "Execute pilot-first HeLa cryopreservation comparison between DMSO baseline and trehalose arm.",
+        "Deliver replicate-confirmed viability analysis and mitigation traceability report."
+      ],
+      "sample_count": "At least 3 biological replicates per arm",
+      "required_assays": [
+        "Immediate post-thaw viability",
+        "24h follow-up viability"
+      ],
+      "deliverables": [
+        "Raw assay tables",
+        "QC log",
+        "Analysis summary",
+        "Deviation report"
+      ],
+      "qc_requirements": [
+        "Controlled-rate freeze log",
+        "Lot traceability",
+        "Blinded run annotation"
+      ],
+      "timeline_request": "21 days (including risk buffers)",
+      "materials_responsibility": "CRO to quote and confirm all materials before ordering.",
+      "questions_for_cro": [
+        "Can you support controlled-rate freezing logs in each run?",
+        "Can you include replicate-level batch metadata in the final report?"
+      ]
+    },
+    "confidence_score": 0.8,
+    "feedback_incorporated": false,
+    "feedback_trace": []
+  }
+}

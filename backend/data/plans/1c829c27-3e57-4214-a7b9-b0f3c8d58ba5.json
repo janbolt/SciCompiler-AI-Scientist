@@ -1,0 +1,492 @@
+{
+  "request": {
+    "question": "Treating IMR-90 fibroblasts with 100 nM rapamycin for 72 hours will reduce the number of p21-positive senescent cells by at least 40% compared to vehicle controls following hydrogen peroxide-induced senescence, due to mTORC1 inhibition reactivating autophagy-mediated clearance of damaged organelles.\nIn plain English: can a drug already used in transplant patients slow or reverse cellular aging in a dish?",
+    "constraints": {
+      "budget": "missing_required_field",
+      "timeline": "missing_required_field",
+      "execution_mode": "in_house"
+    },
+    "prior_feedback": []
+  },
+  "response": {
+    "plan_id": "1c829c27-3e57-4214-a7b9-b0f3c8d58ba5",
+    "hypothesis": {
+      "intervention": "100 nM rapamycin",
+      "biological_system": "IMR-90 fibroblasts",
+      "comparator_or_control": "vehicle controls",
+      "measurable_outcome": "number of p21-positive senescent cells",
+      "threshold": "at least 40% compared to vehicle controls",
+      "mechanistic_rationale": "mTORC1 inhibition reactivating autophagy-mediated clearance of damaged organelles",
+      "experiment_type": "cellular_aging_study",
+      "constraints": {
+        "execution_mode": "in_house"
+      },
+      "readiness": "execution_ready",
+      "readiness_rationale": "All core fields are present and specific; CRO-ready today.",
+      "confidence_score": 1.0,
+      "clarifying_questions": [],
+      "literature_search_hint": "rapamycin IMR-90 fibroblasts cellular aging p21 senescence",
+      "original_hypothesis": "Treating IMR-90 fibroblasts with 100 nM rapamycin for 72 hours will reduce the number of p21-positive senescent cells by at least 40% compared to vehicle controls following hydrogen peroxide-induced senescence, due to mTORC1 inhibition reactivating autophagy-mediated clearance of damaged organelles.\nIn plain English: can a drug already used in transplant patients slow or reverse cellular aging in a dish?",
+      "missing_required_fields": []
+    },
+    "literature_qc": {
+      "novelty_signal": "not_found",
+      "references": [],
+      "confidence_score": 0.8,
+      "explanation": "The retrieved papers do not specifically evaluate the intervention of 100 nM rapamycin on IMR-90 fibroblasts or directly measure the outcome of p21-positive senescent cells. While some papers discuss cellular senescence and the effects of rapamycin, none match the exact biological system or the specific intervention context required by the hypothesis.",
+      "recommended_action": "No directly matching publication found. This combination appears novel. Proceed with experiment planning.",
+      "search_coverage": "full"
+    },
+    "protocol_candidates": [
+      {
+        "protocol_name": "Standard cellular_aging_study protocol for 100 nm rapamycin",
+        "source_type": "stub",
+        "fit_score": 0.75,
+        "confidence": 0.65,
+        "adaptation_notes": "Stub mode \u2014 no live protocols.io search performed. This is a placeholder candidate.",
+        "missing_steps": [
+          "Exact reagent concentrations",
+          "Instrument-specific settings"
+        ],
+        "limitations": [
+          "Stub output only \u2014 real protocols.io search requires PROTOCOLS_IO_TOKEN."
+        ],
+        "raw_steps": [],
+        "protocol_url": ""
+      }
+    ],
+    "evidence_claims": [
+      {
+        "claim": "Post-thaw viability directly tests the stated biological outcome.",
+        "evidence_type": "direct_evidence",
+        "support_summary": "Outcome is explicitly present in user hypothesis.",
+        "strength": "strong",
+        "linked_to": "hypothesis.measurable_outcome"
+      },
+      {
+        "claim": "Trehalose membrane stabilization rationale supports intervention plausibility.",
+        "evidence_type": "mechanistic_evidence",
+        "support_summary": "Mechanistic rationale is explicitly stated in user input.",
+        "strength": "moderate",
+        "linked_to": "hypothesis.mechanistic_rationale"
+      },
+      {
+        "claim": "Expected +15 percentage-point threshold may be optimistic without pilot calibration.",
+        "evidence_type": "unvalidated_assumption",
+        "support_summary": "Effect size is user-defined but not validated in this run.",
+        "strength": "weak",
+        "linked_to": "hypothesis.threshold"
+      }
+    ],
+    "risks": [
+      {
+        "risk_id": "RISK-001",
+        "category": "biological_assumption",
+        "description": "No directly matching protocols or publications found. This may be a novel experimental combination with higher inherent uncertainty.",
+        "severity": "low",
+        "likelihood": "low",
+        "mitigation": "Pilot experiment recommended before committing full resources. Document all assumptions explicitly in the plan.",
+        "action": "document_only"
+      }
+    ],
+    "plan": {
+      "objective": "Determine the effect of 100 nM rapamycin on the number of p21-positive senescent IMR-90 fibroblast cells compared to vehicle controls.",
+      "experimental_design": "IMR-90 fibroblasts will be divided into two groups: a treatment group exposed to 100 nM rapamycin and a control group exposed to vehicle alone. After a defined incubation period, cells will be stained to quantify p21-positive senescent cells using flow cytometry.",
+      "controls": [
+        "IMR-90 fibroblasts treated with 100 nM rapamycin for identified effects on senescence markers.",
+        "IMR-90 fibroblasts treated with the vehicle only, without rapamycin.",
+        "vehicle controls"
+      ],
+      "step_by_step_protocol": [
+        {
+          "step_number": 1,
+          "description": "DAY 0 (PREP) | 5 min | Cell Culture Preparation\nThaw IMR-90 fibroblast cells from cryopreservation in a warm 37\u00b0C water bath until fully thawed.\nExpected outcome: Cells are thawed and viable after gentle transfer to culture medium without damage.",
+          "linked_to": "Cell Culture Preparation"
+        },
+        {
+          "step_number": 2,
+          "description": "DAY 0 (PREP) | 24 h | Cell Culture Preparation\nResuspend thawed IMR-90 fibroblasts in 10 mL of DMEM supplemented with 10% FBS and 1% penicillin-streptomycin at 37\u00b0C with 5% CO2 for 24 h for recovery.\nExpected outcome: Cells adhere to the culture flask and reach confluence.",
+          "linked_to": "Cell Culture Preparation"
+        },
+        {
+          "step_number": 3,
+          "description": "DAY 1 | 10 min | Treatment Application\nWash cells twice with 5 mL of sterile PBS at room temperature to remove serum and antibiotics.\nExpected outcome: Cells are adequately rinsed of serum and antibiotic residues.",
+          "linked_to": "Treatment Application"
+        },
+        {
+          "step_number": 4,
+          "description": "DAY 1 | 5 min | Treatment Application\nAdd 6 mL of DMEM with either 100 nM rapamycin or vehicle control to respective groups of IMR-90 fibroblasts.\nExpected outcome: Cells are treated with rapamycin or vehicle without loss.",
+          "linked_to": "Treatment Application"
+        },
+        {
+          "step_number": 5,
+          "description": "DAY 1 | 72 h | Incubation\nIncubate fibroblasts at 37\u00b0C with 5% CO2 for 72 h post-treatment to allow rapamycin action.\nExpected outcome: Cells remain healthy and attached during incubation.",
+          "linked_to": "Incubation"
+        },
+        {
+          "step_number": 6,
+          "description": "DAY 4 | 5 min | Sample Preparation for Flow Cytometry\nDetach cells from culture flasks using 2 mL of TrypLE Express at 37\u00b0C for 5 min.\nExpected outcome: Cells are successfully detached without damage.",
+          "linked_to": "Sample Preparation for Flow Cytometry"
+        },
+        {
+          "step_number": 7,
+          "description": "DAY 4 | 10 min | Sample Preparation for Flow Cytometry\nResuspend detached cells in 5 mL of DMEM and centrifuge at 300 \u00d7 g for 5 min at room temperature to pellet cells.\nExpected outcome: Cell pellet is collected at the bottom of the tube.",
+          "linked_to": "Sample Preparation for Flow Cytometry"
+        },
+        {
+          "step_number": 8,
+          "description": "DAY 4 | 30 min | Flow Cytometry\nStain cells with 50 \u00b5L of anti-p21 antibody (1:100 dilution in PBS) at room temperature for 30 min in the dark.\nExpected outcome: Cells are stained and ready for analysis to quantify p21 expression.",
+          "linked_to": "Flow Cytometry"
+        },
+        {
+          "step_number": 9,
+          "description": "DAY 4 | 1 h | Flow Cytometry\nAnalyze stained samples on the BD FACSCalibur utilizing appropriate settings to detect p21-positive cells.\nExpected outcome: Flow cytometry data demonstrates an increase in p21-positive cells in rapamycin treatment group compared to vehicle.",
+          "linked_to": "Flow Cytometry"
+        },
+        {
+          "step_number": 10,
+          "description": "DAY 4 | 30 min | Data Analysis\nCalculate the percentage of p21-positive senescent cells in both groups and compare using a Student's t-test for statistical significance.\nExpected outcome: Statistical analysis reveals whether the percentage of p21-positive cells is significantly greater than 40% in the rapamycin treatment group.",
+          "linked_to": "Data Analysis"
+        }
+      ],
+      "assumptions": [
+        "IMR-90 fibroblasts will respond similarly to rapamycin as previously reported for other cell types in terms of senescence.",
+        "The concentration of rapamycin used (100 nM) is adequate to induce significant senescence responses in IMR-90 fibroblasts without cytotoxicity.",
+        "The staining protocol used for p21 is specific and sensitive enough to detect changes in senescence markers."
+      ],
+      "decision_criteria": [
+        "Proceed if p21-positive cells are greater than 40% in the rapamycin treatment group compared to vehicle controls.",
+        "Proceed only if cell viability remains above 80% post-treatment as assessed by trypan blue exclusion test.",
+        "Terminate if there is excessive cytotoxicity observed in the rapamycin-treated group."
+      ],
+      "risk_mitigations_applied": [],
+      "reproducibility_notes": [
+        "Use of the same batch of FBS and DMEM for culturing cells to minimize variability.",
+        "Maintain consistent rapamycin preparation methods and handling to ensure proper dosage.",
+        "Standardize flow cytometry calibration and settings for cell analysis."
+      ],
+      "execution_readiness_score": 1.0,
+      "execution_readiness_label": "execution_ready_after_review",
+      "feedback_incorporated": []
+    },
+    "materials": [
+      {
+        "item_name": "DMEM (Dulbecco's Modified Eagle Medium)",
+        "supplier": "Gibco",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "500 mL",
+        "confidence": "high",
+        "uncertainty_note": "Pricing is standard for DMEM.",
+        "linked_to": "Cell Culture Preparation"
+      },
+      {
+        "item_name": "Fetal Bovine Serum (FBS)",
+        "supplier": "Gibco",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "100 mL",
+        "confidence": "high",
+        "uncertainty_note": "Pricing is stable for FBS.",
+        "linked_to": "Cell Culture Preparation"
+      },
+      {
+        "item_name": "Penicillin-Streptomycin Solution (100X)",
+        "supplier": "Gibco",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "10 mL",
+        "confidence": "high",
+        "uncertainty_note": "Pricing is consistent for this reagent.",
+        "linked_to": "Cell Culture Preparation"
+      },
+      {
+        "item_name": "Rapamycin",
+        "supplier": "Sigma-Aldrich",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 mg",
+        "confidence": "medium",
+        "uncertainty_note": "Cost may vary based on supplier.",
+        "linked_to": "Treatment Application"
+      },
+      {
+        "item_name": "Sterile PBS (Phosphate Buffered Saline)",
+        "supplier": "Gibco",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "500 mL",
+        "confidence": "high",
+        "uncertainty_note": "Standard pricing for PBS.",
+        "linked_to": "Treatment Application"
+      },
+      {
+        "item_name": "TrypLE Express",
+        "supplier": "Gibco",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "100 mL",
+        "confidence": "medium",
+        "uncertainty_note": "Pricing can vary slightly by supplier.",
+        "linked_to": "Sample Preparation for Flow Cytometry"
+      },
+      {
+        "item_name": "Anti-p21 antibody",
+        "supplier": "CST (Cell Signaling Technology)",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "20 \u00b5g",
+        "confidence": "medium",
+        "uncertainty_note": "Antibody prices can fluctuate.",
+        "linked_to": "Sample Preparation for Flow Cytometry"
+      },
+      {
+        "item_name": "BD FACSCalibur",
+        "supplier": "BD Biosciences",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 day rental",
+        "confidence": "medium",
+        "uncertainty_note": "Rental costs may vary.",
+        "linked_to": "Flow Cytometry"
+      },
+      {
+        "item_name": "Pipette tips (sterile, 200 \u00b5L)",
+        "supplier": "ThermoFisher",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 box (1000 tips)",
+        "confidence": "high",
+        "uncertainty_note": "Standard pricing for pipette tips.",
+        "linked_to": "general"
+      },
+      {
+        "item_name": "Cell culture flasks (75 cm\u00b2)",
+        "supplier": "Corning",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "5 flasks",
+        "confidence": "medium",
+        "uncertainty_note": "Pricing is standard for cell culture flasks.",
+        "linked_to": "general"
+      },
+      {
+        "item_name": "Gloves (disposable)",
+        "supplier": "VWR",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 box (100 gloves)",
+        "confidence": "high",
+        "uncertainty_note": "Standard pricing for gloves.",
+        "linked_to": "general"
+      },
+      {
+        "item_name": "Centrifuge tubes (50 mL)",
+        "supplier": "VWR",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 pack (50 tubes)",
+        "confidence": "high",
+        "uncertainty_note": "Typical costs for centrifuge tubes.",
+        "linked_to": "general"
+      }
+    ],
+    "budget": {
+      "currency": "EUR",
+      "line_items": [
+        {
+          "item_name": "DMEM (Dulbecco's Modified Eagle Medium)",
+          "quantity": "500 mL",
+          "unit_cost_estimate": 15.0,
+          "total_cost_estimate": 15.0,
+          "confidence": "high",
+          "uncertainty_note": "Pricing is standard for DMEM."
+        },
+        {
+          "item_name": "Fetal Bovine Serum (FBS)",
+          "quantity": "100 mL",
+          "unit_cost_estimate": 25.0,
+          "total_cost_estimate": 25.0,
+          "confidence": "high",
+          "uncertainty_note": "Pricing is stable for FBS."
+        },
+        {
+          "item_name": "Penicillin-Streptomycin Solution (100X)",
+          "quantity": "10 mL",
+          "unit_cost_estimate": 5.0,
+          "total_cost_estimate": 5.0,
+          "confidence": "high",
+          "uncertainty_note": "Pricing is consistent for this reagent."
+        },
+        {
+          "item_name": "Rapamycin",
+          "quantity": "1 mg",
+          "unit_cost_estimate": 85.0,
+          "total_cost_estimate": 85.0,
+          "confidence": "medium",
+          "uncertainty_note": "Cost may vary based on supplier."
+        },
+        {
+          "item_name": "Sterile PBS (Phosphate Buffered Saline)",
+          "quantity": "500 mL",
+          "unit_cost_estimate": 10.0,
+          "total_cost_estimate": 10.0,
+          "confidence": "high",
+          "uncertainty_note": "Standard pricing for PBS."
+        },
+        {
+          "item_name": "TrypLE Express",
+          "quantity": "100 mL",
+          "unit_cost_estimate": 20.0,
+          "total_cost_estimate": 20.0,
+          "confidence": "medium",
+          "uncertainty_note": "Pricing can vary slightly by supplier."
+        },
+        {
+          "item_name": "Anti-p21 antibody",
+          "quantity": "20 \u00b5g",
+          "unit_cost_estimate": 200.0,
+          "total_cost_estimate": 200.0,
+          "confidence": "medium",
+          "uncertainty_note": "Antibody prices can fluctuate."
+        },
+        {
+          "item_name": "BD FACSCalibur",
+          "quantity": "1 day rental",
+          "unit_cost_estimate": 250.0,
+          "total_cost_estimate": 250.0,
+          "confidence": "medium",
+          "uncertainty_note": "Rental costs may vary."
+        },
+        {
+          "item_name": "Pipette tips (sterile, 200 \u00b5L)",
+          "quantity": "1 box (1000 tips)",
+          "unit_cost_estimate": 20.0,
+          "total_cost_estimate": 20.0,
+          "confidence": "high",
+          "uncertainty_note": "Standard pricing for pipette tips."
+        },
+        {
+          "item_name": "Cell culture flasks (75 cm\u00b2)",
+          "quantity": "5 flasks",
+          "unit_cost_estimate": 50.0,
+          "total_cost_estimate": 50.0,
+          "confidence": "medium",
+          "uncertainty_note": "Pricing is standard for cell culture flasks."
+        },
+        {
+          "item_name": "Gloves (disposable)",
+          "quantity": "1 box (100 gloves)",
+          "unit_cost_estimate": 18.0,
+          "total_cost_estimate": 18.0,
+          "confidence": "high",
+          "uncertainty_note": "Standard pricing for gloves."
+        },
+        {
+          "item_name": "Centrifuge tubes (50 mL)",
+          "quantity": "1 pack (50 tubes)",
+          "unit_cost_estimate": 15.0,
+          "total_cost_estimate": 15.0,
+          "confidence": "high",
+          "uncertainty_note": "Typical costs for centrifuge tubes."
+        }
+      ],
+      "estimated_total_cost": 713.0,
+      "uncertainty_notes": [
+        "Institutional discounts may apply to larger orders.",
+        "Prices might vary with different suppliers, especially for antibodies.",
+        "Storage and transportation costs for sensitive materials may need to be considered."
+      ]
+    },
+    "timeline": {
+      "phases": [
+        {
+          "phase_name": "Day 0: Thawing and Initial Culture Preparation",
+          "duration_estimate": "2 days",
+          "dependencies": [],
+          "responsible_role": "Research associate",
+          "risk_buffer": "1 days",
+          "bottlenecks": [
+            "Cryopreservation thawing efficiency",
+            "Cell viability after thawing"
+          ]
+        },
+        {
+          "phase_name": "Day 1: Treatment Application and Incubation",
+          "duration_estimate": "5 days",
+          "dependencies": [
+            "Day 0: Thawing and Initial Culture Preparation"
+          ],
+          "responsible_role": "Research associate",
+          "risk_buffer": "1 days",
+          "bottlenecks": [
+            "Cell attachment efficiency",
+            "Incubator availability"
+          ]
+        },
+        {
+          "phase_name": "Day 4: Flow Cytometry Preparation and Analysis",
+          "duration_estimate": "1 days",
+          "dependencies": [
+            "Day 1: Treatment Application and Incubation"
+          ],
+          "responsible_role": "Research associate",
+          "risk_buffer": "1 days",
+          "bottlenecks": [
+            "Availability of flow cytometry equipment",
+            "Antibody staining efficiency"
+          ]
+        },
+        {
+          "phase_name": "Day 8: Data Analysis and Write-up",
+          "duration_estimate": "1 days",
+          "dependencies": [
+            "Day 4: Flow Cytometry Preparation and Analysis"
+          ],
+          "responsible_role": "Bioinformatician",
+          "risk_buffer": "1 days",
+          "bottlenecks": [
+            "Statistical analysis software availability",
+            "Time for writing and peer review"
+          ]
+        }
+      ],
+      "total_duration_estimate": "13 days (including risk buffers)"
+    },
+    "validation": {
+      "primary_endpoint": "Post-thaw viability percentage at immediate and 24h checkpoints.",
+      "secondary_endpoints": [
+        "Cell recovery count",
+        "Morphology quality score",
+        "Replicate variance"
+      ],
+      "success_threshold": "at least 40% compared to vehicle controls improvement over comparator in replicate-confirmed data.",
+      "failure_conditions": [
+        "No meaningful viability gain in replicate-confirmed runs.",
+        "Intervention increases delayed viability loss at 24h."
+      ],
+      "suggested_statistical_comparison": "Two-group comparison against comparator using t-test or Mann-Whitney based on normality.",
+      "minimum_replicates_or_design_note": "Minimum three biological replicates before execution-level claim."
+    },
+    "cro_ready_brief": {
+      "objective": "Determine the effect of 100 nM rapamycin on the number of p21-positive senescent IMR-90 fibroblast cells compared to vehicle controls.",
+      "scope_of_work": [
+        "Execute pilot-first HeLa cryopreservation comparison between DMSO baseline and trehalose arm.",
+        "Deliver replicate-confirmed viability analysis and mitigation traceability report."
+      ],
+      "sample_count": "At least 3 biological replicates per arm",
+      "required_assays": [
+        "Immediate post-thaw viability",
+        "24h follow-up viability"
+      ],
+      "deliverables": [
+        "Raw assay tables",
+        "QC log",
+        "Analysis summary",
+        "Deviation report"
+      ],
+      "qc_requirements": [
+        "Controlled-rate freeze log",
+        "Lot traceability",
+        "Blinded run annotation"
+      ],
+      "timeline_request": "13 days (including risk buffers)",
+      "materials_responsibility": "CRO to quote and confirm all materials before ordering.",
+      "questions_for_cro": [
+        "Can you support controlled-rate freezing logs in each run?",
+        "Can you include replicate-level batch metadata in the final report?"
+      ]
+    },
+    "confidence_score": 0.9,
+    "feedback_incorporated": false,
+    "feedback_trace": []
+  }
+}

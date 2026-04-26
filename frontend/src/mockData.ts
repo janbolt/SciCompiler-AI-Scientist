@@ -16,6 +16,15 @@ export type Experiment = {
   success_criteria: string;
   steps: string[];
   materials: Material[];
+  // LLM CRO classifier metadata (optional for backward compat with old plans / mocks)
+  cro_reason?: string;
+  cro_blockers?: string[];
+  cro_confidence?: number;
+  cro_routine_match?: string;
+  // Workflow-bundle metadata: which CRO service line this card belongs to,
+  // plus 2-3 real CROs that sell the bundle.
+  cro_bundle_name?: string;
+  cro_bundle_examples?: string[];
 };
 
 export type Reference = {

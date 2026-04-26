@@ -7,8 +7,13 @@ and structural reshaping are handled here — not in agents or orchestrator logi
 """
 from __future__ import annotations
 
+import logging
 import re
 
+from .agents.cro_compatibility import (
+    CROCompatibilityVerdict,
+    evaluate_batch as evaluate_cro_batch,
+)
 from .schemas import (
     BudgetEstimate,
     DemoRunResponse,
@@ -27,6 +32,8 @@ from .schemas import (
     TimelineEstimate,
     ValidationPlan,
 )
+
+logger = logging.getLogger(__name__)
 
 # ── Novelty signal ────────────────────────────────────────────────────────────
 
@@ -154,132 +161,6 @@ def _estimate_duration_from_steps(steps: list[ProtocolStep]) -> str:
     return f"{span} day{'s' if span > 1 else ''}"
 
 
-def _compute_cro_compatible(demo: DemoRunResponse) -> bool:
-    """
-    Score protocol standardness from multiple pipeline signals to determine
-    whether this experiment is suitable for outsourcing to a CRO.
-
-    A protocol is CRO-compatible when it is:
-      - not blocked by the plan agent (hard gate)
-      - backed by real protocols.io matches and/or published methods literature
-
-    Scoring (threshold = 4):
-      execution_ready_after_review  +2 | pilot_only               +1
-      protocols.io fit >= 0.7       +2 | fit >= 0.5               +1  (per candidate, max 3)
-      novelty: exact_match_found    +2 | similar_work_exists       +1
-      references >= 3               +2 | >= 1                      +1
-      search_coverage == full       +1
-    """
-    plan = demo.plan
-    lit = demo.literature_qc
-    candidates = demo.protocol_candidates
-
-    if plan.execution_readiness_label == "blocked_pending_expert_review":
-        return False
-
-    score = 0
-
-    if plan.execution_readiness_label == "execution_ready_after_review":
-        score += 2
-    elif plan.execution_readiness_label == "pilot_only":
-        score += 1
-
-    real_candidates = [c for c in candidates if c.source_type != "stub" and c.raw_steps]
-    for c in real_candidates[:3]:
-        if c.fit_score >= 0.7:
-            score += 2
-        elif c.fit_score >= 0.5:
-            score += 1
-
-    if lit.novelty_signal == "exact_match_found":
-        score += 2
-    elif lit.novelty_signal == "similar_work_exists":
-        score += 1
-
-    real_refs = [r for r in lit.references if not r.is_stub]
-    if len(real_refs) >= 3:
-        score += 2
-    elif len(real_refs) >= 1:
-        score += 1
-
-    if lit.search_coverage == "full":
-        score += 1
-
-    return score >= 4
-
-
-def _group_level_cro_adjustment(group_name: str, steps: list[ProtocolStep]) -> int:
-    """
-    Per-protocol adjustment on top of the global CRO-readiness score.
-
-    This keeps global context (novelty, references, candidate protocols) while
-    letting each protocol card diverge based on its own procedural complexity.
-    """
-    text = f"{group_name} " + " ".join(step.description for step in steps)
-    lower = text.lower()
-
-    # Patterns typically harder to outsource as a routine CRO package.
-    high_customization = (
-        "optimiz",
-        "de novo",
-        "novel assay",
-        "custom",
-        "troubleshoot",
-        "explor",
-        "pilot",
-        "iterat",
-        "calibration curve design",
-        "algorithm",
-    )
-    # Patterns usually associated with standard CRO workflows.
-    standardizable = (
-        "elisa",
-        "qpcr",
-        "western blot",
-        "flow cytometry",
-        "histology",
-        "immunostaining",
-        "lc-ms",
-        "rna-seq",
-        "plate reader",
-    )
-
-    adjustment = 0
-    if any(token in lower for token in high_customization):
-        adjustment -= 2
-    if any(token in lower for token in standardizable):
-        adjustment += 1
-
-    # Very short groups are often underspecified, very long groups often custom.
-    step_count = len(steps)
-    if step_count <= 2:
-        adjustment -= 1
-    elif step_count >= 12:
-        adjustment -= 1
-
-    return adjustment
-
-
-def _compute_group_cro_compatible(demo: DemoRunResponse, group_name: str, steps: list[ProtocolStep]) -> bool:
-    """
-    Evaluate CRO compatibility for one protocol group.
-    """
-    plan = demo.plan
-    if plan.execution_readiness_label == "blocked_pending_expert_review":
-        return False
-
-    base_global_score = 0
-    if _compute_cro_compatible(demo):
-        # Keep previous global threshold behavior as the baseline.
-        base_global_score = 4
-    else:
-        # Borderline non-CRO plans can still have one standardizable protocol.
-        base_global_score = 3
-
-    score = base_global_score + _group_level_cro_adjustment(group_name, steps)
-    return score >= 4
-
-
 def _map_experiments(demo: DemoRunResponse) -> list[FrontendExperiment]:
     """
     Build one FrontendExperiment per distinct sub-protocol (grouped by
@@ -327,49 +208,149 @@ def _map_experiments(demo: DemoRunResponse) -> list[FrontendExperiment]:
     for tag, fm in frontend_materials_tagged:
         materials_by_group.setdefault(tag, []).append(fm)
 
-    # Group steps by linked_to, preserving agent-defined order
+    # Group steps by linked_to, preserving agent-defined order.
+    #
+    # Risk-mitigation steps emitted by `plan._apply_risk_mitigations` carry an
+    # internal linkage like ``linked_to="risk:RISK-002"`` (or the literal
+    # ``"risk_mitigation"``). Without remapping, those create cryptic phantom
+    # cards in the UI named "risk:RISK-002". We fold them into the most
+    # recently-established real protocol group so the mitigation step shows
+    # up *inside* the protocol it modifies. If a risk step has no preceding
+    # real group, it lands in a clean "Risk Mitigations" card.
     groups: dict[str, list[ProtocolStep]] = {}
+    last_real_group: str | None = None
     for step in plan.step_by_step_protocol:
-        groups.setdefault(step.linked_to or "Protocol", []).append(step)
+        raw_link = step.linked_to or "Protocol"
+        is_risk_phantom = raw_link.lower().startswith("risk:") or raw_link.lower() == "risk_mitigation"
+        if is_risk_phantom:
+            target = last_real_group or "Risk Mitigations"
+        else:
+            target = raw_link
+            last_real_group = target
+        groups.setdefault(target, []).append(step)
 
     if not groups:
-        # Fallback: single card with all steps when the agent emits no steps
+        # Single-card fallback when the plan agent emitted no steps. We still
+        # run the LLM classifier so the card gets a real verdict + reason.
+        single_name = hypothesis.experiment_type.replace("_", " ").title()
+        single_id = demo.plan_id
+        verdicts = evaluate_cro_batch(
+            hypothesis,
+            [
+                {
+                    "id": single_id,
+                    "name": single_name,
+                    "duration": timeline.total_duration_estimate,
+                    "goal": plan.objective,
+                    "steps": [],
+                }
+            ],
+        )
+        v = verdicts.get(single_id)
         return [
-            FrontendExperiment(
-                id=demo.plan_id,
-                name=hypothesis.experiment_type.replace("_", " ").title(),
+            _build_experiment_card(
+                exp_id=single_id,
+                name=single_name,
                 duration=timeline.total_duration_estimate,
-                cro_compatible=_compute_group_cro_compatible(
-                    demo=demo,
-                    group_name=hypothesis.experiment_type.replace("_", " ").title(),
-                    steps=[],
-                ),
                 goal=plan.objective,
                 success_criteria=validation.success_threshold,
                 steps=[],
                 materials=all_frontend_materials,
+                verdict=v,
             )
         ]
 
-    return [
-        FrontendExperiment(
-            id=f"{demo.plan_id}-{i}",
-            name=group_name,
-            duration=_estimate_duration_from_steps(steps),
-            cro_compatible=_compute_group_cro_compatible(demo=demo, group_name=group_name, steps=steps),
-            goal=plan.objective,
-            success_criteria=validation.success_threshold,
-            steps=[s.description for s in steps],
-            # Tagged materials: assign per group; also include 'general' materials on every card.
-            # Untagged (old plans): all materials on card 0, empty elsewhere.
-            materials=(
-                materials_by_group.get(group_name, []) + materials_by_group.get("general", [])
-                if has_tagged
-                else (all_frontend_materials if i == 0 else [])
-            ),
+    # Build provisional card descriptors (without final cro_* fields). We need
+    # these dicts both for the LLM batch call and for assembling the response,
+    # so we materialise the iteration once.
+    card_specs: list[dict] = []
+    for i, (group_name, steps) in enumerate(groups.items()):
+        exp_id = f"{demo.plan_id}-{i}"
+        card_specs.append(
+            {
+                "id": exp_id,
+                "name": group_name,
+                "duration": _estimate_duration_from_steps(steps),
+                "goal": plan.objective,
+                "success_criteria": validation.success_threshold,
+                "steps": [s.description for s in steps],
+                "materials": (
+                    materials_by_group.get(group_name, []) + materials_by_group.get("general", [])
+                    if has_tagged
+                    else (all_frontend_materials if i == 0 else [])
+                ),
+            }
         )
-        for i, (group_name, steps) in enumerate(groups.items())
+
+    # ── Single batched LLM CRO-compatibility classifier ──────────────────────
+    # Falls back to a deterministic heuristic internally if the LLM is
+    # unreachable, so this call cannot raise.
+    verdicts = evaluate_cro_batch(hypothesis, card_specs)
+
+    return [
+        _build_experiment_card(
+            exp_id=spec["id"],
+            name=spec["name"],
+            duration=spec["duration"],
+            goal=spec["goal"],
+            success_criteria=spec["success_criteria"],
+            steps=spec["steps"],
+            materials=spec["materials"],
+            verdict=verdicts.get(spec["id"]),
+        )
+        for spec in card_specs
     ]
+
+
+def _build_experiment_card(
+    *,
+    exp_id: str,
+    name: str,
+    duration: str,
+    goal: str,
+    success_criteria: str,
+    steps: list[str],
+    materials: list[FrontendMaterial],
+    verdict: CROCompatibilityVerdict | None,
+) -> FrontendExperiment:
+    """Assemble a FrontendExperiment, merging in the LLM CRO verdict if present."""
+    if verdict is None:
+        # Should be unreachable because evaluate_cro_batch guarantees coverage,
+        # but stay defensive: ship a non-compatible card with an honest reason.
+        logger.warning("CRO verdict missing for experiment_id=%s — emitting safe default.", exp_id)
+        return FrontendExperiment(
+            id=exp_id,
+            name=name,
+            duration=duration,
+            cro_compatible=False,
+            goal=goal,
+            success_criteria=success_criteria,
+            steps=steps,
+            materials=materials,
+            cro_reason="CRO classifier did not return a verdict for this card.",
+            cro_blockers=["Verdict missing — defaulted to non-CRO for safety."],
+            cro_confidence=0.0,
+            cro_routine_match="unknown",
+            cro_bundle_name="",
+            cro_bundle_examples=[],
+        )
+
+    return FrontendExperiment(
+        id=exp_id,
+        name=name,
+        duration=duration,
+        cro_compatible=verdict.cro_compatible,
+        goal=goal,
+        success_criteria=success_criteria,
+        steps=steps,
+        materials=materials,
+        cro_reason=verdict.reason,
+        cro_blockers=list(verdict.blockers),
+        cro_confidence=verdict.confidence,
+        cro_routine_match=verdict.routine_match,
+        cro_bundle_name=verdict.bundle_name,
+        cro_bundle_examples=list(verdict.bundle_examples),
+    )
 
 
 # ── Objective ─────────────────────────────────────────────────────────────────
