@@ -25,7 +25,7 @@ def _env_bool(name: str, default: str) -> bool:
     return os.environ.get(name, default).strip().lower() in {"1", "true", "yes", "on"}
 
 
-LLM_MODEL: str = os.environ.get("LLM_MODEL", "gpt-4o-mini")
+LLM_MODEL: str = os.environ.get("LLM_MODEL", "gpt-5.5")
 LLM_MAX_RETRIES: int = int(os.environ.get("LLM_MAX_RETRIES", "3"))
 USE_STUB_AGENTS: bool = _env_bool("USE_STUB_AGENTS", "false")
 
