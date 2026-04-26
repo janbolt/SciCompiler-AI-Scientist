@@ -234,6 +234,7 @@ class MaterialItem(BaseModel):
     quantity: str
     confidence: ConfidenceLevel
     uncertainty_note: str | None = None
+    linked_to: str = "general"  # sub-protocol this material belongs to; default preserves back-compat
 
 
 class BudgetLineItem(BaseModel):

@@ -54,10 +54,13 @@ CLIENT_SECRET = os.environ.get("PROTOCOLS_IO_CLIENT_SECRET", "").strip()
 
 # region agent log
 import json as _json, time as _time
-_log_path = pathlib.Path("/Users/janikludwig/Developer/PredictiveBio/.cursor/debug-4e45f2.log")
-_log_path.parent.mkdir(parents=True, exist_ok=True)
-with open(_log_path, "a") as _lf:
-    _lf.write(_json.dumps({"sessionId":"4e45f2","hypothesisId":"H-A/H-B","location":"fetch_protocols_io_token.py:51","message":"credentials loaded after override=True","data":{"client_id_value":CLIENT_ID,"client_id_is_placeholder":CLIENT_ID=="your_client_id_here","env_file_exists":ENV_FILE.exists(),"env_file_path":str(ENV_FILE)},"timestamp":int(_time.time()*1000)}) + "\n")
+_log_path = pathlib.Path(__file__).resolve().parents[2] / ".cursor" / "debug-4e45f2.log"
+try:
+    _log_path.parent.mkdir(parents=True, exist_ok=True)
+    with open(_log_path, "a") as _lf:
+        _lf.write(_json.dumps({"sessionId":"4e45f2","hypothesisId":"H-A/H-B","location":"fetch_protocols_io_token.py:51","message":"credentials loaded after override=True","data":{"client_id_value":CLIENT_ID,"client_id_is_placeholder":CLIENT_ID=="your_client_id_here","env_file_exists":ENV_FILE.exists(),"env_file_path":str(ENV_FILE)},"timestamp":int(_time.time()*1000)}) + "\n")
+except OSError:
+    pass
 # endregion agent log
 
 if not CLIENT_ID or not CLIENT_SECRET:
@@ -127,9 +130,13 @@ def _build_auth_url() -> str:
     url = f"{AUTH_URL}?{params}"
     # region agent log
     import json as _json, time as _time
-    _log_path = pathlib.Path("/Users/janikludwig/Developer/PredictiveBio/.cursor/debug-4e45f2.log")
-    with open(_log_path, "a") as _lf:
-        _lf.write(_json.dumps({"sessionId":"4e45f2","hypothesisId":"H-B","location":"fetch_protocols_io_token.py:_build_auth_url","message":"auth url built","data":{"client_id_in_url":CLIENT_ID,"redirect_param":"redirect_url","full_url":url},"timestamp":int(_time.time()*1000)}) + "\n")
+    _log_path = pathlib.Path(__file__).resolve().parents[2] / ".cursor" / "debug-4e45f2.log"
+    try:
+        _log_path.parent.mkdir(parents=True, exist_ok=True)
+        with open(_log_path, "a") as _lf:
+            _lf.write(_json.dumps({"sessionId":"4e45f2","hypothesisId":"H-B","location":"fetch_protocols_io_token.py:_build_auth_url","message":"auth url built","data":{"client_id_in_url":CLIENT_ID,"redirect_param":"redirect_url","full_url":url},"timestamp":int(_time.time()*1000)}) + "\n")
+    except OSError:
+        pass
     # endregion agent log
     return url
 

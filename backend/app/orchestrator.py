@@ -424,10 +424,11 @@ def run_demo_pipeline(request: DemoRunRequest, plan_id: str | None = None) -> De
         prior_context=_build_prior_context(hypothesis, section="cro_ready_brief"),
     )
 
+    real_protocol_candidates = [c for c in protocol_candidates if c.source_type != "stub"]
     avg_protocol_conf = (
-        sum(item.confidence for item in protocol_candidates) / len(protocol_candidates)
-        if protocol_candidates
-        else 0.0
+        sum(item.confidence for item in real_protocol_candidates) / len(real_protocol_candidates)
+        if real_protocol_candidates
+        else literature_qc.confidence_score
     )
 
     feedback_was_incorporated = bool(plan_feedback_lines or budget_feedback_lines or timeline_feedback_lines)

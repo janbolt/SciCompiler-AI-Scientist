@@ -49,6 +49,15 @@ logger = logging.getLogger(__name__)
 
 
 class _BudgetMaterialLLM(BaseModel):
+    sub_protocol: str = Field(
+        "general",
+        description=(
+            "Name of the sub-protocol this material is primarily used in. "
+            "Must exactly match one of the sub-protocol names listed in the protocol steps "
+            "(e.g. 'Nanoparticle Synthesis', 'Cell Culture', 'Data Analysis'). "
+            "Use 'general' only if the material is shared across multiple sub-protocols."
+        ),
+    )
     category: Literal["instrument", "consumable", "chemical", "control"] = Field(
         ...,
         description=(
@@ -123,12 +132,13 @@ You are a lab manager estimating the materials and costs for a planned experimen
 
 You will receive:
 1. A structured hypothesis describing the experiment.
-2. The experiment plan's protocol steps.
+2. The experiment plan's protocol steps, grouped by sub-protocol name.
 
 Your job is to:
 1. Read the protocol steps carefully and identify ALL materials required.
 2. Categorise every material as: instrument, consumable, chemical, or control.
-3. Estimate typical academic lab pricing in EUR (2024-2025 pricing).
+3. Tag each material with the sub-protocol it belongs to (sub_protocol field).
+4. Estimate typical academic lab pricing in EUR (2024-2025 pricing).
 
 RULES:
 - Cover all four categories where applicable:
@@ -136,6 +146,9 @@ RULES:
     consumable  = single-use items (pipette tips, tubes, plates, gloves)
     chemical    = reagents, kits, buffers, media, stains, enzymes
     control     = materials specific to positive/negative controls
+- sub_protocol must exactly match the sub-protocol name from the steps list.
+  Use 'general' only when a material (e.g. gloves, pipette tips) is used across
+  multiple sub-protocols and cannot be attributed to one.
 - Do NOT invent catalog numbers. The catalog field will be set to
   "verify_before_ordering" by the system — you only provide item names and suppliers.
 - Supplier names come from your training knowledge — do not hardcode. Use the
@@ -155,10 +168,21 @@ RULES:
 
 
 def _format_steps(plan: ExperimentPlan) -> str:
-    lines = []
+    """Format protocol steps, grouping by sub-protocol so the LLM can tag materials."""
+    if not plan.step_by_step_protocol:
+        return "(no steps available)"
+
+    # Group steps by sub-protocol to make the structure explicit for the LLM
+    groups: dict[str, list] = {}
     for step in plan.step_by_step_protocol:
-        lines.append(f"Step {step.step_number}: {step.description}")
-    return "\n".join(lines) if lines else "(no steps available)"
+        groups.setdefault(step.linked_to or "general", []).append(step)
+
+    lines: list[str] = []
+    for sub_protocol, steps in groups.items():
+        lines.append(f"\n[Sub-protocol: {sub_protocol}]")
+        for step in steps:
+            lines.append(f"  Step {step.step_number}: {step.description}")
+    return "\n".join(lines)
 
 
 def _generate_budget_with_llm(
@@ -196,7 +220,7 @@ def _generate_budget_with_llm(
         model=LLM_MODEL,
         response_model=_BudgetLLMOutput,
         max_retries=LLM_MAX_RETRIES,
-        temperature=0.1,
+        temperature=1,
         messages=[
             {"role": "system", "content": SYSTEM_PROMPT},
             {"role": "user", "content": user_message},
@@ -231,6 +255,7 @@ def _build_outputs(
                 quantity=m.quantity,
                 confidence=conf_enum,
                 uncertainty_note=m.uncertainty_note,
+                linked_to=m.sub_protocol or "general",
             )
         )
         line_items.append(

@@ -154,13 +154,140 @@ def _estimate_duration_from_steps(steps: list[ProtocolStep]) -> str:
     return f"{span} day{'s' if span > 1 else ''}"
 
 
+def _compute_cro_compatible(demo: DemoRunResponse) -> bool:
+    """
+    Score protocol standardness from multiple pipeline signals to determine
+    whether this experiment is suitable for outsourcing to a CRO.
+
+    A protocol is CRO-compatible when it is:
+      - not blocked by the plan agent (hard gate)
+      - backed by real protocols.io matches and/or published methods literature
+
+    Scoring (threshold = 4):
+      execution_ready_after_review  +2 | pilot_only               +1
+      protocols.io fit >= 0.7       +2 | fit >= 0.5               +1  (per candidate, max 3)
+      novelty: exact_match_found    +2 | similar_work_exists       +1
+      references >= 3               +2 | >= 1                      +1
+      search_coverage == full       +1
+    """
+    plan = demo.plan
+    lit = demo.literature_qc
+    candidates = demo.protocol_candidates
+
+    if plan.execution_readiness_label == "blocked_pending_expert_review":
+        return False
+
+    score = 0
+
+    if plan.execution_readiness_label == "execution_ready_after_review":
+        score += 2
+    elif plan.execution_readiness_label == "pilot_only":
+        score += 1
+
+    real_candidates = [c for c in candidates if c.source_type != "stub" and c.raw_steps]
+    for c in real_candidates[:3]:
+        if c.fit_score >= 0.7:
+            score += 2
+        elif c.fit_score >= 0.5:
+            score += 1
+
+    if lit.novelty_signal == "exact_match_found":
+        score += 2
+    elif lit.novelty_signal == "similar_work_exists":
+        score += 1
+
+    real_refs = [r for r in lit.references if not r.is_stub]
+    if len(real_refs) >= 3:
+        score += 2
+    elif len(real_refs) >= 1:
+        score += 1
+
+    if lit.search_coverage == "full":
+        score += 1
+
+    return score >= 4
+
+
+def _group_level_cro_adjustment(group_name: str, steps: list[ProtocolStep]) -> int:
+    """
+    Per-protocol adjustment on top of the global CRO-readiness score.
+
+    This keeps global context (novelty, references, candidate protocols) while
+    letting each protocol card diverge based on its own procedural complexity.
+    """
+    text = f"{group_name} " + " ".join(step.description for step in steps)
+    lower = text.lower()
+
+    # Patterns typically harder to outsource as a routine CRO package.
+    high_customization = (
+        "optimiz",
+        "de novo",
+        "novel assay",
+        "custom",
+        "troubleshoot",
+        "explor",
+        "pilot",
+        "iterat",
+        "calibration curve design",
+        "algorithm",
+    )
+    # Patterns usually associated with standard CRO workflows.
+    standardizable = (
+        "elisa",
+        "qpcr",
+        "western blot",
+        "flow cytometry",
+        "histology",
+        "immunostaining",
+        "lc-ms",
+        "rna-seq",
+        "plate reader",
+    )
+
+    adjustment = 0
+    if any(token in lower for token in high_customization):
+        adjustment -= 2
+    if any(token in lower for token in standardizable):
+        adjustment += 1
+
+    # Very short groups are often underspecified, very long groups often custom.
+    step_count = len(steps)
+    if step_count <= 2:
+        adjustment -= 1
+    elif step_count >= 12:
+        adjustment -= 1
+
+    return adjustment
+
+
+def _compute_group_cro_compatible(demo: DemoRunResponse, group_name: str, steps: list[ProtocolStep]) -> bool:
+    """
+    Evaluate CRO compatibility for one protocol group.
+    """
+    plan = demo.plan
+    if plan.execution_readiness_label == "blocked_pending_expert_review":
+        return False
+
+    base_global_score = 0
+    if _compute_cro_compatible(demo):
+        # Keep previous global threshold behavior as the baseline.
+        base_global_score = 4
+    else:
+        # Borderline non-CRO plans can still have one standardizable protocol.
+        base_global_score = 3
+
+    score = base_global_score + _group_level_cro_adjustment(group_name, steps)
+    return score >= 4
+
+
 def _map_experiments(demo: DemoRunResponse) -> list[FrontendExperiment]:
     """
     Build one FrontendExperiment per distinct sub-protocol (grouped by
     ProtocolStep.linked_to) from the ExperimentPlan produced by the pipeline.
 
-    Materials are assigned to the first experiment only, since they are not
-    tagged per step; this keeps _build_budget aggregation correct.
+    Materials are distributed to their matching sub-protocol card using
+    MaterialItem.linked_to. For old plans without tags, all materials fall
+    back to the first card.
     """
     plan: ExperimentPlan = demo.plan
     materials: list[MaterialItem] = demo.materials
@@ -177,19 +304,28 @@ def _map_experiments(demo: DemoRunResponse) -> list[FrontendExperiment]:
             line.total_cost_estimate,
         )
 
-    frontend_materials: list[FrontendMaterial] = []
+    # Build FrontendMaterial objects paired with their sub-protocol tag
+    frontend_materials_tagged: list[tuple[str, FrontendMaterial]] = []
     for m in materials:
         unit_cost, total = cost_by_name.get(m.item_name.lower(), (0.0, 0.0))
-        frontend_materials.append(FrontendMaterial(
+        fm = FrontendMaterial(
             name=m.item_name,
             catalog=m.catalog_number or "verify_before_ordering",
             supplier=m.supplier,
             qty=m.quantity,
             unit_cost_eur=unit_cost,
             total_eur=total,
-        ))
+        )
+        frontend_materials_tagged.append((m.linked_to or "general", fm))
 
-    cro_compatible = plan.execution_readiness_label != "blocked_pending_expert_review"
+    # Determine whether the budget agent tagged materials with sub-protocols
+    has_tagged = any(tag != "general" for tag, _ in frontend_materials_tagged)
+
+    # Build a per-group material index (tagged materials) or full fallback list
+    all_frontend_materials = [fm for _, fm in frontend_materials_tagged]
+    materials_by_group: dict[str, list[FrontendMaterial]] = {}
+    for tag, fm in frontend_materials_tagged:
+        materials_by_group.setdefault(tag, []).append(fm)
 
     # Group steps by linked_to, preserving agent-defined order
     groups: dict[str, list[ProtocolStep]] = {}
@@ -203,11 +339,15 @@ def _map_experiments(demo: DemoRunResponse) -> list[FrontendExperiment]:
                 id=demo.plan_id,
                 name=hypothesis.experiment_type.replace("_", " ").title(),
                 duration=timeline.total_duration_estimate,
-                cro_compatible=cro_compatible,
+                cro_compatible=_compute_group_cro_compatible(
+                    demo=demo,
+                    group_name=hypothesis.experiment_type.replace("_", " ").title(),
+                    steps=[],
+                ),
                 goal=plan.objective,
                 success_criteria=validation.success_threshold,
                 steps=[],
-                materials=frontend_materials,
+                materials=all_frontend_materials,
             )
         ]
 
@@ -216,11 +356,17 @@ def _map_experiments(demo: DemoRunResponse) -> list[FrontendExperiment]:
             id=f"{demo.plan_id}-{i}",
             name=group_name,
             duration=_estimate_duration_from_steps(steps),
-            cro_compatible=cro_compatible,
+            cro_compatible=_compute_group_cro_compatible(demo=demo, group_name=group_name, steps=steps),
             goal=plan.objective,
             success_criteria=validation.success_threshold,
             steps=[s.description for s in steps],
-            materials=frontend_materials if i == 0 else [],
+            # Tagged materials: assign per group; also include 'general' materials on every card.
+            # Untagged (old plans): all materials on card 0, empty elsewhere.
+            materials=(
+                materials_by_group.get(group_name, []) + materials_by_group.get("general", [])
+                if has_tagged
+                else (all_frontend_materials if i == 0 else [])
+            ),
         )
         for i, (group_name, steps) in enumerate(groups.items())
     ]

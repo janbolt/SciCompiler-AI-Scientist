@@ -111,11 +111,12 @@ class _StepLLM(BaseModel):
     description: str = Field(
         ...,
         description=(
-            "Complete procedural action for this step. Must include: "
-            "what is being done, numeric parameters (exact volumes in µL/mL, "
-            "temperatures in °C, centrifuge speeds in ×g, incubation times in min/h), "
-            "and any critical handling notes. "
-            "PROHIBITED: vague language like 'perform assay', 'analyse results', "
+            "One imperative sentence describing a SINGLE bench action. "
+            "Must include numeric parameters: exact volumes in µL/mL, "
+            "temperatures in °C, centrifuge speeds in ×g, incubation times in min/h. "
+            "FORBIDDEN: compound sentences joined by 'Then', 'Next', 'followed by', "
+            "'and then', 'After that'. If two actions are needed, emit two separate steps. "
+            "FORBIDDEN vague language: 'perform assay', 'analyse results', "
             "'prepare samples', 'add appropriate amount'."
         ),
     )
@@ -250,8 +251,18 @@ STRUCTURE RULES
 1. Steps are ordered chronologically by day (day=0 for prep before Day 1).
    Any step with overnight incubation, long culture, or multi-hour passive
    waiting starts a new day.
-2. Every step must cover exactly ONE logical operation at the bench —
-   do not bundle unrelated actions into a single step.
+2. Every step must cover exactly ONE logical bench action — one imperative
+   verb, one instrument operation, one transfer or incubation.
+   PROHIBITED within a single step: transition words that connect two
+   separate actions — "Then", "Next", "After that", "Subsequently",
+   "followed by", "and then". If you need one of these words, split into
+   two steps.
+   BAD: "Stir the emulsion for 4 h to evaporate DCM, then centrifuge at
+        10,000 × g for 15 min at 4°C."
+   GOOD: Step A — "Stir the emulsion at room temperature for 4 h to allow
+         DCM evaporation."
+         Step B — "Centrifuge the emulsion at 10,000 × g for 15 min at 4°C
+         to pellet nanoparticles."
 3. The first 1–2 steps are always setup / reagent prep / equipment booking.
 4. The final step is always data analysis and results interpretation with
    specific statistical tests named.
@@ -332,16 +343,17 @@ def _format_literature_context(lit_qc: LiteratureQCResult) -> str:
 
 
 def _format_step_description(step: _StepLLM) -> str:
-    """Embed all _StepLLM fields into a rich description string."""
+    """Embed _StepLLM fields into a rich description string.
+
+    Equipment and reagents are intentionally excluded — they are captured
+    separately by the budget agent and shown under each experiment's
+    materials list. Keeping them here would be redundant.
+    """
     day_label = f"DAY {step.day}" if step.day > 0 else "DAY 0 (PREP)"
     header = f"{day_label} | {step.expected_duration} | {step.sub_protocol}"
 
     parts = [header, step.description]
 
-    if step.equipment:
-        parts.append("Equipment: " + ", ".join(step.equipment))
-    if step.reagents:
-        parts.append("Reagents: " + ", ".join(step.reagents))
     if step.expected_outcome:
         parts.append(f"Expected outcome: {step.expected_outcome}")
     if step.safety_note:
@@ -407,7 +419,7 @@ def _generate_plan_with_llm(
         model=LLM_MODEL,
         response_model=_PlanLLMOutput,
         max_retries=LLM_MAX_RETRIES,
-        temperature=0.2,
+        temperature=1,
         messages=[
             {"role": "system", "content": SYSTEM_PROMPT},
             {"role": "user", "content": user_message},

@@ -17,7 +17,10 @@ from __future__ import annotations
 import logging
 import os
 import re
+import json
+import time
 from datetime import datetime, timezone
+from pathlib import Path
 from typing import Any, Literal
 
 import requests
@@ -27,6 +30,29 @@ from app.schemas import ProtocolCandidate, StructuredHypothesis
 from app.services.llm import LLM_MAX_RETRIES, LLM_MODEL, USE_STUB_AGENTS, get_client
 
 logger = logging.getLogger(__name__)
+# Resolve to a path inside the current repo so the agent log works on every machine.
+_DEBUG_LOG_PATH = Path(__file__).resolve().parents[3] / ".cursor" / "debug-323526.log"
+
+
+def _debug_log(run_id: str, hypothesis_id: str, location: str, message: str, data: dict[str, object]) -> None:
+    # region agent log
+    payload = {
+        "sessionId": "323526",
+        "runId": run_id,
+        "hypothesisId": hypothesis_id,
+        "location": location,
+        "message": message,
+        "data": data,
+        "timestamp": int(time.time() * 1000),
+    }
+    try:
+        _DEBUG_LOG_PATH.parent.mkdir(parents=True, exist_ok=True)
+        with _DEBUG_LOG_PATH.open("a", encoding="utf-8") as fp:
+            fp.write(json.dumps(payload) + "\n")
+    except OSError:
+        # Diagnostic log is best-effort; never fail the pipeline because of it.
+        pass
+    # endregion
 
 
 PROTOCOLS_IO_BASE_URL = "https://www.protocols.io/api/v3"
@@ -277,7 +303,7 @@ def _assess_fit(
         model=LLM_MODEL,
         response_model=_ProtocolFitLLMOutput,
         max_retries=LLM_MAX_RETRIES,
-        temperature=0,
+        temperature=1,
         messages=[
             {"role": "system", "content": FIT_SYSTEM_PROMPT},
             {"role": "user", "content": user_message},
@@ -344,12 +370,34 @@ def run(hypothesis: StructuredHypothesis) -> list[ProtocolCandidate]:
     Returns up to MAX_CANDIDATES ProtocolCandidate objects ordered by fit_score.
     Degrades gracefully to stub if token is missing or API fails.
     """
+    # region agent log
+    _debug_log(
+        "run1",
+        "H1",
+        "protocol_retrieval.py:run",
+        "entry",
+        {
+            "use_stub_agents": USE_STUB_AGENTS,
+            "experiment_type": hypothesis.experiment_type,
+            "intervention_len": len(hypothesis.intervention or ""),
+        },
+    )
+    # endregion
     if USE_STUB_AGENTS:
         return _stub_protocol_retrieval(hypothesis)
 
     try:
         token = _get_protocols_io_token()
     except EnvironmentError as exc:
+        # region agent log
+        _debug_log(
+            "run1",
+            "H2",
+            "protocol_retrieval.py:run",
+            "token_missing_fallback_stub",
+            {"error": str(exc)},
+        )
+        # endregion
         logger.warning("Protocol Retrieval falling back to stub: %s", exc)
         return _stub_protocol_retrieval(hypothesis)
 
@@ -367,8 +415,34 @@ def run(hypothesis: StructuredHypothesis) -> list[ProtocolCandidate]:
         raw_c = _search_protocols(query_c, token) if query_c else []
 
         all_raw = _dedupe_protocols(raw_a + raw_b + raw_c)
+        # region agent log
+        _debug_log(
+            "run1",
+            "H3",
+            "protocol_retrieval.py:run",
+            "search_counts",
+            {
+                "query_a_len": len(query_a),
+                "query_b_len": len(query_b),
+                "query_c_len": len(query_c),
+                "raw_a": len(raw_a),
+                "raw_b": len(raw_b),
+                "raw_c": len(raw_c),
+                "deduped_total": len(all_raw),
+            },
+        )
+        # endregion
 
         if not all_raw:
+            # region agent log
+            _debug_log(
+                "run1",
+                "H4",
+                "protocol_retrieval.py:run",
+                "no_protocols_fallback_stub",
+                {},
+            )
+            # endregion
             logger.info("protocols.io returned no results — falling back to stub.")
             return _stub_protocol_retrieval(hypothesis)
 
@@ -431,8 +505,32 @@ def run(hypothesis: StructuredHypothesis) -> list[ProtocolCandidate]:
                 )
             enriched += 1
 
-        return candidates or _stub_protocol_retrieval(hypothesis)
+        result = candidates or _stub_protocol_retrieval(hypothesis)
+        # region agent log
+        _debug_log(
+            "run1",
+            "H5",
+            "protocol_retrieval.py:run",
+            "returning_candidates",
+            {
+                "count": len(result),
+                "source_types": [c.source_type for c in result[:3]],
+                "fit_scores": [round(c.fit_score, 3) for c in result[:3]],
+                "confidences": [round(c.confidence, 3) for c in result[:3]],
+            },
+        )
+        # endregion
+        return result
 
     except Exception as exc:  # noqa: BLE001
+        # region agent log
+        _debug_log(
+            "run1",
+            "H6",
+            "protocol_retrieval.py:run",
+            "exception_fallback_stub",
+            {"error_type": type(exc).__name__, "error": str(exc)},
+        )
+        # endregion
         logger.exception("Protocol Retrieval pipeline failed: %s", exc)
         return _stub_protocol_retrieval(hypothesis)

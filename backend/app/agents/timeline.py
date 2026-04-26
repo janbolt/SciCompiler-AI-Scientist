@@ -207,7 +207,7 @@ def _generate_timeline_with_llm(
         model=LLM_MODEL,
         response_model=_TimelineLLMOutput,
         max_retries=LLM_MAX_RETRIES,
-        temperature=0.1,
+        temperature=1,
         messages=[
             {"role": "system", "content": SYSTEM_PROMPT},
             {"role": "user", "content": user_message},
