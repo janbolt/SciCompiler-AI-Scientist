@@ -361,8 +361,26 @@ function ExperimentCard({
                         <tr key={i} style={{ borderTop: "1px solid var(--color-border)" }}>
                           <MatCell editing={editing} value={m.name}
                             onChange={(v) => updateMaterial(i, "name", v)} />
-                          <MatCell editing={editing} value={m.catalog} mono
-                            onChange={(v) => updateMaterial(i, "catalog", v)} />
+                          <MatCell
+                            editing={editing}
+                            value={m.catalog}
+                            mono
+                            onChange={(v) => updateMaterial(i, "catalog", v)}
+                            displayNode={
+                              m.catalog === "verify_before_ordering" ? (
+                                <span
+                                  style={{
+                                    fontFamily: "var(--font-mono)",
+                                    fontSize: "0.72rem",
+                                    color: "var(--color-text-muted)",
+                                    fontStyle: "italic",
+                                  }}
+                                >
+                                  Verify before ordering
+                                </span>
+                              ) : undefined
+                            }
+                          />
                           <MatCell editing={editing} value={m.supplier}
                             onChange={(v) => updateMaterial(i, "supplier", v)} />
 
@@ -511,9 +529,10 @@ type MatCellProps = {
   align?: "left" | "right";
   mono?: boolean;
   prefix?: string;
+  displayNode?: React.ReactNode;
 };
 
-function MatCell({ editing, value, onChange, align = "left", mono = false, prefix }: MatCellProps) {
+function MatCell({ editing, value, onChange, align = "left", mono = false, prefix, displayNode }: MatCellProps) {
   const textStyle: React.CSSProperties = {
     fontFamily: mono ? "var(--font-mono)" : "inherit",
     fontSize: mono ? "0.78rem" : undefined,
@@ -534,6 +553,8 @@ function MatCell({ editing, value, onChange, align = "left", mono = false, prefi
             style={{ ...textStyle, background: "var(--color-edit)", border: "1px solid var(--color-accent)", borderRadius: 4 }}
           />
         </div>
+      ) : displayNode !== undefined ? (
+        <span style={{ textAlign: align, display: "block" }}>{displayNode}</span>
       ) : (
         <span style={textStyle}>{prefix}{value}</span>
       )}
