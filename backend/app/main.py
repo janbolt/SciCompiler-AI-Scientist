@@ -4,6 +4,8 @@ import httpx
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 
+from .orchestrator import get_saved_plan, regenerate_plan, run_demo_pipeline, store_scientist_feedback
+from .schemas import DemoRunRequest, DemoRunResponse, FeedbackRequest, FeedbackResponse
 from . import litmus_client
 from .litmus_client import classify_experiment_type
 from .orchestrator import regenerate_plan, run_demo_pipeline, run_frontend_pipeline, store_feedback
@@ -38,6 +40,17 @@ def demo_run(request: DemoRunRequest) -> DemoRunResponse:
     return run_demo_pipeline(request)
 
 
+@app.get("/plans/{plan_id}", response_model=DemoRunResponse)
+def get_plan(plan_id: str) -> DemoRunResponse:
+    saved = get_saved_plan(plan_id)
+    if saved is None:
+        raise HTTPException(status_code=404, detail="Plan not found")
+    return saved
+
+
+@app.post("/plans/{plan_id}/feedback", response_model=FeedbackResponse)
+def save_feedback(plan_id: str, payload: FeedbackRequest) -> FeedbackResponse:
+    return store_scientist_feedback(plan_id=plan_id, payload=payload)
 @app.post("/demo/plan", response_model=FrontendPlanData)
 def demo_plan(request: DemoRunRequest) -> FrontendPlanData:
     """
@@ -61,8 +74,8 @@ def save_feedback(plan_id: str, feedback: ScientistFeedbackInput) -> dict[str, s
 
 
 @app.post("/plans/{plan_id}/regenerate", response_model=DemoRunResponse)
-def regenerate(plan_id: str) -> DemoRunResponse:
-    updated = regenerate_plan(plan_id)
+def regenerate(plan_id: str, payload: FeedbackRequest | None = None) -> DemoRunResponse:
+    updated = regenerate_plan(plan_id=plan_id, payload=payload)
     if updated is None:
         raise HTTPException(status_code=404, detail="Plan not found")
     return updated

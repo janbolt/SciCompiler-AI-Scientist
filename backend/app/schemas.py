@@ -1,9 +1,10 @@
 from __future__ import annotations
 
+from datetime import datetime
 from enum import Enum
 from typing import Literal
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, model_validator
 
 
 class ExecutionMode(str, Enum):
@@ -27,16 +28,23 @@ class EvidenceType(str, Enum):
     unvalidated_assumption = "unvalidated_assumption"
 
 
+class EvidenceStrength(str, Enum):
+    weak = "weak"
+    moderate = "moderate"
+    strong = "strong"
+
+
 class RiskCategory(str, Enum):
-    biological_assumptions = "biological_assumptions"
-    technical_assumptions = "technical_assumptions"
-    model_system_risks = "model_system_risks"
+    biological_assumption = "biological_assumption"
+    technical_assumption = "technical_assumption"
+    model_system_risk = "model_system_risk"
     assay_readout_mismatch = "assay_readout_mismatch"
-    confounders = "confounders"
-    false_positive_risks = "false_positive_risks"
-    false_negative_risks = "false_negative_risks"
-    control_gaps = "control_gaps"
-    replication_gaps = "replication_gaps"
+    confounder = "confounder"
+    false_positive_risk = "false_positive_risk"
+    false_negative_risk = "false_negative_risk"
+    control_gap = "control_gap"
+    replication_gap = "replication_gap"
+    safety_or_compliance = "safety_or_compliance"
 
 
 class PlanAction(str, Enum):
@@ -52,12 +60,27 @@ class ConfidenceLevel(str, Enum):
     high = "high"
 
 
+class RiskSeverity(str, Enum):
+    low = "low"
+    medium = "medium"
+    high = "high"
+    critical = "critical"
+
+
+class RiskLikelihood(str, Enum):
+    low = "low"
+    medium = "medium"
+    high = "high"
+
+
+MISSING = "missing_required_field"
 MissingRequiredField = Literal["missing_required_field"]
+ReadinessLevel = Literal["execution_ready", "pilot_ready", "underspecified"]
 
 
 class RunConstraints(BaseModel):
-    budget: str | None = None
-    timeline: str | None = None
+    budget: str | MissingRequiredField = "missing_required_field"
+    timeline: str | MissingRequiredField = "missing_required_field"
     execution_mode: ExecutionMode = ExecutionMode.in_house
 
 
@@ -77,58 +100,96 @@ class DemoRunRequest(BaseModel):
     prior_feedback: list[PriorFeedbackItem] = Field(default_factory=list)
 
 
+_CORE_HYPOTHESIS_FIELDS: tuple[str, ...] = (
+    "intervention",
+    "biological_system",
+    "comparator_or_control",
+    "measurable_outcome",
+    "threshold",
+    "mechanistic_rationale",
+    "experiment_type",
+)
+
+
 class StructuredHypothesis(BaseModel):
-    raw_input: str
-    organism_or_model: str | MissingRequiredField
-    intervention: str | MissingRequiredField
-    outcome: str | MissingRequiredField
-    measurable_endpoint: str | MissingRequiredField
-    expected_effect_size: str | MissingRequiredField
-    mechanism: str | MissingRequiredField
-    control_condition: str | MissingRequiredField
-    experiment_type: str | MissingRequiredField
-    missing_fields: list[str]
+    intervention: str
+    biological_system: str
+    comparator_or_control: str
+    measurable_outcome: str
+    threshold: str
+    mechanistic_rationale: str
+    experiment_type: str
+    constraints: dict[str, str] = Field(default_factory=dict)
+    readiness: ReadinessLevel
+    readiness_rationale: str
+    confidence_score: float = Field(ge=0.0, le=1.0)
+    clarifying_questions: list[str] = Field(default_factory=list)
+    literature_search_hint: str
+
+    original_hypothesis: str = ""
+    missing_required_fields: list[str] = Field(default_factory=list)
+
+    @model_validator(mode="after")
+    def _compute_missing_required_fields(self) -> "StructuredHypothesis":
+        self.missing_required_fields = [
+            name for name in _CORE_HYPOTHESIS_FIELDS if getattr(self, name) == MISSING
+        ]
+        return self
 
 
-class Reference(BaseModel):
+class ReferenceItem(BaseModel):
     title: str
+    source_type: Literal["placeholder_seed_reference", "verified_reference"]
     source: str
+    note: str
     url: str | None = None
-    year: int | None = None
+
+
+class ProtocolReference(BaseModel):
+    title: str
+    protocol_url: str
+    authors: list[str] = Field(default_factory=list)
+    published_year: int | None = None
+    match_type: Literal["full_scope", "intervention_only", "system_method", "stub"]
+    relevance_note: str
+    is_stub: bool = False
 
 
 class LiteratureQCResult(BaseModel):
-    novelty_signal: NoveltySignal
-    relevant_references: list[Reference]
-    confidence: float = Field(ge=0.0, le=1.0)
+    novelty_signal: Literal["not_found", "similar_work_exists", "exact_match_found"]
+    references: list[ProtocolReference] = Field(default_factory=list)
+    confidence_score: float = Field(ge=0.0, le=1.0)
     explanation: str
     recommended_action: str
+    search_coverage: Literal["full", "partial", "none"]
 
 
 class ProtocolCandidate(BaseModel):
-    title: str
-    source: str
-    summary: str
+    protocol_name: str
+    source_type: str
+    fit_score: float = Field(ge=0.0, le=1.0)
     confidence: float = Field(ge=0.0, le=1.0)
     adaptation_notes: str
+    missing_steps: list[str]
+    limitations: list[str]
 
 
 class EvidenceClaim(BaseModel):
     claim: str
     evidence_type: EvidenceType
-    source_ids: list[str]
-    relevance_to_plan: str
+    support_summary: str
+    strength: EvidenceStrength
+    linked_to: str
 
 
 class RiskItem(BaseModel):
     risk_id: str
     category: RiskCategory
     description: str
-    severity: Literal["low", "moderate", "high", "critical"]
-    probability: float = Field(ge=0.0, le=1.0)
-    impact: str
-    required_mitigation: str
-    plan_action: PlanAction
+    severity: RiskSeverity
+    likelihood: RiskLikelihood
+    mitigation: str
+    action: PlanAction
 
 
 class ProtocolStep(BaseModel):
@@ -137,14 +198,27 @@ class ProtocolStep(BaseModel):
     linked_to: str
 
 
+class ExperimentPlan(BaseModel):
+    objective: str
+    experimental_design: str
+    controls: list[str]
+    step_by_step_protocol: list[ProtocolStep]
+    assumptions: list[str]
+    decision_criteria: list[str]
+    risk_mitigations_applied: list[str]
+    reproducibility_notes: list[str]
+    execution_readiness_score: float = Field(ge=0.0, le=1.0)
+    execution_readiness_label: Literal["execution_ready_after_review", "pilot_only", "blocked_pending_expert_review"]
+    feedback_incorporated: list[str] = Field(default_factory=list)
+
+
 class MaterialItem(BaseModel):
-    name: str
+    item_name: str
     supplier: str
-    catalog_reference: str | Literal["verify_before_ordering"] | None = None
+    catalog_number: str | Literal["verify_before_ordering"] | None = None
     quantity: str
-    estimated_unit_cost: float | None = None
     confidence: ConfidenceLevel
-    notes: str | None = None
+    uncertainty_note: str | None = None
 
 
 class BudgetLineItem(BaseModel):
@@ -152,29 +226,29 @@ class BudgetLineItem(BaseModel):
     quantity: str
     unit_cost_estimate: float
     total_cost_estimate: float
-    supplier: str
-    catalog_reference: str | Literal["verify_before_ordering"] | None = None
     confidence: ConfidenceLevel
+    uncertainty_note: str | None = None
 
 
 class BudgetEstimate(BaseModel):
     currency: str = "USD"
     line_items: list[BudgetLineItem]
     estimated_total_cost: float
-    notes: str
+    uncertainty_notes: list[str]
 
 
 class TimelinePhase(BaseModel):
     phase_name: str
-    estimated_duration_days: int
+    duration_estimate: str
     dependencies: list[str]
     responsible_role: str
-    risk_buffer_days: int
+    risk_buffer: str
+    bottlenecks: list[str]
 
 
 class TimelineEstimate(BaseModel):
     phases: list[TimelinePhase]
-    estimated_total_days: int
+    total_duration_estimate: str
 
 
 class ValidationPlan(BaseModel):
@@ -183,18 +257,7 @@ class ValidationPlan(BaseModel):
     success_threshold: str
     failure_conditions: list[str]
     suggested_statistical_comparison: str
-
-
-class ExperimentPlan(BaseModel):
-    id: str
-    objective: str
-    experimental_design: str
-    controls: list[str]
-    step_by_step_protocol: list[ProtocolStep]
-    assumptions: list[str]
-    decision_criteria: list[str]
-    risk_mitigations_applied: list[str]
-    feedback_incorporated: list[str] = Field(default_factory=list)
+    minimum_replicates_or_design_note: str
 
 
 class CROReadyBrief(BaseModel):
@@ -205,10 +268,12 @@ class CROReadyBrief(BaseModel):
     deliverables: list[str]
     qc_requirements: list[str]
     timeline_request: str
+    materials_responsibility: str
     questions_for_cro: list[str]
 
 
 class DemoRunResponse(BaseModel):
+    plan_id: str
     hypothesis: StructuredHypothesis
     literature_qc: LiteratureQCResult
     protocol_candidates: list[ProtocolCandidate]
@@ -223,16 +288,26 @@ class DemoRunResponse(BaseModel):
     confidence_score: float = Field(ge=0.0, le=1.0)
 
 
-class ScientistFeedbackInput(BaseModel):
-    section: str
-    original_text: str
-    correction: str
-    reason: str
+class FeedbackRequest(BaseModel):
+    feedback: str
+    requested_changes: list[str] = Field(default_factory=list)
+    section: str = "overall_plan"
     severity: Literal["low", "medium", "high"] = "medium"
 
 
-class ScientistFeedback(ScientistFeedbackInput):
+class FeedbackResponse(BaseModel):
     plan_id: str
+    stored: bool
+    feedback_summary: str
+
+
+class FeedbackRecord(BaseModel):
+    plan_id: str
+    feedback: str
+    requested_changes: list[str]
+    section: str
+    severity: Literal["low", "medium", "high"]
+    created_at: datetime
 
 
 # ── Frontend-shaped models ────────────────────────────────────────────────────
