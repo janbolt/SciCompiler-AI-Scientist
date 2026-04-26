@@ -1,0 +1,106 @@
+@import "tailwindcss";
+
+:root {
+  --color-bg: #FAFAFA;
+  --color-text: #0A0A0A;
+  --color-border: #E0E0E0;
+  --color-accent: #1B6B72;
+  --color-accent-light: #E8F4F5;
+  --color-code-bg: #111111;
+  --color-code-text: #E8E8E8;
+  --color-badge-green: #2D6A4F;
+  --color-badge-amber: #B5700A;
+  --color-badge-red: #A63232;
+  --color-muted: #666666;
+  --color-edit: #FFFBEA;
+
+  --font-sans: "DM Sans", system-ui, -apple-system, sans-serif;
+  --font-mono: "Space Mono", ui-monospace, "SF Mono", Menlo, monospace;
+}
+
+@theme inline {
+  --color-bg: var(--color-bg);
+  --color-text: var(--color-text);
+  --color-border: var(--color-border);
+  --color-accent: var(--color-accent);
+  --color-accent-light: var(--color-accent-light);
+  --color-code-bg: var(--color-code-bg);
+  --color-code-text: var(--color-code-text);
+  --color-badge-green: var(--color-badge-green);
+  --color-badge-amber: var(--color-badge-amber);
+  --color-badge-red: var(--color-badge-red);
+  --color-muted: var(--color-muted);
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-size: 15px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+button {
+  font-family: var(--font-sans);
+  cursor: pointer;
+}
+
+textarea,
+input {
+  font-family: var(--font-sans);
+}
+
+.font-mono {
+  font-family: var(--font-mono);
+}
+
+.small-caps {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.code-block {
+  background: var(--color-code-bg);
+  color: var(--color-code-text);
+  font-family: var(--font-mono);
+  padding: 12px 16px;
+  border-radius: 0;
+  font-size: 0.8rem;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+[contenteditable="true"] {
+  background: var(--color-edit);
+  outline: none;
+}
+
+[contenteditable="true"]:focus {
+  box-shadow: inset 0 0 0 1px var(--color-accent);
+}
+
+.no-shadow {
+  box-shadow: none !important;
+}
+
+.divider {
+  border-bottom: 1px solid var(--color-border);
+}

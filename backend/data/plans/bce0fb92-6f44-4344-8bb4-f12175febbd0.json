@@ -1,0 +1,359 @@
+{
+  "request": {
+    "question": "Treat human fibroblasts with 50 nM rapamycin for 48 h; hypothesis: rapamycin will reduce EdU incorporation by \u226530% versus DMSO control because mTORC1 inhibition suppresses anabolic cell-cycle entry.",
+    "constraints": {
+      "budget": "5000 USD",
+      "timeline": "4 weeks",
+      "execution_mode": "in_house"
+    }
+  },
+  "response": {
+    "hypothesis": {
+      "raw_input": "Treat human fibroblasts with 50 nM rapamycin for 48 h; hypothesis: rapamycin will reduce EdU incorporation by \u226530% versus DMSO control because mTORC1 inhibition suppresses anabolic cell-cycle entry.",
+      "organism_or_model": "missing_required_field",
+      "intervention": "missing_required_field",
+      "outcome": "reduce EdU incorporation by \u226530% versus DMSO control because mTORC1 inhibition suppresses anabolic cell-cycle entry.",
+      "measurable_endpoint": "missing_required_field",
+      "expected_effect_size": "30 %",
+      "mechanism": "missing_required_field",
+      "control_condition": "missing_required_field",
+      "experiment_type": "missing_required_field",
+      "missing_fields": [
+        "organism_or_model",
+        "intervention",
+        "measurable_endpoint",
+        "mechanism",
+        "control_condition",
+        "experiment_type"
+      ]
+    },
+    "literature_qc": {
+      "novelty_signal": "not_found",
+      "relevant_references": [],
+      "confidence": 0.45,
+      "explanation": "No close match identified in the stubbed search index.",
+      "recommended_action": "Proceed with a conservative pilot and stronger controls."
+    },
+    "protocol_candidates": [
+      {
+        "title": "Baseline DMSO freezing for adherent human cell lines (candidate)",
+        "source": "atcc_stub",
+        "summary": "Standard controlled-rate freezing with 10% DMSO and serum-containing medium.",
+        "confidence": 0.78,
+        "adaptation_notes": "Replace sucrose fraction with trehalose arm while preserving cooling rate and thaw handling."
+      },
+      {
+        "title": "Trehalose supplementation in cryopreservation media (candidate)",
+        "source": "protocols_io_stub",
+        "summary": "Trehalose dose exploration prior to large-batch freezing.",
+        "confidence": 0.63,
+        "adaptation_notes": "Run a concentration sweep pilot before committing to full-scale comparison."
+      }
+    ],
+    "evidence_claims": [
+      {
+        "claim": "Trehalose may improve membrane stabilization during freeze-thaw cycles.",
+        "evidence_type": "mechanistic_evidence",
+        "source_ids": [
+          "hypothesis_mechanism"
+        ],
+        "relevance_to_plan": "Supports adding trehalose treatment arm."
+      },
+      {
+        "claim": "Post-thaw viability is an interpretable primary endpoint for this cell model.",
+        "evidence_type": "direct_evidence",
+        "source_ids": [
+          "standard_cell_culture_practice"
+        ],
+        "relevance_to_plan": "Defines main assay readout."
+      },
+      {
+        "claim": "Assumed +15 percentage-point viability improvement may be optimistic.",
+        "evidence_type": "unvalidated_assumption",
+        "source_ids": [
+          "hypothesis_effect_size"
+        ],
+        "relevance_to_plan": "Requires pilot threshold check before scale-up."
+      }
+    ],
+    "risks": [
+      {
+        "risk_id": "R1",
+        "category": "biological_assumptions",
+        "description": "Trehalose uptake and protection may differ from expected mechanism in HeLa cells.",
+        "severity": "moderate",
+        "probability": 0.5,
+        "impact": "Reduced effect size despite protocol execution quality.",
+        "required_mitigation": "Add dose-response pilot arm and confirm osmotic tolerance.",
+        "plan_action": "modify_plan"
+      },
+      {
+        "risk_id": "R2",
+        "category": "technical_assumptions",
+        "description": "Cooling-rate variability can dominate cryoprotectant effect differences.",
+        "severity": "high",
+        "probability": 0.6,
+        "impact": "False attribution of viability differences to chemical composition.",
+        "required_mitigation": "Use controlled-rate freezing and instrument log capture for each batch.",
+        "plan_action": "modify_plan"
+      },
+      {
+        "risk_id": "R3",
+        "category": "assay_readout_mismatch",
+        "description": "Single viability readout may miss delayed apoptosis after thaw.",
+        "severity": "moderate",
+        "probability": 0.55,
+        "impact": "Overstated treatment benefit.",
+        "required_mitigation": "Include delayed 24h viability follow-up.",
+        "plan_action": "modify_plan"
+      },
+      {
+        "risk_id": "R4",
+        "category": "control_gaps",
+        "description": "No explicit no-cryoprotectant stress control in baseline setup.",
+        "severity": "moderate",
+        "probability": 0.5,
+        "impact": "Weak interpretation of treatment effects.",
+        "required_mitigation": "Add no-cryoprotectant stress control and sham-freeze control.",
+        "plan_action": "modify_plan"
+      },
+      {
+        "risk_id": "R5",
+        "category": "replication_gaps",
+        "description": "Single run risks batch artifacts.",
+        "severity": "low",
+        "probability": 0.4,
+        "impact": "Low confidence in reproducibility.",
+        "required_mitigation": "Document as minimum 3 biological replicates requirement.",
+        "plan_action": "document_only"
+      }
+    ],
+    "plan": {
+      "id": "bce0fb92-6f44-4344-8bb4-f12175febbd0",
+      "objective": "Evaluate whether trehalose substitution improves post-thaw HeLa viability against standard DMSO workflow.",
+      "experimental_design": "Two-arm comparative cryopreservation study with pilot concentration sweep and replicate batches.",
+      "controls": [
+        "Standard DMSO cryomedia control",
+        "No-cryoprotectant stress control",
+        "Sham-freeze handling control"
+      ],
+      "step_by_step_protocol": [
+        {
+          "step_number": 1,
+          "description": "Culture HeLa cells to consistent confluency before freezing.",
+          "linked_to": "user_input"
+        },
+        {
+          "step_number": 2,
+          "description": "Prepare control (standard DMSO) and trehalose test cryomedia arms.",
+          "linked_to": "hypothesis.intervention"
+        },
+        {
+          "step_number": 3,
+          "description": "Freeze using controlled-rate protocol and consistent vial fill volume.",
+          "linked_to": "risk:R2"
+        },
+        {
+          "step_number": 4,
+          "description": "Thaw rapidly and measure immediate viability with blinded plate layout.",
+          "linked_to": "validation.primary_endpoint"
+        },
+        {
+          "step_number": 5,
+          "description": "Measure 24h post-thaw viability to capture delayed cell death.",
+          "linked_to": "risk:R3"
+        },
+        {
+          "step_number": 6,
+          "description": "Mitigation step: R1: Add dose-response pilot arm and confirm osmotic tolerance.",
+          "linked_to": "risk_mitigation"
+        },
+        {
+          "step_number": 7,
+          "description": "Mitigation step: R2: Use controlled-rate freezing and instrument log capture for each batch.",
+          "linked_to": "risk_mitigation"
+        },
+        {
+          "step_number": 8,
+          "description": "Mitigation step: R3: Include delayed 24h viability follow-up.",
+          "linked_to": "risk_mitigation"
+        },
+        {
+          "step_number": 9,
+          "description": "Mitigation step: R4: Add no-cryoprotectant stress control and sham-freeze control.",
+          "linked_to": "risk_mitigation"
+        }
+      ],
+      "assumptions": [
+        "Trehalose concentration range is compatible with HeLa osmolality tolerance.",
+        "Operator handling and thaw timing are standardized across arms.",
+        "Unspecified fields remain unresolved: organism_or_model, intervention, measurable_endpoint, mechanism, control_condition, experiment_type."
+      ],
+      "decision_criteria": [
+        "Advance if trehalose arm shows >=15 percentage-point improvement with acceptable variance.",
+        "Downgrade to pilot optimization if improvement is between 5 and 15 percentage points.",
+        "Stop if trehalose arm underperforms DMSO or increases delayed apoptosis."
+      ],
+      "risk_mitigations_applied": [
+        "R1: Add dose-response pilot arm and confirm osmotic tolerance.",
+        "R2: Use controlled-rate freezing and instrument log capture for each batch.",
+        "R3: Include delayed 24h viability follow-up.",
+        "R4: Add no-cryoprotectant stress control and sham-freeze control."
+      ],
+      "feedback_incorporated": []
+    },
+    "materials": [
+      {
+        "name": "HeLa cell line",
+        "supplier": "ATCC candidate supplier",
+        "catalog_reference": "verify_before_ordering",
+        "quantity": "1 vial",
+        "estimated_unit_cost": 450.0,
+        "confidence": "medium",
+        "notes": "Exact catalog must be verified before ordering."
+      },
+      {
+        "name": "DMSO, cell culture grade",
+        "supplier": "Thermo Fisher candidate supplier",
+        "catalog_reference": "verify_before_ordering",
+        "quantity": "500 mL",
+        "estimated_unit_cost": 85.0,
+        "confidence": "medium",
+        "notes": null
+      },
+      {
+        "name": "Trehalose",
+        "supplier": "Sigma-Aldrich candidate supplier",
+        "catalog_reference": "verify_before_ordering",
+        "quantity": "100 g",
+        "estimated_unit_cost": 120.0,
+        "confidence": "low",
+        "notes": "Purity grade and lot constraints to verify."
+      }
+    ],
+    "budget": {
+      "currency": "USD",
+      "line_items": [
+        {
+          "item_name": "HeLa cell line",
+          "quantity": "1 vial",
+          "unit_cost_estimate": 450.0,
+          "total_cost_estimate": 450.0,
+          "supplier": "ATCC candidate supplier",
+          "catalog_reference": "verify_before_ordering",
+          "confidence": "medium"
+        },
+        {
+          "item_name": "DMSO, cell culture grade",
+          "quantity": "500 mL",
+          "unit_cost_estimate": 85.0,
+          "total_cost_estimate": 85.0,
+          "supplier": "Thermo Fisher candidate supplier",
+          "catalog_reference": "verify_before_ordering",
+          "confidence": "medium"
+        },
+        {
+          "item_name": "Trehalose",
+          "quantity": "100 g",
+          "unit_cost_estimate": 120.0,
+          "total_cost_estimate": 120.0,
+          "supplier": "Sigma-Aldrich candidate supplier",
+          "catalog_reference": "verify_before_ordering",
+          "confidence": "low"
+        },
+        {
+          "item_name": "Consumables and assay reagents buffer",
+          "quantity": "1 package",
+          "unit_cost_estimate": 350.0,
+          "total_cost_estimate": 350.0,
+          "supplier": "local_core_facility_estimate",
+          "catalog_reference": null,
+          "confidence": "low"
+        }
+      ],
+      "estimated_total_cost": 1005.0,
+      "notes": "Costs are directional for demo use. Verify quotations before procurement."
+    },
+    "timeline": {
+      "phases": [
+        {
+          "phase_name": "Setup and reagent verification",
+          "estimated_duration_days": 3,
+          "dependencies": [],
+          "responsible_role": "Research associate",
+          "risk_buffer_days": 1
+        },
+        {
+          "phase_name": "Pilot dose-response freeze-thaw run",
+          "estimated_duration_days": 5,
+          "dependencies": [
+            "Setup and reagent verification"
+          ],
+          "responsible_role": "Scientist",
+          "risk_buffer_days": 2
+        },
+        {
+          "phase_name": "Main replicate experiment",
+          "estimated_duration_days": 7,
+          "dependencies": [
+            "Pilot dose-response freeze-thaw run"
+          ],
+          "responsible_role": "Scientist",
+          "risk_buffer_days": 2
+        },
+        {
+          "phase_name": "Analysis and go/no-go review",
+          "estimated_duration_days": 3,
+          "dependencies": [
+            "Main replicate experiment"
+          ],
+          "responsible_role": "PI",
+          "risk_buffer_days": 1
+        }
+      ],
+      "estimated_total_days": 24
+    },
+    "validation": {
+      "primary_endpoint": "Post-thaw viability percentage at 0h and 24h.",
+      "secondary_endpoints": [
+        "Cell recovery count",
+        "Morphology score",
+        "Batch-to-batch variance"
+      ],
+      "success_threshold": "Trehalose arm improves 24h viability by >=15 percentage points over DMSO.",
+      "failure_conditions": [
+        "Improvement <5 percentage points after three biological replicates.",
+        "Trehalose arm shows increased delayed apoptosis markers."
+      ],
+      "suggested_statistical_comparison": "Two-sided t-test or Mann-Whitney U (depending on normality) with replicate-level analysis."
+    },
+    "cro_ready_brief": {
+      "objective": "Evaluate whether trehalose substitution improves post-thaw HeLa viability against standard DMSO workflow.",
+      "scope_of_work": [
+        "Run comparative cryopreservation test between standard DMSO and trehalose-modified media.",
+        "Execute pilot concentration sweep followed by replicate confirmation."
+      ],
+      "sample_count": "Minimum 3 biological replicates per arm",
+      "required_assays": [
+        "Immediate post-thaw viability",
+        "24h viability follow-up"
+      ],
+      "deliverables": [
+        "Raw viability data",
+        "QC log",
+        "Summary report with statistical comparison"
+      ],
+      "qc_requirements": [
+        "Controlled-rate freeze logs",
+        "Blinded sample annotation",
+        "Replicate traceability"
+      ],
+      "timeline_request": "Target completion in approximately 24 days including risk buffers.",
+      "questions_for_cro": [
+        "Can you support controlled-rate freezing instrumentation logs?",
+        "Which viability assay kit do you recommend for 24h delayed apoptosis sensitivity?"
+      ]
+    },
+    "confidence_score": 0.62
+  }
+}
