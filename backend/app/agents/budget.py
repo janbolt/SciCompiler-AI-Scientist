@@ -164,8 +164,22 @@ def _format_steps(plan: ExperimentPlan) -> str:
 def _generate_budget_with_llm(
     hypothesis: StructuredHypothesis,
     plan: ExperimentPlan,
+    scientist_feedback: str = "",
 ) -> _BudgetLLMOutput:
     client = get_client()
+
+    feedback_block = ""
+    if scientist_feedback.strip():
+        feedback_block = (
+            "\n=================================================================\n"
+            "SCIENTIST FEEDBACK ON MATERIALS / BUDGET — YOU MUST ADDRESS:\n"
+            "=================================================================\n"
+            f"{scientist_feedback.strip()}\n"
+            "Adjust supplier choices, quantities, item names, and cost estimates\n"
+            "to address every point above. If you cannot fully address an item,\n"
+            "state explicitly in uncertainty_notes what was addressed and what\n"
+            "could not be addressed and why.\n"
+        )
 
     user_message = (
         "HYPOTHESIS\n"
@@ -173,7 +187,8 @@ def _generate_budget_with_llm(
         f"- biological_system: {hypothesis.biological_system}\n"
         f"- experiment_type: {hypothesis.experiment_type}\n\n"
         "PROTOCOL STEPS\n"
-        f"{_format_steps(plan)}\n\n"
+        f"{_format_steps(plan)}\n"
+        f"{feedback_block}\n"
         "Generate a complete materials and cost estimate for this experiment."
     )
 
@@ -330,12 +345,16 @@ def _stub_budget(
 def run(
     hypothesis: StructuredHypothesis | None = None,
     plan: ExperimentPlan | None = None,
+    scientist_feedback: str = "",
 ) -> tuple[list[MaterialItem], BudgetEstimate]:
     """Generate a materials list and budget estimate for the experiment.
 
     Args:
         hypothesis: Structured hypothesis (required in live mode).
         plan: Experiment plan whose steps drive material inference.
+        scientist_feedback: Free-text scientist corrections specifically
+            targeting materials/budget. Injected into the LLM prompt with
+            mandatory-address language. Empty string = no feedback.
 
     Returns:
         Tuple of (materials list, budget estimate).
@@ -369,7 +388,7 @@ def run(
         )
 
     try:
-        llm_output = _generate_budget_with_llm(hypothesis, plan)
+        llm_output = _generate_budget_with_llm(hypothesis, plan, scientist_feedback=scientist_feedback)
         return _build_outputs(llm_output)
     except Exception as exc:  # noqa: BLE001
         logger.exception("Budget agent LLM call failed, falling back to stub: %s", exc)

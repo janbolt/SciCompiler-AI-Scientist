@@ -120,13 +120,86 @@ export function reviewCount(): number {
   return readReviews().length;
 }
 
+// ─── Hypothesis-relevance filter ──────────────────────────────────────────────
+
+/**
+ * Generic experimental words that don't carry topical meaning. Excluded
+ * before matching so a review tagged "western blot experiment" doesn't
+ * match every hypothesis just because both contain the word "experiment".
+ */
+const STOPWORDS = new Set([
+  "a", "an", "and", "or", "the", "of", "to", "in", "for", "with", "by",
+  "on", "at", "as", "is", "are", "be", "this", "that", "these", "those",
+  "experiment", "experiments", "study", "studies", "test", "tests",
+  "assay", "assays", "protocol", "protocols", "method", "methods",
+  "analysis", "based", "using", "use", "vs", "versus",
+]);
+
+/** Minimum shared-prefix length for stem matching between two tokens. */
+const STEM_PREFIX_LEN = 4;
+
+function tokens(text: string): string[] {
+  return text
+    .toLowerCase()
+    .split(/[^a-z0-9-]+/)
+    .filter((t) => t.length > 2 && !STOPWORDS.has(t));
+}
+
+/**
+ * Returns true when two tokens are likely about the same topic. Catches
+ * morphological variants and common scientific stems that simple substring
+ * matching misses, e.g.:
+ *   - "cryopreservation" ↔ "cryoprotectant"  (stem "cryo*")
+ *   - "cryopreservation" ↔ "cryopreserve"
+ *   - "western"          ↔ "westerns"
+ *   - "qpcr"             ↔ "pcr"
+ */
+function tokensRelated(a: string, b: string): boolean {
+  if (!a || !b) return false;
+  if (a === b) return true;
+  if (a.includes(b) || b.includes(a)) return true;
+  if (a.length >= STEM_PREFIX_LEN && b.length >= STEM_PREFIX_LEN) {
+    return a.slice(0, STEM_PREFIX_LEN) === b.slice(0, STEM_PREFIX_LEN);
+  }
+  return false;
+}
+
+/**
+ * A review is applicable to the current context if any meaningful token from
+ * its experiment_type tag (or its experiment_name as a fallback) is related
+ * to any token in the current hypothesis / plan / experiment text. Matching
+ * is case-insensitive and uses both substring and shared-stem heuristics.
+ */
+export function isReviewApplicable(review: ExperimentReview, contextText: string): boolean {
+  const haystackTokens = tokens(contextText);
+  const reviewTokens = [
+    ...tokens(review.experiment_type || ""),
+    ...tokens(review.experiment_name || ""),
+  ];
+  if (reviewTokens.length === 0 || haystackTokens.length === 0) return false;
+  return reviewTokens.some((rt) => haystackTokens.some((ht) => tokensRelated(rt, ht)));
+}
+
+export function loadApplicableReviews(contextText: string): ExperimentReview[] {
+  if (!contextText || !contextText.trim()) return [];
+  return readReviews().filter((r) => isReviewApplicable(r, contextText));
+}
+
 /**
  * Flatten all stored reviews into the flat `PriorFeedbackItem[]` format
  * the backend expects. Only sections with a note are included.
+ *
+ * Pass a non-empty `contextText` (e.g. the current hypothesis) to limit
+ * the output to reviews relevant to that context. With no contextText
+ * the function returns every stored note (legacy behavior).
  */
-export function buildPriorFeedback(): PriorFeedbackItem[] {
+export function buildPriorFeedback(contextText: string = ""): PriorFeedbackItem[] {
+  const reviews = contextText.trim()
+    ? readReviews().filter((r) => isReviewApplicable(r, contextText))
+    : readReviews();
+
   const items: PriorFeedbackItem[] = [];
-  for (const review of readReviews()) {
+  for (const review of reviews) {
     for (const [section, sr] of Object.entries(review.sections) as [string, SectionRating][]) {
       if (sr.note.trim()) {
         items.push({

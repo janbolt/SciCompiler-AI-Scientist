@@ -368,8 +368,19 @@ def _generate_plan_with_llm(
 
     feedback_section = ""
     if feedback_notes:
-        feedback_section = "\nPRIOR FEEDBACK TO INCORPORATE:\n" + "\n".join(
-            f"- {note}" for note in feedback_notes
+        feedback_section = (
+            "\n=================================================================\n"
+            "SCIENTIST FEEDBACK ON THE PLAN / PROTOCOL STEPS — YOU MUST ADDRESS:\n"
+            "=================================================================\n"
+            + "\n".join(f"- {note}" for note in feedback_notes)
+            + "\n\n"
+            "These corrections come from a scientist who reviewed an earlier\n"
+            "version of this plan. You MUST incorporate every point in your\n"
+            "regenerated steps, controls, decision criteria, and reproducibility\n"
+            "notes. If a request is impossible (e.g. a step the technique does\n"
+            "not allow), state this explicitly in the corresponding step's\n"
+            "expected_outcome or in assumptions, then provide the closest\n"
+            "feasible alternative.\n"
         )
 
     user_message = (
@@ -428,7 +439,7 @@ def _apply_risk_mitigations(
             steps.append(
                 ProtocolStep(
                     step_number=len(steps) + 1,
-                    description=f"Risk mitigation — {risk.risk_id}: {risk.mitigation}",
+                    description=f"Mitigation step for {risk.risk_id}: {risk.mitigation}",
                     linked_to=f"risk:{risk.risk_id}",
                 )
             )

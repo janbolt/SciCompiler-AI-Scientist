@@ -107,22 +107,39 @@ def run(
 
     # --- Default: always return at least one item ----------------------------
     if not risks:
-        risks.append(
-            RiskItem(
-                risk_id="RISK-001",
-                category=RiskCategory.biological_assumption,
-                description=(
-                    "Standard experimental risk — the approach has literature support "
-                    "but execution details should be reviewed before proceeding."
+        risks.extend(
+            [
+                RiskItem(
+                    risk_id="RISK-001",
+                    category=RiskCategory.biological_assumption,
+                    description=(
+                        "Standard translational risk remains even with literature support. "
+                        "Run a pilot before moving to full execution."
+                    ),
+                    severity="medium",
+                    likelihood="medium",
+                    mitigation=(
+                        "Downgrade to pilot execution until at least three biological "
+                        "replicates confirm threshold performance."
+                    ),
+                    action=PlanAction.downgrade_to_pilot,
                 ),
-                severity="low",
-                likelihood="low",
-                mitigation=(
-                    "Confirm all materials, controls, and readiness criteria with "
-                    "a scientist before execution."
+                RiskItem(
+                    risk_id="RISK-002",
+                    category=RiskCategory.control_gap,
+                    description=(
+                        "Control strategy may miss process-specific artifacts in handling "
+                        "or reagent preparation."
+                    ),
+                    severity="medium",
+                    likelihood="medium",
+                    mitigation=(
+                        "Add an explicit process control arm and a pre-run calibration "
+                        "checkpoint to the protocol."
+                    ),
+                    action=PlanAction.modify_plan,
                 ),
-                action=PlanAction.document_only,
-            )
+            ]
         )
 
     return risks

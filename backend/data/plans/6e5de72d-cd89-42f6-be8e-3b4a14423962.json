@@ -1,0 +1,598 @@
+{
+  "request": {
+    "question": "Test FK506 (10nM) on T-cell IL-2 secretion in Jurkat cells, ELISA readout.",
+    "constraints": {
+      "budget": "missing_required_field",
+      "timeline": "missing_required_field",
+      "execution_mode": "in_house"
+    },
+    "prior_feedback": []
+  },
+  "response": {
+    "plan_id": "6e5de72d-cd89-42f6-be8e-3b4a14423962",
+    "hypothesis": {
+      "intervention": "FK506 (10nM)",
+      "biological_system": "Jurkat cells",
+      "comparator_or_control": "missing_required_field",
+      "measurable_outcome": "IL-2 secretion (assay: ELISA)",
+      "threshold": "missing_required_field",
+      "mechanistic_rationale": "missing_required_field",
+      "experiment_type": "T-cell cytokine secretion assay",
+      "constraints": {
+        "execution_mode": "in_house"
+      },
+      "readiness": "pilot_ready",
+      "readiness_rationale": "Comparator, threshold, and mechanistic rationale are missing. Other fields are specified.",
+      "confidence_score": 0.8,
+      "clarifying_questions": [
+        "What is the comparator or control condition for this experiment?",
+        "What is the numeric success threshold for IL-2 secretion?",
+        "What is the mechanistic rationale for using FK506 in this context?"
+      ],
+      "literature_search_hint": "FK506 T-cell IL-2 secretion Jurkat cells ELISA",
+      "original_hypothesis": "Test FK506 (10nM) on T-cell IL-2 secretion in Jurkat cells, ELISA readout.",
+      "missing_required_fields": [
+        "comparator_or_control",
+        "threshold",
+        "mechanistic_rationale"
+      ]
+    },
+    "literature_qc": {
+      "novelty_signal": "similar_work_exists",
+      "references": [
+        {
+          "title": "Delta-opioid receptors expressed by Jurkat T cells enhance IL-2 secretion by increasing AP-1 complexes and activity of the NF-AT/AP-1-binding promoter element.",
+          "protocol_url": "https://doi.org/10.4049/jimmunol.159.11.5431",
+          "authors": [
+            "Karen E. Hedin",
+            "Michael P. Bell",
+            "K. Kalli",
+            "et al."
+          ],
+          "published_year": 1997,
+          "match_type": "full_scope",
+          "relevance_note": "This paper discusses the enhancement of IL-2 secretion in Jurkat T cells, which is directly relevant to the measurable outcome of the hypothesis.",
+          "is_stub": false
+        },
+        {
+          "title": "A COX-2 metabolite of the endogenous cannabinoid, 2-arachidonyl glycerol, mediates suppression of IL-2 secretion in activated Jurkat T cells.",
+          "protocol_url": "https://doi.org/10.1016/j.bcp.2008.05.005",
+          "authors": [
+            "C. Rockwell",
+            "P. Raman",
+            "B. Kaplan",
+            "et al."
+          ],
+          "published_year": 2008,
+          "match_type": "full_scope",
+          "relevance_note": "This study examines the suppression of IL-2 secretion in activated Jurkat T cells, providing insights into factors that may influence IL-2 levels.",
+          "is_stub": false
+        },
+        {
+          "title": "Somatostatin increases mitogen\u2010induced IL\u20102 secretion and proliferation of human jurkat T cells via sst3 receptor isotype",
+          "protocol_url": "https://doi.org/10.1002/(SICI)1097-4644(19980101)68:1<62::AID-JCB6>3.0.CO;2-U",
+          "authors": [
+            "A. Cardoso",
+            "Christelle El Ghamrawy",
+            "J. Gautron",
+            "et al."
+          ],
+          "published_year": 1998,
+          "match_type": "full_scope",
+          "relevance_note": "This paper investigates the increase of IL-2 secretion in Jurkat T cells, which relates to the cytokine secretion aspect of the hypothesis.",
+          "is_stub": false
+        }
+      ],
+      "confidence_score": 0.95,
+      "explanation": "The intervention FK506 is a known immunosuppressant that affects T cell function, and while it is not explicitly mentioned in the retrieved papers, the biological system of Jurkat cells is covered in several studies (e.g., papers [3], [4], and [5]) that investigate IL-2 secretion in this cell line. The experiment type, focusing on T-cell cytokine secretion assays, is also relevant to the context of these papers, which examine factors influencing IL-2 secretion in Jurkat cells. However, none of the papers directly address FK506's effect on IL-2 secretion in Jurkat cells specifically.",
+      "recommended_action": "Related publications exist. Review the references, cite relevant prior work in your plan, and explicitly state how your experiment differs or extends the existing approach.",
+      "search_coverage": "full"
+    },
+    "protocol_candidates": [
+      {
+        "protocol_name": "Standard t-cell cytokine secretion assay protocol for fk506 (10nm)",
+        "source_type": "stub",
+        "fit_score": 0.75,
+        "confidence": 0.65,
+        "adaptation_notes": "Stub mode \u2014 no live protocols.io search performed. This is a placeholder candidate.",
+        "missing_steps": [
+          "Exact reagent concentrations",
+          "Instrument-specific settings"
+        ],
+        "limitations": [
+          "Stub output only \u2014 real protocols.io search requires PROTOCOLS_IO_TOKEN."
+        ],
+        "raw_steps": [],
+        "protocol_url": ""
+      }
+    ],
+    "evidence_claims": [
+      {
+        "claim": "Post-thaw viability directly tests the stated biological outcome.",
+        "evidence_type": "direct_evidence",
+        "support_summary": "Outcome is explicitly present in user hypothesis.",
+        "strength": "strong",
+        "linked_to": "hypothesis.measurable_outcome"
+      },
+      {
+        "claim": "Trehalose membrane stabilization rationale supports intervention plausibility.",
+        "evidence_type": "mechanistic_evidence",
+        "support_summary": "Mechanistic rationale is explicitly stated in user input.",
+        "strength": "moderate",
+        "linked_to": "hypothesis.mechanistic_rationale"
+      },
+      {
+        "claim": "Expected +15 percentage-point threshold may be optimistic without pilot calibration.",
+        "evidence_type": "unvalidated_assumption",
+        "support_summary": "Effect size is user-defined but not validated in this run.",
+        "strength": "weak",
+        "linked_to": "hypothesis.threshold"
+      },
+      {
+        "claim": "Related work exists but exact comparators and setup differ.",
+        "evidence_type": "indirect_evidence",
+        "support_summary": "Literature QC returns similar_work_exists with placeholder references.",
+        "strength": "moderate",
+        "linked_to": "literature_qc.novelty_signal"
+      }
+    ],
+    "risks": [
+      {
+        "risk_id": "RISK-001",
+        "category": "biological_assumption",
+        "description": "Standard translational risk remains even with literature support. Run a pilot before moving to full execution.",
+        "severity": "medium",
+        "likelihood": "medium",
+        "mitigation": "Downgrade to pilot execution until at least three biological replicates confirm threshold performance.",
+        "action": "downgrade_to_pilot"
+      },
+      {
+        "risk_id": "RISK-002",
+        "category": "control_gap",
+        "description": "Control strategy may miss process-specific artifacts in handling or reagent preparation.",
+        "severity": "medium",
+        "likelihood": "medium",
+        "mitigation": "Add an explicit process control arm and a pre-run calibration checkpoint to the protocol.",
+        "action": "modify_plan"
+      }
+    ],
+    "plan": {
+      "objective": "To determine the effect of FK506 (10 nM) on IL-2 secretion in Jurkat cells.",
+      "experimental_design": "Jurkat cells will be cultured and treated with FK506 (10 nM) for 24 hours. IL-2 secretion will be measured using an ELISA assay. Control groups will include untreated Jurkat cells and cells treated with a vehicle control.",
+      "controls": [
+        "Jurkat cells stimulated with 5 \u00b5g/mL PHA (phytohemagglutinin) to induce IL-2 secretion.",
+        "Jurkat cells treated with vehicle (DMSO) without FK506.",
+        "missing_required_field"
+      ],
+      "step_by_step_protocol": [
+        {
+          "step_number": 1,
+          "description": "DAY 0 (PREP) | 30 min | Cell Culture Preparation\nThaw Jurkat cells from liquid nitrogen storage and transfer to a 15 mL conical tube. Add 10 mL of RPMI 1640 medium supplemented with 10% FBS and 1% penicillin-streptomycin. Centrifuge at 300 \u00d7 g for 5 min at room temperature. Discard supernatant and resuspend the cell pellet in 10 mL of fresh RPMI 1640 medium.\nEquipment: Eppendorf 5424 centrifuge, 15 mL conical tubes\nReagents: Jurkat cells (ATCC TIB-152), RPMI 1640 medium (Gibco), Fetal Bovine Serum (FBS, Sigma), Penicillin-Streptomycin (Gibco)\nExpected outcome: Cell viability >90% as assessed by trypan blue exclusion.",
+          "linked_to": "Cell Culture Preparation"
+        },
+        {
+          "step_number": 2,
+          "description": "DAY 0 (PREP) | 30 min | Cell Seeding\nCount Jurkat cells using a hemocytometer and adjust the concentration to 1 \u00d7 10^6 cells/mL. Seed 1 mL of cell suspension into each well of a 24-well plate (total of 12 wells).\nEquipment: Hemocytometer, 24-well tissue culture plate\nExpected outcome: Cells evenly distributed at a density of 1 \u00d7 10^6 cells/mL in each well.",
+          "linked_to": "Cell Seeding"
+        },
+        {
+          "step_number": 3,
+          "description": "DAY 1 | 15 min | Treatment with FK506\nPrepare FK506 stock solution at 1 mM in DMSO. Dilute to 10 nM in RPMI 1640 medium. Add 1 mL of FK506 solution to 6 wells and 1 mL of DMSO (vehicle control) to 6 wells. Incubate cells at 37\u00b0C with 5% CO2 for 24 h.\nEquipment: Pipettes, 37\u00b0C incubator with 5% CO2\nReagents: FK506 (10 nM), DMSO (Sigma)\nExpected outcome: FK506 is successfully added to the treatment wells without affecting cell viability.",
+          "linked_to": "Treatment with FK506"
+        },
+        {
+          "step_number": 4,
+          "description": "DAY 1 | 30 min | IL-2 Secretion Measurement\nAfter 24 h treatment, collect 100 \u00b5L of supernatant from each well and transfer to a new 96-well plate. Store at -20\u00b0C until analysis. Prepare IL-2 ELISA kit according to the manufacturer's instructions (e.g., eBioscience).\nEquipment: 96-well plate, Pipettes\nReagents: IL-2 ELISA kit (eBioscience)\nExpected outcome: Supernatant collected without contamination, ready for ELISA analysis.",
+          "linked_to": "IL-2 Secretion Measurement"
+        },
+        {
+          "step_number": 5,
+          "description": "DAY 1 | 3 h | ELISA Assay\nThaw the collected supernatants and perform the ELISA according to the kit protocol. Add 50 \u00b5L of each sample and standard to the respective wells. Incubate for 2 h at room temperature. Wash wells 3 times with wash buffer. Add 100 \u00b5L of detection antibody and incubate for 1 h. Wash wells again and add 100 \u00b5L of substrate solution. Measure absorbance at 450 nm after 30 min.\nEquipment: Microplate reader (BioTek Synergy HT), Wash buffer, Pipettes\nExpected outcome: Absorbance readings obtained for all samples, with a standard curve established for IL-2 quantification.",
+          "linked_to": "ELISA Assay"
+        },
+        {
+          "step_number": 6,
+          "description": "DAY 1 | 1 h | Data Analysis\nCalculate IL-2 concentrations from the absorbance values using the standard curve. Compare IL-2 levels between FK506-treated and control groups using a one-way ANOVA followed by Tukey's post-hoc test for multiple comparisons.\nExpected outcome: Statistical significance determined with p < 0.05 for differences in IL-2 secretion between groups.",
+          "linked_to": "Data Analysis"
+        },
+        {
+          "step_number": 7,
+          "description": "DAY 1 | 1 h | Documentation and Reporting\nCompile all data, including cell viability, IL-2 concentrations, and statistical analysis results. Prepare a report summarizing the findings and conclusions of the experiment.\nExpected outcome: Comprehensive report generated detailing the experimental results and interpretations.",
+          "linked_to": "Documentation and Reporting"
+        },
+        {
+          "step_number": 8,
+          "description": "Mitigation step for RISK-002: Add an explicit process control arm and a pre-run calibration checkpoint to the protocol.",
+          "linked_to": "risk:RISK-002"
+        }
+      ],
+      "assumptions": [
+        "FK506 effectively inhibits IL-2 secretion in Jurkat cells at 10 nM concentration.",
+        "Jurkat cells are responsive to PHA stimulation for IL-2 secretion.",
+        "The ELISA kit used is sensitive enough to detect IL-2 levels in the supernatants."
+      ],
+      "decision_criteria": [
+        "Proceed if IL-2 secretion in FK506-treated cells is significantly lower than in control cells (p < 0.05).",
+        "Proceed if cell viability remains above 90% after treatment with FK506.",
+        "Proceed if the standard curve for IL-2 shows a linear relationship with R\u00b2 > 0.95.",
+        "Pilot-only mode: do not scale to full run until replicate criteria are met."
+      ],
+      "risk_mitigations_applied": [
+        "RISK-001: downgraded to pilot (Downgrade to pilot execution until at least three biological replicates confirm threshold performance.)",
+        "RISK-002: Add an explicit process control arm and a pre-run calibration checkpoint to the protocol."
+      ],
+      "reproducibility_notes": [
+        "Use the same batch of Jurkat cells for all experiments.",
+        "Standardize the FK506 preparation method and DMSO concentration.",
+        "Ensure all reagents are from the same supplier and lot number for consistency."
+      ],
+      "execution_readiness_score": 0.62,
+      "execution_readiness_label": "pilot_only",
+      "feedback_incorporated": []
+    },
+    "materials": [
+      {
+        "item_name": "Eppendorf 5424 centrifuge",
+        "supplier": "Eppendorf",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 day",
+        "confidence": "medium",
+        "uncertainty_note": "Daily rental cost for shared equipment."
+      },
+      {
+        "item_name": "Hemocytometer",
+        "supplier": "ThermoFisher",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1",
+        "confidence": "medium",
+        "uncertainty_note": "Standard pricing for a hemocytometer."
+      },
+      {
+        "item_name": "37\u00b0C incubator with 5% CO2",
+        "supplier": "ThermoFisher",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 day",
+        "confidence": "medium",
+        "uncertainty_note": "Daily rental cost for shared equipment."
+      },
+      {
+        "item_name": "Microplate reader (BioTek Synergy HT)",
+        "supplier": "BioTek",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 day",
+        "confidence": "medium",
+        "uncertainty_note": "Daily rental cost for shared equipment."
+      },
+      {
+        "item_name": "15 mL conical tubes",
+        "supplier": "ThermoFisher",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "10",
+        "confidence": "high",
+        "uncertainty_note": "Common item with stable pricing."
+      },
+      {
+        "item_name": "24-well tissue culture plate",
+        "supplier": "ThermoFisher",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1",
+        "confidence": "high",
+        "uncertainty_note": "Common item with stable pricing."
+      },
+      {
+        "item_name": "96-well plate",
+        "supplier": "ThermoFisher",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1",
+        "confidence": "high",
+        "uncertainty_note": "Common item with stable pricing."
+      },
+      {
+        "item_name": "Pipette tips",
+        "supplier": "ThermoFisher",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 box (1000 tips)",
+        "confidence": "high",
+        "uncertainty_note": "Common item with stable pricing."
+      },
+      {
+        "item_name": "RPMI 1640 medium",
+        "supplier": "Gibco",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "500 mL",
+        "confidence": "medium",
+        "uncertainty_note": "Verify specific formulation before ordering."
+      },
+      {
+        "item_name": "Fetal Bovine Serum (FBS)",
+        "supplier": "Sigma",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "100 mL",
+        "confidence": "medium",
+        "uncertainty_note": "Pricing can vary based on supplier and quality."
+      },
+      {
+        "item_name": "Penicillin-Streptomycin",
+        "supplier": "Gibco",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "100 mL",
+        "confidence": "medium",
+        "uncertainty_note": "Verify specific formulation before ordering."
+      },
+      {
+        "item_name": "FK506",
+        "supplier": "Sigma",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 vial (1 mg)",
+        "confidence": "low",
+        "uncertainty_note": "Pricing can vary significantly based on supplier."
+      },
+      {
+        "item_name": "DMSO",
+        "supplier": "Sigma",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "50 mL",
+        "confidence": "medium",
+        "uncertainty_note": "Verify specific formulation before ordering."
+      },
+      {
+        "item_name": "IL-2 ELISA kit",
+        "supplier": "eBioscience",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 kit",
+        "confidence": "low",
+        "uncertainty_note": "Pricing can vary based on supplier and kit specifics."
+      }
+    ],
+    "budget": {
+      "currency": "EUR",
+      "line_items": [
+        {
+          "item_name": "Eppendorf 5424 centrifuge",
+          "quantity": "1 day",
+          "unit_cost_estimate": 50.0,
+          "total_cost_estimate": 50.0,
+          "confidence": "medium",
+          "uncertainty_note": "Daily rental cost for shared equipment."
+        },
+        {
+          "item_name": "Hemocytometer",
+          "quantity": "1",
+          "unit_cost_estimate": 100.0,
+          "total_cost_estimate": 100.0,
+          "confidence": "medium",
+          "uncertainty_note": "Standard pricing for a hemocytometer."
+        },
+        {
+          "item_name": "37\u00b0C incubator with 5% CO2",
+          "quantity": "1 day",
+          "unit_cost_estimate": 50.0,
+          "total_cost_estimate": 50.0,
+          "confidence": "medium",
+          "uncertainty_note": "Daily rental cost for shared equipment."
+        },
+        {
+          "item_name": "Microplate reader (BioTek Synergy HT)",
+          "quantity": "1 day",
+          "unit_cost_estimate": 100.0,
+          "total_cost_estimate": 100.0,
+          "confidence": "medium",
+          "uncertainty_note": "Daily rental cost for shared equipment."
+        },
+        {
+          "item_name": "15 mL conical tubes",
+          "quantity": "10",
+          "unit_cost_estimate": 0.5,
+          "total_cost_estimate": 5.0,
+          "confidence": "high",
+          "uncertainty_note": "Common item with stable pricing."
+        },
+        {
+          "item_name": "24-well tissue culture plate",
+          "quantity": "1",
+          "unit_cost_estimate": 5.0,
+          "total_cost_estimate": 5.0,
+          "confidence": "high",
+          "uncertainty_note": "Common item with stable pricing."
+        },
+        {
+          "item_name": "96-well plate",
+          "quantity": "1",
+          "unit_cost_estimate": 10.0,
+          "total_cost_estimate": 10.0,
+          "confidence": "high",
+          "uncertainty_note": "Common item with stable pricing."
+        },
+        {
+          "item_name": "Pipette tips",
+          "quantity": "1 box (1000 tips)",
+          "unit_cost_estimate": 20.0,
+          "total_cost_estimate": 20.0,
+          "confidence": "high",
+          "uncertainty_note": "Common item with stable pricing."
+        },
+        {
+          "item_name": "RPMI 1640 medium",
+          "quantity": "500 mL",
+          "unit_cost_estimate": 30.0,
+          "total_cost_estimate": 30.0,
+          "confidence": "medium",
+          "uncertainty_note": "Verify specific formulation before ordering."
+        },
+        {
+          "item_name": "Fetal Bovine Serum (FBS)",
+          "quantity": "100 mL",
+          "unit_cost_estimate": 150.0,
+          "total_cost_estimate": 150.0,
+          "confidence": "medium",
+          "uncertainty_note": "Pricing can vary based on supplier and quality."
+        },
+        {
+          "item_name": "Penicillin-Streptomycin",
+          "quantity": "100 mL",
+          "unit_cost_estimate": 25.0,
+          "total_cost_estimate": 25.0,
+          "confidence": "medium",
+          "uncertainty_note": "Verify specific formulation before ordering."
+        },
+        {
+          "item_name": "FK506",
+          "quantity": "1 vial (1 mg)",
+          "unit_cost_estimate": 200.0,
+          "total_cost_estimate": 200.0,
+          "confidence": "low",
+          "uncertainty_note": "Pricing can vary significantly based on supplier."
+        },
+        {
+          "item_name": "DMSO",
+          "quantity": "50 mL",
+          "unit_cost_estimate": 30.0,
+          "total_cost_estimate": 30.0,
+          "confidence": "medium",
+          "uncertainty_note": "Verify specific formulation before ordering."
+        },
+        {
+          "item_name": "IL-2 ELISA kit",
+          "quantity": "1 kit",
+          "unit_cost_estimate": 300.0,
+          "total_cost_estimate": 300.0,
+          "confidence": "low",
+          "uncertainty_note": "Pricing can vary based on supplier and kit specifics."
+        }
+      ],
+      "estimated_total_cost": 1075.0,
+      "uncertainty_notes": [
+        "Institutional discounts may apply to some reagents and consumables.",
+        "Shared equipment rental costs may vary based on lab policies.",
+        "Verify specific formulations and suppliers before ordering."
+      ]
+    },
+    "timeline": {
+      "phases": [
+        {
+          "phase_name": "Day 0: Cell Culture Preparation and Seeding",
+          "duration_estimate": "1 days",
+          "dependencies": [],
+          "responsible_role": "Research associate",
+          "risk_buffer": "1 days",
+          "bottlenecks": [
+            "Cell viability assessment",
+            "Equipment availability"
+          ]
+        },
+        {
+          "phase_name": "Day 1: Treatment with FK506",
+          "duration_estimate": "1 days",
+          "dependencies": [
+            "Day 0: Cell Culture Preparation and Seeding"
+          ],
+          "responsible_role": "Research associate",
+          "risk_buffer": "1 days",
+          "bottlenecks": [
+            "Reagent preparation",
+            "Incubator availability"
+          ]
+        },
+        {
+          "phase_name": "Day 1: IL-2 Secretion Measurement",
+          "duration_estimate": "1 days",
+          "dependencies": [
+            "Day 1: Treatment with FK506"
+          ],
+          "responsible_role": "Research associate",
+          "risk_buffer": "1 days",
+          "bottlenecks": [
+            "Sample handling",
+            "Contamination risk"
+          ]
+        },
+        {
+          "phase_name": "Day 1: ELISA Assay",
+          "duration_estimate": "1 days",
+          "dependencies": [
+            "Day 1: IL-2 Secretion Measurement"
+          ],
+          "responsible_role": "Research associate",
+          "risk_buffer": "1 days",
+          "bottlenecks": [
+            "Microplate reader availability",
+            "Reagent stability"
+          ]
+        },
+        {
+          "phase_name": "Day 1: Data Analysis",
+          "duration_estimate": "1 days",
+          "dependencies": [
+            "Day 1: ELISA Assay"
+          ],
+          "responsible_role": "Scientist",
+          "risk_buffer": "1 days",
+          "bottlenecks": [
+            "Statistical software access"
+          ]
+        },
+        {
+          "phase_name": "Day 1: Documentation and Reporting",
+          "duration_estimate": "1 days",
+          "dependencies": [
+            "Day 1: Data Analysis"
+          ],
+          "responsible_role": "Scientist",
+          "risk_buffer": "1 days",
+          "bottlenecks": [
+            "Report formatting",
+            "Data verification"
+          ]
+        }
+      ],
+      "total_duration_estimate": "12 days (including risk buffers)"
+    },
+    "validation": {
+      "primary_endpoint": "Post-thaw viability percentage at immediate and 24h checkpoints.",
+      "secondary_endpoints": [
+        "Cell recovery count",
+        "Morphology quality score",
+        "Replicate variance"
+      ],
+      "success_threshold": ">=10 percentage points (pilot fallback) improvement over comparator in replicate-confirmed data.",
+      "failure_conditions": [
+        "No meaningful viability gain in replicate-confirmed runs.",
+        "Intervention increases delayed viability loss at 24h."
+      ],
+      "suggested_statistical_comparison": "Two-group comparison against comparator using t-test or Mann-Whitney based on normality.",
+      "minimum_replicates_or_design_note": "Minimum three biological replicates before execution-level claim."
+    },
+    "cro_ready_brief": {
+      "objective": "To determine the effect of FK506 (10 nM) on IL-2 secretion in Jurkat cells.",
+      "scope_of_work": [
+        "Execute pilot-first HeLa cryopreservation comparison between DMSO baseline and trehalose arm.",
+        "Deliver replicate-confirmed viability analysis and mitigation traceability report."
+      ],
+      "sample_count": "At least 3 biological replicates per arm",
+      "required_assays": [
+        "Immediate post-thaw viability",
+        "24h follow-up viability"
+      ],
+      "deliverables": [
+        "Raw assay tables",
+        "QC log",
+        "Analysis summary",
+        "Deviation report"
+      ],
+      "qc_requirements": [
+        "Controlled-rate freeze log",
+        "Lot traceability",
+        "Blinded run annotation"
+      ],
+      "timeline_request": "12 days (including risk buffers)",
+      "materials_responsibility": "CRO to quote and confirm all materials before ordering.",
+      "questions_for_cro": [
+        "Can you support controlled-rate freezing logs in each run?",
+        "Can you include replicate-level batch metadata in the final report?"
+      ]
+    },
+    "confidence_score": 0.64,
+    "feedback_incorporated": false,
+    "feedback_trace": []
+  }
+}

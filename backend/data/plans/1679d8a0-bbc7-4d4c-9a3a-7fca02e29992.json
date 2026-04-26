@@ -1,0 +1,837 @@
+{
+  "request": {
+    "question": "Expressing a heterologous xylose isomerase from Piromyces sp. in Saccharomyces cerevisiae CEN.PK will enable fermentation of xylose to ethanol at a yield of at least 0.4 g ethanol/g xylose within 48 hours under anaerobic conditions, compared to zero ethanol production in the parental strain, due to the enzyme bypassing the native redox-imbalanced xylose reductase/xylitol dehydrogenase pathway.\nIn plain English: can we engineer baker's yeast to convert a sugar found in agricultural waste into fuel, something it cannot naturally do?",
+    "constraints": {
+      "budget": "missing_required_field",
+      "timeline": "missing_required_field",
+      "execution_mode": "in_house"
+    },
+    "prior_feedback": []
+  },
+  "response": {
+    "plan_id": "1679d8a0-bbc7-4d4c-9a3a-7fca02e29992",
+    "hypothesis": {
+      "intervention": "heterologous xylose isomerase from Piromyces sp. (specifics of expression system TBD)",
+      "biological_system": "Saccharomyces cerevisiae CEN.PK",
+      "comparator_or_control": "parental strain (ethanol production comparison)",
+      "measurable_outcome": "ethanol yield",
+      "threshold": "at least 0.4 g ethanol/g xylose",
+      "mechanistic_rationale": "bypassing the native redox-imbalanced xylose reductase/xylitol dehydrogenase pathway",
+      "experiment_type": "fermentation_study",
+      "constraints": {
+        "execution_mode": "in_house"
+      },
+      "readiness": "execution_ready",
+      "readiness_rationale": "All core fields are present and specific, making the hypothesis CRO-ready.",
+      "confidence_score": 1.0,
+      "clarifying_questions": [],
+      "literature_search_hint": "xylose isomerase Saccharomyces cerevisiae fermentation ethanol yield",
+      "original_hypothesis": "Expressing a heterologous xylose isomerase from Piromyces sp. in Saccharomyces cerevisiae CEN.PK will enable fermentation of xylose to ethanol at a yield of at least 0.4 g ethanol/g xylose within 48 hours under anaerobic conditions, compared to zero ethanol production in the parental strain, due to the enzyme bypassing the native redox-imbalanced xylose reductase/xylitol dehydrogenase pathway.\nIn plain English: can we engineer baker's yeast to convert a sugar found in agricultural waste into fuel, something it cannot naturally do?",
+      "missing_required_fields": []
+    },
+    "literature_qc": {
+      "novelty_signal": "exact_match_found",
+      "references": [
+        {
+          "title": "Metal Dependence of the Xylose Isomerase from Piromyces sp. E2 Explored by Activity Profiling and Protein Crystallography",
+          "protocol_url": "https://doi.org/10.1021/acs.biochem.7b00777",
+          "authors": [
+            "Misun Lee",
+            "H. Rozeboom",
+            "Paul P. de Waal",
+            "et al."
+          ],
+          "published_year": 2017,
+          "match_type": "full_scope",
+          "relevance_note": "This paper specifically discusses the xylose isomerase from Piromyces sp. and its application in Saccharomyces cerevisiae for ethanol fermentation, which is directly relevant to the hypothesis.",
+          "is_stub": false
+        }
+      ],
+      "confidence_score": 0.95,
+      "explanation": "The retrieved paper [4] discusses the xylose isomerase from Piromyces sp. and its application in Saccharomyces cerevisiae for ethanol fermentation, which aligns directly with the intervention and biological system specified in the hypothesis. Additionally, the focus on ethanol production as an outcome matches the measurable outcome of the hypothesis, confirming that the core experiment is already described in the literature.",
+      "recommended_action": "A paper matching this experiment was found in the scientific literature. Review it before proceeding. If this is intentional replication, state that explicitly. If not, differentiate your approach.",
+      "search_coverage": "full"
+    },
+    "protocol_candidates": [
+      {
+        "protocol_name": "Standard fermentation_study protocol for heterologous xylose isomerase from piromyces sp. (specifics of expression system tbd)",
+        "source_type": "stub",
+        "fit_score": 0.75,
+        "confidence": 0.65,
+        "adaptation_notes": "Stub mode \u2014 no live protocols.io search performed. This is a placeholder candidate.",
+        "missing_steps": [
+          "Exact reagent concentrations",
+          "Instrument-specific settings"
+        ],
+        "limitations": [
+          "Stub output only \u2014 real protocols.io search requires PROTOCOLS_IO_TOKEN."
+        ],
+        "raw_steps": [],
+        "protocol_url": ""
+      }
+    ],
+    "evidence_claims": [
+      {
+        "claim": "Post-thaw viability directly tests the stated biological outcome.",
+        "evidence_type": "direct_evidence",
+        "support_summary": "Outcome is explicitly present in user hypothesis.",
+        "strength": "strong",
+        "linked_to": "hypothesis.measurable_outcome"
+      },
+      {
+        "claim": "Trehalose membrane stabilization rationale supports intervention plausibility.",
+        "evidence_type": "mechanistic_evidence",
+        "support_summary": "Mechanistic rationale is explicitly stated in user input.",
+        "strength": "moderate",
+        "linked_to": "hypothesis.mechanistic_rationale"
+      },
+      {
+        "claim": "Expected +15 percentage-point threshold may be optimistic without pilot calibration.",
+        "evidence_type": "unvalidated_assumption",
+        "support_summary": "Effect size is user-defined but not validated in this run.",
+        "strength": "weak",
+        "linked_to": "hypothesis.threshold"
+      }
+    ],
+    "risks": [
+      {
+        "risk_id": "RISK-001",
+        "category": "biological_assumption",
+        "description": "Standard translational risk remains even with literature support. Run a pilot before moving to full execution.",
+        "severity": "medium",
+        "likelihood": "medium",
+        "mitigation": "Downgrade to pilot execution until at least three biological replicates confirm threshold performance.",
+        "action": "downgrade_to_pilot"
+      },
+      {
+        "risk_id": "RISK-002",
+        "category": "control_gap",
+        "description": "Control strategy may miss process-specific artifacts in handling or reagent preparation.",
+        "severity": "medium",
+        "likelihood": "medium",
+        "mitigation": "Add an explicit process control arm and a pre-run calibration checkpoint to the protocol.",
+        "action": "modify_plan"
+      }
+    ],
+    "plan": {
+      "objective": "To evaluate the ethanol yield from Saccharomyces cerevisiae CEN.PK expressing heterologous xylose isomerase from Piromyces sp. compared to the parental strain.",
+      "experimental_design": "The experiment will involve fermenting xylose in a controlled bioreactor setup using both the engineered Saccharomyces cerevisiae strain and the parental strain. Ethanol production will be measured over a defined fermentation period, and comparisons will be made to assess the impact of the heterologous xylose isomerase on ethanol yield.",
+      "controls": [
+        "Saccharomyces cerevisiae CEN.PK parental strain fermented with 50 g/L xylose under anaerobic conditions.",
+        "Saccharomyces cerevisiae CEN.PK parental strain fermented with 50 g/L glucose under anaerobic conditions.",
+        "parental strain (ethanol production comparison)"
+      ],
+      "step_by_step_protocol": [
+        {
+          "step_number": 1,
+          "description": "DAY 0 (PREP) | 1 h | Reagent Preparation\nPrepare 1 L of YPD medium containing 20 g/L yeast extract, 20 g/L peptone, and 200 g/L deionized water. Adjust pH to 5.5 using 1 M HCl or NaOH. Sterilize by autoclaving at 121\u00b0C for 15 min.\nEquipment: Autoclave (Thermo Scientific, Model 1000), pH meter (Hanna Instruments, Model HI 98107)\nReagents: 20 g/L yeast extract (BD Biosciences), 20 g/L peptone (BD Biosciences), 200 g/L deionized water\nExpected outcome: Medium pH is adjusted to 5.5 and sterilized without contamination.",
+          "linked_to": "Reagent Preparation"
+        },
+        {
+          "step_number": 2,
+          "description": "DAY 0 (PREP) | 24 h | Strain Preparation\nInoculate 10 mL of YPD medium with a single colony of Saccharomyces cerevisiae CEN.PK parental strain and incubate at 30\u00b0C for 24 h with shaking at 200 rpm.\nEquipment: Incubator (Thermo Fisher Scientific, Model 1000), Shaker (New Brunswick Scientific, Model Innova 44)\nReagents: 10 mL YPD medium\nExpected outcome: Culture reaches an OD600 of approximately 1.0 after 24 h incubation.",
+          "linked_to": "Strain Preparation"
+        },
+        {
+          "step_number": 3,
+          "description": "DAY 0 (PREP) | 1 h | Transformation\nTransform Saccharomyces cerevisiae CEN.PK with the plasmid containing the heterologous xylose isomerase gene from Piromyces sp. using the lithium acetate method. Prepare transformation mix with 100 \u00b5L of competent cells, 10 \u00b5g of plasmid DNA, and 240 \u00b5L of PEG 3350 solution. Incubate at 30\u00b0C for 30 min, then heat shock at 42\u00b0C for 15 min.\nEquipment: Water bath (Thermo Fisher Scientific, Model 1000)\nReagents: 100 \u00b5L competent Saccharomyces cerevisiae CEN.PK, 10 \u00b5g plasmid DNA, 240 \u00b5L 50% PEG 3350 (Sigma-Aldrich)\nExpected outcome: Successful transformation indicated by growth on selective media after plating.",
+          "linked_to": "Transformation"
+        },
+        {
+          "step_number": 4,
+          "description": "DAY 0 (PREP) | 48 h | Selection of Transformants\nPlate 100 \u00b5L of transformed cells onto selective YPD agar plates containing 200 \u00b5g/mL G418. Incubate at 30\u00b0C for 48 h.\nEquipment: Incubator (Thermo Fisher Scientific, Model 1000)\nReagents: Selective YPD agar plates with 200 \u00b5g/mL G418 (Sigma-Aldrich)\nExpected outcome: Colonies appear on selective plates indicating successful transformation.",
+          "linked_to": "Selection of Transformants"
+        },
+        {
+          "step_number": 5,
+          "description": "DAY 1 | 24 h | Colony Screening\nPick 5 colonies from the selective plates and inoculate each into 5 mL of YPD medium containing 200 \u00b5g/mL G418. Incubate at 30\u00b0C for 24 h with shaking at 200 rpm.\nEquipment: Shaker (New Brunswick Scientific, Model Innova 44)\nReagents: 5 mL YPD medium with 200 \u00b5g/mL G418\nExpected outcome: Cultures reach an OD600 of approximately 1.0 after 24 h incubation.",
+          "linked_to": "Colony Screening"
+        },
+        {
+          "step_number": 6,
+          "description": "DAY 1 | 1 h | Plasmid Extraction\nExtract plasmid DNA from 1 mL of overnight culture using the QIAprep Spin Miniprep Kit (Qiagen) following the manufacturer's protocol. Elute DNA in 50 \u00b5L of elution buffer.\nEquipment: Microcentrifuge (Eppendorf, Model 5424)\nReagents: QIAprep Spin Miniprep Kit (Qiagen)\nExpected outcome: Purified plasmid DNA with A260/A280 ratio between 1.8 and 2.0.",
+          "linked_to": "Plasmid Extraction"
+        },
+        {
+          "step_number": 7,
+          "description": "DAY 1 | 2 h | PCR Confirmation\nPerform PCR using 50 ng of plasmid DNA as template, with primers specific for the xylose isomerase gene. Use 25 \u00b5L reaction volume with 1x Taq polymerase buffer, 0.2 mM dNTPs, 0.5 \u00b5M primers, and 1 U Taq polymerase (Thermo Fisher Scientific). Amplify with the following conditions: 95\u00b0C for 5 min, 35 cycles of 95\u00b0C for 30 s, 55\u00b0C for 30 s, 72\u00b0C for 1 min, and a final extension at 72\u00b0C for 5 min.\nEquipment: Thermal cycler (Bio-Rad, Model T100)\nReagents: 1x Taq polymerase buffer (Thermo Fisher Scientific), 0.2 mM dNTPs (Thermo Fisher Scientific), 0.5 \u00b5M primers (IDT), 1 U Taq polymerase (Thermo Fisher Scientific)\nExpected outcome: PCR products of expected size confirmed by gel electrophoresis.",
+          "linked_to": "PCR Confirmation"
+        },
+        {
+          "step_number": 8,
+          "description": "DAY 1 | 1 h | Gel Electrophoresis\nRun 5 \u00b5L of PCR product on a 1% agarose gel in TAE buffer at 100 V for 30 min. Stain with 0.5 \u00b5g/mL ethidium bromide and visualize under UV light.\nEquipment: Gel electrophoresis apparatus (Bio-Rad, Model Mini-Sub Cell GT), UV transilluminator (Bio-Rad, Model Gel Doc XR+)\nReagents: 1% agarose gel in TAE buffer, 0.5 \u00b5g/mL ethidium bromide (Sigma-Aldrich)\nExpected outcome: Bands corresponding to the expected size of the xylose isomerase gene are visible on the gel.\nSafety: Ethidium bromide is a mutagen; handle with gloves.",
+          "linked_to": "Gel Electrophoresis"
+        },
+        {
+          "step_number": 9,
+          "description": "DAY 1 | 2 h | Fermentation Setup\nPrepare 1 L of fermentation medium containing 50 g/L xylose, 5 g/L yeast extract, and 5 g/L peptone. Adjust pH to 5.5 and sterilize by autoclaving at 121\u00b0C for 15 min. Inoculate with 10% (v/v) of overnight culture of either the engineered strain or the parental strain.\nEquipment: Autoclave (Thermo Scientific, Model 1000), pH meter (Hanna Instruments, Model HI 98107)\nReagents: 50 g/L xylose (Sigma-Aldrich), 5 g/L yeast extract (BD Biosciences), 5 g/L peptone (BD Biosciences)\nExpected outcome: Fermentation medium is prepared and inoculated with the appropriate strain.",
+          "linked_to": "Fermentation Setup"
+        },
+        {
+          "step_number": 10,
+          "description": "DAY 1 | 72 h | Fermentation\nFerment the inoculated medium in a 2 L bioreactor (Applikon, Model 2L) at 30\u00b0C, 200 rpm, and 1 vvm aeration for 72 h. Monitor pH and maintain at 5.5 using 1 M NaOH.\nEquipment: Bioreactor (Applikon, Model 2L), pH controller (Applikon, Model BioController)\nReagents: 1 M NaOH (Sigma-Aldrich)\nExpected outcome: Ethanol production is monitored over 72 h, with pH maintained at 5.5.",
+          "linked_to": "Fermentation"
+        },
+        {
+          "step_number": 11,
+          "description": "DAY 2 | 1 h | Ethanol Measurement\nAt 24, 48, and 72 h, take 1 mL samples from the bioreactor and centrifuge at 6,000 \u00d7 g for 10 min at 4\u00b0C. Collect supernatant for ethanol analysis.\nEquipment: Eppendorf 5424 centrifuge\nExpected outcome: Supernatant is collected for ethanol quantification.",
+          "linked_to": "Ethanol Measurement"
+        },
+        {
+          "step_number": 12,
+          "description": "DAY 2 | 1 h | Ethanol Quantification\nQuantify ethanol concentration in the supernatant using gas chromatography (Agilent 7890B) with a DB-FFAP column. Inject 1 \u00b5L of sample and run with the following conditions: initial temperature 80\u00b0C, hold for 2 min, ramp to 200\u00b0C at 10\u00b0C/min, hold for 5 min.\nEquipment: Gas chromatograph (Agilent, Model 7890B)\nExpected outcome: Ethanol concentration is determined in g/L from the chromatogram.",
+          "linked_to": "Ethanol Quantification"
+        },
+        {
+          "step_number": 13,
+          "description": "DAY 2 | 2 h | Data Analysis\nCalculate ethanol yield based on the concentration measured and the initial xylose concentration. Use the formula: Ethanol yield (g/g) = (g/L ethanol)/(g/L xylose). Perform statistical analysis using ANOVA to compare yields between strains.\nExpected outcome: Ethanol yield is calculated and compared statistically between engineered and parental strains.",
+          "linked_to": "Data Analysis"
+        },
+        {
+          "step_number": 14,
+          "description": "Mitigation step for RISK-002: Add an explicit process control arm and a pre-run calibration checkpoint to the protocol.",
+          "linked_to": "risk:RISK-002"
+        }
+      ],
+      "assumptions": [
+        "The heterologous xylose isomerase is functionally expressed in Saccharomyces cerevisiae.",
+        "Ethanol production can be accurately measured using gas chromatography.",
+        "The fermentation conditions are optimal for both strains."
+      ],
+      "decision_criteria": [
+        "Proceed if ethanol yield from engineered strain is \u2265 0.4 g ethanol/g xylose.",
+        "Proceed if statistical analysis shows significant difference (p < 0.05) between engineered and parental strains.",
+        "Pilot-only mode: do not scale to full run until replicate criteria are met."
+      ],
+      "risk_mitigations_applied": [
+        "RISK-001: downgraded to pilot (Downgrade to pilot execution until at least three biological replicates confirm threshold performance.)",
+        "RISK-002: Add an explicit process control arm and a pre-run calibration checkpoint to the protocol."
+      ],
+      "reproducibility_notes": [
+        "Use the same batch of xylose for all fermentations.",
+        "Maintain consistent inoculum size across all experiments.",
+        "Calibrate gas chromatograph before each use."
+      ],
+      "execution_readiness_score": 0.62,
+      "execution_readiness_label": "pilot_only",
+      "feedback_incorporated": []
+    },
+    "materials": [
+      {
+        "item_name": "Autoclave",
+        "supplier": "Thermo Scientific",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1",
+        "confidence": "medium",
+        "uncertainty_note": "Verify rental or usage fees for the autoclave."
+      },
+      {
+        "item_name": "pH meter",
+        "supplier": "Hanna Instruments",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1",
+        "confidence": "medium",
+        "uncertainty_note": "Verify rental or usage fees for the pH meter."
+      },
+      {
+        "item_name": "Incubator",
+        "supplier": "Thermo Fisher Scientific",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1",
+        "confidence": "medium",
+        "uncertainty_note": "Verify rental or usage fees for the incubator."
+      },
+      {
+        "item_name": "Shaker",
+        "supplier": "New Brunswick Scientific",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1",
+        "confidence": "medium",
+        "uncertainty_note": "Verify rental or usage fees for the shaker."
+      },
+      {
+        "item_name": "Water bath",
+        "supplier": "Thermo Fisher Scientific",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1",
+        "confidence": "medium",
+        "uncertainty_note": "Verify rental or usage fees for the water bath."
+      },
+      {
+        "item_name": "Microcentrifuge",
+        "supplier": "Eppendorf",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1",
+        "confidence": "medium",
+        "uncertainty_note": "Verify rental or usage fees for the microcentrifuge."
+      },
+      {
+        "item_name": "Thermal cycler",
+        "supplier": "Bio-Rad",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1",
+        "confidence": "medium",
+        "uncertainty_note": "Verify rental or usage fees for the thermal cycler."
+      },
+      {
+        "item_name": "Gel electrophoresis apparatus",
+        "supplier": "Bio-Rad",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1",
+        "confidence": "medium",
+        "uncertainty_note": "Verify rental or usage fees for the gel electrophoresis apparatus."
+      },
+      {
+        "item_name": "UV transilluminator",
+        "supplier": "Bio-Rad",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1",
+        "confidence": "medium",
+        "uncertainty_note": "Verify rental or usage fees for the UV transilluminator."
+      },
+      {
+        "item_name": "Bioreactor",
+        "supplier": "Applikon",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1",
+        "confidence": "medium",
+        "uncertainty_note": "Verify rental or usage fees for the bioreactor."
+      },
+      {
+        "item_name": "Gas chromatograph",
+        "supplier": "Agilent",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1",
+        "confidence": "medium",
+        "uncertainty_note": "Verify rental or usage fees for the gas chromatograph."
+      },
+      {
+        "item_name": "Yeast extract",
+        "supplier": "BD Biosciences",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "20 g",
+        "confidence": "high",
+        "uncertainty_note": "Common reagent, verify bulk pricing."
+      },
+      {
+        "item_name": "Peptone",
+        "supplier": "BD Biosciences",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "20 g",
+        "confidence": "high",
+        "uncertainty_note": "Common reagent, verify bulk pricing."
+      },
+      {
+        "item_name": "Deionized water",
+        "supplier": "N/A",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "200 mL",
+        "confidence": "high",
+        "uncertainty_note": "Verify local pricing for deionized water."
+      },
+      {
+        "item_name": "Plasmid DNA",
+        "supplier": "N/A",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "10 \u00b5g",
+        "confidence": "low",
+        "uncertainty_note": "Verify pricing for plasmid DNA."
+      },
+      {
+        "item_name": "PEG 3350",
+        "supplier": "Sigma-Aldrich",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "240 \u00b5L",
+        "confidence": "medium",
+        "uncertainty_note": "Verify pricing for PEG 3350."
+      },
+      {
+        "item_name": "G418",
+        "supplier": "Sigma-Aldrich",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "200 \u00b5g/mL",
+        "confidence": "medium",
+        "uncertainty_note": "Verify pricing for G418."
+      },
+      {
+        "item_name": "Taq polymerase buffer",
+        "supplier": "Thermo Fisher Scientific",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1x",
+        "confidence": "high",
+        "uncertainty_note": "Common reagent, verify bulk pricing."
+      },
+      {
+        "item_name": "dNTPs",
+        "supplier": "Thermo Fisher Scientific",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "0.2 mM",
+        "confidence": "high",
+        "uncertainty_note": "Common reagent, verify bulk pricing."
+      },
+      {
+        "item_name": "Primers",
+        "supplier": "IDT",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "0.5 \u00b5M",
+        "confidence": "medium",
+        "uncertainty_note": "Verify pricing for custom primers."
+      },
+      {
+        "item_name": "Taq polymerase",
+        "supplier": "Thermo Fisher Scientific",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 U",
+        "confidence": "high",
+        "uncertainty_note": "Common reagent, verify bulk pricing."
+      },
+      {
+        "item_name": "Agarose",
+        "supplier": "Sigma-Aldrich",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 g",
+        "confidence": "high",
+        "uncertainty_note": "Common reagent, verify bulk pricing."
+      },
+      {
+        "item_name": "TAE buffer",
+        "supplier": "N/A",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "500 mL",
+        "confidence": "medium",
+        "uncertainty_note": "Verify pricing for TAE buffer."
+      },
+      {
+        "item_name": "Ethidium bromide",
+        "supplier": "Sigma-Aldrich",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "0.5 \u00b5g/mL",
+        "confidence": "medium",
+        "uncertainty_note": "Verify pricing for ethidium bromide."
+      },
+      {
+        "item_name": "Xylose",
+        "supplier": "Sigma-Aldrich",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "50 g",
+        "confidence": "medium",
+        "uncertainty_note": "Verify pricing for xylose."
+      },
+      {
+        "item_name": "1 M NaOH",
+        "supplier": "Sigma-Aldrich",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "100 mL",
+        "confidence": "high",
+        "uncertainty_note": "Common reagent, verify bulk pricing."
+      },
+      {
+        "item_name": "Competent Saccharomyces cerevisiae CEN.PK",
+        "supplier": "N/A",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "100 \u00b5L",
+        "confidence": "low",
+        "uncertainty_note": "Verify pricing for competent cells."
+      },
+      {
+        "item_name": "Selective YPD agar plates with G418",
+        "supplier": "Sigma-Aldrich",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "10 plates",
+        "confidence": "medium",
+        "uncertainty_note": "Verify pricing for selective plates."
+      },
+      {
+        "item_name": "QIAprep Spin Miniprep Kit",
+        "supplier": "Qiagen",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 kit",
+        "confidence": "medium",
+        "uncertainty_note": "Verify pricing for the miniprep kit."
+      }
+    ],
+    "budget": {
+      "currency": "EUR",
+      "line_items": [
+        {
+          "item_name": "Autoclave",
+          "quantity": "1",
+          "unit_cost_estimate": 100.0,
+          "total_cost_estimate": 100.0,
+          "confidence": "medium",
+          "uncertainty_note": "Verify rental or usage fees for the autoclave."
+        },
+        {
+          "item_name": "pH meter",
+          "quantity": "1",
+          "unit_cost_estimate": 150.0,
+          "total_cost_estimate": 150.0,
+          "confidence": "medium",
+          "uncertainty_note": "Verify rental or usage fees for the pH meter."
+        },
+        {
+          "item_name": "Incubator",
+          "quantity": "1",
+          "unit_cost_estimate": 100.0,
+          "total_cost_estimate": 100.0,
+          "confidence": "medium",
+          "uncertainty_note": "Verify rental or usage fees for the incubator."
+        },
+        {
+          "item_name": "Shaker",
+          "quantity": "1",
+          "unit_cost_estimate": 100.0,
+          "total_cost_estimate": 100.0,
+          "confidence": "medium",
+          "uncertainty_note": "Verify rental or usage fees for the shaker."
+        },
+        {
+          "item_name": "Water bath",
+          "quantity": "1",
+          "unit_cost_estimate": 100.0,
+          "total_cost_estimate": 100.0,
+          "confidence": "medium",
+          "uncertainty_note": "Verify rental or usage fees for the water bath."
+        },
+        {
+          "item_name": "Microcentrifuge",
+          "quantity": "1",
+          "unit_cost_estimate": 150.0,
+          "total_cost_estimate": 150.0,
+          "confidence": "medium",
+          "uncertainty_note": "Verify rental or usage fees for the microcentrifuge."
+        },
+        {
+          "item_name": "Thermal cycler",
+          "quantity": "1",
+          "unit_cost_estimate": 150.0,
+          "total_cost_estimate": 150.0,
+          "confidence": "medium",
+          "uncertainty_note": "Verify rental or usage fees for the thermal cycler."
+        },
+        {
+          "item_name": "Gel electrophoresis apparatus",
+          "quantity": "1",
+          "unit_cost_estimate": 150.0,
+          "total_cost_estimate": 150.0,
+          "confidence": "medium",
+          "uncertainty_note": "Verify rental or usage fees for the gel electrophoresis apparatus."
+        },
+        {
+          "item_name": "UV transilluminator",
+          "quantity": "1",
+          "unit_cost_estimate": 200.0,
+          "total_cost_estimate": 200.0,
+          "confidence": "medium",
+          "uncertainty_note": "Verify rental or usage fees for the UV transilluminator."
+        },
+        {
+          "item_name": "Bioreactor",
+          "quantity": "1",
+          "unit_cost_estimate": 500.0,
+          "total_cost_estimate": 500.0,
+          "confidence": "medium",
+          "uncertainty_note": "Verify rental or usage fees for the bioreactor."
+        },
+        {
+          "item_name": "Gas chromatograph",
+          "quantity": "1",
+          "unit_cost_estimate": 1000.0,
+          "total_cost_estimate": 1000.0,
+          "confidence": "medium",
+          "uncertainty_note": "Verify rental or usage fees for the gas chromatograph."
+        },
+        {
+          "item_name": "Yeast extract",
+          "quantity": "20 g",
+          "unit_cost_estimate": 0.5,
+          "total_cost_estimate": 10.0,
+          "confidence": "high",
+          "uncertainty_note": "Common reagent, verify bulk pricing."
+        },
+        {
+          "item_name": "Peptone",
+          "quantity": "20 g",
+          "unit_cost_estimate": 0.5,
+          "total_cost_estimate": 10.0,
+          "confidence": "high",
+          "uncertainty_note": "Common reagent, verify bulk pricing."
+        },
+        {
+          "item_name": "Deionized water",
+          "quantity": "200 mL",
+          "unit_cost_estimate": 0.01,
+          "total_cost_estimate": 2.0,
+          "confidence": "high",
+          "uncertainty_note": "Verify local pricing for deionized water."
+        },
+        {
+          "item_name": "Plasmid DNA",
+          "quantity": "10 \u00b5g",
+          "unit_cost_estimate": 50.0,
+          "total_cost_estimate": 50.0,
+          "confidence": "low",
+          "uncertainty_note": "Verify pricing for plasmid DNA."
+        },
+        {
+          "item_name": "PEG 3350",
+          "quantity": "240 \u00b5L",
+          "unit_cost_estimate": 0.1,
+          "total_cost_estimate": 2.4,
+          "confidence": "medium",
+          "uncertainty_note": "Verify pricing for PEG 3350."
+        },
+        {
+          "item_name": "G418",
+          "quantity": "200 \u00b5g/mL",
+          "unit_cost_estimate": 0.5,
+          "total_cost_estimate": 10.0,
+          "confidence": "medium",
+          "uncertainty_note": "Verify pricing for G418."
+        },
+        {
+          "item_name": "Taq polymerase buffer",
+          "quantity": "1x",
+          "unit_cost_estimate": 0.5,
+          "total_cost_estimate": 0.5,
+          "confidence": "high",
+          "uncertainty_note": "Common reagent, verify bulk pricing."
+        },
+        {
+          "item_name": "dNTPs",
+          "quantity": "0.2 mM",
+          "unit_cost_estimate": 0.5,
+          "total_cost_estimate": 0.5,
+          "confidence": "high",
+          "uncertainty_note": "Common reagent, verify bulk pricing."
+        },
+        {
+          "item_name": "Primers",
+          "quantity": "0.5 \u00b5M",
+          "unit_cost_estimate": 0.5,
+          "total_cost_estimate": 0.5,
+          "confidence": "medium",
+          "uncertainty_note": "Verify pricing for custom primers."
+        },
+        {
+          "item_name": "Taq polymerase",
+          "quantity": "1 U",
+          "unit_cost_estimate": 1.0,
+          "total_cost_estimate": 1.0,
+          "confidence": "high",
+          "uncertainty_note": "Common reagent, verify bulk pricing."
+        },
+        {
+          "item_name": "Agarose",
+          "quantity": "1 g",
+          "unit_cost_estimate": 0.5,
+          "total_cost_estimate": 0.5,
+          "confidence": "high",
+          "uncertainty_note": "Common reagent, verify bulk pricing."
+        },
+        {
+          "item_name": "TAE buffer",
+          "quantity": "500 mL",
+          "unit_cost_estimate": 5.0,
+          "total_cost_estimate": 5.0,
+          "confidence": "medium",
+          "uncertainty_note": "Verify pricing for TAE buffer."
+        },
+        {
+          "item_name": "Ethidium bromide",
+          "quantity": "0.5 \u00b5g/mL",
+          "unit_cost_estimate": 0.5,
+          "total_cost_estimate": 0.5,
+          "confidence": "medium",
+          "uncertainty_note": "Verify pricing for ethidium bromide."
+        },
+        {
+          "item_name": "Xylose",
+          "quantity": "50 g",
+          "unit_cost_estimate": 5.0,
+          "total_cost_estimate": 5.0,
+          "confidence": "medium",
+          "uncertainty_note": "Verify pricing for xylose."
+        },
+        {
+          "item_name": "1 M NaOH",
+          "quantity": "100 mL",
+          "unit_cost_estimate": 1.0,
+          "total_cost_estimate": 1.0,
+          "confidence": "high",
+          "uncertainty_note": "Common reagent, verify bulk pricing."
+        },
+        {
+          "item_name": "Competent Saccharomyces cerevisiae CEN.PK",
+          "quantity": "100 \u00b5L",
+          "unit_cost_estimate": 10.0,
+          "total_cost_estimate": 10.0,
+          "confidence": "low",
+          "uncertainty_note": "Verify pricing for competent cells."
+        },
+        {
+          "item_name": "Selective YPD agar plates with G418",
+          "quantity": "10 plates",
+          "unit_cost_estimate": 2.0,
+          "total_cost_estimate": 20.0,
+          "confidence": "medium",
+          "uncertainty_note": "Verify pricing for selective plates."
+        },
+        {
+          "item_name": "QIAprep Spin Miniprep Kit",
+          "quantity": "1 kit",
+          "unit_cost_estimate": 50.0,
+          "total_cost_estimate": 50.0,
+          "confidence": "medium",
+          "uncertainty_note": "Verify pricing for the miniprep kit."
+        }
+      ],
+      "estimated_total_cost": 2878.9,
+      "uncertainty_notes": [
+        "Prices may vary based on supplier contracts and institutional discounts.",
+        "Verify bulk pricing for common reagents to ensure cost efficiency.",
+        "Check for any additional fees related to equipment usage or rental."
+      ]
+    },
+    "timeline": {
+      "phases": [
+        {
+          "phase_name": "Day 0: Reagent Preparation and Strain Preparation",
+          "duration_estimate": "1 days",
+          "dependencies": [],
+          "responsible_role": "Research associate",
+          "risk_buffer": "1 days",
+          "bottlenecks": [
+            "Equipment availability for autoclaving",
+            "Reagent preparation time"
+          ]
+        },
+        {
+          "phase_name": "Day 0: Transformation and Selection of Transformants",
+          "duration_estimate": "3 days",
+          "dependencies": [],
+          "responsible_role": "Research associate",
+          "risk_buffer": "1 days",
+          "bottlenecks": [
+            "Transformation efficiency variability",
+            "Time for colony growth on selective media"
+          ]
+        },
+        {
+          "phase_name": "Day 1: Colony Screening and Plasmid Extraction",
+          "duration_estimate": "1 days",
+          "dependencies": [],
+          "responsible_role": "Research associate",
+          "risk_buffer": "1 days",
+          "bottlenecks": [
+            "Colony picking efficiency",
+            "Plasmid extraction yield"
+          ]
+        },
+        {
+          "phase_name": "Day 1: PCR Confirmation and Gel Electrophoresis",
+          "duration_estimate": "1 days",
+          "dependencies": [],
+          "responsible_role": "Research associate",
+          "risk_buffer": "1 days",
+          "bottlenecks": [
+            "PCR amplification success",
+            "Gel electrophoresis results interpretation"
+          ]
+        },
+        {
+          "phase_name": "Day 1: Fermentation Setup",
+          "duration_estimate": "1 days",
+          "dependencies": [],
+          "responsible_role": "Research associate",
+          "risk_buffer": "1 days",
+          "bottlenecks": [
+            "Medium preparation time",
+            "Inoculation accuracy"
+          ]
+        },
+        {
+          "phase_name": "Day 1-3: Fermentation",
+          "duration_estimate": "3 days",
+          "dependencies": [],
+          "responsible_role": "Scientist",
+          "risk_buffer": "1 days",
+          "bottlenecks": [
+            "Bioreactor performance",
+            "Monitoring pH and conditions"
+          ]
+        },
+        {
+          "phase_name": "Day 2: Ethanol Measurement and Quantification",
+          "duration_estimate": "1 days",
+          "dependencies": [],
+          "responsible_role": "Research associate",
+          "risk_buffer": "1 days",
+          "bottlenecks": [
+            "Sample processing time",
+            "Gas chromatography availability"
+          ]
+        },
+        {
+          "phase_name": "Day 2: Data Analysis",
+          "duration_estimate": "1 days",
+          "dependencies": [],
+          "responsible_role": "Bioinformatician",
+          "risk_buffer": "1 days",
+          "bottlenecks": [
+            "Statistical analysis complexity",
+            "Data interpretation"
+          ]
+        }
+      ],
+      "total_duration_estimate": "20 days (including risk buffers)"
+    },
+    "validation": {
+      "primary_endpoint": "Post-thaw viability percentage at immediate and 24h checkpoints.",
+      "secondary_endpoints": [
+        "Cell recovery count",
+        "Morphology quality score",
+        "Replicate variance"
+      ],
+      "success_threshold": "at least 0.4 g ethanol/g xylose improvement over comparator in replicate-confirmed data.",
+      "failure_conditions": [
+        "No meaningful viability gain in replicate-confirmed runs.",
+        "Intervention increases delayed viability loss at 24h."
+      ],
+      "suggested_statistical_comparison": "Two-group comparison against comparator using t-test or Mann-Whitney based on normality.",
+      "minimum_replicates_or_design_note": "Minimum three biological replicates before execution-level claim."
+    },
+    "cro_ready_brief": {
+      "objective": "To evaluate the ethanol yield from Saccharomyces cerevisiae CEN.PK expressing heterologous xylose isomerase from Piromyces sp. compared to the parental strain.",
+      "scope_of_work": [
+        "Execute pilot-first HeLa cryopreservation comparison between DMSO baseline and trehalose arm.",
+        "Deliver replicate-confirmed viability analysis and mitigation traceability report."
+      ],
+      "sample_count": "At least 3 biological replicates per arm",
+      "required_assays": [
+        "Immediate post-thaw viability",
+        "24h follow-up viability"
+      ],
+      "deliverables": [
+        "Raw assay tables",
+        "QC log",
+        "Analysis summary",
+        "Deviation report"
+      ],
+      "qc_requirements": [
+        "Controlled-rate freeze log",
+        "Lot traceability",
+        "Blinded run annotation"
+      ],
+      "timeline_request": "20 days (including risk buffers)",
+      "materials_responsibility": "CRO to quote and confirm all materials before ordering.",
+      "questions_for_cro": [
+        "Can you support controlled-rate freezing logs in each run?",
+        "Can you include replicate-level batch metadata in the final report?"
+      ]
+    },
+    "confidence_score": 0.64,
+    "feedback_incorporated": false,
+    "feedback_trace": []
+  }
+}

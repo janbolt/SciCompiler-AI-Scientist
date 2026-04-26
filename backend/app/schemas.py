@@ -73,6 +73,19 @@ class RiskLikelihood(str, Enum):
     high = "high"
 
 
+class SectionName(str, Enum):
+    HYPOTHESIS = "hypothesis"
+    LITERATURE_QC = "literature_qc"
+    PROTOCOL_CANDIDATES = "protocol_candidates"
+    EVIDENCE_CLAIMS = "evidence_claims"
+    RISKS = "risks"
+    PLAN = "plan"
+    BUDGET = "budget"
+    TIMELINE = "timeline"
+    VALIDATION = "validation"
+    CRO_BRIEF = "cro_ready_brief"
+
+
 MISSING = "missing_required_field"
 MissingRequiredField = Literal["missing_required_field"]
 ReadinessLevel = Literal["execution_ready", "pilot_ready", "underspecified"]
@@ -288,6 +301,33 @@ class DemoRunResponse(BaseModel):
     validation: ValidationPlan
     cro_ready_brief: CROReadyBrief
     confidence_score: float = Field(ge=0.0, le=1.0)
+    feedback_incorporated: bool = False
+    feedback_trace: list[str] = Field(default_factory=list)
+
+
+class SectionAnnotation(BaseModel):
+    section: SectionName
+    feedback_text: str
+    requested_changes: list[str] = Field(default_factory=list)
+    severity: Literal["critical", "major", "minor", "suggestion"] = "major"
+
+
+class ScientistReview(BaseModel):
+    plan_id: str
+    annotations: list[SectionAnnotation] = Field(min_length=1)
+    global_feedback: str = ""
+    reviewer_note: str = ""
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+
+
+class RegenerateResponse(BaseModel):
+    plan_id: str
+    updated_plan: DemoRunResponse
+    feedback_incorporated: bool = True
+    regenerated_sections: list[str]
+    unchanged_sections: list[str]
+    feedback_trace: list[str]
+    stored_to_memory: bool
 
 
 class FeedbackRequest(BaseModel):

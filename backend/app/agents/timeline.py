@@ -174,8 +174,23 @@ def _format_steps(plan: ExperimentPlan) -> str:
 def _generate_timeline_with_llm(
     hypothesis: StructuredHypothesis,
     plan: ExperimentPlan,
+    scientist_feedback: str = "",
 ) -> _TimelineLLMOutput:
     client = get_client()
+
+    feedback_block = ""
+    if scientist_feedback.strip():
+        feedback_block = (
+            "\n=================================================================\n"
+            "SCIENTIST FEEDBACK ON TIMELINE — YOU MUST ADDRESS:\n"
+            "=================================================================\n"
+            f"{scientist_feedback.strip()}\n"
+            "Adjust phase durations, ordering, parallelisation, and risk buffers\n"
+            "to address every point above. If a requested change is unrealistic\n"
+            "(e.g. a duration shorter than physically possible for the technique),\n"
+            "state this explicitly in the corresponding phase's bottlenecks list\n"
+            "and choose the closest realistic value.\n"
+        )
 
     user_message = (
         "HYPOTHESIS\n"
@@ -183,7 +198,8 @@ def _generate_timeline_with_llm(
         f"- biological_system: {hypothesis.biological_system}\n"
         f"- experiment_type: {hypothesis.experiment_type}\n\n"
         "PROTOCOL STEPS\n"
-        f"{_format_steps(plan)}\n\n"
+        f"{_format_steps(plan)}\n"
+        f"{feedback_block}\n"
         "Generate a realistic phase-by-phase timeline for this experiment."
     )
 
@@ -283,12 +299,16 @@ def _stub_timeline(
 def run(
     hypothesis: StructuredHypothesis | None = None,
     plan: ExperimentPlan | None = None,
+    scientist_feedback: str = "",
 ) -> TimelineEstimate:
     """Generate a timeline estimate for the experiment.
 
     Args:
         hypothesis: Structured hypothesis (required in live mode).
         plan: Experiment plan whose steps drive phase inference.
+        scientist_feedback: Free-text scientist corrections specifically
+            targeting the timeline. Injected into the LLM prompt with
+            mandatory-address language. Empty string = no feedback.
 
     Returns:
         A TimelineEstimate with phases and total duration.
@@ -297,7 +317,7 @@ def run(
         return _stub_timeline(hypothesis, plan)
 
     try:
-        llm_output = _generate_timeline_with_llm(hypothesis, plan)
+        llm_output = _generate_timeline_with_llm(hypothesis, plan, scientist_feedback=scientist_feedback)
         return _build_timeline(llm_output)
     except Exception as exc:  # noqa: BLE001
         logger.exception("Timeline agent LLM call failed, falling back to stub: %s", exc)

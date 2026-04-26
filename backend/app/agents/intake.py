@@ -28,6 +28,17 @@ from app.services.llm import LLM_MAX_RETRIES, LLM_MODEL, USE_STUB_AGENTS, get_cl
 logger = logging.getLogger(__name__)
 
 
+def _exception_chain_text(exc: BaseException) -> str:
+    parts: list[str] = []
+    seen: set[int] = set()
+    current: BaseException | None = exc
+    while current is not None and id(current) not in seen:
+        seen.add(id(current))
+        parts.append(f"{current.__class__.__name__}: {current}")
+        current = current.__cause__ or current.__context__
+    return " -> ".join(parts)
+
+
 DEMO_HYPOTHESIS = (
     "Replacing sucrose with trehalose as a cryoprotectant in the freezing medium "
     "will increase post-thaw viability of HeLa cells by at least 15 percentage "
@@ -52,79 +63,93 @@ class _IntakeLLMOutput(BaseModel):
     intervention: str = Field(
         ...,
         description=(
-            "The specific perturbation the experiment will apply. "
-            "QUALIFIES: a concrete compound + dose/concentration + delivery, e.g. "
-            "'replace 10% DMSO with 200 mM trehalose in the freezing medium'. "
-            "DOES NOT QUALIFY: vague goals like 'use a better cryoprotectant', "
-            "'optimize the protocol', 'improve cryopreservation'. "
-            "If the user did not state a concrete intervention, return the exact "
-            "string 'missing_required_field'."
+            "The perturbation the experiment will apply, extracted as faithfully "
+            "as possible from the user's text. "
+            "PREFERRED: extract whatever the user named (compound class, technique, "
+            "replacement, modification) verbatim, even if dose/concentration/delivery "
+            "details are missing. e.g. for 'GLP-1 agonists in obese mice' extract "
+            "'GLP-1 agonists' and add a clarifying_question for the missing dose. "
+            "STRONG (best case): a concrete compound + dose/concentration + delivery, "
+            "e.g. 'replace 10% DMSO with 200 mM trehalose in the freezing medium'. "
+            "Return 'missing_required_field' ONLY when the user named no perturbation "
+            "at all (pure goal statements like 'optimize the protocol' with no named "
+            "perturbation)."
         ),
     )
     biological_system: str = Field(
         ...,
         description=(
-            "The exact biological model being perturbed. "
-            "QUALIFIES: a named cell line ('HeLa cells'), a strain + sex + age "
-            "('C57BL/6 mice, male, 8-10 weeks'), or a defined primary culture. "
-            "DOES NOT QUALIFY: 'mammalian cells', 'cells', 'a human cell line', "
-            "'patient samples' without a defined cohort. "
-            "If the user did not name a specific system, return "
-            "'missing_required_field'."
+            "The biological model being perturbed, extracted as faithfully as the "
+            "user wrote it. "
+            "PREFERRED: extract whatever was named, even if not fully specified. "
+            "e.g. 'mammalian cells' → extract 'mammalian cells (specific cell line "
+            "to be confirmed)' and add a clarifying_question; "
+            "'mouse model' → extract 'mouse model (strain/sex/age TBD)'. "
+            "STRONG (best case): a named cell line ('HeLa cells') or a fully-specified "
+            "cohort ('C57BL/6 mice, male, 8-10 weeks'). "
+            "Return 'missing_required_field' ONLY when no system is named at all."
         ),
     )
     comparator_or_control: str = Field(
         ...,
         description=(
             "The reference condition the intervention is measured against. "
-            "QUALIFIES: a concretely-named control such as 'standard 10% DMSO "
-            "freezing protocol' or 'vehicle-only DMSO at matched volume'. "
-            "DOES NOT QUALIFY: 'compared to standard conditions', 'vs control', "
-            "'vs baseline' with no protocol named. "
-            "If absent, return 'missing_required_field'."
+            "PREFERRED: extract whatever the user named even if generic, e.g. "
+            "'standard protocol' → extract 'standard protocol (to be specified)'; "
+            "'untreated controls' → extract 'untreated controls'. "
+            "STRONG (best case): a concretely-named control such as 'standard 10% "
+            "DMSO freezing protocol' or 'vehicle-only DMSO at matched volume'. "
+            "Return 'missing_required_field' ONLY when no comparator is mentioned."
         ),
     )
     measurable_outcome: str = Field(
         ...,
         description=(
-            "The specific assay or readout that will be quantified. "
-            "QUALIFIES: 'post-thaw viability by trypan blue exclusion', "
+            "The readout that will be quantified. "
+            "PREFERRED: extract whatever the user named, even without a named assay. "
+            "e.g. 'cell viability' → extract 'cell viability (assay to be specified)'; "
+            "'tumor regression' → extract 'tumor regression (measurement method TBD)'. "
+            "STRONG (best case): 'post-thaw viability by trypan blue exclusion', "
             "'EdU incorporation by flow cytometry', 'tumor volume by caliper'. "
-            "DOES NOT QUALIFY: 'cell survival', 'viability', 'response' without "
-            "a named assay. "
-            "If absent, return 'missing_required_field'."
+            "Return 'missing_required_field' ONLY when no outcome is mentioned."
         ),
     )
     threshold: str = Field(
         ...,
         description=(
-            "The numeric success criterion. MUST contain a number AND a unit. "
-            "QUALIFIES: 'at least 15 percentage points higher than DMSO control', "
+            "The success criterion. Numeric thresholds are strongly preferred. "
+            "STRONG: 'at least 15 percentage points higher than DMSO control', "
             "'>=30% reduction vs vehicle', 'IC50 below 100 nM'. "
-            "DOES NOT QUALIFY: 'higher than control', 'improved', 'better' "
-            "without a numeric threshold. "
-            "If no number is present, return 'missing_required_field'."
+            "If the user expressed direction without a number ('improved', 'reduced'), "
+            "extract the qualitative threshold and add a clarifying_question for the "
+            "numeric target. "
+            "Return 'missing_required_field' ONLY when no success criterion is "
+            "mentioned at all."
         ),
     )
     mechanistic_rationale: str = Field(
         ...,
         description=(
             "The biological reason the intervention is expected to work. "
-            "QUALIFIES: 'trehalose replaces water molecules in phospholipid "
-            "hydration shells, reducing membrane damage during ice crystal "
-            "formation'. "
-            "DOES NOT QUALIFY: 'because it is better', 'due to superior "
-            "properties', 'it should work'. "
-            "If absent or non-biological, return 'missing_required_field'."
+            "PREFERRED: extract whatever rationale the user gave, even if thin. "
+            "e.g. 'because it stabilizes membranes' is acceptable as "
+            "'stabilizes membranes (mechanism details TBD)'. "
+            "STRONG (best case): 'trehalose replaces water molecules in phospholipid "
+            "hydration shells, reducing membrane damage during ice crystal formation'. "
+            "Return 'missing_required_field' ONLY when no rationale is given. "
+            "Do NOT invent biology — only extract what was stated."
         ),
     )
     experiment_type: str = Field(
         ...,
         description=(
-            "A short experiment-class label, e.g. 'comparative_cryopreservation', "
-            "'small_molecule_dose_response', 'in_vivo_efficacy_study'. "
-            "If the hypothesis is too vague to classify, return "
-            "'missing_required_field'."
+            "A short experiment-class label, inferred from the hypothesis even when "
+            "the wording is loose. e.g. 'comparative_cryopreservation', "
+            "'small_molecule_dose_response', 'in_vivo_efficacy_study', "
+            "'cell_viability_assay', 'comparative_treatment_study'. "
+            "Always provide your best-effort label. "
+            "Return 'missing_required_field' ONLY if the input contains no scientific "
+            "content at all (e.g. greetings, off-topic chatter)."
         ),
     )
     constraints: dict[str, str] = Field(
@@ -197,68 +222,78 @@ scientist wants to take to a CRO. Your job is to extract a structured
 representation that downstream planning agents can rely on.
 
 A real lab will spend weeks and thousands of dollars based on this output.
-Inventing biology that the user did not state is the single most damaging
-failure mode. When in doubt, mark a field as "missing_required_field" and
-ask the user a clarifying question.
+Your job is to be PRACTICAL: extract what the user said, even when it is
+incomplete, so the pipeline can produce a useful first draft. The user will
+see clarifying_questions and refine the plan iteratively.
 
 ================================================================
-SECTION 1 — What a strong hypothesis requires
+PRIME DIRECTIVES
 ================================================================
-For each core field, here is what counts as STRONG vs WEAK.
+DIRECTIVE 1 — Preserve, do not erase.
+    If the user gave partial information, EXTRACT IT. Do NOT replace partial
+    text with "missing_required_field" just because it lacks dose, units, or
+    a specific assay name. Add a clarifying_question for the missing detail
+    instead.
+
+DIRECTIVE 2 — Never invent biology.
+    Only extract what was actually written or trivially implied. Do not
+    silently expand "standard DMSO protocol" into "10% DMSO in RPMI-1640".
+    Do not assert a mechanism the user never mentioned.
+
+DIRECTIVE 3 — Always produce a usable hypothesis.
+    The pipeline must continue. "missing_required_field" is reserved for
+    fields where the user provided NOTHING that could plausibly populate
+    them. Lower confidence_score generously when extraction was partial,
+    but populate the field whenever possible.
+
+================================================================
+SECTION 1 — What a strong hypothesis looks like
+================================================================
+The full target is below — but partial extraction is acceptable and
+expected for many real hypotheses. Use clarifying_questions to fill gaps.
 
 Intervention
-  STRONG: "replace 10% DMSO with 200 mM trehalose in the freezing medium"
-  WEAK:   "use a better cryoprotectant", "improve cryopreservation"
+  STRONG:   "replace 10% DMSO with 200 mM trehalose in the freezing medium"
+  PARTIAL:  "GLP-1 agonists" → extract verbatim, ask for compound + dose
+  ABSENT:   "improve drug discovery"  (no perturbation named at all)
 
 Biological system
-  STRONG: "HeLa cells", "C57BL/6 mice, male, 8-10 weeks"
-  WEAK:   "mammalian cells", "cells", "human cell line"
+  STRONG:   "HeLa cells", "C57BL/6 mice, male, 8-10 weeks"
+  PARTIAL:  "mammalian cells" → extract "mammalian cells (cell line TBD)"
+  ABSENT:   only emit missing_required_field if no organism/system named
 
 Comparator / control
-  STRONG: "standard 10% DMSO freezing protocol"
-  WEAK:   "compared to standard conditions"
+  STRONG:   "standard 10% DMSO freezing protocol"
+  PARTIAL:  "standard protocol" → extract verbatim, ask for the specific
+            named protocol
+  ABSENT:   no control mentioned at all → missing_required_field
 
 Measurable outcome
-  STRONG: "post-thaw viability by trypan blue exclusion"
-  WEAK:   "cell survival", "viability"
+  STRONG:   "post-thaw viability by trypan blue exclusion"
+  PARTIAL:  "cell viability" → extract "cell viability (assay TBD)"
+  ABSENT:   no outcome mentioned → missing_required_field
 
 Threshold
-  STRONG: "at least 15 percentage points higher than DMSO control"
-  WEAK:   "improved", "higher than"  (no number = NOT a threshold)
+  STRONG:   "at least 15 percentage points higher than DMSO control"
+  PARTIAL:  "higher than control" → extract direction; ask for numeric target
+  ABSENT:   no success criterion mentioned → missing_required_field
 
 Mechanistic rationale
-  STRONG: "trehalose replaces water molecules in phospholipid hydration
-           shells, reducing membrane damage during ice crystal formation"
-  WEAK:   "because it is better", "due to superior properties"
+  STRONG:   "trehalose replaces water molecules in phospholipid hydration
+             shells, reducing membrane damage during ice crystal formation"
+  PARTIAL:  "stabilizes membranes" → extract; ask for detail
+  ABSENT:   no rationale at all → missing_required_field
 
 ================================================================
 SECTION 2 — Non-negotiable rules
 ================================================================
-Rule 1: Never invent biology. If the user did not state it, return the
-        exact sentinel string "missing_required_field". A false assumption
-        can send a real lab down the wrong path for weeks.
-
-Rule 2: Never paraphrase into invention. "standard DMSO protocol" stays
-        "standard DMSO protocol" — do not silently expand it to
-        "10% DMSO in RPMI-1640".
-
-Rule 3: Goals are not hypotheses. "AI will improve drug discovery" is a
-        goal — every core field for it is "missing_required_field".
-
-Rule 4: Threshold requires a number. "Higher than control" with no number
-        is "missing_required_field".
-
-Rule 5: Mechanism requires biology. "Because it works better" is
-        "missing_required_field".
-
-Rule 6: Constraints in the constraints dict are ONLY constraints the user
-        explicitly mentioned in the hypothesis text. If the user said
-        nothing about budget, timeline, or other limits, leave constraints
-        as an empty object. Budget/timeline/execution_mode passed as
-        separate arguments are merged in Python afterwards — do NOT copy
-        them into this dict.
-
-Rule 7: clarifying_questions must be specific and actionable. Not
+Rule 1: Prefer partial extraction over erasure (Directive 1).
+Rule 2: Never invent biology (Directive 2).
+Rule 3: Constraints in the constraints dict are ONLY constraints the user
+        explicitly mentioned in the hypothesis text. Budget/timeline/
+        execution_mode passed as separate arguments are merged in Python
+        afterwards — do NOT copy them into this dict.
+Rule 4: clarifying_questions must be specific and actionable. Not
         "please provide more detail" but "What cell line are you using?"
         or "What is the numeric success threshold (e.g. >=15% improvement)?"
 
@@ -266,40 +301,40 @@ Rule 7: clarifying_questions must be specific and actionable. Not
 SECTION 3 — Readiness classification
 ================================================================
 execution_ready
-    All 6 core fields (intervention, biological_system, comparator_or_control,
-    measurable_outcome, threshold, mechanistic_rationale) are present and
-    specific. The hypothesis could be handed to a CRO today.
+    All 6 core fields are present AND specific. CRO-ready today.
 
 pilot_ready
-    Core fields are present but at least one is weak: mechanism is thin,
-    threshold is approximate, or comparator is only partially specified.
-    Needs a scientist review and probably a pilot run before scale-up.
+    Core fields are populated (possibly with partial information) and the
+    plan is workable for a pilot run. This is the typical case for a
+    moderately-specified hypothesis. PREFER this label whenever you have
+    a usable extraction even if some fields are partial.
 
 underspecified
-    ANY of intervention, biological_system, comparator_or_control, or
-    measurable_outcome is missing. The pipeline cannot meaningfully proceed
-    until the user fills the gap.
+    Use ONLY if intervention, biological_system, comparator_or_control,
+    AND measurable_outcome are ALL "missing_required_field" — i.e. the
+    input contained essentially no extractable scientific content.
 
 ================================================================
 SECTION 4 — literature_search_hint
 ================================================================
-Synthesise 3-6 keywords from the hypothesis for the Literature QC agent.
-Include: the intervention compound/method, the biological system, the
-assay type, and the key outcome.
-
+Always produce 3-6 keywords from whatever the user wrote, even if the
+hypothesis is loose. The Literature QC agent needs SOME query to run.
+Lower confidence_score if you had to extrapolate.
 Example: "trehalose DMSO cryopreservation HeLa viability trypan blue"
-
-If the hypothesis is too vague to extract keywords, emit the most useful
-keywords you can and lower confidence_score accordingly.
 """
 
 
 USER_PROMPT_TEMPLATE = """\
 Extract a structured hypothesis from the input below.
 
-Reminder: use the exact string "missing_required_field" for any field the
-user did not explicitly state. Do not invent biology. Do not paraphrase a
-vague phrase into a specific one.
+Reminder:
+  - PREFER partial extraction over erasure. If the user named a compound
+    class, technique, or system without full detail, extract it verbatim
+    and add a clarifying_question.
+  - Use "missing_required_field" ONLY when a field has no extractable
+    content at all.
+  - Do not invent biology. Do not paraphrase a vague phrase into a specific
+    one.
 
 ----- RAW USER HYPOTHESIS (verbatim) -----
 {hypothesis}
@@ -383,6 +418,69 @@ def _stub_intake(
 # ---------------------------------------------------------------------------
 
 
+def _is_network_error(exc: BaseException) -> bool:
+    """True iff the exception chain is dominated by network/connection problems
+    (DNS lookup failure, connect timeout, proxy block, OpenAI APIConnectionError).
+    Distinguishes recoverable infrastructure failures from genuine API errors
+    (auth, quota, malformed requests) where degraded fallback would be wrong.
+    """
+    chain = _exception_chain_text(exc).lower()
+    network_tokens = (
+        "connecterror",
+        "apiconnectionerror",
+        "connection error",
+        "gaierror",
+        "nodename nor servname",
+        "name or service not known",
+        "proxyerror",
+        "timeout",
+        "remotedisconnected",
+    )
+    return any(t in chain for t in network_tokens)
+
+
+def _heuristic_intake(
+    hypothesis: str,
+    budget: str | None,
+    timeline: str | None,
+    execution_mode: str | None,
+    failure_reason: str,
+) -> StructuredHypothesis:
+    """Deterministic, no-LLM fallback that keeps the user's actual text.
+
+    Used only when the LLM is unreachable (network/DNS/proxy). We do NOT
+    invent biology — we leave structured fields as MISSING and put the
+    user's verbatim hypothesis in ``original_hypothesis`` and the search
+    hint, so downstream agents and the frontend show input-specific output
+    instead of identical mock data.
+    """
+    text = hypothesis.strip()
+    return StructuredHypothesis(
+        intervention=MISSING,
+        biological_system=MISSING,
+        comparator_or_control=MISSING,
+        measurable_outcome=MISSING,
+        threshold=MISSING,
+        mechanistic_rationale=MISSING,
+        experiment_type="unspecified",
+        constraints=_build_constraints(budget, timeline, execution_mode),
+        readiness="underspecified",
+        readiness_rationale=(
+            "Heuristic fallback: the LLM was unreachable so structured fields "
+            f"could not be extracted. Underlying error: {failure_reason}. "
+            "Pipeline continued in degraded mode using the user's verbatim text."
+        ),
+        confidence_score=0.2,
+        clarifying_questions=[
+            "Which intervention / compound / technique are you applying?",
+            "Which biological system (cell line, organism, tissue)?",
+            "What is the measurable outcome and the comparator?",
+        ],
+        literature_search_hint=text[:200],
+        original_hypothesis=text,
+    )
+
+
 def run_intake_agent(
     hypothesis: str,
     budget: str | None = None,
@@ -393,13 +491,18 @@ def run_intake_agent(
 
     Mode selection:
       - ``USE_STUB_AGENTS=true`` → hardcoded demo stub.
-      - Otherwise use schema-enforced LLM extraction.
+      - Otherwise use schema-enforced LLM extraction. On *network* failure
+        (DNS / proxy / timeout / APIConnectionError) we degrade to a heuristic
+        fallback so the pipeline can still produce output reflecting the
+        user's actual input. Genuine API errors (auth/quota/malformed) are
+        re-raised so the caller can surface them properly.
     """
     if USE_STUB_AGENTS:
         return _stub_intake(hypothesis, budget, timeline, execution_mode)
 
     try:
         client = get_client()
+        logger.info("Intake Agent: calling OpenAI model=%s …", LLM_MODEL)
         llm_output: _IntakeLLMOutput = client.chat.completions.create(
             model=LLM_MODEL,
             response_model=_IntakeLLMOutput,
@@ -418,9 +521,36 @@ def run_intake_agent(
                 },
             ],
         )
+        logger.info(
+            "Intake Agent: OpenAI OK (intervention=%r, system=%r, readiness=%s)",
+            llm_output.intervention[:60],
+            llm_output.biological_system[:60],
+            llm_output.readiness,
+        )
     except Exception as exc:
         logger.exception("Intake Agent LLM call failed.")
-        raise RuntimeError(f"Intake Agent failed: {exc}") from exc
+        chain = _exception_chain_text(exc)
+        if _is_network_error(exc):
+            logger.warning(
+                "Intake Agent network error — falling back to heuristic extraction. "
+                "Pipeline will continue in degraded mode."
+            )
+            return _heuristic_intake(
+                hypothesis=hypothesis,
+                budget=budget,
+                timeline=timeline,
+                execution_mode=execution_mode,
+                failure_reason=chain,
+            )
+        status_hint = ""
+        lowered = chain.lower()
+        if any(token in lowered for token in ("401", "unauthorized", "invalid_api_key")):
+            status_hint = " | status_hint=401"
+        elif any(token in lowered for token in ("429", "rate_limit", "quota")):
+            status_hint = " | status_hint=429"
+        raise RuntimeError(
+            f"Intake Agent failed: {exc} | repr={exc!r} | chain={chain}{status_hint}"
+        ) from exc
 
     merged_constraints = _build_constraints(
         budget=budget,

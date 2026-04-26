@@ -13,12 +13,17 @@ Design goals:
 
 from __future__ import annotations
 
+import logging
 import os
+from pathlib import Path
 from typing import Any
 
 from dotenv import load_dotenv
 
-load_dotenv()
+logger = logging.getLogger(__name__)
+
+BACKEND_DIR = Path(__file__).resolve().parents[2]
+load_dotenv(BACKEND_DIR / ".env")
 
 
 def _env_bool(name: str, default: str) -> bool:
@@ -44,10 +49,22 @@ def _get_api_key() -> str:
 
 
 def _build_client() -> Any:
+    import httpx
     import instructor
     from openai import OpenAI
 
-    raw_client = OpenAI(api_key=_get_api_key())
+    key = _get_api_key()
+    # Bypass shell-level proxy variables by default so local dev/pytest
+    # are not blocked by corporate proxy 403 tunnel responses.
+    http_client = httpx.Client(trust_env=False)
+    raw_client = OpenAI(api_key=key, http_client=http_client)
+    logger.info(
+        "LLM client initialised | model=%s | key_prefix=%s | key_tail=%s | stub_mode=%s",
+        LLM_MODEL,
+        key[:8],
+        key[-6:],
+        USE_STUB_AGENTS,
+    )
     return instructor.from_openai(raw_client, mode=instructor.Mode.TOOLS)
 
 

@@ -1,0 +1,740 @@
+{
+  "request": {
+    "question": "Does 50 nM rapamycin reduce H3K9me3 levels in mouse embryonic fibroblasts after 24h treatment, measured by Western blot?",
+    "constraints": {
+      "budget": "missing_required_field",
+      "timeline": "missing_required_field",
+      "execution_mode": "in_house"
+    },
+    "prior_feedback": []
+  },
+  "response": {
+    "plan_id": "c028592d-db8a-4c92-9a75-bb6e4ad7d76f",
+    "hypothesis": {
+      "intervention": "50 nM rapamycin",
+      "biological_system": "mouse embryonic fibroblasts",
+      "comparator_or_control": "missing_required_field",
+      "measurable_outcome": "H3K9me3 levels (measured by Western blot)",
+      "threshold": "missing_required_field",
+      "mechanistic_rationale": "missing_required_field",
+      "experiment_type": "in_vivo_efficacy_study",
+      "constraints": {
+        "execution_mode": "in_house"
+      },
+      "readiness": "pilot_ready",
+      "readiness_rationale": "Comparator, threshold, and mechanistic rationale are missing. The intervention and biological system are specified.",
+      "confidence_score": 0.8,
+      "clarifying_questions": [
+        "What is the comparator or control condition for this experiment?",
+        "What is the numeric success threshold for H3K9me3 reduction?",
+        "What is the mechanistic rationale for using rapamycin in this context?"
+      ],
+      "literature_search_hint": "rapamycin H3K9me3 mouse embryonic fibroblasts Western blot",
+      "original_hypothesis": "Does 50 nM rapamycin reduce H3K9me3 levels in mouse embryonic fibroblasts after 24h treatment, measured by Western blot?",
+      "missing_required_fields": [
+        "comparator_or_control",
+        "threshold",
+        "mechanistic_rationale"
+      ]
+    },
+    "literature_qc": {
+      "novelty_signal": "not_found",
+      "references": [],
+      "confidence_score": 0.95,
+      "explanation": "No retrieved papers discuss the use of 50 nM rapamycin specifically in mouse embryonic fibroblasts, nor do they focus on measuring H3K9me3 levels by Western blot. The papers either address different interventions or biological systems, making them tangentially related at best.",
+      "recommended_action": "No directly matching publication found. This combination appears novel. Proceed with experiment planning.",
+      "search_coverage": "full"
+    },
+    "protocol_candidates": [
+      {
+        "protocol_name": "Standard in_vivo_efficacy_study protocol for 50 nm rapamycin",
+        "source_type": "stub",
+        "fit_score": 0.75,
+        "confidence": 0.65,
+        "adaptation_notes": "Stub mode \u2014 no live protocols.io search performed. This is a placeholder candidate.",
+        "missing_steps": [
+          "Exact reagent concentrations",
+          "Instrument-specific settings"
+        ],
+        "limitations": [
+          "Stub output only \u2014 real protocols.io search requires PROTOCOLS_IO_TOKEN."
+        ],
+        "raw_steps": [],
+        "protocol_url": ""
+      }
+    ],
+    "evidence_claims": [
+      {
+        "claim": "Post-thaw viability directly tests the stated biological outcome.",
+        "evidence_type": "direct_evidence",
+        "support_summary": "Outcome is explicitly present in user hypothesis.",
+        "strength": "strong",
+        "linked_to": "hypothesis.measurable_outcome"
+      },
+      {
+        "claim": "Trehalose membrane stabilization rationale supports intervention plausibility.",
+        "evidence_type": "mechanistic_evidence",
+        "support_summary": "Mechanistic rationale is explicitly stated in user input.",
+        "strength": "moderate",
+        "linked_to": "hypothesis.mechanistic_rationale"
+      },
+      {
+        "claim": "Expected +15 percentage-point threshold may be optimistic without pilot calibration.",
+        "evidence_type": "unvalidated_assumption",
+        "support_summary": "Effect size is user-defined but not validated in this run.",
+        "strength": "weak",
+        "linked_to": "hypothesis.threshold"
+      }
+    ],
+    "risks": [
+      {
+        "risk_id": "RISK-001",
+        "category": "biological_assumption",
+        "description": "No directly matching protocols or publications found. This may be a novel experimental combination with higher inherent uncertainty.",
+        "severity": "low",
+        "likelihood": "low",
+        "mitigation": "Pilot experiment recommended before committing full resources. Document all assumptions explicitly in the plan.",
+        "action": "document_only"
+      }
+    ],
+    "plan": {
+      "objective": "To determine the effect of 50 nM rapamycin on H3K9me3 levels in mouse embryonic fibroblasts.",
+      "experimental_design": "This experiment will involve treating mouse embryonic fibroblasts with 50 nM rapamycin and comparing H3K9me3 levels to untreated controls. The study will include multiple replicates to ensure statistical validity and will utilize Western blotting for quantification of H3K9me3 levels.",
+      "controls": [
+        "Mouse embryonic fibroblasts treated with 100 nM of a known histone methylation inhibitor (e.g., DZNep) to induce a decrease in H3K9me3 levels.",
+        "Untreated mouse embryonic fibroblasts to establish baseline H3K9me3 levels.",
+        "missing_required_field"
+      ],
+      "step_by_step_protocol": [
+        {
+          "step_number": 1,
+          "description": "DAY 0 (PREP) | 2 h | Cell Culture Preparation\nThaw mouse embryonic fibroblasts (MEFs) from liquid nitrogen storage and transfer to a 25 cm\u00b2 culture flask containing 5 mL of DMEM (Dulbecco's Modified Eagle Medium) supplemented with 10% FBS (fetal bovine serum) and 1% penicillin-streptomycin. Incubate at 37\u00b0C with 5% CO2 for 2 h to allow attachment.\nEquipment: Thermo Scientific Heracell 150i CO2 incubator, Corning 25 cm\u00b2 culture flask\nReagents: DMEM (Gibco, 11965-092), 10% FBS (Gibco, 26140-079), 1% penicillin-streptomycin (Gibco, 15140-122)\nExpected outcome: Cells are adherent and healthy after 2 h of incubation.",
+          "linked_to": "Cell Culture Preparation"
+        },
+        {
+          "step_number": 2,
+          "description": "DAY 0 (PREP) | 30 min | Reagent Preparation\nPrepare 50 nM rapamycin solution by diluting 1 mM rapamycin stock (Selleckchem, S1039) in DMSO (dimethyl sulfoxide) to a final concentration of 50 nM in 1 mL of DMEM. Vortex gently and store at -20\u00b0C until use.\nEquipment: Vortex mixer, Pipettes and tips\nReagents: 1 mM rapamycin (Selleckchem, S1039), DMSO (Sigma, D8418), DMEM (Gibco, 11965-092)\nExpected outcome: 50 nM rapamycin solution is homogeneously mixed and stored properly.\nSafety: DMSO is a skin irritant; handle with gloves.",
+          "linked_to": "Reagent Preparation"
+        },
+        {
+          "step_number": 3,
+          "description": "DAY 1 | 24 h | Cell Treatment\nOnce MEFs reach 70% confluence, remove culture medium and wash cells with 5 mL of PBS (phosphate-buffered saline). Add 5 mL of fresh DMEM containing 50 nM rapamycin to the treatment group and 5 mL of fresh DMEM for the control group. Incubate for 24 h at 37\u00b0C with 5% CO2.\nEquipment: Thermo Scientific Heracell 150i CO2 incubator\nReagents: PBS (Gibco, 14190-094), DMEM (Gibco, 11965-092)\nExpected outcome: Cells are treated with rapamycin or control medium for 24 h without contamination.",
+          "linked_to": "Cell Treatment"
+        },
+        {
+          "step_number": 4,
+          "description": "DAY 2 | 1 h | Cell Lysis\nAfter 24 h treatment, remove the medium and wash cells with 5 mL of ice-cold PBS. Add 500 \u00b5L of RIPA lysis buffer (Thermo Scientific, 89900) supplemented with protease inhibitors (Roche, 04693159001) to each flask. Scrape cells and transfer the lysate to a microcentrifuge tube. Incubate on ice for 30 min and centrifuge at 12,000 \u00d7 g for 15 min at 4\u00b0C to collect the supernatant.\nEquipment: Eppendorf 5424 centrifuge, Microcentrifuge tubes, Pipettes and tips\nReagents: RIPA lysis buffer (Thermo Scientific, 89900), Protease inhibitors (Roche, 04693159001)\nExpected outcome: Cell lysates are obtained with minimal degradation of proteins.",
+          "linked_to": "Cell Lysis"
+        },
+        {
+          "step_number": 5,
+          "description": "DAY 2 | 1 h | Protein Quantification\nDetermine protein concentration of the supernatant using the BCA protein assay kit (Thermo Scientific, 23225). Prepare standards and samples according to the kit protocol. Measure absorbance at 562 nm using a BioTek Synergy H1 plate reader.\nEquipment: BioTek Synergy H1 plate reader, 96-well plates\nReagents: BCA protein assay kit (Thermo Scientific, 23225)\nExpected outcome: Protein concentrations are accurately quantified for all samples.",
+          "linked_to": "Protein Quantification"
+        },
+        {
+          "step_number": 6,
+          "description": "DAY 2 | 2 h | Western Blot Preparation\nPrepare 30 \u00b5g of protein from each sample in 4\u00d7 Laemmli buffer (Bio-Rad, 1610747) and heat at 95\u00b0C for 5 min. Load samples into a 10% SDS-PAGE gel (Bio-Rad, 4561033) along with a protein ladder (Bio-Rad, 1610374). Run the gel at 120 V for 90 min.\nEquipment: Bio-Rad Mini-PROTEAN Tetra Cell, Power supply\nReagents: 4\u00d7 Laemmli buffer (Bio-Rad, 1610747), 10% SDS-PAGE gel (Bio-Rad, 4561033), Protein ladder (Bio-Rad, 1610374)\nExpected outcome: Proteins are separated by size on the gel without smearing.",
+          "linked_to": "Western Blot Preparation"
+        },
+        {
+          "step_number": 7,
+          "description": "DAY 2 | 2 h | Transfer to Membrane\nTransfer proteins from the gel to a PVDF membrane (Bio-Rad, 1620177) using a wet transfer method at 100 V for 1 h. After transfer, block the membrane with 5% non-fat dry milk in TBST (Tris-buffered saline with Tween-20) for 1 h at room temperature.\nEquipment: Bio-Rad Trans-Blot Turbo Transfer System\nReagents: PVDF membrane (Bio-Rad, 1620177), 5% non-fat dry milk in TBST\nExpected outcome: Proteins are successfully transferred to the membrane and blocked.",
+          "linked_to": "Transfer to Membrane"
+        },
+        {
+          "step_number": 8,
+          "description": "DAY 2 | 16 h | Antibody Incubation\nIncubate the membrane with primary antibody against H3K9me3 (1:1000 dilution, Cell Signaling Technology, 9753) in 5% BSA in TBST overnight at 4\u00b0C. Wash the membrane three times with TBST for 5 min each after incubation.\nEquipment: Thermo Scientific Heracell 150i CO2 incubator\nReagents: Primary antibody against H3K9me3 (Cell Signaling Technology, 9753), 5% BSA in TBST\nExpected outcome: Primary antibody binds specifically to H3K9me3 on the membrane.",
+          "linked_to": "Antibody Incubation"
+        },
+        {
+          "step_number": 9,
+          "description": "DAY 3 | 1 h | Secondary Antibody Incubation\nIncubate the membrane with HRP-conjugated secondary antibody (1:5000 dilution, Cell Signaling Technology, 7074) in 5% BSA in TBST for 1 h at room temperature. Wash the membrane three times with TBST for 5 min each after incubation.\nReagents: HRP-conjugated secondary antibody (Cell Signaling Technology, 7074), 5% BSA in TBST\nExpected outcome: Secondary antibody binds to the primary antibody, allowing for detection.",
+          "linked_to": "Secondary Antibody Incubation"
+        },
+        {
+          "step_number": 10,
+          "description": "DAY 3 | 1 h | Detection\nDevelop the membrane using ECL detection reagent (Thermo Scientific, 32106) and visualize using a Bio-Rad ChemiDoc MP imaging system. Capture images and analyze band intensity using ImageJ software.\nEquipment: Bio-Rad ChemiDoc MP imaging system\nReagents: ECL detection reagent (Thermo Scientific, 32106)\nExpected outcome: H3K9me3 levels are visualized and quantifiable via band intensity.",
+          "linked_to": "Detection"
+        },
+        {
+          "step_number": 11,
+          "description": "DAY 3 | 1 h | Data Analysis\nQuantify the intensity of H3K9me3 bands using ImageJ software. Normalize the intensity against a loading control (e.g., \u03b2-actin) and compare treatment groups using a two-tailed t-test to assess statistical significance.\nEquipment: Computer with ImageJ software\nExpected outcome: Statistical analysis reveals significant differences in H3K9me3 levels between treatment and control groups.",
+          "linked_to": "Data Analysis"
+        },
+        {
+          "step_number": 12,
+          "description": "DAY 3 | 30 min | Documentation\nDocument all experimental procedures, results, and observations in the laboratory notebook. Ensure all data is backed up in electronic format and stored securely.\nExpected outcome: All experimental data and procedures are accurately recorded and stored.",
+          "linked_to": "Documentation"
+        },
+        {
+          "step_number": 13,
+          "description": "DAY 3 | 1 h | Final Review\nReview all data and results with the research team. Discuss implications and potential follow-up experiments based on findings.\nExpected outcome: Research team reaches consensus on findings and next steps for further investigation.",
+          "linked_to": "Final Review"
+        }
+      ],
+      "assumptions": [
+        "50 nM rapamycin effectively alters H3K9me3 levels in mouse embryonic fibroblasts.",
+        "H3K9me3 levels can be accurately quantified by Western blotting.",
+        "The experimental conditions do not introduce confounding variables that affect H3K9me3 levels."
+      ],
+      "decision_criteria": [
+        "Proceed if H3K9me3 levels in rapamycin-treated cells are significantly different from control (p < 0.05).",
+        "Proceed if protein loading is consistent across samples (\u03b2-actin levels are similar).",
+        "Proceed if the experiment can be replicated with similar results in at least three independent trials."
+      ],
+      "risk_mitigations_applied": [],
+      "reproducibility_notes": [
+        "Use the same batch of rapamycin for all treatments to ensure consistency.",
+        "Standardize cell passage number to avoid variability in cell behavior.",
+        "Calibrate the Bio-Rad ChemiDoc MP imaging system before use to ensure accurate detection."
+      ],
+      "execution_readiness_score": 0.8,
+      "execution_readiness_label": "execution_ready_after_review",
+      "feedback_incorporated": []
+    },
+    "materials": [
+      {
+        "item_name": "Thermo Scientific Heracell 150i CO2 incubator",
+        "supplier": "Thermo Fisher",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 day",
+        "confidence": "high",
+        "uncertainty_note": "Daily rental cost for incubator."
+      },
+      {
+        "item_name": "BioTek Synergy H1 plate reader",
+        "supplier": "BioTek",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 day",
+        "confidence": "high",
+        "uncertainty_note": "Daily rental cost for plate reader."
+      },
+      {
+        "item_name": "Bio-Rad Mini-PROTEAN Tetra Cell",
+        "supplier": "Bio-Rad",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 day",
+        "confidence": "high",
+        "uncertainty_note": "Daily rental cost for gel system."
+      },
+      {
+        "item_name": "Bio-Rad ChemiDoc MP imaging system",
+        "supplier": "Bio-Rad",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 day",
+        "confidence": "high",
+        "uncertainty_note": "Daily rental cost for imaging system."
+      },
+      {
+        "item_name": "Eppendorf 5424 centrifuge",
+        "supplier": "Eppendorf",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 day",
+        "confidence": "high",
+        "uncertainty_note": "Daily rental cost for centrifuge."
+      },
+      {
+        "item_name": "Corning 25 cm\u00b2 culture flask",
+        "supplier": "Corning",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "10 flasks",
+        "confidence": "high",
+        "uncertainty_note": "Standard cost for culture flasks."
+      },
+      {
+        "item_name": "Pipette tips",
+        "supplier": "Thermo Fisher",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "200 tips",
+        "confidence": "high",
+        "uncertainty_note": "Standard cost for pipette tips."
+      },
+      {
+        "item_name": "Microcentrifuge tubes",
+        "supplier": "Thermo Fisher",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "100 tubes",
+        "confidence": "high",
+        "uncertainty_note": "Standard cost for microcentrifuge tubes."
+      },
+      {
+        "item_name": "96-well plates",
+        "supplier": "Thermo Fisher",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "5 plates",
+        "confidence": "high",
+        "uncertainty_note": "Standard cost for 96-well plates."
+      },
+      {
+        "item_name": "DMEM (Dulbecco's Modified Eagle Medium)",
+        "supplier": "Gibco",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "500 mL",
+        "confidence": "high",
+        "uncertainty_note": "Standard cost for DMEM."
+      },
+      {
+        "item_name": "Fetal Bovine Serum (FBS)",
+        "supplier": "Gibco",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "500 mL",
+        "confidence": "high",
+        "uncertainty_note": "Standard cost for FBS."
+      },
+      {
+        "item_name": "Penicillin-streptomycin",
+        "supplier": "Gibco",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "100 mL",
+        "confidence": "high",
+        "uncertainty_note": "Standard cost for penicillin-streptomycin."
+      },
+      {
+        "item_name": "1 mM rapamycin",
+        "supplier": "Selleckchem",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 vial",
+        "confidence": "medium",
+        "uncertainty_note": "Cost for rapamycin may vary."
+      },
+      {
+        "item_name": "DMSO (dimethyl sulfoxide)",
+        "supplier": "Sigma",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "100 mL",
+        "confidence": "high",
+        "uncertainty_note": "Standard cost for DMSO."
+      },
+      {
+        "item_name": "PBS (phosphate-buffered saline)",
+        "supplier": "Gibco",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "500 mL",
+        "confidence": "high",
+        "uncertainty_note": "Standard cost for PBS."
+      },
+      {
+        "item_name": "RIPA lysis buffer",
+        "supplier": "Thermo Scientific",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "500 mL",
+        "confidence": "medium",
+        "uncertainty_note": "Cost for RIPA buffer may vary."
+      },
+      {
+        "item_name": "Protease inhibitors",
+        "supplier": "Roche",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 vial",
+        "confidence": "medium",
+        "uncertainty_note": "Cost for protease inhibitors may vary."
+      },
+      {
+        "item_name": "BCA protein assay kit",
+        "supplier": "Thermo Scientific",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 kit",
+        "confidence": "medium",
+        "uncertainty_note": "Cost for BCA kit may vary."
+      },
+      {
+        "item_name": "4\u00d7 Laemmli buffer",
+        "supplier": "Bio-Rad",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "100 mL",
+        "confidence": "medium",
+        "uncertainty_note": "Cost for Laemmli buffer may vary."
+      },
+      {
+        "item_name": "10% SDS-PAGE gel",
+        "supplier": "Bio-Rad",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "5 gels",
+        "confidence": "medium",
+        "uncertainty_note": "Cost for SDS-PAGE gels may vary."
+      },
+      {
+        "item_name": "Protein ladder",
+        "supplier": "Bio-Rad",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 vial",
+        "confidence": "medium",
+        "uncertainty_note": "Cost for protein ladder may vary."
+      },
+      {
+        "item_name": "PVDF membrane",
+        "supplier": "Bio-Rad",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 membrane",
+        "confidence": "medium",
+        "uncertainty_note": "Cost for PVDF membrane may vary."
+      },
+      {
+        "item_name": "5% non-fat dry milk in TBST",
+        "supplier": "Thermo Scientific",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "100 g",
+        "confidence": "medium",
+        "uncertainty_note": "Cost for non-fat dry milk may vary."
+      },
+      {
+        "item_name": "Primary antibody against H3K9me3",
+        "supplier": "Cell Signaling Technology",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 vial",
+        "confidence": "medium",
+        "uncertainty_note": "Cost for primary antibody may vary."
+      },
+      {
+        "item_name": "HRP-conjugated secondary antibody",
+        "supplier": "Cell Signaling Technology",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 vial",
+        "confidence": "medium",
+        "uncertainty_note": "Cost for secondary antibody may vary."
+      },
+      {
+        "item_name": "ECL detection reagent",
+        "supplier": "Thermo Scientific",
+        "catalog_number": "verify_before_ordering",
+        "quantity": "1 kit",
+        "confidence": "medium",
+        "uncertainty_note": "Cost for ECL reagent may vary."
+      }
+    ],
+    "budget": {
+      "currency": "EUR",
+      "line_items": [
+        {
+          "item_name": "Thermo Scientific Heracell 150i CO2 incubator",
+          "quantity": "1 day",
+          "unit_cost_estimate": 50.0,
+          "total_cost_estimate": 50.0,
+          "confidence": "high",
+          "uncertainty_note": "Daily rental cost for incubator."
+        },
+        {
+          "item_name": "BioTek Synergy H1 plate reader",
+          "quantity": "1 day",
+          "unit_cost_estimate": 100.0,
+          "total_cost_estimate": 100.0,
+          "confidence": "high",
+          "uncertainty_note": "Daily rental cost for plate reader."
+        },
+        {
+          "item_name": "Bio-Rad Mini-PROTEAN Tetra Cell",
+          "quantity": "1 day",
+          "unit_cost_estimate": 50.0,
+          "total_cost_estimate": 50.0,
+          "confidence": "high",
+          "uncertainty_note": "Daily rental cost for gel system."
+        },
+        {
+          "item_name": "Bio-Rad ChemiDoc MP imaging system",
+          "quantity": "1 day",
+          "unit_cost_estimate": 100.0,
+          "total_cost_estimate": 100.0,
+          "confidence": "high",
+          "uncertainty_note": "Daily rental cost for imaging system."
+        },
+        {
+          "item_name": "Eppendorf 5424 centrifuge",
+          "quantity": "1 day",
+          "unit_cost_estimate": 30.0,
+          "total_cost_estimate": 30.0,
+          "confidence": "high",
+          "uncertainty_note": "Daily rental cost for centrifuge."
+        },
+        {
+          "item_name": "Corning 25 cm\u00b2 culture flask",
+          "quantity": "10 flasks",
+          "unit_cost_estimate": 1.5,
+          "total_cost_estimate": 15.0,
+          "confidence": "high",
+          "uncertainty_note": "Standard cost for culture flasks."
+        },
+        {
+          "item_name": "Pipette tips",
+          "quantity": "200 tips",
+          "unit_cost_estimate": 10.0,
+          "total_cost_estimate": 10.0,
+          "confidence": "high",
+          "uncertainty_note": "Standard cost for pipette tips."
+        },
+        {
+          "item_name": "Microcentrifuge tubes",
+          "quantity": "100 tubes",
+          "unit_cost_estimate": 15.0,
+          "total_cost_estimate": 15.0,
+          "confidence": "high",
+          "uncertainty_note": "Standard cost for microcentrifuge tubes."
+        },
+        {
+          "item_name": "96-well plates",
+          "quantity": "5 plates",
+          "unit_cost_estimate": 20.0,
+          "total_cost_estimate": 100.0,
+          "confidence": "high",
+          "uncertainty_note": "Standard cost for 96-well plates."
+        },
+        {
+          "item_name": "DMEM (Dulbecco's Modified Eagle Medium)",
+          "quantity": "500 mL",
+          "unit_cost_estimate": 20.0,
+          "total_cost_estimate": 20.0,
+          "confidence": "high",
+          "uncertainty_note": "Standard cost for DMEM."
+        },
+        {
+          "item_name": "Fetal Bovine Serum (FBS)",
+          "quantity": "500 mL",
+          "unit_cost_estimate": 150.0,
+          "total_cost_estimate": 150.0,
+          "confidence": "high",
+          "uncertainty_note": "Standard cost for FBS."
+        },
+        {
+          "item_name": "Penicillin-streptomycin",
+          "quantity": "100 mL",
+          "unit_cost_estimate": 30.0,
+          "total_cost_estimate": 30.0,
+          "confidence": "high",
+          "uncertainty_note": "Standard cost for penicillin-streptomycin."
+        },
+        {
+          "item_name": "1 mM rapamycin",
+          "quantity": "1 vial",
+          "unit_cost_estimate": 100.0,
+          "total_cost_estimate": 100.0,
+          "confidence": "medium",
+          "uncertainty_note": "Cost for rapamycin may vary."
+        },
+        {
+          "item_name": "DMSO (dimethyl sulfoxide)",
+          "quantity": "100 mL",
+          "unit_cost_estimate": 20.0,
+          "total_cost_estimate": 20.0,
+          "confidence": "high",
+          "uncertainty_note": "Standard cost for DMSO."
+        },
+        {
+          "item_name": "PBS (phosphate-buffered saline)",
+          "quantity": "500 mL",
+          "unit_cost_estimate": 15.0,
+          "total_cost_estimate": 15.0,
+          "confidence": "high",
+          "uncertainty_note": "Standard cost for PBS."
+        },
+        {
+          "item_name": "RIPA lysis buffer",
+          "quantity": "500 mL",
+          "unit_cost_estimate": 50.0,
+          "total_cost_estimate": 50.0,
+          "confidence": "medium",
+          "uncertainty_note": "Cost for RIPA buffer may vary."
+        },
+        {
+          "item_name": "Protease inhibitors",
+          "quantity": "1 vial",
+          "unit_cost_estimate": 50.0,
+          "total_cost_estimate": 50.0,
+          "confidence": "medium",
+          "uncertainty_note": "Cost for protease inhibitors may vary."
+        },
+        {
+          "item_name": "BCA protein assay kit",
+          "quantity": "1 kit",
+          "unit_cost_estimate": 150.0,
+          "total_cost_estimate": 150.0,
+          "confidence": "medium",
+          "uncertainty_note": "Cost for BCA kit may vary."
+        },
+        {
+          "item_name": "4\u00d7 Laemmli buffer",
+          "quantity": "100 mL",
+          "unit_cost_estimate": 30.0,
+          "total_cost_estimate": 30.0,
+          "confidence": "medium",
+          "uncertainty_note": "Cost for Laemmli buffer may vary."
+        },
+        {
+          "item_name": "10% SDS-PAGE gel",
+          "quantity": "5 gels",
+          "unit_cost_estimate": 50.0,
+          "total_cost_estimate": 250.0,
+          "confidence": "medium",
+          "uncertainty_note": "Cost for SDS-PAGE gels may vary."
+        },
+        {
+          "item_name": "Protein ladder",
+          "quantity": "1 vial",
+          "unit_cost_estimate": 50.0,
+          "total_cost_estimate": 50.0,
+          "confidence": "medium",
+          "uncertainty_note": "Cost for protein ladder may vary."
+        },
+        {
+          "item_name": "PVDF membrane",
+          "quantity": "1 membrane",
+          "unit_cost_estimate": 50.0,
+          "total_cost_estimate": 50.0,
+          "confidence": "medium",
+          "uncertainty_note": "Cost for PVDF membrane may vary."
+        },
+        {
+          "item_name": "5% non-fat dry milk in TBST",
+          "quantity": "100 g",
+          "unit_cost_estimate": 20.0,
+          "total_cost_estimate": 20.0,
+          "confidence": "medium",
+          "uncertainty_note": "Cost for non-fat dry milk may vary."
+        },
+        {
+          "item_name": "Primary antibody against H3K9me3",
+          "quantity": "1 vial",
+          "unit_cost_estimate": 200.0,
+          "total_cost_estimate": 200.0,
+          "confidence": "medium",
+          "uncertainty_note": "Cost for primary antibody may vary."
+        },
+        {
+          "item_name": "HRP-conjugated secondary antibody",
+          "quantity": "1 vial",
+          "unit_cost_estimate": 200.0,
+          "total_cost_estimate": 200.0,
+          "confidence": "medium",
+          "uncertainty_note": "Cost for secondary antibody may vary."
+        },
+        {
+          "item_name": "ECL detection reagent",
+          "quantity": "1 kit",
+          "unit_cost_estimate": 150.0,
+          "total_cost_estimate": 150.0,
+          "confidence": "medium",
+          "uncertainty_note": "Cost for ECL reagent may vary."
+        }
+      ],
+      "estimated_total_cost": 2005.0,
+      "uncertainty_notes": [
+        "Prices may vary based on supplier discounts or institutional agreements.",
+        "Some reagents may have batch-to-batch variability in pricing.",
+        "Consider potential shipping costs for reagents not in stock."
+      ]
+    },
+    "timeline": {
+      "phases": [
+        {
+          "phase_name": "Day 0: Cell Culture Preparation and Reagent Preparation",
+          "duration_estimate": "1 days",
+          "dependencies": [],
+          "responsible_role": "Research associate",
+          "risk_buffer": "1 days",
+          "bottlenecks": [
+            "Equipment availability for cell culture",
+            "Reagent preparation timing"
+          ]
+        },
+        {
+          "phase_name": "Day 1: Cell Treatment",
+          "duration_estimate": "1 days",
+          "dependencies": [
+            "Day 0: Cell Culture Preparation and Reagent Preparation"
+          ],
+          "responsible_role": "Research associate",
+          "risk_buffer": "1 days",
+          "bottlenecks": [
+            "Cell confluence timing",
+            "Contamination risks"
+          ]
+        },
+        {
+          "phase_name": "Day 2: Cell Lysis, Protein Quantification, and Western Blot Preparation",
+          "duration_estimate": "1 days",
+          "dependencies": [
+            "Day 1: Cell Treatment"
+          ],
+          "responsible_role": "Research associate",
+          "risk_buffer": "1 days",
+          "bottlenecks": [
+            "Timing of lysis and quantification",
+            "Protein degradation risks"
+          ]
+        },
+        {
+          "phase_name": "Day 2: Transfer to Membrane and Antibody Incubation",
+          "duration_estimate": "1 days",
+          "dependencies": [
+            "Day 2: Cell Lysis, Protein Quantification, and Western Blot Preparation"
+          ],
+          "responsible_role": "Research associate",
+          "risk_buffer": "1 days",
+          "bottlenecks": [
+            "Transfer efficiency",
+            "Antibody binding specificity"
+          ]
+        },
+        {
+          "phase_name": "Day 3: Secondary Antibody Incubation, Detection, Data Analysis, Documentation, and Final Review",
+          "duration_estimate": "1 days",
+          "dependencies": [
+            "Day 2: Transfer to Membrane and Antibody Incubation"
+          ],
+          "responsible_role": "Research associate",
+          "risk_buffer": "1 days",
+          "bottlenecks": [
+            "Detection sensitivity",
+            "Data analysis accuracy"
+          ]
+        }
+      ],
+      "total_duration_estimate": "10 days (including risk buffers)"
+    },
+    "validation": {
+      "primary_endpoint": "Post-thaw viability percentage at immediate and 24h checkpoints.",
+      "secondary_endpoints": [
+        "Cell recovery count",
+        "Morphology quality score",
+        "Replicate variance"
+      ],
+      "success_threshold": ">=10 percentage points (pilot fallback) improvement over comparator in replicate-confirmed data.",
+      "failure_conditions": [
+        "No meaningful viability gain in replicate-confirmed runs.",
+        "Intervention increases delayed viability loss at 24h."
+      ],
+      "suggested_statistical_comparison": "Two-group comparison against comparator using t-test or Mann-Whitney based on normality.",
+      "minimum_replicates_or_design_note": "Minimum three biological replicates before execution-level claim."
+    },
+    "cro_ready_brief": {
+      "objective": "To determine the effect of 50 nM rapamycin on H3K9me3 levels in mouse embryonic fibroblasts.",
+      "scope_of_work": [
+        "Execute pilot-first HeLa cryopreservation comparison between DMSO baseline and trehalose arm.",
+        "Deliver replicate-confirmed viability analysis and mitigation traceability report."
+      ],
+      "sample_count": "At least 3 biological replicates per arm",
+      "required_assays": [
+        "Immediate post-thaw viability",
+        "24h follow-up viability"
+      ],
+      "deliverables": [
+        "Raw assay tables",
+        "QC log",
+        "Analysis summary",
+        "Deviation report"
+      ],
+      "qc_requirements": [
+        "Controlled-rate freeze log",
+        "Lot traceability",
+        "Blinded run annotation"
+      ],
+      "timeline_request": "10 days (including risk buffers)",
+      "materials_responsibility": "CRO to quote and confirm all materials before ordering.",
+      "questions_for_cro": [
+        "Can you support controlled-rate freezing logs in each run?",
+        "Can you include replicate-level batch metadata in the final report?"
+      ]
+    },
+    "confidence_score": 0.73,
+    "feedback_incorporated": false,
+    "feedback_trace": []
+  }
+}

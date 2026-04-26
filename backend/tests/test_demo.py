@@ -245,3 +245,124 @@ def test_cro_ready_brief_exists_in_demo_response() -> None:
     assert "cro_ready_brief" in payload
     assert payload["cro_ready_brief"]["objective"]
 
+
+def test_review_feedback_routed_to_correct_agents(monkeypatch: pytest.MonkeyPatch) -> None:
+    """Materials feedback must reach budget agent, timeline feedback must reach timeline agent."""
+    import app.orchestrator as orch
+    from app.agents import budget as budget_module
+    from app.agents import timeline as timeline_module
+
+    captured: dict[str, str] = {}
+
+    real_budget_run = budget_module.run
+    real_timeline_run = timeline_module.run
+
+    def spy_budget_run(*args, scientist_feedback: str = "", **kwargs):
+        captured["budget"] = scientist_feedback
+        return real_budget_run(*args, scientist_feedback=scientist_feedback, **kwargs)
+
+    def spy_timeline_run(*args, scientist_feedback: str = "", **kwargs):
+        captured["timeline"] = scientist_feedback
+        return real_timeline_run(*args, scientist_feedback=scientist_feedback, **kwargs)
+
+    monkeypatch.setattr(orch, "_run_budget", spy_budget_run)
+    monkeypatch.setattr(orch, "_run_timeline", spy_timeline_run)
+
+    response = client.post(
+        "/demo/run",
+        json={
+            "question": _default_question(),
+            "constraints": {"execution_mode": "hybrid"},
+            "prior_feedback": [
+                {
+                    "experiment_type": "cryopreservation",
+                    "section": "materials",
+                    "rating": 2,
+                    "note": "Use Sigma-Aldrich trehalose D-(+) molecular biology grade, not pharmaceutical grade.",
+                    "timestamp": "2026-04-26T08:00:00Z",
+                },
+                {
+                    "experiment_type": "cryopreservation",
+                    "section": "timeline",
+                    "rating": 2,
+                    "note": "Cell recovery phase needs 48h not 24h for HeLa post-thaw.",
+                    "timestamp": "2026-04-26T08:00:00Z",
+                },
+                {
+                    "experiment_type": "cryopreservation",
+                    "section": "steps",
+                    "rating": 3,
+                    "note": "Add an explicit viability check with trypan blue at 0h and 24h.",
+                    "timestamp": "2026-04-26T08:00:00Z",
+                },
+            ],
+        },
+    )
+
+    assert response.status_code == 200
+    payload = response.json()
+
+    assert "Sigma-Aldrich" in captured.get("budget", ""), (
+        f"materials feedback was not routed to the budget agent; got: {captured.get('budget')!r}"
+    )
+    assert "48h" in captured.get("timeline", ""), (
+        f"timeline feedback was not routed to the timeline agent; got: {captured.get('timeline')!r}"
+    )
+    assert "Sigma-Aldrich" not in captured.get("timeline", ""), (
+        "materials feedback leaked into timeline agent"
+    )
+    assert "48h" not in captured.get("budget", ""), (
+        "timeline feedback leaked into budget agent"
+    )
+
+    assert payload.get("feedback_incorporated") is True
+    trace_text = " ".join(payload.get("feedback_trace", []))
+    assert "Budget agent received" in trace_text
+    assert "Timeline agent received" in trace_text
+    assert "Plan agent received" in trace_text
+
+
+def test_intake_partial_extraction_does_not_erase(monkeypatch: pytest.MonkeyPatch) -> None:
+    """Vague-but-non-empty fields should be extracted, not replaced with the missing sentinel."""
+    from app.schemas import StructuredHypothesis as SH
+
+    fake = SH(
+        intervention="GLP-1 agonists (specific compound and dose to be confirmed)",
+        biological_system="diet-induced obesity mouse models (strain/sex/age TBD)",
+        comparator_or_control="missing_required_field",
+        measurable_outcome="hepatic steatosis (assay TBD)",
+        threshold="missing_required_field",
+        mechanistic_rationale="missing_required_field",
+        experiment_type="comparative_treatment_study",
+        constraints={},
+        readiness="pilot_ready",
+        readiness_rationale="Partial extraction with several clarifying questions.",
+        confidence_score=0.45,
+        clarifying_questions=[
+            "Which specific GLP-1 agonist (e.g. liraglutide, semaglutide)?",
+            "What dose and delivery route?",
+            "What mouse strain, sex, and age range?",
+            "What numeric improvement threshold (e.g. >=30% reduction)?",
+        ],
+        literature_search_hint="GLP-1 agonist hepatic steatosis DIO mouse",
+        original_hypothesis="Investigate whether GLP-1 agonists reduce hepatic steatosis in DIO mouse models.",
+    )
+
+    def fake_run_intake_agent(**kwargs):
+        return fake
+
+    monkeypatch.setattr(intake_module, "run_intake_agent", fake_run_intake_agent)
+
+    hypothesis = intake_module.run_intake_agent(
+        hypothesis=fake.original_hypothesis,
+        budget=None,
+        timeline=None,
+        execution_mode="in_house",
+    )
+    assert hypothesis.intervention != "missing_required_field"
+    assert "GLP-1" in hypothesis.intervention
+    assert hypothesis.biological_system != "missing_required_field"
+    assert hypothesis.experiment_type != "missing_required_field"
+    assert hypothesis.readiness == "pilot_ready"
+    assert len(hypothesis.clarifying_questions) >= 2
+
