@@ -1,6 +1,6 @@
 # SciCompiler Vertical Demo
 
-Runnable vertical demo for AI-assisted experiment planning.
+Runnable vertical demo for AI-powered experiment planning.
 
 ## Structure
 
